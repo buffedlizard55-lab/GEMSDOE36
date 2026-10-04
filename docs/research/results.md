@@ -21,3 +21,9 @@
 ## Required next measured result
 
 Before any submission slot: obtain official data/template through an authorized session; record hashes and actual template/mask geometry; count WSM/DEM/flightline coverage in the AOI; reproduce the organizer comparator; implement/test the official known-fault evaluation mask; run preregistered spatial folds and H1 ablations; show pooled and fold-by-fold DTI plus uncertainty/costs; compare against the current same-run local holdout best; then generate a unique candidate, write an accurate note, locally validate exact TIFF bytes/hash, and preserve any manual platform receipt. Current local holdout best remains `NONE`.
+
+## 2026-10-04 — GitHub handoff and live-site verification
+
+- [PR #2](https://github.com/buffedlizard55-lab/GEMSDOE36/pull/2) was merged to `main` at 2026-10-04 18:07:50 UTC as merge commit `1186bd1b705f47a8979d85c65c552f4c9bc31106`.
+- GitHub Pages reported its build `built`. A cache-busted request to the public root followed the root redirect to `/docs/`; the updated landing page showed the no-submission status, score-attribution note, four conditional hypotheses, and QA-only TIFF warning.
+- This confirms publication of the research/site/code changes only. No authorized competition data, model, real holdout, candidate TIFF, upload, or organizer score exists.
