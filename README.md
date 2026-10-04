@@ -1,79 +1,94 @@
 # GEMSDOE36 — DOE GEMS fault discovery
 
-> **Recurring starting point:** reread this whole README before every substantive session. The full project brief, non-negotiable rules, current verified state, and next gates live here. Update the status/results sections after each work session; never replace a missing measurement with a claim.
+> **Recurring starting point:** reread this complete README before every substantive session. Keep the standing brief, evidence state, limitations, and next gates here for future agents and collaborators. Update the status/results after each work session; never replace a missing measurement with a claim.
 
-**Research status (2026-10-04 UTC):** this checkout began with only this README. It now has a source register, five ranked hypotheses, an exact local DTI calculator, a differentiable stress-orientation training term, spatial-block CV mechanics, and a strict template-based GeoTIFF writer/validator. Current QA: **28 synthetic unit tests pass, Ruff passes, and the local site-link check passes.** The official competition rasters/template are not available in this environment; no model, real spatial holdout, contest score, or upload-ready prediction exists. The site offers a tiny synthetic QA TIFF for format testing only—**do not submit it**.
+**Research status (2026-10-04 UTC):** this checkout contains an auditable DTI calculator, spatial-block validation utilities, a differentiable uncertainty-weighted orientation loss, a fail-closed template-based GeoTIFF writer, four ranked research hypotheses, and a static research site whose Pages root now redirects to `/docs/`. The official competition inputs/template and an attributable submission receipt are not available here. No competition model, real spatial holdout, winning local baseline, contest score, or upload-ready prediction exists. The only downloadable TIFF is a tiny synthetic QA fixture—**do not submit it**. Final local QA in this continuation: **33 tests passed** (including Torch-dependent differentiation tests), Ruff passed, and the root/docs site checks passed. The missing-input audit still fails closed because official files are absent.
 
-## Full project brief — reread before work
+## Full standing brief — reread before work
 
-Build a scientifically grounded, auditable project for the DOE Geologic Enhanced Mapping System (GEMS) Prize Challenge, targeting strong generalization to **previously unmapped geological faults** in the GeoDAWN region. A leaderboard number is feedback, not evidence that this repository's method or file is correct. Do not promise a rank, score, or prize.
+Build a scientifically grounded, auditable project for the DOE Geologic Enhanced Mapping System (GEMS) Prize Challenge. The strategic target is strong generalization to **previously unmapped geological faults** in the GeoDAWN region. Do not promise a score, rank, or prize.
 
-### Required outcome and guardrails
+### Decision principles
 
-1. **Research before modeling.** Propose and rank 3–5 genuinely distinct geological hypotheses. For each, state the layers, target signature, why it might find off-catalogue faults, how it differs from this repository's method, qualitative expected DTI benefit, engineering/data cost, and verified availability. Do not invent a method already present in this initially empty repository.
-2. **Validate before any weekly slot.** Test the leading hypothesis using spatially blocked holdouts before recommending or preparing a competition submission. Do not use random pixel splits as primary evidence. Keep all fold values, failure cases, calibration/emission choices, costs, and proxy-generalization limits.
-3. **Stress is a loss constraint.** Treat regional stress/extension orientation as a differentiable, uncertainty-aware physics-informed term in the learning objective—not as a post-hoc compass filter. Do not infer orientation from scalar dilatation/shear/second-invariant bands alone; use a full tensor or an adequately justified mechanism inversion, spatially varying directions, and regime uncertainty.
-4. **Generate only our own prediction.** Never copy a prior participant's output file/pixels. Prior work can be reviewed for educational context, but no historical prediction may be passed off as new. A submission TIFF must be produced by this project's method, have a unique filename and a short truthful submission note, and pass local checks against the official template.
-5. **No guessed submission.** The competition asks for a single-band float32 GeoTIFF on the organizer grid (EPSG:32611, 100 m, same bounds, probabilities/confidence in [0,1], null/NaN outside bounds). Do not call a file submission-ready until shape, bounds, transform, CRS, mask, dtype, finite [0,1] values, and the final on-disk bytes are verified against the official sample. Local validity is not proof of platform acceptance.
-6. **[0,1] rejection guard.** Reject non-finite or out-of-range in-bounds values before writing; use the sample-template mask (not a feature-band NoData mask); write safely, reread the bytes, and preserve a hash/manifest. Do not assert a historical rejection cause without the rejected file and template.
-7. **Data sourcing.** When new data are proposed, identify a specific free/official source and verify what is actually available. A web landing page or download listing is not proof of local acquisition, AOI coverage, a compatible license, or added DTI value. Never bypass DrivenData enrollment/authentication or copy data from another participant's repository.
-8. **User-facing site.** Put the download action/status near the top; include a linked executive-summary subpage with submission steps. Keep a date and source for any leaderboard observations; do not scrape, poll, or mirror DrivenData. The current site exposes a clearly marked synthetic QA file, not a fake competitive submission.
-9. **Three review passes.** Review requirements/rules, scientific assumptions and validation, then code/edge cases/site/handoff. Log what was found and fixed.
-10. **AI disclosure.** The September 2026 official rules allow generative AI but require a narrative describing the extent and how it was used. Keep the disclosure truthful and update it if AI later touches model design or results.
-11. **Sources and limitations.** Link primary/official sources; record availability checks, uncertainties, failures, and next work. Flag score attribution, timing, and data inconsistencies.
-12. **GitHub handoff.** The requested PR and merge must be attempted and reported honestly. Do not claim a PR, merge, or main-branch update until GitHub confirms it.
+- **Maximize P(Win):** pursue improvements that can beat the best comparable, spatially blocked holdout in this repository. Spend scarce weekly submission slots as experiments, not lottery tickets. Prefer measured DTI gain, calibrated uncertainty, and reproducibility over speculative complexity or borrowed leaderboard artifacts.
+- **Own the Outcome:** work autonomously where authorized; own research, code, source verification, validation, delivery, and follow-up. Report blockers and failures directly. Do not imply a TIFF, PR, merge, score, or organizer acceptance exists unless it actually does.
 
-## Verified state now
+### Required outcome and non-negotiable rules
 
-- **Official goal:** predict fault-confidence values on the GeoDAWN grid; the official metric is distance-weighted Tversky with \(\alpha=0.2\), \(\beta=0.8\), triangular support \(R=300\) m. The official problem page specifies one float32 band, EPSG:32611, 100 m, same bounds, and null/NaN outside.
-- **Data access:** the official data tab redirected this unauthenticated workspace to login. No training raster, label raster, or official sample submission was acquired. We did not request or store credentials and did not bypass access controls.
-- **Model/validation:** no trained model and no real-data spatial holdout. The DTI, orientation and fold utilities are only tested with synthetic arrays. No numeric expected gain is claimed.
-- **TIFF:** no competition-grid candidate exists. `docs/downloads/GEMS36_FORMAT_TEST_NOT_SUBMISSION.tif` is a small synthetic test fixture with deliberately wrong competition dimensions/bounds. It verifies basic GeoTIFF handling, not a model, official grid, or upload acceptance.
-- **Score report:** the user-reported 0.2778 is not tied to GEMSDOE32, this checkout, or a local file by any organizer receipt available here. See the [leaderboard note](docs/research/leaderboard.md) and [official board](https://www.drivendata.org/competitions/306/competition-doe-gems/leaderboard/). No leaderboard values are mirrored or automated because the published Terms of Use require prior written consent for monitoring/copying.
-- **Original repository state:** initial tracked content was only `README.md` containing `# GEMSDOE36`; there was no existing model implementation. Compare proposals with the [organizer reference solution](https://github.com/drivendataorg/gems-prize-reference-solution), not with nonexistent local code.
+1. **Research before modeling.** Maintain 3–5 distinct, ranked geological hypotheses. For each, identify specific layers/inputs, the physical signature, why it could find faults absent from USGS/INGENIOUS catalogues, what is new relative to this repository and prior site history, qualitative DTI potential, engineering cost, a free official/trusted source, license/access, and what is or is not verified about AOI coverage. A public landing page is not proof of local data acquisition, coverage, or value.
+2. **Study history without copying it.** Review prior GEMSDOE site/repository histories to understand evidence classes, proxy/holdout weaknesses, and failed approaches. Never copy another participant's raster pixels or files into a new prediction. Do not use participant mirrors to bypass DrivenData enrollment or to obtain contest data. Preserve score attribution caveats.
+3. **Validate before any weekly slot.** Run the leading hypothesis against the **current best local spatially blocked holdout** using matched labels, folds, prediction policy/budget, and exact DTI. Do not use random-pixel splits as primary evidence. Keep pooled and every-fold scores, uncertainty, ablations, failure cases, computation cost, calibration/emission decisions, and proxy-generalization limits. If no reproducible holdout winner exists, the gate is closed.
+4. **Stress/orientation belongs in the loss.** Regional stress/extension orientation must be a differentiable, uncertainty-aware constraint in the training objective—not a post-hoc compass filter. Do not infer a unique direction from scalar dilatation, shear magnitude, or second-invariant bands. Use a full tensor or defensible stress/mechanism source, spatially varying directions, and regime/data uncertainty. Strain is not automatically stress.
+5. **Generate only our own prediction.** Never reuse or copy a prior prediction raster. Any eventual candidate must be generated by this project's code, have a unique collision-resistant TIFF filename, a distinct human-readable submission name, and a short truthful method/holdout note.
+6. **Never guess a submission.** Follow the official submission description: single-band float32 GeoTIFF, EPSG:32611, 100 m, exact organizer sample grid, in-bounds confidence/probability in [0,1], and null/NaN outside the data bounds. Do not call a file upload-ready until shape, transform, bounds, CRS, mask, dtype, finite range, and final bytes are verified against the authorized sample template. A local pass is not platform acceptance.
+7. **Fail closed on range and geometry.** Reject non-finite or out-of-range in-bounds values before writing. Use the official sample mask, not feature-band NoData. Write safely, reread the bytes, preserve a SHA-256 manifest, and do not diagnose a historical `[0,1]` rejection without the rejected bytes and template.
+8. **User-facing site.** Make the actual TIFF download/status easy to find. Until a real candidate passes, prominently say no submission is available and label the synthetic fixture **NOT A SUBMISSION / NEVER UPLOAD**. Include a linked executive summary with exact submission instructions. GitHub Pages is configured for `main:/`; root `index.html` must route visitors to `/docs/`.
+9. **Three review passes.** For substantive changes review (1) request/rules/sources, (2) geological assumptions/validation, and (3) code/edge cases/site/handoff. Log fixes and unresolved issues.
+10. **AI disclosure.** The September 2026 official rules allow generative AI but require a narrative describing its extent and how it was used. Keep the disclosure truthful and update it if AI later touches model design, experiments, or results.
+11. **Verify and cite.** Use official/trusted sources, record links and dates, flag irregularities and contradictions, avoid hallucinations, and state what was not checked. Do not scrape, poll, or mirror DrivenData standings without prior written permission or a clearly authorized API.
+12. **GitHub handoff.** Attempt a PR and merge to `main`; only report success after GitHub confirms it. Work only on the session branch `arena/01a10801-gemsdoe36`.
 
-## Ranked research and validation decision
+## Verified state and hard blockers
 
-The five non-duplicative hypotheses are documented in [`docs/research/hypotheses.md`](docs/research/hypotheses.md). H1 is the lead: multiscale geophysical lineament evidence plus an uncertainty-weighted stress-orientation penalty *in the differentiable objective*. The rank is a prior, not a measured score. H1 cannot be promoted until the authorized rasters arrive and the matched spatial-fold/ablation plan passes.
+- **Competition task:** predict fault confidence on the GeoDAWN region. The public problem page describes expert-labeled new faults absent from the existing public USGS database, a distance-weighted Tversky metric with \(\alpha=0.2\), \(\beta=0.8\), and triangular support \(R=300\) m. Official format text says one float32 band, EPSG:32611, 100 m, exact bounds/grid, [0,1] values and null/NaN outside.
+- **Known-fault mask:** DrivenData staff clarified that pixels corresponding to existing USGS/INGENIOUS faults are excluded from scoring, including re-evaluation. This does **not** justify an arbitrary 200 m catalogue buffer: nearby, distinct hidden faults may still receive credit within the 300 m metric. See the official [staff clarification](https://community.drivendata.org/t/scoring-clarification-are-known-usgs-ingenious-faults-masked-when-scoring-and-are-they-in-the-final-round-label-set/11516).
+- **Data access:** the official data tab redirected this unauthenticated workspace to login. No training raster, labels, or official sample template were acquired. No credentials were requested or stored; no access control was bypassed; no participant mirror was used.
+- **Model/holdout:** no model is trained, and there is no local spatial holdout best yet. DTI/orientation/fold utilities use synthetic tests only. Do not report a numeric expected improvement as measured.
+- **Score attribution:** the user-supplied `0.2778` is not tied by an organizer receipt to GEMSDOE32 or a local file. GEMSDOE32's own README calls H33-2-B2 `0.2747` a projection, labels that artifact `UNSCORED`, and says no organizer score exists for its artifacts. GEMSDOE31 describes a `0.2708` geometry as owner-reported, while GEMSDOE32's later audit disputes that attribution; no receipt resolves the conflict. The user-supplied `0.3195` is not verified as the current public maximum; a one-time 2026-10-04 board read showed higher entries. No score table or participant names are mirrored. See [`docs/research/leaderboard.md`](docs/research/leaderboard.md) and the [official live board](https://www.drivendata.org/competitions/306/competition-doe-gems/leaderboard/).
+- **Prior site-history lesson:** GEMSDOE32 contains useful owner-reported experiments/projections but explicitly distinguishes them from organizer scores. A prior site's own audit also found a mismatch between its advertised primary download and its measured best artifact. Treat all inherited rankings as hypotheses until this repository reproduces them on authorized data and an uncontaminated spatial holdout. No prior TIFF or pixels are reused here.
+- **Official reference solution:** this repo began with only a README title; no prior model code existed. Compare against the [organizer reference](https://github.com/drivendataorg/gems-prize-reference-solution). Its example notebook writes an output without an explicit NoData tag, while the official problem text says null/NaN outside bounds. This format inconsistency remains unresolved until the authorized sample/organizer clarification is checked; this project follows the explicit format text and sample-template mask and does not claim platform acceptance.
+- **GitHub Pages:** Pages serves `main:/`; the previous root rendered README instead of the site. A repository-root `index.html` now redirects to `docs/`, and the local checker verifies this entry point. Live verification is still required after a confirmed merge/deploy.
+- **Competition TIFF:** none exists. `docs/downloads/GEMS36_FORMAT_TEST_NOT_SUBMISSION.tif` is deliberately tiny, synthetic, and on the wrong grid. It proves only that a basic GeoTIFF download/link can be exercised.
+- **Competition rules:** the September 2026 rules require an AI-use narrative and allow up to three feedback submissions per week; one final file is selected across prize rounds. The competition overview and official rules may change; recheck before upload.
 
-Read [`docs/research/validation-plan.md`](docs/research/validation-plan.md) before any model experiment. It predeclares 512-pixel spatial tiles, 30-pixel training collars, the 3-pixel metric support buffer, matched baseline/prediction budgets, stress ablations, and a release gate. This plan has **not** been run on competition data.
+## Ranked research decision
+
+Four distinct, conditional hypotheses are in [`docs/research/hypotheses.md`](docs/research/hypotheses.md). H1 is the **provisional research lead**, not a selected model: combine cross-layer multiscale fault lineaments with an uncertainty/regime-weighted World Stress Map orientation prior inside the differentiable objective. The GFZ WSM 2025 data release is public and CC BY 4.0, but local download, record count/quality in the competition AOI, and field usefulness have **not** been measured. If coverage or licensing/attribution requirements fail, H1 is demoted rather than fabricated.
+
+Other candidates use high-resolution DEM geomorphology, raw GeoDAWN flight-line evidence, or Sentinel-1 InSAR. Official sources and their availability/access gates are listed in [`docs/research/sources.md`](docs/research/sources.md). No new external data have been downloaded and no external candidate is yet declared viable in the AOI.
+
+Read [`docs/research/validation-plan.md`](docs/research/validation-plan.md) before experiments. The plan starts with 512-pixel contiguous tiles, a 30-pixel train collar, a 3-pixel metric support buffer, held-out fault systems where IDs allow, matched prediction budgets, organizer-reference comparison, and stress ablations. It also applies the official existing-fault evaluation mask. **No folds have been run.** The promotion gate requires beating the best comparable local blocked-holdout result; the present local best is `NONE`.
 
 ## Project map
 
-- `docs/index.html` — landing page; submission status and synthetic QA download are visible near the top.
-- `docs/executive-summary.html` — executive summary and step-by-step submission guide.
-- `docs/downloads/GEMS36_FORMAT_TEST_NOT_SUBMISSION.tif` — synthetic QA fixture, **never upload**; small and intentionally not on the organizer grid.
-- `docs/research/hypotheses.md` — ranked, sourced geological hypotheses.
-- `docs/research/sources.md` — source register and actual availability/coverage caveats.
+- `index.html` — Pages-root redirect to `docs/` (Pages is configured for `main:/`).
+- `docs/index.html` — landing page with prominent no-submission status, score-attribution warning, and QA-only download.
+- `docs/executive-summary.html` — executive summary and exact data → holdout → build → validate → manual-upload instructions.
+- `docs/downloads/GEMS36_FORMAT_TEST_NOT_SUBMISSION.tif` and its JSON — synthetic format fixture only; never upload.
+- `docs/research/hypotheses.md` — four ranked hypotheses with layers, mechanisms, expected DTI, cost, availability, and gates.
+- `docs/research/sources.md` — official/trusted source register, licenses, and AOI/local-acquisition caveats.
 - `docs/research/validation-plan.md` — preregistered spatial holdout and promotion gates.
-- `docs/research/results.md` — date-stamped results ledger; no contest score is claimed.
-- `docs/research/known_irregularities.md` — data, score-attribution, deadline and rules caveats.
-- `docs/AI_DISCLOSURE.md` — required disclosure draft for a future narrative.
-- `src/gemsdoe36/metric.py` — exact published DTI calculator (local evaluator, not training loss).
-- `src/gemsdoe36/orientation.py` — differentiable local strain-axis and trace-orientation penalty; optional PyTorch.
+- `docs/research/leaderboard.md` — dated score attribution and prior-site history; no mirrored score table.
+- `docs/research/results.md` — results ledger; no contest score is claimed.
+- `docs/research/known_irregularities.md` — data, score, format, deadline, and site-route caveats.
+- `docs/research/review-log.md` — three-pass review log for the work sessions.
+- `docs/AI_DISCLOSURE.md` — draft for the required future narrative.
+- `src/gemsdoe36/metric.py` — local implementation of the published DTI evaluator, not a training loss.
+- `src/gemsdoe36/orientation.py` — full-tensor principal-strain helper and differentiable, masked axial-orientation loss; optional PyTorch. Strain is not automatically stress.
 - `src/gemsdoe36/spatial_cv.py` — deterministic spatial tile folds and train/evaluation collars.
-- `src/gemsdoe36/submission.py` — fail-closed, template-based writer/validator with read-back and manifest.
-- `scripts/audit_inputs.py`, `scripts/build_submission.py`, `scripts/validate_submission.py`, `scripts/check_site.py` — local data/TIFF workflow and static-site link checks; no authentication or downloads.
-- `tests/` — analytic/synthetic checks only; not evidence of real-data DTI.
+- `src/gemsdoe36/submission.py` — fail-closed template writer/validator, unique filename utility, read-back and manifest.
+- `scripts/audit_inputs.py`, `scripts/build_submission.py`, `scripts/validate_submission.py`, `scripts/check_site.py` — input/TIFF workflow and static-site checks; no auth or downloads.
+- `tests/` — analytic/synthetic tests only; no real-data DTI evidence.
 
 ## Setup and checks
 
-Python 3.10+ is required. Data and generated candidates are ignored by Git.
+Python 3.10+ is required. Competition data and generated candidate outputs are ignored by Git.
 
 ```bash
 python -m venv .venv
 source .venv/bin/activate
 python -m pip install -e '.[dev]'
 # Optional for training-time differentiable orientation loss:
-# install a CPU/CUDA-compatible PyTorch build using the current PyTorch instructions
+# install a CPU/CUDA-compatible build using the current PyTorch instructions
 python -m pip install '.[train]'
 python -m pytest -q
 python -m ruff check src scripts tests
+python scripts/check_site.py
 ```
 
-The optional `train` extra may install a large PyTorch build; choose the right CPU/GPU wheel for your machine. No GPU is needed for metric, spatial fold, writer, and site tests.
+The optional `train` extra may install a large PyTorch build; choose a suitable wheel. No GPU is needed for DTI, spatial folds, GeoTIFF writer, or site checks. The orientation test file is skipped if Torch is not installed—report that skip rather than implying the differentiability test ran.
 
-After obtaining the files through the official enrolled data page, place them under ignored `data/raw/`. Replace the labels argument below with the exact raster filename provided by the organizers:
+After obtaining competition files through an authorized enrolled session, place them under ignored `data/raw/`. Replace the labels filename with the exact organizer-provided raster:
 
 ```bash
 python scripts/audit_inputs.py \
@@ -82,57 +97,40 @@ python scripts/audit_inputs.py \
   --template data/raw/sample_submission.tif
 ```
 
-The audit fails on missing files or grid mismatch. Inspect band-level NoData and valid masks before training. Do not place competition rasters or model checkpoints in Git.
+Inspect band-level masks/tags, label semantics, valid footprint, and the actual sample grid. Do not place competition data or model checkpoints in Git.
 
-### Local candidate path (only after a model and real holdout exist)
+### Candidate path — only after the real holdout gate passes
 
 ```bash
-# `scores.npy` must be this project's selected full-grid 2-D probability map.
+# `prediction.npy` must be this project's selected full-grid 2-D probability map.
 python scripts/build_submission.py outputs/prediction.npy \
   --template data/raw/sample_submission.tif \
-  --note docs/submission_note.txt
+  --submission-name "GEMS36-H1-UNIQUE-RUN-ID" \
+  --note "Actual method and measured spatial-holdout result; concise limitation."
 
-python scripts/validate_submission.py outputs/submissions/GEMS36_candidate_<UTC>_<hash>.tif \
+# Copy the exact .tif path printed by the builder.
+python scripts/validate_submission.py outputs/submissions/PASTE_PRINTED_FILENAME_HERE.tif \
   --template data/raw/sample_submission.tif --json
 ```
 
-The writer requires exact sample geometry, finite [0,1] scores inside the sample's valid area, writes NaN outside, disables TIFF predictors, rereads its own bytes, and creates a SHA-256 manifest. If any gate fails, no successful candidate is published. This code path has synthetic tests only; **it has not produced a contest candidate in this repository.**
+The writer requires exact sample geometry, finite in-bounds [0,1] scores, writes NaN outside, disables TIFF predictors, rereads its bytes, and creates a SHA-256 JSON manifest with the submission name/note. It does not train, measure DTI, pass the holdout gate, or guarantee platform acceptance. **This code path has not generated a competition candidate in this repository.**
 
-## Stress orientation in the objective
+## Orientation constraint — required in training, not as a post-filter
 
-`orientation.py` derives a principal horizontal extension axis from full \((\epsilon_{EE},\epsilon_{EN},\epsilon_{NN})\) strain components and a confidence measure, computes a differentiable structure-tensor alignment penalty on predicted probability gradients, and provides `physics_informed_objective(base_loss, ...)` that adds this term during training. Trace orientation is axial (modulo 180°); for normal faulting, a map-view trace normal is expected to be compatible with the extension direction. The current implementation's angle convention is east-toward-south in raster coordinates; geographic EN angles are converted explicitly. Mixed regimes and uncertainty must be modeled. No training experiment has used this loss yet.
+`orientation.py` computes a principal extension axis from full \((\epsilon_{EE},\epsilon_{EN},\epsilon_{NN})\) horizontal strain components, then evaluates a differentiable structure-tensor alignment penalty on predicted probability gradients. `physics_informed_objective(base_loss, ...)` adds it during training. Axial directions are modulo 180°; `geographic_en_angle_to_raster` converts EN angles into raster axes. The helper is explicit that strain is only an orientation proxy, not a direct stress measurement. A WSM-derived local stress prior must incorporate record quality, interpolation uncertainty, and regime applicability; where a single extension direction is not justified, confidence must be zero or a justified multi-modal loss must replace the single-axis term. No training experiment has used this loss.
 
-## Competition rules, AI, and leaderboard hygiene
+## Sources, limits and next gates
 
-The [September 2026 official rules](https://www.nlr.gov/docs/fy26osti/96647.pdf) require a narrative disclosure of generative-AI use (§3.2), permit up to three feedback submissions per week (§3.4), and require choosing one final submission for both prize rounds. The [AI disclosure draft](docs/AI_DISCLOSURE.md) describes only the work done so far and must be updated for any future model.
+Primary links are in [`docs/research/sources.md`](docs/research/sources.md). Core records include the official [competition metric/data description](https://www.drivendata.org/competitions/306/competition-doe-gems/page/967/), [September 2026 rules](https://www.nlr.gov/docs/fy26osti/96647.pdf), [USGS GeoDAWN release](https://doi.org/10.5066/P93LGLVQ), [GFZ World Stress Map 2025](https://doi.org/10.5880/WSM.2025.001), [USGS 3DEP](https://www.usgs.gov/3d-elevation-program/about-3dep-products-services), [NASA Sentinel-1/ASF](https://www.earthdata.nasa.gov/data/platforms/space-based-platforms/sentinel-1), and the [official known-fault scoring clarification](https://community.drivendata.org/t/scoring-clarification-are-known-usgs-ingenious-faults-masked-when-scoring-and-are-they-in-the-final-round-label-set/11516). All data pages were checked at the publisher/page level; no local AOI/coverage analysis was performed.
 
-The official DrivenData [Terms of Use](https://www.drivendata.org/termsofuse/) prohibit automated leaderboard monitoring/copying and manual monitoring/copying without prior written consent. The current site links to the official board and ships no poller or live mirror. A dated one-time note is in [`docs/research/leaderboard.md`](docs/research/leaderboard.md); do not refresh or publish a score feed without permission or an authorized API.
-
-## Sources and current limitations
-
-Start with [`docs/research/sources.md`](docs/research/sources.md): official DrivenData metric/rules/data links; USGS GeoDAWN DOI `10.5066/P93LGLVQ`; NGL Great Basin strain and MAGNET velocities; USGS slip/dilation DOI `10.5066/P9YL58W6`; NBMG Monte Cristo mapped rupture; GDR INGENIOUS; and USGS heat-flow/ComCat references. Some official/public download listings were verified, but no competition data or new binary layer was acquired locally and exact grid overlap remains unmeasured.
-
-Important scientific limitations:
-
-- The official features include scalar strain summaries, not a unique stress-axis raster.
-- GNSS-derived strain is kinematic evidence, not a direct stress measurement at every cell; a local tensor, temporal window, interpolation uncertainty, and regime model are needed.
-- Regional extensional/transtensional structures vary; a single fixed NNE strike prior is not defensible.
-- Geophysical edges can be lithologic contacts or survey artifacts; geothermal context is not fault truth.
-- A spatial holdout on known catalogue traces is still only a proxy for privately labeled off-catalogue faults.
-- The platform's previous `[0, 1]` rejection cannot be diagnosed from this checkout; the rejected file and official sample are absent.
-- The official homepage lists Dec 3, 2026 23:59 UTC, while rules Appendix A.1 says 5:00 p.m. ET on the deadline date (22:00 UTC in December). Treat the earlier time as safe and seek organizer clarification.
-
-See [`docs/research/known_irregularities.md`](docs/research/known_irregularities.md) for the full register.
-
-## Three-pass review and next actions
-
-Three review passes are logged in [`docs/research/review-log.md`](docs/research/review-log.md): requirements/rules; geology and validation; code/site/handoff. Latest recorded QA is 26 synthetic tests, Ruff, and the local site check all passing; re-run `scripts/run_checks.sh` plus the input audit after any changes.
+Important limits: no private labels; no competition inputs; no spatial folds or holdout winner; no verified local coverage for WSM/3DEP/GeoDAWN raw profiles/Sentinel-1; no contest score receipt; no candidate TIFF; official-format/reference-notebook discrepancy; prior score attribution remains unresolved; and known-fault masking must be represented in local holdouts. Review the full [`known_irregularities.md`](docs/research/known_irregularities.md).
 
 **Next gates, in order:**
 
-1. Obtain the official rasters/template through an authorized competition session; record hashes and metadata.
-2. Run preflight and reproduce the organizer baseline.
-3. Build H1 features and full-tensor orientation prior; run spatial-block holdout and ablations. Publish all folds and failure cases.
-4. Only if the preregistered gate passes, generate a unique candidate, a verified local GeoTIFF, a source/method note, and an AI disclosure.
-5. Have the participant upload manually if desired; retain the organizer's receipt. Respect submission limits and select only one final file.
-6. Create the requested branch PR and merge only after CI/review and GitHub confirmation; report the PR/merge result honestly.
+1. Obtain the official rasters/template legally; hash them and resolve grid/mask/format semantics from actual files.
+2. Preflight the WSM AOI record count/quality/regime, DEM URL coverage, and any selected external dataset's license/access. Demote candidates that fail.
+3. Reproduce the organizer reference under masked, spatially blocked folds; establish the current local best.
+4. Test the lead and ablations with matched policy; require a positive, robust improvement over that best before any weekly slot.
+5. Generate a unique TIFF/name/note from this project's own method; locally validate exact bytes/hash; update AI disclosure.
+6. Only then consider manual upload and preserve the organizer receipt. Follow current submission rules.
+7. For this code/site follow-up, create a new PR from `arena/01a10801-gemsdoe36`, then merge only after GitHub confirms. Existing PR #1 is already merged; no new PR exists yet for this follow-up.

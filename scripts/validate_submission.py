@@ -26,7 +26,8 @@ def main() -> int:
         print(
             f"grid={report.width}x{report.height} bands={report.count} dtype={report.dtype} "
             f"crs={report.crs} resolution={report.resolution_m} range="
-            f"[{report.minimum}, {report.maximum}]"
+            f"[{report.minimum}, {report.maximum}] outside_finite="
+            f"{report.finite_outside_bounds} outside_infinite={report.infinite_outside_bounds}"
         )
         for error in report.errors:
             print(f"- {error}")

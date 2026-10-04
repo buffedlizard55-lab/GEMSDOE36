@@ -1,9 +1,6 @@
-GEMS DOE 36 candidate [UTC timestamp/hash]
+GEMS36 [method-id] [unique run id]
+Method: [actual model/features/emission used].
+Spatial holdout: [pooled delta DTI; per-fold wins; comparator; date].
+Limit: [short, material generalization or data-coverage caveat].
 
-Method: [name and concise description of the model, features, and emission policy actually used].
-Data: [official files and any external sources with versions/licenses].
-Validation: [spatial fold definition, pooled/per-fold DTI, baseline comparison, and known limitations].
-
-Generative-AI disclosure: Generative AI assisted with [actual tasks]. [Describe any AI involvement in modeling, analysis, and documentation accurately.] No private test labels were accessed. [Remove or revise this sentence if it is not true for the eventual workflow.]
-
-This GeoTIFF was generated from this repository's own code and was locally checked against the organizer's official sample template. Local validation does not imply platform acceptance or private-test performance.
+Replace every bracketed field only with measured, reproducible results. Do not describe a proxy score or model projection as an organizer score. The submission note should match the method and unique name stored in the TIFF manifest.
