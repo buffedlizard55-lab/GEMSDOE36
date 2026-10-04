@@ -359,7 +359,7 @@ def main() -> int:
 
     manifest = {
         "generated_utc": datetime.now(timezone.utc).isoformat(),
-        "generated_by": "scripts/prepare_data.py",
+        "generated_by": "scripts/prepare_data_h6.py",
         "grid": {
             "width": 3292,
             "height": 3730,

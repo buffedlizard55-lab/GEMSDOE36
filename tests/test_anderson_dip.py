@@ -15,7 +15,7 @@ import pytest
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "src"))
 
-from gemsdoe36.anderson import (  # noqa: E402
+from gemsdoe36.anderson_dip import (  # noqa: E402
     ExtensionField,
     axial_distance,
     azimuth_to_raster,

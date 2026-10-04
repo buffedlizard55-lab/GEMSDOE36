@@ -33,7 +33,7 @@ from pathlib import Path
 import numpy as np
 from scipy.ndimage import gaussian_filter
 
-from .anderson import (
+from .anderson_dip import (
     ExtensionField,
     dip_project,
     local_extension_field,
