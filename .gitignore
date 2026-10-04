@@ -1,0 +1,38 @@
+# Competition data, generated outputs, and local environments
+/data/raw/
+/data/processed/
+/data/derived/
+/outputs/
+/models/
+/checkpoints/
+*.ckpt
+*.pt
+*.pth
+*.npy
+*.npz
+*.tif
+*.tiff
+# Tiny synthetic fixture used only to verify site download and GeoTIFF handling.
+!/docs/downloads/GEMS36_FORMAT_TEST_NOT_SUBMISSION.tif
+*.aux.xml
+*.msi
+*.ovr
+*.partial
+*.tmp
+
+# Python
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+.venv/
+venv/
+build/
+dist/
+*.egg-info/
+
+# Editors / OS
+.DS_Store
+.idea/
+.vscode/
