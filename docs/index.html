@@ -38,12 +38,15 @@
       </aside>
     </section>
 
-    <section class="download-strip" aria-label="Download and submission status">
+    <section class="download-strip" id="submission" aria-label="Submission download status">
       <div>
-        <strong>⬇ One-click GeoTIFF download — QA fixture only, never upload it</strong>
-        <p>A tiny synthetic file exercises float32 / EPSG:32611 / [0,1] TIFF handling. It is <strong>NOT a competition submission</strong>: it is not on the official grid, uses no contest data, and is not a model prediction. The actual submission download stays withheld until data, holdout, and template checks pass.</p>
+        <strong>Competition TIFF: not available — no prediction has passed the spatial holdout.</strong>
+        <p>Do not upload a guess. The only file currently downloadable is a tiny synthetic format fixture: <strong>NOT a competition submission</strong>, not on the official grid, and never upload it. The actual TIFF link will replace this status only after the model beats the current local spatial-holdout best and passes official-template validation.</p>
       </div>
-      <a class="button warning" href="downloads/GEMS36_FORMAT_TEST_NOT_SUBMISSION.tif" download>Download QA-only TIFF</a>
+      <div class="hero-actions">
+        <a class="button secondary" href="executive-summary.html#steps-title">Submission steps</a>
+        <a class="button warning" href="downloads/GEMS36_FORMAT_TEST_NOT_SUBMISSION.tif" download>Download QA fixture only</a>
+      </div>
     </section>
 
     <section class="section" aria-labelledby="why-title">
@@ -58,18 +61,28 @@
       </div>
     </section>
 
+    <section class="section" aria-labelledby="score-history-title">
+      <div class="section-head">
+        <div><div class="eyebrow">Score attribution · checked 2026-10-04</div><h2 id="score-history-title">Separate a public number from a scored artifact.</h2></div>
+        <p>Past site claims guide hypotheses, but they are not ground truth or proof of an organizer score.</p>
+      </div>
+      <div class="grid cols-2">
+        <article class="card"><span class="card-kicker">GEMSDOE32 history</span><h3>0.2778 is not attributable here.</h3><p>The linked GEMSDOE32 README labels its H33-2-B2 file <em>UNSCORED</em>, calls 0.2747 a projection, and says no organizer score exists for its artifacts. Its reported 0.2708 base also lacks a receipt in this repository. We will not copy its pixels or present its proxy as a contest result.</p><p><a href="https://github.com/buffedlizard55-lab/GEMSDOE32#one-click-submission-file--identification-pack-the-three-slot-live-measurement" target="_blank" rel="noopener">Review the GEMSDOE32 evidence labels ↗</a></p></article>
+        <article class="card"><span class="card-kicker">Live public board</span><h3>0.3195 is not verified as the current maximum.</h3><p>A one-time read on 2026-10-04 showed public entries above the user-reported 0.3195. No table or participant-name snapshot is retained because the Terms restrict leaderboard monitoring/copying.</p><p><a href="https://www.drivendata.org/competitions/306/competition-doe-gems/leaderboard/" target="_blank" rel="noopener">Open the official live leaderboard ↗</a></p></article>
+      </div>
+    </section>
+
     <section class="section" aria-labelledby="hyp-title">
       <div class="section-head">
-        <div><div class="eyebrow">Before implementation</div><h2 id="hyp-title">Five distinct ways to look for what is missing.</h2></div>
+        <div><div class="eyebrow">Before implementation</div><h2 id="hyp-title">Four distinct ways to look for what is missing.</h2></div>
         <p>Qualitative ranking only. No numeric DTI gains are claimed until the same data and folds have been measured.</p>
       </div>
       <div class="grid cols-3">
-        <article class="card"><span class="card-kicker"><span class="rank">01</span>Lead hypothesis</span><h3>Stress-constrained geophysical lineaments</h3><p>Cross-layer, multiscale line geometry with a locally uncertain stress-orientation term inside the objective.</p><span class="tag">medium–high potential · untested</span></article>
-        <article class="card"><span class="card-kicker"><span class="rank">02</span>Fault-system geometry</span><h3>Tips, relays &amp; transfer zones</h3><p>Graph-based propagation tests where mapped structures terminate, step, or hand off strain.</p><span class="tag">medium · localized</span></article>
-        <article class="card"><span class="card-kicker"><span class="rank">03</span>Independent geophysics</span><h3>Potential-field edge/depth inversion</h3><p>Seek buried structures with coherent magnetic, gravity, conductivity, and radiometric boundaries.</p><span class="tag">low–medium · higher cost</span></article>
-        <article class="card"><span class="card-kicker"><span class="rank">04</span>Observed rupture transfer</span><h3>Monte Cristo case study</h3><p>Use the mapped 2020 rupture as a narrow diagnostic for feature transfer—not universal fault truth.</p><span class="tag">low–medium · one event</span></article>
-        <article class="card"><span class="card-kicker"><span class="rank">05</span>Resource context</span><h3>Joint fault / play-fairway model</h3><p>Combine fault evidence with public heat-flow and geothermal data, while guarding against recall loss.</p><span class="tag">uncertain · high cost</span></article>
-        <article class="card"><span class="card-kicker">Read the full register</span><h3>Layers, risks, and access gates</h3><p>Every hypothesis names source availability, expected DTI relevance, cost, and a falsification route.</p><p><a href="research/hypotheses.md">Open the full ranked register →</a></p></article>
+        <article class="card"><span class="card-kicker"><span class="rank">01</span>Lead · conditional</span><h3>WSM regime-aware orientation + lineaments</h3><p>Combine the competition's multiscale geophysics with locally uncertain World Stress Map directions in the differentiable loss.</p><span class="tag">medium potential · AOI coverage untested</span></article>
+        <article class="card"><span class="card-kicker"><span class="rank">02</span>High-resolution surface expression</span><h3>1 m DEM scarps &amp; drainage offsets</h3><p>Test geomorphic line continuity beyond the supplied 100 m detrended relief; avoid broad fan edges and channels.</p><span class="tag">low–medium · DEM coverage untested</span></article>
+        <article class="card"><span class="card-kicker"><span class="rank">03</span>Raw survey profiles</span><h3>GeoDAWN flight-line coherence</h3><p>Separate cross-line-stable subsurface anomalies from acquisition-direction streaks in the public profile data.</p><span class="tag">low–medium · higher cost</span></article>
+        <article class="card"><span class="card-kicker"><span class="rank">04</span>Time-dependent evidence</span><h3>Sentinel-1 InSAR discontinuities</h3><p>Use repeat-pass surface-motion evidence only where multi-temporal coherence and line-of-sight geometry are adequate.</p><span class="tag">low / uncertain · account + coverage gate</span></article>
+        <article class="card"><span class="card-kicker">Read the full register</span><h3>Inputs, physics, availability, cost</h3><p>Each hypothesis is explicitly conditional until the official AOI coverage and the spatial holdout are checked.</p><p><a href="research/hypotheses.md">Open the full ranked register →</a></p></article>
       </div>
     </section>
 
@@ -91,12 +104,12 @@
       </div>
       <div class="grid cols-3">
         <article class="card"><span class="card-kicker">Competition</span><h3>Rules, metric, format</h3><p><a href="https://www.drivendata.org/competitions/306/competition-doe-gems/page/967/" target="_blank" rel="noopener">Problem description ↗</a><br><a href="https://www.nlr.gov/docs/fy26osti/96647.pdf" target="_blank" rel="noopener">Official rules PDF ↗</a><br><a href="https://www.drivendata.org/competitions/306/competition-doe-gems/data/" target="_blank" rel="noopener">Data page (enrollment required) ↗</a></p></article>
-        <article class="card"><span class="card-kicker">Geodesy</span><h3>Local strain / velocities</h3><p><a href="https://geodesy.unr.edu/greatbasinstrain.php" target="_blank" rel="noopener">NGL Great Basin strain ↗</a><br><a href="https://geodesy.unr.edu/magnet/Table3web.html" target="_blank" rel="noopener">NGL MAGNET velocities ↗</a></p></article>
-        <article class="card"><span class="card-kicker">Geology</span><h3>Faults &amp; geophysics</h3><p><a href="https://doi.org/10.5066/P93LGLVQ" target="_blank" rel="noopener">USGS GeoDAWN release ↗</a><br><a href="https://doi.org/10.5066/P9YL58W6" target="_blank" rel="noopener">USGS slip/dilation data ↗</a><br><a href="https://nbmg.unr.edu/Geohazards/Earthquakes/MonteCristoRangeEQData.html" target="_blank" rel="noopener">NBMG Monte Cristo rupture ↗</a></p></article>
+        <article class="card"><span class="card-kicker">Stress &amp; geodesy</span><h3>Observed orientation sources</h3><p><a href="https://doi.org/10.5880/WSM.2025.001" target="_blank" rel="noopener">World Stress Map 2025 (CC BY 4.0) ↗</a><br><a href="https://geodesy.unr.edu/greatbasinstrain.php" target="_blank" rel="noopener">NGL Great Basin strain ↗</a><br><a href="https://geodesy.unr.edu/magnet/Table3web.html" target="_blank" rel="noopener">NGL MAGNET velocities ↗</a></p></article>
+        <article class="card"><span class="card-kicker">Public imagery / elevation</span><h3>Conditional new layers</h3><p><a href="https://www.usgs.gov/3d-elevation-program/about-3dep-products-services" target="_blank" rel="noopener">USGS 3DEP availability &amp; use ↗</a><br><a href="https://www.earthdata.nasa.gov/data/platforms/space-based-platforms/sentinel-1" target="_blank" rel="noopener">NASA Sentinel-1 / ASF ↗</a><br><a href="https://www.sciencebase.gov/catalog/item/657e1d85d34e23d3533209f7" target="_blank" rel="noopener">USGS GeoDAWN flight lines ↗</a></p></article>
       </div>
     </section>
   </main>
 
-  <footer class="site-footer"><div class="wrap footer-row"><p>GEMS DOE 36 · Evidence-led research, not an official DOE/DrivenData product.</p><p><a href="research/sources.md">Source register</a> · <a href="AI_DISCLOSURE.md">AI disclosure draft</a> · <a href="https://www.drivendata.org/competitions/306/competition-doe-gems/leaderboard/" target="_blank" rel="noopener">Official leaderboard ↗</a></p></div></footer>
+  <footer class="site-footer"><div class="wrap footer-row"><p>GEMS DOE 36 · Evidence-led research, not an official DOE/DrivenData product.</p><p><a href="research/sources.md">Source register</a> · <a href="https://github.com/buffedlizard55-lab/GEMSDOE36/blob/main/README.md" target="_blank" rel="noopener">Full project brief (README) ↗</a> · <a href="AI_DISCLOSURE.md">AI disclosure draft</a> · <a href="https://www.drivendata.org/competitions/306/competition-doe-gems/leaderboard/" target="_blank" rel="noopener">Official leaderboard ↗</a></p></div></footer>
 </body>
 </html>

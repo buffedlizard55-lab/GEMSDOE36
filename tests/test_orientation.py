@@ -89,12 +89,56 @@ def test_principal_extension_axis_and_raster_angle_conversion():
     )
 
 
-def test_isotropic_tensor_has_low_direction_confidence():
-    _, confidence = principal_extension_raster_angle(1.0, 0.0, 1.0)
-    assert confidence.item() < 0.01
+def test_isotropic_and_zero_tensors_have_low_direction_confidence():
+    _, isotropic_confidence = principal_extension_raster_angle(1.0, 0.0, 1.0)
+    assert isotropic_confidence.item() < 0.01
     # A tensor with only compressive principal strains must not act as an extension prior.
     _, compressive_confidence = principal_extension_raster_angle(-2.0, 0.0, -1.0)
     assert compressive_confidence.item() < 0.01
+    # The old sqrt(epsilon) discriminant incorrectly assigned this near-unit confidence.
+    _, zero_confidence = principal_extension_raster_angle(0.0, 0.0, 0.0)
+    assert zero_confidence.item() == pytest.approx(0.0, abs=1e-7)
+
+
+def test_principal_axis_is_stable_across_tensor_units():
+    base = principal_extension_raster_angle(0.2, 0.1, -0.1)
+    tiny = principal_extension_raster_angle(2e-20, 1e-20, -1e-20)
+    assert tiny[0].item() == pytest.approx(base[0].item(), abs=1e-6)
+    assert tiny[1].item() == pytest.approx(base[1].item(), abs=1e-6)
+
+
+def test_valid_mask_protects_orientation_loss_from_invalid_edges():
+    p = _stripe(vertical=False)
+    valid = torch.ones_like(p)
+    valid[..., :8] = 0.0
+    angle = torch.zeros_like(p)
+    confidence = torch.ones_like(p)
+    reference = stress_orientation_loss(p, angle, confidence, valid_mask=valid)
+
+    masked_p = p.clone()
+    masked_p[..., :8] = torch.nan
+    masked_angle = angle.clone()
+    masked_angle[..., :8] = torch.nan
+    masked_confidence = confidence.clone()
+    masked_confidence[..., :8] = torch.nan
+    masked = stress_orientation_loss(
+        masked_p, masked_angle, masked_confidence, valid_mask=valid
+    )
+    assert torch.isfinite(masked)
+    assert masked.item() == pytest.approx(reference.item(), abs=1e-6)
+
+
+def test_invalid_confidence_and_mask_ranges_are_rejected():
+    p = _stripe(vertical=True)
+    confidence = torch.ones((40, 40))
+    confidence[10, 10] = 1.1
+    with pytest.raises(ValueError, match="confidence must be in \\[0, 1\\]"):
+        stress_orientation_loss(p, torch.zeros((40, 40)), confidence)
+
+    valid = torch.ones((40, 40))
+    valid[10, 10] = -0.1
+    with pytest.raises(ValueError, match="valid_mask must be in \\[0, 1\\]"):
+        stress_orientation_loss(p, torch.zeros((40, 40)), torch.ones((40, 40)), valid_mask=valid)
 
 
 def test_invalid_regularization_weight_is_rejected():

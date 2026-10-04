@@ -1,30 +1,49 @@
-# Spatial validation and release gates
+# Spatial validation plan and release gates
 
-**State:** plan only; no competition data, folds, DTI result, or candidate raster exists in this checkout.
+**State:** plan only. No competition data, local baseline, spatial folds, holdout DTI result, or candidate TIFF exists. The **current best local spatial holdout is `NONE`**; a score on another repository or a leaderboard value is not a substitute.
 
-## Why a holdout is mandatory
+## Why spatial validation is mandatory
 
-Training labels are incomplete known-fault catalogues; competition truth is expert-labeled new faults. Random pixel splits leak continuous traces and local geophysical context. Holding out spatial regions and/or whole systems is less optimistic, but it still uses known faults as a proxy and cannot reproduce the private newly discovered fault population. Report that limitation alongside every local score.
+The authorized training labels are existing catalogue faults; the scored target is newly identified fault geometry. Random-pixel splits leak continuous traces and local geology. Holding out contiguous areas or whole fault systems is a harder proxy for transfer, but still cannot reproduce the private newly discovered population. Every reported local DTI must carry that caveat.
 
-## Predeclared leading-candidate test
+DrivenData staff have clarified that pixels corresponding to existing USGS/INGENIOUS faults are masked/excluded from evaluation, including re-evaluation. A local holdout must emulate that rule and preserve the held-out target; it must **not** impose an unsupported 200 m “no fault” buffer. The official DTI itself has 300 m support, so a nearby distinct hidden trace may receive credit.
 
-1. **Freeze inputs.** Record source URL, access/license, hashes, GeoTIFF geometry, band tags/units/nodata, mask, and processing software for the official features, labels and sample template. Keep data and outputs out of Git.
-2. **Reproduce a comparator.** Train/score the organizer reference under the same train/validation partitions before claiming a gain.
-3. **Partition spatially.** Start with deterministic 512-pixel tiles and five folds. Exclude a 30-pixel collar around held-out tiles from training labels (3 km); score only the held-out truth with a separate 3-pixel (300 m) metric-radius evaluation collar. If vector fault IDs are available, group whole fault systems and record how that changes fold membership. No random pixel split is a primary result.
-4. **Prevent feature/label leakage.** Fit normalization, feature selection, calibration, and thresholds on training folds only. Any labels used for pseudo-labels, dilation, or augmentation must be inside the train mask. Assert zero intersection between train-label and validation-truth masks.
-5. **Compare at fixed policy.** Score the reference and H1 on identical folds with exact DTI, fixed candidate/emission budget, and no tuning on validation folds. Report pooled DTI, per-fold DTI, prediction coverage, precision/recall diagnostics, and uncertainty. Score continuous values exactly as the published equation specifies.
-6. **Ablate physics.** Compare stress `lambda=0` vs. the preregistered positive `lambda`, then a spatially shuffled orientation field and a broad-uncertainty field. A nominal gain that survives only one fold or does not beat the shuffled control is not evidence for a stress mechanism.
-7. **Release gate.** Require positive pooled ΔDTI and improvement in at least 4 of 5 folds, no severe degradation in any fold, correct no-leak checks, complete source/hash records, and a full raster-format pass. If any condition fails or no run exists, do not spend a submission slot.
+## Preregistered spatial comparison
 
-## Metric implementation
+1. **Freeze and audit authorized inputs.** Record official source URLs, hashes, raster dimensions, CRS, transform, bounds, band tags/units/NoData, template validity mask, vector IDs, and preparation versions. Store raw inputs/outputs outside Git.
+2. **Prove the evaluator semantics.** Re-read the official metric/problem page and actual sample template. Implement the known-fault evaluation mask so it excludes existing mapped pixels while retaining held-out proxy truth. Test overlap and distance-support behavior on small analytic rasters. The present `spatial_cv.py` creates folds/collars but does **not yet** construct this competition-specific evaluation mask; do not use it alone to claim a valid proxy score.
+3. **Reproduce the organizer comparator.** Run the official reference solution (or an explicitly documented corrected reproduction) on the authorized files using the same outer spatial folds. Record any deviation, normalization leakage, or format behavior. Reference parameters must be tuned only inside training folds.
+4. **Partition spatially.** Default to deterministic contiguous 512-pixel tiles and five outer folds. Exclude at least a 30-pixel (3 km) collar around held-out tile/trace labels from training. Use the 3-pixel (300 m) metric-support collar when constructing each scoring domain so credit across tile boundaries is handled consistently. If fault IDs permit, group whole systems into outer folds and report the tile-based comparison as a sensitivity check. Do not call an individual 512-pixel tile a fault system.
+5. **Apply the official evaluation mask.** For each fold, define the held-out fault/system as proxy truth. Exclude other known catalogue fault pixels from scoring, following the staff answer. Retain eligible held-out truth pixels and their 300 m support. Report mask implementation and counts per fold. Do not drop a generic neighborhood around all catalogue faults unless an official rule or predeclared, separately tested rationale requires it.
+6. **Prevent leakage.** Fit feature scaling, imputation, feature selection, calibration, probability thresholds, stress interpolation/tuning, graph/line extraction and emission policy only within training folds. Labels used for augmentation/pseudo-labeling must be train-only. Assert zero overlap between train-label mask and held-out truth and verify train collars after rasterization.
+7. **Compare matched candidates.** Compare organizer reference, the best previously evaluated local candidate, and H1 on identical outer folds, score masks, continuous DTI implementation, and fixed prediction-mass/coverage policy. Report pooled DTI, every fold, paired fold/block deltas, candidate mass, coverage, precision/recall diagnostics, runtime, and uncertainty. No pixel-random CV and no post-hoc choice of a favorable emission budget.
+8. **Run physical ablations.** For H1 compare `lambda_stress=0`, the preregistered nonzero loss, spatially shuffled directions, and uncertainty/regime-masked directions. Also ablate the geophysical layer family. If the real WSM AOI screen fails, stop H1 before modeling rather than interpolate a field without observations.
 
-`src/gemsdoe36/metric.py` encodes the published DTI definition: each truth pixel receives the maximum nearby `p(x) k(d)` credit; false-positive mass is probability times one minus the maximum truth-proximity kernel; false-negative mass is one minus that per-truth credit. The kernel is triangular with a 300 m radius. Unit tests use analytic toy rasters; they do not validate performance on the contest AOI.
+## Promotion gate before spending a weekly slot
 
-## Release gates for an uploadable TIFF
+A candidate is eligible for consideration only if all conditions hold:
 
-- Must use the organizer's local sample template, not guessed dimensions or public competitor metadata.
-- Exact single-band float32 GeoTIFF; EPSG:32611; 100 m; same shape, bounds and transform as the template.
-- Finite predictions within [0, 1] in the template-valid region; `NaN`/null outside that region as specified by the official problem page.
-- Writer disables TIFF predictors for float data, writes atomically, reopens the bytes, verifies range/geometry/mask, and emits a SHA-256 manifest plus a short note.
-- A local PASS is not an organizer acceptance receipt. The prior `[0, 1]` rejection cannot be attributed to a specific encoding cause from this repository because the rejected file and sample template are absent.
-- **Current gate:** blocked. No official sample, no real score raster, no holdout winner; therefore no competitive TIFF is published or represented as ready to upload.
+- It uses this project's own code and authorized data with a complete source/hash record.
+- It beats the **best reproducible local spatial-holdout comparator** on the same folds and policy, with positive pooled \(\Delta\)DTI.
+- It improves on at least 4 of 5 outer folds, and a paired spatial-block uncertainty analysis does not show that the apparent gain is within noise. Report all fold scores; do not hide failures or compare unlike masks.
+- The gain survives the predeclared relevant ablations and is not a consequence of validation leakage, post-hoc threshold/emission tuning, or catalogue-mask errors.
+- The final full-grid raster passes the official template-based checks after rereading the final bytes; the unique name, note, manifest and AI disclosure are prepared.
+
+If folds are too few/too dependent to estimate uncertainty, no local-best comparison exists, the reference cannot be reproduced, or external coverage is inadequate, the decision is **NO SUBMISSION SLOT**. A public competitor score/projection does not open this gate.
+
+**Current gate:** closed. No real input, comparator, spatial holdout winner, or upload-ready TIFF exists.
+
+## Metric implementation and interpretation
+
+`src/gemsdoe36/metric.py` implements the public DTI equations locally: every truth pixel receives the maximum nearby probability multiplied by the triangular distance kernel; false-positive mass is probability times one minus the maximum truth-proximity kernel; false-negative mass is the remaining truth credit. The official constants are \(\alpha=0.2\), \(\beta=0.8\), and \(R=300\) m (3 pixels on the stated 100 m grid). Synthetic analytic tests verify implementation behavior only; they do not establish competition performance.
+
+An extra prediction is not automatically helpful because the metric weights false positives less heavily than false negatives; it still must add enough unique nearby truth credit relative to added probability mass. Do not convert this qualitative fact into an unmeasured DTI promise or a universal probability threshold.
+
+## Release and format gates
+
+- Use the authorized official sample template; never guess grid dimensions, footprint, bounds, transform, or mask.
+- Exact one-band float32 GeoTIFF, EPSG:32611, 100 m pixel vectors, matching shape/CRS/transform/bounds.
+- Reject non-finite and out-of-range [0,1] predictions within the sample-valid area; write NaN/null outside according to the explicit public format text and template mask.
+- Writer disables TIFF predictor for compatibility, writes to a temporary file, rereads/validates before publishing, and stores SHA-256, bytes, note, submission name and validation JSON.
+- **Format irregularity:** the official description says null/NaN outside; the organizer reference notebook's example writes the prediction array without an explicit NoData tag. The competition sample and actual portal response were not available here. Follow the explicit public format/sample, flag the discrepancy, and do not claim acceptance until confirmed.
+- A local `PASS` is not an organizer acceptance receipt. The reported historical `[0,1]` rejection cannot be diagnosed without the rejected bytes and sample template.

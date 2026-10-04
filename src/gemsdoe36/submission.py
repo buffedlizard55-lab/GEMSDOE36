@@ -4,8 +4,11 @@ from __future__ import annotations
 
 import hashlib
 import json
+import math
 import os
+import re
 import tempfile
+import uuid
 from dataclasses import asdict, dataclass
 from datetime import datetime, timezone
 from pathlib import Path
@@ -27,6 +30,7 @@ class ValidationReport:
     finite_in_bounds: int
     invalid_in_bounds: int
     finite_outside_bounds: int
+    infinite_outside_bounds: int
     minimum: float | None
     maximum: float | None
     nodata: float | str | None
@@ -68,8 +72,8 @@ def validate_submission(
 
     The valid region comes only from the sample/template raster, never from feature-band
     NoData.  Values must be finite and within [0, 1] inside that region.  By default,
-    cells outside the template's valid region must be non-finite (the published format
-    calls for null/NaN outside the data bounds).  A local PASS is not platform acceptance.
+    cells outside the template's valid region must be NaN/null by default; infinity is
+    rejected because it is not a null value. A local PASS is not platform acceptance.
     """
     sub_path, tmpl_path = Path(submission_path), Path(template_path)
     errors: list[str] = []
@@ -88,7 +92,8 @@ def validate_submission(
             errors.append(f"expected float32, found {sub.dtypes[0]}")
         if sub.crs is None or sub.crs.to_string() != expected_crs:
             errors.append(f"expected {expected_crs}, found {sub.crs}")
-        xres, yres = abs(sub.transform.a), abs(sub.transform.e)
+        xres = math.hypot(sub.transform.a, sub.transform.d)
+        yres = math.hypot(sub.transform.b, sub.transform.e)
         if not (
             np.isclose(xres, expected_resolution_m) and np.isclose(yres, expected_resolution_m)
         ):
@@ -121,6 +126,9 @@ def validate_submission(
             errors.append("template has no finite prediction values inside its valid region")
 
         finite_outside = int(np.isfinite(outside_values).sum())
+        infinite_outside = int(np.isinf(outside_values).sum())
+        if infinite_outside:
+            errors.append(f"{infinite_outside} infinite values outside the template bounds")
         if require_nonfinite_outside and finite_outside:
             # The official page requires null/NaN outside bounds; fail closed.
             errors.append(f"{finite_outside} finite values outside the template bounds")
@@ -137,6 +145,7 @@ def validate_submission(
             finite_in_bounds=int(finite_inside.sum()),
             invalid_in_bounds=invalid_inside,
             finite_outside_bounds=finite_outside,
+            infinite_outside_bounds=infinite_outside,
             minimum=minimum,
             maximum=maximum,
             nodata=(None if nodata is None else (float(nodata) if np.isfinite(nodata) else "NaN")),
@@ -153,6 +162,7 @@ def write_submission(
     output_path: str | Path,
     *,
     note: str = "",
+    submission_name: str | None = None,
     manifest_path: str | Path | None = None,
 ) -> ValidationReport:
     """Write scores on the exact template grid, reread, validate, and atomically publish.
@@ -222,11 +232,14 @@ def write_submission(
         try:
             with rasterio.open(temp_path, "w", **profile) as dst:
                 dst.write(export, 1)
-                dst.update_tags(
-                    AREA_OR_POINT="Area",
-                    GEMS36_NOTE=note[:4000],
-                    GEMS36_WRITER="gemsdoe36.submission.write_submission",
-                )
+                tags = {
+                    "AREA_OR_POINT": "Area",
+                    "GEMS36_NOTE": note[:4000],
+                    "GEMS36_WRITER": "gemsdoe36.submission.write_submission",
+                }
+                if submission_name is not None:
+                    tags["GEMS36_SUBMISSION_NAME"] = submission_name[:256]
+                dst.update_tags(**tags)
             # Read-back from disk before atomic publish.
             report = validate_submission(temp_path, template_path)
             if not report.passed:
@@ -256,6 +269,7 @@ def write_submission(
             "bytes": output.stat().st_size,
             "created_utc": datetime.now(timezone.utc).isoformat(),
             "validation": report.to_dict(),
+            "submission_name": submission_name,
             "note": note,
             "limitations": [
                 "A local format pass is not proof of acceptance by the competition platform.",
@@ -285,8 +299,20 @@ def write_submission(
 
 
 def unique_submission_name(scores: np.ndarray, *, prefix: str = "GEMS36_candidate") -> str:
-    """Create a traceable UTC filename from the prediction bytes and current time."""
+    """Return a collision-resistant, traceable UTC filename for one score grid.
+
+    The digest includes array shape as well as canonical float32 bytes. A random suffix and
+    microsecond-resolution timestamp ensure that two builds of the same grid remain distinct.
+    Existing files are still never overwritten by :func:`write_submission`.
+    """
     array = np.ascontiguousarray(np.asarray(scores, dtype=np.float32))
-    digest = hashlib.sha256(array.tobytes()).hexdigest()[:8]
-    timestamp = datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%SZ")
-    return f"{prefix}_{timestamp}_{digest}.tif"
+    if array.ndim != 2:
+        raise ValueError("scores must be a two-dimensional array")
+    slug = re.sub(r"[^A-Za-z0-9_-]+", "-", prefix).strip("-_")[:48]
+    if not slug:
+        raise ValueError("prefix must contain at least one filename-safe character")
+    fingerprint = f"{array.shape[0]}x{array.shape[1]}:float32:".encode("ascii") + array.tobytes()
+    digest = hashlib.sha256(fingerprint).hexdigest()[:10]
+    timestamp = datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%S.%fZ")
+    unique_suffix = uuid.uuid4().hex[:8]
+    return f"{slug}_{timestamp}_{digest}_{unique_suffix}.tif"

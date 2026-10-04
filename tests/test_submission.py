@@ -3,7 +3,11 @@ import pytest
 import rasterio
 from affine import Affine
 
-from gemsdoe36.submission import validate_submission, write_submission
+from gemsdoe36.submission import (
+    unique_submission_name,
+    validate_submission,
+    write_submission,
+)
 
 
 def _write_template(path):
@@ -32,7 +36,12 @@ def test_writer_round_trip_matches_template_range_and_mask(tmp_path):
     scores[4:6, 4] = 1.0
     scores[6:8, 5] = 0.25
     report = write_submission(
-        scores, template, output, note="synthetic unit-test raster", manifest_path=manifest
+        scores,
+        template,
+        output,
+        note="synthetic unit-test raster",
+        submission_name="GEMS36-test-run",
+        manifest_path=manifest,
     )
     assert report.passed
     assert report.template_match
@@ -46,6 +55,7 @@ def test_writer_round_trip_matches_template_range_and_mask(tmp_path):
 
     manifest_data = json.loads(manifest.read_text(encoding="utf-8"))
     assert manifest_data["validation"]["nodata"] == "NaN"
+    assert manifest_data["submission_name"] == "GEMS36-test-run"
     with rasterio.open(output) as ds:
         arr = ds.read(1)
         assert ds.nodata is not None and np.isnan(ds.nodata)
@@ -144,3 +154,42 @@ def test_writer_rejects_manifest_path_collisions(tmp_path):
     scores = np.zeros((12, 10), dtype=np.float32)
     with pytest.raises(ValueError, match="manifest_path must not overwrite"):
         write_submission(scores, template, tmp_path / "candidate.tif", manifest_path=template)
+
+
+def test_validator_rejects_infinite_values_outside_template_bounds(tmp_path):
+    template = tmp_path / "template.tif"
+    candidate = tmp_path / "infinite_outside.tif"
+    _write_template(template)
+    profile = {
+        "driver": "GTiff",
+        "height": 12,
+        "width": 10,
+        "count": 1,
+        "dtype": "float32",
+        "crs": "EPSG:32611",
+        "transform": Affine(100, 0, 300000, 0, -100, 4300000),
+        "nodata": np.nan,
+    }
+    arr = np.zeros((12, 10), dtype=np.float32)
+    arr[:2, :] = np.nan
+    arr[0, 0] = np.inf
+    with rasterio.open(candidate, "w", **profile) as dst:
+        dst.write(arr, 1)
+    report = validate_submission(candidate, template)
+    assert not report.passed
+    assert report.infinite_outside_bounds == 1
+    assert any("infinite values outside" in error for error in report.errors)
+
+
+def test_unique_submission_names_are_sanitized_and_collision_resistant():
+    scores = np.zeros((2, 3), dtype=np.float32)
+    first = unique_submission_name(scores, prefix="GEMS36 H1 / run")
+    second = unique_submission_name(scores, prefix="GEMS36 H1 / run")
+    assert first != second
+    assert first.startswith("GEMS36-H1-run_")
+    assert first.endswith(".tif")
+    assert "/" not in first and " " not in first
+    with pytest.raises(ValueError, match="filename-safe"):
+        unique_submission_name(scores, prefix=" / ")
+    with pytest.raises(ValueError, match="two-dimensional"):
+        unique_submission_name(np.zeros((1, 2, 3)))
