@@ -4,6 +4,9 @@
 /data/derived/
 /data/external/
 /data/study/
+/data/scored/
+/data/raw_parts/
+.cache/
 /outputs/
 /models/
 /checkpoints/
@@ -14,15 +17,17 @@
 *.npz
 *.tif
 *.tiff
-# Tiny synthetic fixture used only to verify site download and GeoTIFF handling.
-!/docs/downloads/GEMS36_FORMAT_TEST_NOT_SUBMISSION.tif
-# Gate-passed H6 competition candidate (24,881 dots, validated on the exact
-# template grid). This is the single upload-ready file for both rounds.
-!/docs/downloads/GEMS36_h6_offcatalog_network_prior_20261004T193432.021282Z_3276c04090_3c064db2.tif
+# Audited submission deliverables in docs/downloads — all tracked:
+# the gate-passed H6 candidate (the unique upload-ready file for both
+# rounds), the QA format fixture, and main's Anderson-PINN outputs.
+!/docs/downloads/*.tif
+!/docs/downloads/*.zip
+!/docs/downloads/*.json
 *.aux.xml
 *.msi
 *.ovr
 *.partial
+*.assembling
 *.tmp
 
 # Python

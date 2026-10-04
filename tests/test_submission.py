@@ -1,3 +1,5 @@
+from pathlib import Path
+
 import numpy as np
 import pytest
 import rasterio
@@ -7,6 +9,7 @@ from gemsdoe36.submission import (
     unique_submission_name,
     validate_submission,
     write_submission,
+    write_submission_bundle,
 )
 
 
@@ -61,6 +64,45 @@ def test_writer_round_trip_matches_template_range_and_mask(tmp_path):
         assert ds.nodata is not None and np.isnan(ds.nodata)
         assert np.isnan(arr[:2]).all()
         assert np.isfinite(arr[2:]).all()
+
+
+def test_writer_zeros_mode_all_finite(tmp_path):
+    template = tmp_path / "template.tif"
+    output = tmp_path / "candidate_zeros.tif"
+    _write_template(template)
+    scores = np.zeros((12, 10), dtype=np.float32)
+    scores[4, 4] = 1.0
+    report = write_submission(scores, template, output, mode="zeros")
+    assert report.passed
+    with rasterio.open(output) as ds:
+        arr = ds.read(1)
+        assert ds.nodata is None
+        assert np.isfinite(arr).all()
+        assert np.all((arr >= 0.0) & (arr <= 1.0))
+
+
+def test_write_submission_bundle_emits_all_artifacts(tmp_path):
+    template = tmp_path / "template.tif"
+    out_dir = tmp_path / "bundle_out"
+    _write_template(template)
+    scores = np.zeros((12, 10), dtype=np.float32)
+    scores[4, 4] = 1.0
+    bundle = write_submission_bundle(
+        scores,
+        template,
+        out_dir,
+        prefix="test-bundle",
+        timestamp_tag="20261004T000000Z",
+        submission_name="Test-Bundle-Run",
+        note="A short note for test bundle",
+    )
+    assert bundle["emitted_positive_pixels"] == 1
+    zeros_path = Path(bundle["zeros_tif"]["path"])
+    nan_path = Path(bundle["nan_tif"]["path"])
+    zip_path = Path(bundle["zip_archive"]["path"])
+    assert zeros_path.is_file()
+    assert nan_path.is_file()
+    assert zip_path.is_file()
 
 
 def test_validator_rejects_range_error(tmp_path):
