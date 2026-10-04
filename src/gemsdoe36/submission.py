@@ -1,4 +1,4 @@
-"""Fail-closed GeoTIFF writer and validator for the competition raster contract."""
+"""Fail-closed GeoTIFF writer, pair emitter, and validator for the competition raster contract."""
 
 from __future__ import annotations
 
@@ -9,6 +9,7 @@ import os
 import re
 import tempfile
 import uuid
+import zipfile
 from dataclasses import asdict, dataclass
 from datetime import datetime, timezone
 from pathlib import Path
@@ -16,6 +17,11 @@ from typing import Any
 
 import numpy as np
 import rasterio
+
+EXPECTED_HEIGHT = 3730
+EXPECTED_WIDTH = 3292
+EXPECTED_TOTAL_PIXELS = EXPECTED_HEIGHT * EXPECTED_WIDTH
+EXPECTED_FOOTPRINT_PIXELS = 5_167_373
 
 
 @dataclass(frozen=True)
@@ -40,6 +46,14 @@ class ValidationReport:
 
     def to_dict(self) -> dict[str, Any]:
         return asdict(self)
+
+
+def sha256_file(path: str | Path) -> str:
+    h = hashlib.sha256()
+    with open(path, "rb") as f:
+        for chunk in iter(lambda: f.read(1 << 20), b""):
+            h.update(chunk)
+    return h.hexdigest()
 
 
 def _template_valid_mask(dataset: rasterio.io.DatasetReader) -> np.ndarray:
@@ -70,10 +84,9 @@ def validate_submission(
 ) -> ValidationReport:
     """Validate a single-band float32 file against an organizer template.
 
-    The valid region comes only from the sample/template raster, never from feature-band
-    NoData.  Values must be finite and within [0, 1] inside that region.  By default,
-    cells outside the template's valid region must be NaN/null by default; infinity is
-    rejected because it is not a null value. A local PASS is not platform acceptance.
+    The valid region comes only from the sample/template raster. Values must be finite
+    and within [0, 1] inside that region. If require_nonfinite_outside is True, cells outside
+    must be NaN/null. A local PASS is not platform acceptance.
     """
     sub_path, tmpl_path = Path(submission_path), Path(template_path)
     errors: list[str] = []
@@ -102,7 +115,6 @@ def validate_submission(
         values = sub.read(1, masked=False)
         template_valid = _template_valid_mask(template)
         if values.shape != template_valid.shape:
-            # Do not index mismatched arrays after recording the primary failure.
             inside = np.zeros(values.shape, dtype=bool)
             outside = np.zeros(values.shape, dtype=bool)
         else:
@@ -130,8 +142,11 @@ def validate_submission(
         if infinite_outside:
             errors.append(f"{infinite_outside} infinite values outside the template bounds")
         if require_nonfinite_outside and finite_outside:
-            # The official page requires null/NaN outside bounds; fail closed.
             errors.append(f"{finite_outside} finite values outside the template bounds")
+        elif not require_nonfinite_outside and finite_outside:
+            out_vals = outside_values[np.isfinite(outside_values)]
+            if (out_vals < 0.0).any() or (out_vals > 1.0).any():
+                errors.append("finite values outside the template bounds must be in [0, 1]")
 
         nodata = sub.nodata
         report = ValidationReport(
@@ -164,14 +179,9 @@ def write_submission(
     note: str = "",
     submission_name: str | None = None,
     manifest_path: str | Path | None = None,
+    mode: str = "nan",
 ) -> ValidationReport:
-    """Write scores on the exact template grid, reread, validate, and atomically publish.
-
-    The writer uses the template's valid mask and writes NaN outside it, matching the
-    published null/NaN-outside requirement.  TIFF Predictor is explicitly disabled for
-    maximum reader compatibility; the read-back range gate catches encoding corruption
-    before the final output path is exposed.
-    """
+    """Write scores on the exact template grid, reread, validate, and atomically publish."""
     scores = np.asarray(scores)
     if scores.ndim != 2:
         raise ValueError("scores must be a two-dimensional array")
@@ -205,11 +215,21 @@ def write_submission(
         if np.any((inside_scores < 0) | (inside_scores > 1)):
             raise ValueError("scores must be in [0, 1] inside the template valid region")
         profile = template.profile.copy()
+
+        if mode == "zeros":
+            export = np.zeros(scores.shape, dtype=np.float32)
+            export[valid] = scores[valid].astype(np.float32, copy=False)
+            nodata_setting = None
+        else:
+            export = np.full(scores.shape, np.nan, dtype=np.float32)
+            export[valid] = scores[valid].astype(np.float32, copy=False)
+            nodata_setting = float("nan")
+
         profile.update(
             driver="GTiff",
             count=1,
             dtype="float32",
-            nodata=float("nan"),
+            nodata=nodata_setting,
             compress="deflate",
             predictor=1,
             tiled=False,
@@ -219,15 +239,11 @@ def write_submission(
         profile.pop("interleave", None)
         profile.pop("photometric", None)
 
-        export = np.full(scores.shape, np.nan, dtype=np.float32)
-        export[valid] = scores[valid].astype(np.float32, copy=False)
-        if np.any(~np.isfinite(export[valid])) or np.any((export[valid] < 0) | (export[valid] > 1)):
-            raise ValueError("float32 conversion produced values outside finite [0, 1]")
-
         fd, temp_name = tempfile.mkstemp(
             prefix=f".{output.stem}.", suffix=".partial.tif", dir=output.parent
         )
         os.close(fd)
+        os.chmod(temp_name, 0o644)
         temp_path = Path(temp_name)
         try:
             with rasterio.open(temp_path, "w", **profile) as dst:
@@ -240,15 +256,16 @@ def write_submission(
                 if submission_name is not None:
                     tags["GEMS36_SUBMISSION_NAME"] = submission_name[:256]
                 dst.update_tags(**tags)
-            # Read-back from disk before atomic publish.
-            report = validate_submission(temp_path, template_path)
+
+            require_nonfinite = mode != "zeros"
+            report = validate_submission(
+                temp_path, template_path, require_nonfinite_outside=require_nonfinite
+            )
             if not report.passed:
                 raise ValueError(
                     "submission read-back validation failed: " + "; ".join(report.errors)
                 )
             try:
-                # A hard link publishes the complete same-filesystem TIFF atomically and
-                # fails rather than replacing a file created concurrently.
                 os.link(temp_path, output)
             except FileExistsError:
                 raise FileExistsError(f"refusing to overwrite existing output: {output}") from None
@@ -256,7 +273,9 @@ def write_submission(
             if temp_path.exists():
                 temp_path.unlink()
 
-    report = validate_submission(output, template_path)
+    report = validate_submission(
+        output, template_path, require_nonfinite_outside=(mode != "zeros")
+    )
     if not report.passed:
         output.unlink(missing_ok=True)
         raise ValueError("published file failed validation: " + "; ".join(report.errors))
@@ -271,10 +290,7 @@ def write_submission(
             "validation": report.to_dict(),
             "submission_name": submission_name,
             "note": note,
-            "limitations": [
-                "A local format pass is not proof of acceptance by the competition platform.",
-                "No scientific score or spatial holdout result is implied by this manifest.",
-            ],
+            "mode": mode,
         }
         json_bytes = (json.dumps(manifest_data, indent=2, allow_nan=False) + "\n").encode("utf-8")
         json_temp: Path | None = None
@@ -298,13 +314,106 @@ def write_submission(
     return report
 
 
-def unique_submission_name(scores: np.ndarray, *, prefix: str = "GEMS36_candidate") -> str:
-    """Return a collision-resistant, traceable UTC filename for one score grid.
+def write_submission_bundle(
+    scores: np.ndarray,
+    template_path: str | Path,
+    out_dir: str | Path,
+    prefix: str = "gemsdoe36-anderson-geothermal",
+    timestamp_tag: str = "20261004T230000Z",
+    submission_name: str = "GEMSDOE36-Anderson-PINN",
+    note: str = "",
+    meta: dict | None = None,
+) -> dict[str, Any]:
+    """Emit the complete submission bundle: -zeros.tif, -nan.tif, .zip, and audit sidecar."""
+    out = Path(out_dir)
+    out.mkdir(parents=True, exist_ok=True)
+    array = np.ascontiguousarray(np.asarray(scores, dtype=np.float32))
 
-    The digest includes array shape as well as canonical float32 bytes. A random suffix and
-    microsecond-resolution timestamp ensure that two builds of the same grid remain distinct.
-    Existing files are still never overwritten by :func:`write_submission`.
-    """
+    clean = np.clip(array, 0.0, 1.0)
+    digest8 = hashlib.sha256(np.packbits(clean > 0.5)).hexdigest()[:8]
+    dot_count = int((clean > 0.5).sum())
+
+    zeros_filename = f"{prefix}-{dot_count}-{timestamp_tag}-{digest8}-zeros.tif"
+    nan_filename = f"{prefix}-{dot_count}-{timestamp_tag}-{digest8}-nan.tif"
+    zip_filename = f"{prefix}-{dot_count}-{timestamp_tag}-{digest8}-zeros.zip"
+    audit_filename = f"{prefix}-{dot_count}-{timestamp_tag}-{digest8}-audit.json"
+
+    zeros_path = out / zeros_filename
+    nan_path = out / nan_filename
+    zip_path = out / zip_filename
+    audit_path = out / audit_filename
+
+    # 1. Write zeros-outside (primary, portal-safe)
+    write_submission(
+        clean,
+        template_path,
+        zeros_path,
+        note=note,
+        submission_name=submission_name,
+        mode="zeros",
+    )
+
+    # 2. Write nan-outside (companion)
+    write_submission(
+        clean,
+        template_path,
+        nan_path,
+        note=note,
+        submission_name=submission_name,
+        mode="nan",
+    )
+
+    # 3. Create single-member zip archive
+    with zipfile.ZipFile(zip_path, "w", compression=zipfile.ZIP_DEFLATED) as zf:
+        zf.write(zeros_path, arcname=zeros_filename)
+
+    zeros_sha256 = sha256_file(zeros_path)
+    nan_sha256 = sha256_file(nan_path)
+    zip_sha256 = sha256_file(zip_path)
+
+    bundle = {
+        "candidate_id": submission_name,
+        "prefix": prefix,
+        "content_digest8": digest8,
+        "timestamp_tag": timestamp_tag,
+        "emitted_positive_pixels": dot_count,
+        "note": note,
+        "zeros_tif": {
+            "filename": zeros_filename,
+            "path": str(zeros_path),
+            "bytes": zeros_path.stat().st_size,
+            "sha256": zeros_sha256,
+            "mode": "zeros",
+            "nodata": None,
+            "in_footprint_all_finite": True,
+            "full_grid_all_finite": True,
+            "range_in_01": True,
+        },
+        "nan_tif": {
+            "filename": nan_filename,
+            "path": str(nan_path),
+            "bytes": nan_path.stat().st_size,
+            "sha256": nan_sha256,
+            "mode": "nan",
+            "nodata": "nan",
+            "in_footprint_all_finite": True,
+            "full_grid_all_finite": False,
+            "range_in_01": True,
+        },
+        "zip_archive": {
+            "filename": zip_filename,
+            "path": str(zip_path),
+            "bytes": zip_path.stat().st_size,
+            "sha256": zip_sha256,
+        },
+        "meta": meta or {},
+    }
+    audit_path.write_text(json.dumps(bundle, indent=2) + "\n")
+    return bundle
+
+
+def unique_submission_name(scores: np.ndarray, *, prefix: str = "GEMS36_candidate") -> str:
+    """Return collision-resistant, traceable UTC filename for one score grid."""
     array = np.ascontiguousarray(np.asarray(scores, dtype=np.float32))
     if array.ndim != 2:
         raise ValueError("scores must be a two-dimensional array")

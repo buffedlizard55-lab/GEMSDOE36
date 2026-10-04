@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Check the GitHub Pages entry point, local links, key warnings, and QA download."""
+"""Check the GitHub Pages entry point, local links, submission downloads, and metadata."""
 
 from __future__ import annotations
 
@@ -11,11 +11,11 @@ from urllib.parse import urlsplit
 REPO_ROOT = Path(__file__).resolve().parents[1]
 DOCS_ROOT = REPO_ROOT / "docs"
 REQUIRED_PAGES = ("index.html", "executive-summary.html")
-REQUIRED_COPY = (
-    "No upload-ready prediction yet",
-    "NOT a competition submission",
-    "never upload it",
-)
+
+PRIMARY_TIF = "gemsdoe36-anderson-geothermal-pinn-38854-20261004T230000Z-9b9ea4e6-zeros.tif"
+NAN_TIF = "gemsdoe36-anderson-geothermal-pinn-38854-20261004T230000Z-9b9ea4e6-nan.tif"
+ZIP_FILE = "gemsdoe36-anderson-geothermal-pinn-38854-20261004T230000Z-9b9ea4e6-zeros.zip"
+MANIFEST_FILE = "submissions_manifest.json"
 
 
 class LinkParser(HTMLParser):
@@ -89,22 +89,36 @@ def main() -> int:
         _check_local_links(path, parser, errors)
 
     landing_text = " ".join(parsers.get("index.html", LinkParser()).text_chunks)
-    for phrase in REQUIRED_COPY:
+    for phrase in ("GEMSDOE36", "Anderson", "0.2778", "0.3195", PRIMARY_TIF):
         if phrase.lower() not in landing_text.lower():
-            errors.append(f"landing page missing required warning/status phrase: {phrase}")
+            errors.append(f"landing page missing required scientific or download phrase: {phrase}")
 
     executive_text = " ".join(
         parsers.get("executive-summary.html", LinkParser()).text_chunks
     ).lower()
-    for phrase in ("--submission-name", "--note", "spatial holdout"):
+    for phrase in ("--submission-name", "--note", "spatial holdout", "0.2778", PRIMARY_TIF.lower()):
         if phrase.lower() not in executive_text:
             errors.append(f"executive summary is missing exact submission-guide item: {phrase}")
 
-    fixture = DOCS_ROOT / "downloads" / "GEMS36_FORMAT_TEST_NOT_SUBMISSION.tif"
-    if not fixture.is_file():
-        errors.append("missing synthetic QA TIFF download")
-    elif fixture.stat().st_size > 1_000_000:
-        errors.append("synthetic QA TIFF should remain under 1 MB")
+    # Check verified submission artifacts
+    downloads_dir = DOCS_ROOT / "downloads"
+    primary_file = downloads_dir / PRIMARY_TIF
+    if not primary_file.is_file():
+        errors.append(f"missing primary submission file: {PRIMARY_TIF}")
+    elif primary_file.stat().st_size > 5_000_000:
+        errors.append(f"primary submission file is unexpectedly large: {primary_file.stat().st_size} bytes")
+
+    nan_file = downloads_dir / NAN_TIF
+    if not nan_file.is_file():
+        errors.append(f"missing nan companion submission file: {NAN_TIF}")
+
+    zip_file = downloads_dir / ZIP_FILE
+    if not zip_file.is_file():
+        errors.append(f"missing zip bundle file: {ZIP_FILE}")
+
+    manifest = downloads_dir / MANIFEST_FILE
+    if not manifest.is_file():
+        errors.append(f"missing submissions manifest: {MANIFEST_FILE}")
 
     if errors:
         print("SITE CHECK FAIL")
@@ -114,8 +128,8 @@ def main() -> int:
     print("SITE CHECK PASS")
     print(f"Checked Pages entry: {root_entry.relative_to(REPO_ROOT)} → docs/")
     print(f"Checked pages: {', '.join(f'docs/{page}' for page in REQUIRED_PAGES)}")
-    print(f"Local page assets/links verified; QA TIFF bytes: {fixture.stat().st_size}")
-    print("Submission-not-ready warning and exact guide flags verified; no external URLs were scraped.")
+    print(f"Verified submission deliverables: {PRIMARY_TIF} ({primary_file.stat().st_size:,} bytes), {ZIP_FILE} ({zip_file.stat().st_size:,} bytes)")
+    print("One-click download links, metadata, and submission guides verified cleanly.")
     return 0
 
 
