@@ -2,6 +2,10 @@
 /data/raw/
 /data/processed/
 /data/derived/
+/data/external/
+/data/scored/
+/data/raw_parts/
+.cache/
 /outputs/
 /models/
 /checkpoints/
@@ -12,12 +16,15 @@
 *.npz
 *.tif
 *.tiff
-# Tiny synthetic fixture used only to verify site download and GeoTIFF handling.
-!/docs/downloads/GEMS36_FORMAT_TEST_NOT_SUBMISSION.tif
+# Audited submission deliverables in docs/downloads
+!/docs/downloads/*.tif
+!/docs/downloads/*.zip
+!/docs/downloads/*.json
 *.aux.xml
 *.msi
 *.ovr
 *.partial
+*.assembling
 *.tmp
 
 # Python

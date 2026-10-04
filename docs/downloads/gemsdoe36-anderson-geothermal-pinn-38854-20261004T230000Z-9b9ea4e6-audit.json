@@ -1,0 +1,54 @@
+{
+  "candidate_id": "GEMSDOE36-Anderson-PINN-MultiPhysics-20261004",
+  "prefix": "gemsdoe36-anderson-geothermal-pinn",
+  "content_digest8": "9b9ea4e6",
+  "timestamp_tag": "20261004T230000Z",
+  "emitted_positive_pixels": 38854,
+  "note": "GEMSDOE36 Anderson PINN | H36-1/3 GDR geotherm conduit + B=2 catalogue-flank prune: 38,854 dots; 0 on-cat; LM holdout 0.2699 (+0.0020 vs 0.2778 base, 1/4 quads); projected 0.2798",
+  "zeros_tif": {
+    "filename": "gemsdoe36-anderson-geothermal-pinn-38854-20261004T230000Z-9b9ea4e6-zeros.tif",
+    "path": "/home/user/GEMSDOE36/docs/downloads/gemsdoe36-anderson-geothermal-pinn-38854-20261004T230000Z-9b9ea4e6-zeros.tif",
+    "bytes": 318190,
+    "sha256": "e15891020b9c57056ac7fa874a5e506fbd6ed9314a4ea8e73af0753887a3708a",
+    "mode": "zeros",
+    "nodata": null,
+    "in_footprint_all_finite": true,
+    "full_grid_all_finite": true,
+    "range_in_01": true
+  },
+  "nan_tif": {
+    "filename": "gemsdoe36-anderson-geothermal-pinn-38854-20261004T230000Z-9b9ea4e6-nan.tif",
+    "path": "/home/user/GEMSDOE36/docs/downloads/gemsdoe36-anderson-geothermal-pinn-38854-20261004T230000Z-9b9ea4e6-nan.tif",
+    "bytes": 371126,
+    "sha256": "96d451d5ffc819fc3834052f22ab66190621f206c0bf8990446082a3363dc2ef",
+    "mode": "nan",
+    "nodata": "nan",
+    "in_footprint_all_finite": true,
+    "full_grid_all_finite": false,
+    "range_in_01": true
+  },
+  "zip_archive": {
+    "filename": "gemsdoe36-anderson-geothermal-pinn-38854-20261004T230000Z-9b9ea4e6-zeros.zip",
+    "path": "/home/user/GEMSDOE36/docs/downloads/gemsdoe36-anderson-geothermal-pinn-38854-20261004T230000Z-9b9ea4e6-zeros.zip",
+    "bytes": 212252,
+    "sha256": "ab44d481b23b65556adff0eecfcfad7b8eb21e9008f2bc1f9f2f35c03a5825e8"
+  },
+  "meta": {
+    "candidate_id": "GEMSDOE36-LEAD-PINN",
+    "hypothesis": "H36-PINN-Lead",
+    "description": "GEMSDOE36 Multi-Physics Anderson PINN: B=2 base + Anderson-consistent geothermal & step-over conduits (38,854 dots)",
+    "emitted_dots": 38854,
+    "on_catalogue_dots": 0,
+    "lm_calibrated_mean": 0.2699079014319995,
+    "lm_per_fold": {
+      "foldNW": 0.17699779396397708,
+      "foldNE": 0.42234235300524403,
+      "foldSW": 0.22497167953959424,
+      "foldSE": 0.25531977921918264
+    },
+    "margin_vs_base": 0.0019873698629583325,
+    "folds_beat_base": 1,
+    "projected_live_score": 0.2797873698629583,
+    "slot_eligible": false
+  }
+}
