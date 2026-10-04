@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Executive summary and step-by-step GEMS DOE competition submission guide for GEMSDOE36.">
+  <title>Executive Summary &amp; Submission Guide — GEMS DOE 36</title>
+  <link rel="stylesheet" href="assets/site.css">
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to main content</a>
+  <header class="site-header">
+    <a class="brand" href="index.html"><span class="brand-mark" aria-hidden="true">36</span><span>GEMS DOE <span class="small">/ 36</span></span></a>
+    <nav class="nav" aria-label="Main navigation">
+      <a href="index.html">Home</a>
+      <a href="research/hypotheses.md">Hypotheses</a>
+      <a href="research/sources.md">Sources</a>
+      <a href="https://www.drivendata.org/competitions/306/competition-doe-gems/" target="_blank" rel="noopener">Competition page ↗</a>
+    </nav>
+  </header>
+
+  <main id="main" class="wrap">
+    <section class="page-hero">
+      <div class="eyebrow">Executive summary · submission guide</div>
+      <h1>One workflow.<br>One honest submission.</h1>
+      <p class="lede">This page gives the competition objective, the current data gate, and the exact path to a locally validated GeoTIFF. At present, there is no real candidate to upload.</p>
+    </section>
+
+    <section class="download-strip" aria-label="Submission download status">
+      <div>
+        <strong>Submission download: withheld until scientific and format gates pass.</strong>
+        <p>The adjacent file is a small synthetic QA fixture. It is not on the official grid and must not be submitted. No training raster, label raster, sample template, or holdout score is available in this workspace.</p>
+      </div>
+      <a class="button warning" href="downloads/GEMS36_FORMAT_TEST_NOT_SUBMISSION.tif" download>Download QA-only TIFF</a>
+    </section>
+
+    <section class="section" aria-labelledby="summary-title">
+      <div class="section-head">
+        <div><div class="eyebrow">Brief</div><h2 id="summary-title">What the challenge asks.</h2></div>
+        <p>Predict geological faults across the GeoDAWN region as a one-band confidence raster. The target is newly identified, potentially off-catalogue fault geometry—not heat-flow favorability by itself.</p>
+      </div>
+      <div class="grid cols-2">
+        <article class="card"><span class="card-kicker">Scoring</span><h3>Distance-weighted Tversky</h3><p>The official problem page specifies &alpha; = 0.2, &beta; = 0.8, and a triangular kernel with 300 m support. Per-truth-pixel maximum credit means nearby redundant predictions can add false-positive mass without adding true-positive credit.</p></article>
+        <article class="card"><span class="card-kicker">Selected research lead</span><h3>Stress-constrained lineaments</h3><p>Combine multiscale geophysical structure with a locally uncertain stress-orientation penalty <em>inside</em> the differentiable training objective. The implementation is unit-tested on synthetic arrays only; no real-data benefit is measured.</p></article>
+      </div>
+    </section>
+
+    <section class="section" aria-labelledby="status-title">
+      <div class="section-head">
+        <div><div class="eyebrow">Read this before any upload</div><h2 id="status-title">Current readiness: blocked.</h2></div>
+        <p>The data page redirects to login in this environment. We have not attempted to bypass it or use a participant mirror.</p>
+      </div>
+      <div class="callout warning">
+        <strong>Do not upload the QA fixture or a guessed zero raster.</strong>
+        <p>It does not share verified official bounds/shape/mask, contains no trained prediction, and has no spatial holdout result.</p>
+      </div>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Gate</th><th>Required evidence</th><th>Current state</th></tr></thead>
+          <tbody>
+            <tr><td>Official data</td><td>Training features, labels, official sample template; record file hashes and metadata.</td><td><strong>Blocked:</strong> login-gated files are absent.</td></tr>
+            <tr><td>Hypothesis test</td><td>Matched baseline + predeclared spatial folds, same emission budget, stress ablations.</td><td><strong>Not run:</strong> no data or real DTI results.</td></tr>
+            <tr><td>Prediction</td><td>Own method; no copied historical prediction; reproducible code and provenance.</td><td><strong>Not generated.</strong></td></tr>
+            <tr><td>GeoTIFF gate</td><td>Exact template grid; single-band float32; EPSG:32611; 100 m; valid in-bounds values [0,1]; null/NaN outside; reread and hash.</td><td><strong>Scaffold only:</strong> synthetic tests pass only after the final QA run.</td></tr>
+            <tr><td>Platform / score</td><td>Manual upload receipt and platform response, if the participant chooses to submit.</td><td><strong>No submission made.</strong></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="section" aria-labelledby="steps-title">
+      <div class="section-head">
+        <div><div class="eyebrow">Submission steps</div><h2 id="steps-title">The safe path from data to upload.</h2></div>
+        <p>Follow in order. The model and file download are withheld until the validation result is real.</p>
+      </div>
+      <ol class="steps">
+        <li><div><h3>Enroll and obtain official files</h3><p>Use the <a href="https://www.drivendata.org/competitions/306/competition-doe-gems/data/" target="_blank" rel="noopener">official data page</a> after accepting the rules. Place files locally under <code>data/raw/</code>. Do not paste credentials into the repository or share them with an assistant.</p></div></li>
+        <li><div><h3>Audit geometry and NoData</h3><p>Run <code>python scripts/audit_inputs.py --features data/raw/training_features.tif --labels data/raw/labels.tif --template data/raw/sample_submission.tif</code>. Confirm the authorized template is the source of the output mask—not feature-band nodata.</p></div></li>
+        <li><div><h3>Run the reference and spatial holdout</h3><p>Read <a href="research/validation-plan.md">the preregistered validation plan</a>. Compare H1 to the organizer reference using contiguous spatial folds, train collars, exact DTI, fixed emission budget, and stress ablations. Do not use random pixel splits as the main result.</p></div></li>
+        <li><div><h3>Build from your own score array</h3><p>Save the chosen full-grid score field as a 2-D NumPy <code>.npy</code> array. Then run <code>python scripts/build_submission.py outputs/prediction.npy --template data/raw/sample_submission.tif --note docs/submission_note.txt</code>. The writer creates a UTC/hash-unique name and JSON manifest.</p></div></li>
+        <li><div><h3>Validate the exact bytes</h3><p>Run <code>python scripts/validate_submission.py outputs/submissions/FILE.tif --template data/raw/sample_submission.tif --json</code>. Inspect the report and manifest. Any nonfinite in-bounds value or value outside [0,1] is a hard failure; a local PASS still does not guarantee portal acceptance.</p></div></li>
+        <li><div><h3>Write the required AI narrative and upload manually</h3><p>Adapt <a href="AI_DISCLOSURE.md">the AI disclosure draft</a> to the actual work. Read the current official rules, use the manual DrivenData upload form, preserve the response/score receipt, and observe the three-per-week limit and single final-selection rule.</p></div></li>
+      </ol>
+      <div class="hero-actions">
+        <a class="button" href="https://www.drivendata.org/competitions/306/competition-doe-gems/data/" target="_blank" rel="noopener">Open official data page ↗</a>
+        <a class="button secondary" href="https://www.drivendata.org/competitions/306/competition-doe-gems/page/967/" target="_blank" rel="noopener">Review official metric &amp; format ↗</a>
+      </div>
+    </section>
+
+    <section class="section" aria-labelledby="format-title">
+      <div class="section-head">
+        <div><div class="eyebrow">Format guardrails</div><h2 id="format-title">Avoid the [0, 1] rejection.</h2></div>
+        <p>Use the official sample to confirm bounds and valid-data mask. Never clip or replace values silently without keeping a provenance record.</p>
+      </div>
+      <div class="grid cols-3">
+        <article class="card"><span class="card-kicker">1 · Before write</span><h3>Check source scores</h3><p>Fail if any in-bounds value is NaN, infinite, below zero, or above one. Keep the valid mask from the sample template.</p></article>
+        <article class="card"><span class="card-kicker">2 · On disk</span><h3>Use a safe TIFF path</h3><p>One float32 band, exact grid metadata, NaN outside, predictor disabled, atomic output; reopen the bytes before publishing.</p></article>
+        <article class="card"><span class="card-kicker">3 · Before upload</span><h3>Check the same file</h3><p>Run the validator on the final path and verify its SHA-256 manifest. The historical rejection cause is unresolved here because the rejected file is absent.</p></article>
+      </div>
+    </section>
+
+    <section class="section" aria-labelledby="rules-title">
+      <div class="section-head">
+        <div><div class="eyebrow">Rules &amp; provenance</div><h2 id="rules-title">Human-owned, auditable work.</h2></div>
+        <p>Generative AI is allowed by the current official rules but disclosure is required. The draft is explicit about this agent's use and the fact that no competition rasters were provided here.</p>
+      </div>
+      <div class="callout"><p><strong>AI disclosure draft:</strong> AI assisted public-source research, code scaffolding/review, documentation, and synthetic tests. No competition raster, label, private test label, or private submission file was shared with the AI; no model or competition prediction has been generated in this checkout. The competitor is responsible for updating and verifying the final narrative.</p></div>
+      <p>See the full <a href="research/hypotheses.md">ranked research hypotheses</a>, <a href="research/sources.md">source register</a>, <a href="research/known_irregularities.md">irregularities</a>, and <a href="research/results.md">results ledger</a>.</p>
+    </section>
+  </main>
+
+  <footer class="site-footer"><div class="wrap footer-row"><p>GEMS DOE 36 · Not an official DOE, NLR, USGS, NBMG, or DrivenData site.</p><p><a href="index.html">Home</a> · <a href="research/validation-plan.md">Validation plan</a> · <a href="AI_DISCLOSURE.md">AI disclosure</a></p></div></footer>
+</body>
+</html>
+
+</html>

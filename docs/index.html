@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="GEMSDOE36: an auditable, geology-informed workflow for discovering unmapped faults in the DOE GEMS Prize Challenge.">
+  <title>GEMS DOE 36 — Fault discovery, honestly validated</title>
+  <link rel="stylesheet" href="assets/site.css">
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to main content</a>
+  <header class="site-header">
+    <a class="brand" href="index.html"><span class="brand-mark" aria-hidden="true">36</span><span>GEMS DOE <span class="small">/ 36</span></span></a>
+    <nav class="nav" aria-label="Main navigation">
+      <a href="executive-summary.html">Executive summary</a>
+      <a href="research/hypotheses.md">Hypotheses</a>
+      <a href="research/sources.md">Sources</a>
+      <a href="https://www.drivendata.org/competitions/306/competition-doe-gems/leaderboard/" target="_blank" rel="noopener">Official leaderboard ↗</a>
+    </nav>
+  </header>
+
+  <main id="main" class="wrap">
+    <section class="hero" aria-labelledby="hero-title">
+      <div>
+        <div class="eyebrow">DOE GEMS Prize Challenge · research project</div>
+        <h1 id="hero-title">Find the fault.<br>Show the evidence.</h1>
+        <p class="lede">A new, auditable workflow for mapping previously unmapped geological faults in the GeoDAWN region—grounded in the published metric, regional geology, spatial holdouts, and explicit uncertainty.</p>
+        <div class="hero-actions">
+          <a class="button" href="executive-summary.html">Executive summary &amp; submit guide <span aria-hidden="true">→</span></a>
+          <a class="button secondary" href="research/hypotheses.md">See the ranked hypotheses</a>
+        </div>
+      </div>
+      <aside class="status-card" aria-label="Current project status">
+        <div class="eyebrow"><span class="status-pip" aria-hidden="true"></span>Current status · 2026-10-04</div>
+        <h2>No upload-ready prediction yet.</h2>
+        <p>The official competition rasters and sample template require an enrolled DrivenData session and are not present here. No real spatial holdout has run, so a competitive TIFF would be guesswork.</p>
+        <a href="research/results.md">Read the results ledger →</a>
+      </aside>
+    </section>
+
+    <section class="download-strip" aria-label="Download and submission status">
+      <div>
+        <strong>⬇ One-click GeoTIFF download — QA fixture only, never upload it</strong>
+        <p>A tiny synthetic file exercises float32 / EPSG:32611 / [0,1] TIFF handling. It is <strong>NOT a competition submission</strong>: it is not on the official grid, uses no contest data, and is not a model prediction. The actual submission download stays withheld until data, holdout, and template checks pass.</p>
+      </div>
+      <a class="button warning" href="downloads/GEMS36_FORMAT_TEST_NOT_SUBMISSION.tif" download>Download QA-only TIFF</a>
+    </section>
+
+    <section class="section" aria-labelledby="why-title">
+      <div class="section-head">
+        <div><div class="eyebrow">Method, not leaderboard theater</div><h2 id="why-title">A score is not a scientific claim.</h2></div>
+        <p>GEMS scores continuous fault-confidence rasters with a 300 m distance-weighted Tversky index. Good work must find off-catalogue structure without mistaking every geophysical edge for a fault.</p>
+      </div>
+      <div class="grid cols-3">
+        <article class="card"><span class="card-kicker">Objective</span><h3>Discover new traces</h3><p>Predict faults that are absent from the current public catalogue. A geothermal favorability layer is context—not ground truth.</p></article>
+        <article class="card"><span class="card-kicker">Physics-informed</span><h3>Stress belongs in the loss</h3><p>A differentiable axial-orientation penalty is implemented with uncertainty weighting. It is not a compass filter applied after inference.</p></article>
+        <article class="card"><span class="card-kicker">Validation</span><h3>Block space, not pixels</h3><p>Spatial folds and collars are specified before modeling. Current status: test scaffolding only; no competition-data holdout has run.</p></article>
+      </div>
+    </section>
+
+    <section class="section" aria-labelledby="hyp-title">
+      <div class="section-head">
+        <div><div class="eyebrow">Before implementation</div><h2 id="hyp-title">Five distinct ways to look for what is missing.</h2></div>
+        <p>Qualitative ranking only. No numeric DTI gains are claimed until the same data and folds have been measured.</p>
+      </div>
+      <div class="grid cols-3">
+        <article class="card"><span class="card-kicker"><span class="rank">01</span>Lead hypothesis</span><h3>Stress-constrained geophysical lineaments</h3><p>Cross-layer, multiscale line geometry with a locally uncertain stress-orientation term inside the objective.</p><span class="tag">medium–high potential · untested</span></article>
+        <article class="card"><span class="card-kicker"><span class="rank">02</span>Fault-system geometry</span><h3>Tips, relays &amp; transfer zones</h3><p>Graph-based propagation tests where mapped structures terminate, step, or hand off strain.</p><span class="tag">medium · localized</span></article>
+        <article class="card"><span class="card-kicker"><span class="rank">03</span>Independent geophysics</span><h3>Potential-field edge/depth inversion</h3><p>Seek buried structures with coherent magnetic, gravity, conductivity, and radiometric boundaries.</p><span class="tag">low–medium · higher cost</span></article>
+        <article class="card"><span class="card-kicker"><span class="rank">04</span>Observed rupture transfer</span><h3>Monte Cristo case study</h3><p>Use the mapped 2020 rupture as a narrow diagnostic for feature transfer—not universal fault truth.</p><span class="tag">low–medium · one event</span></article>
+        <article class="card"><span class="card-kicker"><span class="rank">05</span>Resource context</span><h3>Joint fault / play-fairway model</h3><p>Combine fault evidence with public heat-flow and geothermal data, while guarding against recall loss.</p><span class="tag">uncertain · high cost</span></article>
+        <article class="card"><span class="card-kicker">Read the full register</span><h3>Layers, risks, and access gates</h3><p>Every hypothesis names source availability, expected DTI relevance, cost, and a falsification route.</p><p><a href="research/hypotheses.md">Open the full ranked register →</a></p></article>
+      </div>
+    </section>
+
+    <section class="section" aria-labelledby="integrity-title">
+      <div class="section-head">
+        <div><div class="eyebrow">Trust &amp; reproducibility</div><h2 id="integrity-title">What exists—and what does not.</h2></div>
+        <p>The project started from a README-only repository. This branch adds research/code scaffolding, not a trained model or a claimed score.</p>
+      </div>
+      <div class="grid cols-2">
+        <article class="card"><h3>Implemented and testable</h3><p>Published DTI calculator; differentiable stress-orientation loss; seeded spatial block-fold utility; strict template-based writer and validator; synthetic QA tests.</p><p><a href="research/validation-plan.md">Read the holdout and release gates →</a></p></article>
+        <article class="card"><h3>Still blocked</h3><p>Official raster/labels/template; local external-data coverage; real spatial holdout; model selection; upload-ready TIFF; organizer acceptance and score receipt.</p><p><a href="research/known_irregularities.md">See limitations and irregularities →</a></p></article>
+      </div>
+    </section>
+
+    <section class="section" aria-labelledby="sources-title">
+      <div class="section-head">
+        <div><div class="eyebrow">Manual review</div><h2 id="sources-title">Primary sources first.</h2></div>
+        <p>Official competition materials and government/university datasets are linked for review. A listed download is not represented as locally acquired.</p>
+      </div>
+      <div class="grid cols-3">
+        <article class="card"><span class="card-kicker">Competition</span><h3>Rules, metric, format</h3><p><a href="https://www.drivendata.org/competitions/306/competition-doe-gems/page/967/" target="_blank" rel="noopener">Problem description ↗</a><br><a href="https://www.nlr.gov/docs/fy26osti/96647.pdf" target="_blank" rel="noopener">Official rules PDF ↗</a><br><a href="https://www.drivendata.org/competitions/306/competition-doe-gems/data/" target="_blank" rel="noopener">Data page (enrollment required) ↗</a></p></article>
+        <article class="card"><span class="card-kicker">Geodesy</span><h3>Local strain / velocities</h3><p><a href="https://geodesy.unr.edu/greatbasinstrain.php" target="_blank" rel="noopener">NGL Great Basin strain ↗</a><br><a href="https://geodesy.unr.edu/magnet/Table3web.html" target="_blank" rel="noopener">NGL MAGNET velocities ↗</a></p></article>
+        <article class="card"><span class="card-kicker">Geology</span><h3>Faults &amp; geophysics</h3><p><a href="https://doi.org/10.5066/P93LGLVQ" target="_blank" rel="noopener">USGS GeoDAWN release ↗</a><br><a href="https://doi.org/10.5066/P9YL58W6" target="_blank" rel="noopener">USGS slip/dilation data ↗</a><br><a href="https://nbmg.unr.edu/Geohazards/Earthquakes/MonteCristoRangeEQData.html" target="_blank" rel="noopener">NBMG Monte Cristo rupture ↗</a></p></article>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer"><div class="wrap footer-row"><p>GEMS DOE 36 · Evidence-led research, not an official DOE/DrivenData product.</p><p><a href="research/sources.md">Source register</a> · <a href="AI_DISCLOSURE.md">AI disclosure draft</a> · <a href="https://www.drivendata.org/competitions/306/competition-doe-gems/leaderboard/" target="_blank" rel="noopener">Official leaderboard ↗</a></p></div></footer>
+</body>
+</html>
