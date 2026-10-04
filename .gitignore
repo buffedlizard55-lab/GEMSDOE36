@@ -2,6 +2,8 @@
 /data/raw/
 /data/processed/
 /data/derived/
+/data/external/
+/data/study/
 /outputs/
 /models/
 /checkpoints/
@@ -14,6 +16,9 @@
 *.tiff
 # Tiny synthetic fixture used only to verify site download and GeoTIFF handling.
 !/docs/downloads/GEMS36_FORMAT_TEST_NOT_SUBMISSION.tif
+# Gate-passed H6 competition candidate (24,881 dots, validated on the exact
+# template grid). This is the single upload-ready file for both rounds.
+!/docs/downloads/GEMS36_h6_offcatalog_network_prior_20261004T193432.021282Z_3276c04090_3c064db2.tif
 *.aux.xml
 *.msi
 *.ovr

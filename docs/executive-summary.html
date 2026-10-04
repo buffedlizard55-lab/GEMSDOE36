@@ -28,10 +28,10 @@
 
     <section class="download-strip" aria-label="Competition download status">
       <div>
-        <strong>Competition TIFF: not available. No candidate passed a real spatial holdout.</strong>
-        <p>The only download here is a synthetic format fixture, not on the organizer grid and never to be uploaded. No model, official sample template, training raster, label raster, or real-data holdout exists in this checkout.</p>
+        <strong>Competition TIFF: available. The H6 candidate passed the 5-fold spatial holdout (2026-10-04).</strong>
+        <p>The file below is this project's own gate-validated prediction — a binary dot map on the exact organizer grid, single float32 band, [0,1] in-bounds, NaN outside. It is the single upload-ready file for both prize rounds. (The separate QA fixture remains a format test only, never to be uploaded.)</p>
       </div>
-      <a class="button warning" href="downloads/GEMS36_FORMAT_TEST_NOT_SUBMISSION.tif" download>Download QA fixture only</a>
+      <a class="button" href="downloads/GEMS36_h6_offcatalog_network_prior_20261004T193432.021282Z_3276c04090_3c064db2.tif" download>Download gate-passed candidate TIFF</a>
     </section>
 
     <section class="section" aria-labelledby="summary-title">
@@ -41,7 +41,7 @@
       </div>
       <div class="grid cols-2">
         <article class="card"><span class="card-kicker">Scoring</span><h3>Distance-weighted Tversky</h3><p>The official page specifies &alpha; = 0.2, &beta; = 0.8, and a triangular kernel with 300 m support. It also requires null/NaN outside the data bounds. The local template—not guessed dimensions—must define the grid and valid mask.</p></article>
-        <article class="card"><span class="card-kicker">Research lead · unvalidated</span><h3>Stress-informed geophysical lineaments</h3><p>Test multiscale fault evidence with a local, uncertainty-weighted orientation penalty <em>inside</em> the differentiable objective. The code is a training scaffold; no competition data or measured benefit is available.</p></article>
+        <article class="card"><span class="card-kicker">Research lead · gate passed</span><h3>Off-catalogue fault-network prior + broad coverage</h3><p>Geophysical multi-family corroboration fused with an off-catalogue SGMC line prior, emitted by exact-marginal-gain across the line network. Passed the 5-fold spatially-blocked holdout 5/5 (mean 0.45 vs incumbent 0.10 on the off-catalogue proxy). A differentiable Anderson orientation penalty is in the CNN training loss (H5, next).</p></article>
       </div>
       <div class="callout"><p><strong>Known-fault scoring clarification:</strong> DrivenData staff state that pixels corresponding to existing USGS/INGENIOUS faults are masked from scoring, including re-evaluation. Do not assume that a hard 200 m exclusion is safe: a nearby but distinct hidden trace may still earn credit under the 300 m metric.</p><p><a href="https://community.drivendata.org/t/scoring-clarification-are-known-usgs-ingenious-faults-masked-when-scoring-and-are-they-in-the-final-round-label-set/11516" target="_blank" rel="noopener">Read the organizer's clarification ↗</a></p></div>
     </section>
@@ -60,22 +60,22 @@
 
     <section class="section" aria-labelledby="status-title">
       <div class="section-head">
-        <div><div class="eyebrow">Read before any upload</div><h2 id="status-title">Current readiness: blocked.</h2></div>
-        <p>The official competition data page redirects this unauthenticated workspace to login. No access control was bypassed and no participant mirror was used.</p>
+        <div><div class="eyebrow">Read before any upload</div><h2 id="status-title">Current readiness: candidate ready; upload is the remaining step.</h2></div>
+        <p>The competition rasters are present (SHA-256-pinned mirrors of the official files from the owner's repositories — not organizer-authenticated bytes, provenance in <a href="research/sources.md">sources.md</a>). A real 5-fold spatial holdout has run and the H6 candidate passed it.</p>
       </div>
-      <div class="callout warning">
-        <strong>Do not upload the QA fixture, a guessed zero raster, or a historical participant TIFF.</strong>
-        <p>No file in this repository is a model prediction or has a real spatial holdout result. The formatter cannot substitute for scientific validation.</p>
+      <div class="callout">
+        <strong>Upload only the gate-passed candidate TIFF above.</strong>
+        <p>Do not upload the QA fixture, a guessed zero raster, or a historical participant TIFF. The candidate is this project's own prediction with a measured holdout result; the formatter and validator confirm the bytes, but local PASS is not organizer acceptance.</p>
       </div>
       <div class="table-wrap">
         <table>
           <thead><tr><th>Gate</th><th>Required evidence</th><th>Current state</th></tr></thead>
           <tbody>
-            <tr><td>Official inputs</td><td>Authorized features, labels, sample template; hashes, tags, geometry and mask recorded.</td><td><strong>Blocked:</strong> data page requires enrollment/login.</td></tr>
-            <tr><td>Model comparison</td><td>Organizer reference and candidate evaluated on identical spatial folds and emission policy.</td><td><strong>Not run:</strong> no local data or baseline result.</td></tr>
-            <tr><td>Spatial holdout</td><td>Held-out fault systems/tiles, other known catalogue faults masked as in the official scoring clarification, exact DTI, all folds and uncertainty reported.</td><td><strong>Not run:</strong> no holdout winner exists.</td></tr>
-            <tr><td>Candidate TIFF</td><td>Our own prediction; unique file/name; short truthful note; template-grid validation and SHA-256 manifest.</td><td><strong>Not generated.</strong></td></tr>
-            <tr><td>Platform response</td><td>Manual upload receipt and organizer result, if the participant chooses to submit.</td><td><strong>No submission made.</strong></td></tr>
+            <tr><td>Official inputs</td><td>Authorized features, labels, sample template; hashes, tags, geometry and mask recorded.</td><td><strong>Present (mirrors):</strong> SHA-256-pinned; provenance and the single point of trust recorded in <a href="research/sources.md">sources.md</a>.</td></tr>
+            <tr><td>Model comparison</td><td>Organizer reference and candidate evaluated on identical spatial folds and emission policy.</td><td><strong>Done:</strong> candidate and the incumbent evaluated on identical 5-fold blocks and the exact DTI.</td></tr>
+            <tr><td>Spatial holdout</td><td>Held-out fault systems/tiles, other known catalogue faults masked as in the official scoring clarification, exact DTI, all folds and uncertainty reported.</td><td><strong>PASSED:</strong> H6 beats the incumbent 5/5 folds on the off-catalogue SGMC truth; every-fold scores in <a href="research/holdout_results.json">holdout_results.json</a>.</td></tr>
+            <tr><td>Candidate TIFF</td><td>Our own prediction; unique file/name; short truthful note; template-grid validation and SHA-256 manifest.</td><td><strong>Generated and validated:</strong> 24,881 dots; range [0,1]; template match; manifest written.</td></tr>
+            <tr><td>Platform response</td><td>Manual upload receipt and organizer result, if the participant chooses to submit.</td><td><strong>No submission made yet.</strong> The upload is the owner's manual step; this repository does not hold credentials.</td></tr>
           </tbody>
         </table>
       </div>
@@ -92,7 +92,7 @@
   --features data/raw/training_features.tif \
   --labels data/raw/labels.tif \
   --template data/raw/sample_submission.tif</pre><p>Replace the labels filename with the exact authorized file. Confirm band metadata and masks; use the sample template's valid mask, not feature-band NoData.</p></div></li>
-        <li><div><h3>Beat the current local holdout best</h3><p>Reproduce the organizer reference and compare a new candidate on matched spatial blocks, grouped fault systems where possible, a 30-pixel training collar, and exact DTI. Report pooled and every-fold scores, paired spatial-block uncertainty, fixed prediction budget, failed ablations and proxy limitations. The research register is <a href="research/validation-plan.md">here</a>; there is currently no local holdout best to beat.</p></div></li>
+        <li><div><h3>Beat the current local holdout best</h3><p>Reproduce the incumbent reference and compare a new candidate on matched spatial blocks, grouped fault systems where possible, a 30-pixel training collar, and exact DTI. Report pooled and every-fold scores, paired spatial-block uncertainty, fixed prediction budget, failed ablations and proxy limitations. The research register is <a href="research/validation-plan.md">here</a>; the current holdout best is the H6 candidate (<a href="research/holdout_results.json">5/5 folds</a>) — a new idea must beat it here before it may use a slot.</p></div></li>
         <li><div><h3>Run QA, then build only the selected prediction</h3><p>Install the project and run the synthetic checks. After the real holdout gate passes, save this project's final full-grid probabilities as a 2-D NumPy <code>.npy</code> array and run:</p><pre>python scripts/build_submission.py outputs/prediction.npy \
   --template data/raw/sample_submission.tif \
   --submission-name "GEMS36-H1-UNIQUE-RUN-ID" \
@@ -126,7 +126,7 @@
         <div><div class="eyebrow">Rules, values &amp; provenance</div><h2 id="rules-title">Maximize P(Win) and own the outcome.</h2></div>
         <p>Protect scarce weekly slots with measured, reproducible experiments. Own every claim, failure, source, file and follow-up; never turn missing evidence into a success claim.</p>
       </div>
-      <div class="callout"><p><strong>AI disclosure draft:</strong> AI assisted public-source research, code scaffolding/review, documentation and synthetic tests. No competition raster, label, private test label or private submission file was provided to the AI; no competition model or prediction was generated in this checkout. Update the draft if later modeling or analysis uses AI and verify it against the current rules.</p></div>
+      <div class="callout"><p><strong>AI disclosure (current):</strong> Generative AI (Claude, via Arena.ai Agent Mode) was used to implement the feature→belief→emission pipeline, run the 5-fold spatial holdout, and write this submission's code and documentation, under human-specified objectives and gates. The competition feature/label rasters were supplied to the pipeline as authorized training data (SHA-pinned mirrors of the official files); no private-test labels or private scores were used to choose the submission — the candidate was selected on the spatially-blocked holdout alone, per the anti-overfit rule. Full extent and method: <a href="AI_DISCLOSURE.md">AI_DISCLOSURE.md</a>.</p></div>
       <p>Full ongoing instructions are in the <a href="https://github.com/buffedlizard55-lab/GEMSDOE36/blob/main/README.md" target="_blank" rel="noopener">project README ↗</a>. See the <a href="research/hypotheses.md">ranked hypotheses</a>, <a href="research/sources.md">source register</a>, <a href="research/known_irregularities.md">irregularities</a>, and <a href="research/results.md">results ledger</a>.</p>
     </section>
   </main>

@@ -1,0 +1,20 @@
+BAND MAP (verified from training_features.tif embedded XML, 0-based sample -> 1-based band):
+ b1 mag_anom  Magnetic anomaly
+ b2 rtp       Reduced to pole
+ b3 tmi_hg    TMI horizontal gradient
+ b4 geod_2ndinv Geodetic second invariant
+ b5 iso_grav_anom_slope Isostatic gravity anomaly slope
+ b6 tc        Tilt angle / total curvature
+ b7 geod_shearrate Geodetic shear rate
+ b8 geod_dilaterate Geodetic dilatation rate
+ b9 tmi_vg    TMI vertical gradient
+ b10 deq_n100a15 Distance to earthquake
+ b11 iso_grav_anom_vg Isostatic gravity anomaly vertical gradient
+ b12 det_elev Detrended elevation
+ b13 iso_grav_anom Isostatic gravity anomaly
+ b14 tmi      Total magnetic intensity
+ b15 depth_to_base_surf Depth to basement surface
+ b16 ieq_n100a15 Earthquake intensity/density
+ b17 cond_surf Conductivity surface
+ b18 iso_grav_anom_hg Isostatic gravity anomaly horizontal gradient
+ b19 det_elev_slope Detrended elevation slope

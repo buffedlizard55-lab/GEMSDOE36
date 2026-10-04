@@ -11,10 +11,18 @@ from urllib.parse import urlsplit
 REPO_ROOT = Path(__file__).resolve().parents[1]
 DOCS_ROOT = REPO_ROOT / "docs"
 REQUIRED_PAGES = ("index.html", "executive-summary.html")
+# The landing page must state the current, honest status. As of the 2026-10-04
+# holdout gate (PASS), the candidate is upload-ready; these phrases assert that
+# and that the claim is holdout-backed, not a fabricated score.
 REQUIRED_COPY = (
+    "holdout gate PASSED",
+    "passed the 5-fold spatial holdout gate",
+    "gate-passed candidate TIFF",
+)
+# The landing page must NOT regress to the pre-gate "no prediction" framing.
+FORBIDDEN_COPY = (
     "No upload-ready prediction yet",
-    "NOT a competition submission",
-    "never upload it",
+    "Competition TIFF: not available",
 )
 
 
@@ -64,6 +72,22 @@ def _check_local_links(path: Path, parser: LinkParser, errors: list[str]) -> Non
             errors.append(f"{path.relative_to(REPO_ROOT)}: target=_blank link lacks rel=noopener: {href}")
 
 
+def _candidate_tif() -> Path | None:
+    """Return the gate-passed candidate TIF in docs/downloads/ (the primary download)."""
+    downloads = DOCS_ROOT / "downloads"
+    if not downloads.is_dir():
+        return None
+    # The candidate is the real, gate-passed file: a GEMS36_h6_* dot-map TIFF.
+    # The QA fixture (GEMS36_FORMAT_TEST_NOT_SUBMISSION.tif) is not the candidate.
+    candidates = [
+        p for p in downloads.glob("GEMS36_h6_*.tif")
+        if p.name != "GEMS36_FORMAT_TEST_NOT_SUBMISSION.tif"
+    ]
+    if not candidates:
+        return None
+    return max(candidates, key=lambda p: p.stat().st_size)
+
+
 def main() -> int:
     errors: list[str] = []
     parsers: dict[str, LinkParser] = {}
@@ -89,9 +113,13 @@ def main() -> int:
         _check_local_links(path, parser, errors)
 
     landing_text = " ".join(parsers.get("index.html", LinkParser()).text_chunks)
+    landing_lower = landing_text.lower()
     for phrase in REQUIRED_COPY:
-        if phrase.lower() not in landing_text.lower():
-            errors.append(f"landing page missing required warning/status phrase: {phrase}")
+        if phrase.lower() not in landing_lower:
+            errors.append(f"landing page missing required status phrase: {phrase}")
+    for phrase in FORBIDDEN_COPY:
+        if phrase.lower() in landing_lower:
+            errors.append(f"landing page regressed to stale pre-gate copy: {phrase}")
 
     executive_text = " ".join(
         parsers.get("executive-summary.html", LinkParser()).text_chunks
@@ -106,6 +134,14 @@ def main() -> int:
     elif fixture.stat().st_size > 1_000_000:
         errors.append("synthetic QA TIFF should remain under 1 MB")
 
+    # The gate-passed candidate is the primary download; it must exist on the
+    # served docs/downloads/ tree and be a real (non-trivial) GeoTIFF.
+    candidate = _candidate_tif()
+    if candidate is None:
+        errors.append("missing gate-passed candidate TIFF in docs/downloads/")
+    elif candidate.stat().st_size < 10_000:
+        errors.append("gate-passed candidate TIFF is suspiciously small")
+
     if errors:
         print("SITE CHECK FAIL")
         for error in errors:
@@ -114,8 +150,10 @@ def main() -> int:
     print("SITE CHECK PASS")
     print(f"Checked Pages entry: {root_entry.relative_to(REPO_ROOT)} → docs/")
     print(f"Checked pages: {', '.join(f'docs/{page}' for page in REQUIRED_PAGES)}")
-    print(f"Local page assets/links verified; QA TIFF bytes: {fixture.stat().st_size}")
-    print("Submission-not-ready warning and exact guide flags verified; no external URLs were scraped.")
+    print(f"Local page assets/links verified; QA fixture bytes: {fixture.stat().st_size}")
+    if candidate is not None:
+        print(f"Gate-passed candidate present: docs/downloads/{candidate.name} ({candidate.stat().st_size} bytes)")
+    print("Gate-passed status and exact submission-guide flags verified; no external URLs were scraped.")
     return 0
 
 

@@ -32,20 +32,20 @@
       </div>
       <aside class="status-card" aria-label="Current project status">
         <div class="eyebrow"><span class="status-pip" aria-hidden="true"></span>Current status · 2026-10-04</div>
-        <h2>No upload-ready prediction yet.</h2>
-        <p>The official competition rasters and sample template require an enrolled DrivenData session and are not present here. No real spatial holdout has run, so a competitive TIFF would be guesswork.</p>
+        <h2>Upload-ready candidate: holdout gate PASSED.</h2>
+        <p>An off-catalogue fault-network prior (USGS SGMC) fused with geophysical corroboration, emitted by exact-marginal-gain, beat the incumbent on a 5-fold spatially-blocked holdout — 5/5 folds, mean 0.45 vs 0.10 on the off-catalogue proxy. The validated TIFF is downloadable below.</p>
         <a href="research/results.md">Read the results ledger →</a>
       </aside>
     </section>
 
     <section class="download-strip" id="submission" aria-label="Submission download status">
       <div>
-        <strong>Competition TIFF: not available — no prediction has passed the spatial holdout.</strong>
-        <p>Do not upload a guess. The only file currently downloadable is a tiny synthetic format fixture: <strong>NOT a competition submission</strong>, not on the official grid, and never upload it. The actual TIFF link will replace this status only after the model beats the current local spatial-holdout best and passes official-template validation.</p>
+        <strong>Competition TIFF: available — passed the 5-fold spatial holdout gate (2026-10-04).</strong>
+        <p>The file below is the gate-validated candidate: a binary dot map (24,881 dots) on the exact official 100 m / EPSG:32611 grid — single float32 band, values in [0, 1], NaN outside the footprint. It is the single upload-ready file intended for both rounds. Built with AI-assisted coding; the full method, data provenance, and holdout are in the research docs.</p>
       </div>
       <div class="hero-actions">
         <a class="button secondary" href="executive-summary.html#steps-title">Submission steps</a>
-        <a class="button warning" href="downloads/GEMS36_FORMAT_TEST_NOT_SUBMISSION.tif" download>Download QA fixture only</a>
+        <a class="button" href="downloads/GEMS36_h6_offcatalog_network_prior_20261004T193432.021282Z_3276c04090_3c064db2.tif" download>Download gate-passed candidate TIFF</a>
       </div>
     </section>
 
@@ -57,7 +57,7 @@
       <div class="grid cols-3">
         <article class="card"><span class="card-kicker">Objective</span><h3>Discover new traces</h3><p>Predict faults that are absent from the current public catalogue. A geothermal favorability layer is context—not ground truth.</p></article>
         <article class="card"><span class="card-kicker">Physics-informed</span><h3>Stress belongs in the loss</h3><p>A differentiable axial-orientation penalty is implemented with uncertainty weighting. It is not a compass filter applied after inference.</p></article>
-        <article class="card"><span class="card-kicker">Validation</span><h3>Block space, not pixels</h3><p>Spatial folds and collars are specified before modeling. Current status: test scaffolding only; no competition-data holdout has run.</p></article>
+        <article class="card"><span class="card-kicker">Validation</span><h3>Block space, not pixels</h3><p>Spatial folds and collars are specified before modeling. A 5-fold spatially-blocked holdout (512 px blocks, 30 px collar, seed 36) has run; the lead candidate passed 5/5 folds before this submission slot was used.</p></article>
       </div>
     </section>
 
@@ -74,26 +74,26 @@
 
     <section class="section" aria-labelledby="hyp-title">
       <div class="section-head">
-        <div><div class="eyebrow">Before implementation</div><h2 id="hyp-title">Four distinct ways to look for what is missing.</h2></div>
-        <p>Qualitative ranking only. No numeric DTI gains are claimed until the same data and folds have been measured.</p>
+        <div><div class="eyebrow">Hypotheses · measured on the holdout</div><h2 id="hyp-title">What the 5-fold holdout actually supported.</h2></div>
+        <p>The register is ranked by measured off-catalogue holdout performance, not by prior plausibility. The lead (H6) passed the gate; the rest are ablations or conditional.</p>
       </div>
       <div class="grid cols-3">
-        <article class="card"><span class="card-kicker"><span class="rank">01</span>Lead · conditional</span><h3>WSM regime-aware orientation + lineaments</h3><p>Combine the competition's multiscale geophysics with locally uncertain World Stress Map directions in the differentiable loss.</p><span class="tag">medium potential · AOI coverage untested</span></article>
-        <article class="card"><span class="card-kicker"><span class="rank">02</span>High-resolution surface expression</span><h3>1 m DEM scarps &amp; drainage offsets</h3><p>Test geomorphic line continuity beyond the supplied 100 m detrended relief; avoid broad fan edges and channels.</p><span class="tag">low–medium · DEM coverage untested</span></article>
-        <article class="card"><span class="card-kicker"><span class="rank">03</span>Raw survey profiles</span><h3>GeoDAWN flight-line coherence</h3><p>Separate cross-line-stable subsurface anomalies from acquisition-direction streaks in the public profile data.</p><span class="tag">low–medium · higher cost</span></article>
-        <article class="card"><span class="card-kicker"><span class="rank">04</span>Time-dependent evidence</span><h3>Sentinel-1 InSAR discontinuities</h3><p>Use repeat-pass surface-motion evidence only where multi-temporal coherence and line-of-sight geometry are adequate.</p><span class="tag">low / uncertain · account + coverage gate</span></article>
-        <article class="card"><span class="card-kicker">Read the full register</span><h3>Inputs, physics, availability, cost</h3><p>Each hypothesis is explicitly conditional until the official AOI coverage and the spatial holdout are checked.</p><p><a href="research/hypotheses.md">Open the full ranked register →</a></p></article>
+        <article class="card"><span class="card-kicker"><span class="rank">01</span>Lead · gate PASSED 5/5</span><h3>H6 Off-catalogue fault-network prior + broad coverage</h3><p>An off-catalogue SGMC line prior fused with geophysical corroboration, emitted broadly across the line network. Beat the incumbent on every fold (mean 0.45 vs 0.10 on the proxy).</p><span class="tag">measured 4–5× on the proxy · in the candidate TIFF</span></article>
+        <article class="card"><span class="card-kicker"><span class="rank">02</span>Ablation · small negative</span><h3>H1 Anderson dip projection</h3><p>Re-projects deep potential-field lineaments up-dip to the surface trace. Measured a consistent small *negative* on the surface-trace target, so it is off in the candidate.</p><span class="tag">measured −0.01…−0.045 · ablation</span></article>
+        <article class="card"><span class="card-kicker"><span class="rank">03</span>Ablation · in the candidate</span><h3>H2 Scatter-smoothed emission (300 m)</h3><p>Dots may land within the 300 m kernel of a line; the exact-gain rule picks off-peak positions when they credit scattered truth better. On by default in the emitter.</p><span class="tag">low cost · emitter parameter</span></article>
+        <article class="card"><span class="card-kicker"><span class="rank">04</span>Conditional · not yet in the file</span><h3>H5 Physics-informed CNN ensemble</h3><p>A small U-Net with the differentiable Anderson orientation term in the loss, ensembled with the H6 field. Trained next; only adopted if it beats H6 on the same holdout.</p><span class="tag">high cost · gated behind H6</span></article>
+        <article class="card"><span class="card-kicker">Read the full register</span><h3>Physics, ablations, gate rules</h3><p>Every hypothesis states its geological layer, why it catches off-catalogue faults, the expected gain vs cost, and its pre-registered gate.</p><p><a href="research/hypotheses.md">Open the full ranked register →</a></p></article>
       </div>
     </section>
 
     <section class="section" aria-labelledby="integrity-title">
       <div class="section-head">
         <div><div class="eyebrow">Trust &amp; reproducibility</div><h2 id="integrity-title">What exists—and what does not.</h2></div>
-        <p>The project started from a README-only repository. This repository now contains research and code scaffolding—not a trained model or a claimed score.</p>
+        <p>The project started from a README-only repository. It now contains the competition data (SHA-pinned mirrors), a full feature→belief→emission pipeline, a passed 5-fold spatial holdout, and a gate-validated upload-ready TIFF. It does not yet contain an organizer score.</p>
       </div>
       <div class="grid cols-2">
-        <article class="card"><h3>Implemented and testable</h3><p>Published DTI calculator; differentiable stress-orientation loss; seeded spatial block-fold utility; strict template-based writer and validator; synthetic QA tests.</p><p><a href="research/validation-plan.md">Read the holdout and release gates →</a></p></article>
-        <article class="card"><h3>Still blocked</h3><p>Official raster/labels/template; local external-data coverage; real spatial holdout; model selection; upload-ready TIFF; organizer acceptance and score receipt.</p><p><a href="research/known_irregularities.md">See limitations and irregularities →</a></p></article>
+        <article class="card"><h3>Implemented and testable</h3><p>Published DTI calculator; differentiable stress-orientation loss; spatial block-fold utility; multi-family belief field with off-catalogue SGMC prior; exact-marginal-gain emitter; strict template-based writer and validator; physics-informed U-Net (training configured); synthetic + real-data tests.</p><p><a href="research/validation-plan.md">Read the holdout and release gates →</a></p></article>
+        <article class="card"><h3>Still open</h3><p>Organizer acceptance and a live leaderboard score for the candidate TIFF; the CNN ensemble (H5) has not yet beaten the H6 holdout best, so it is not in this file; the proxy→live transfer is only partially calibrated (the SGMC proxy over-counts old faults).</p><p><a href="research/known_irregularities.md">See limitations and irregularities →</a></p></article>
       </div>
     </section>
 

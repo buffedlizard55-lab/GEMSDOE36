@@ -1,0 +1,46 @@
+=== fold 0: eval domain 1052106 px, held blocks 12
+    truth px: {'sgmc': 9545, 'cat': 11924}
+    full         dots= 13490 sgmc=0.0916 cat=0.0007
+    nodip        dots= 13530 sgmc=0.0961 cat=0.0009
+    model_only   dots= 13023 sgmc=0.0294 cat=0.0012
+    full_noscat  dots= 12112 sgmc=0.0902 cat=0.0006
+    (fold 0 done, 179s elapsed)
+=== fold 1: eval domain 877981 px, held blocks 11
+    truth px: {'sgmc': 10032, 'cat': 8937}
+    full         dots= 13478 sgmc=0.0241 cat=0.0022
+    nodip        dots= 13522 sgmc=0.0269 cat=0.0024
+    model_only   dots= 12997 sgmc=0.0038 cat=0.0032
+    full_noscat  dots= 12080 sgmc=0.0230 cat=0.0013
+    (fold 1 done, 231s elapsed)
+=== fold 2: eval domain 1449061 px, held blocks 11
+    truth px: {'sgmc': 18859, 'cat': 19094}
+    full         dots= 13488 sgmc=0.1191 cat=0.0009
+    nodip        dots= 13503 sgmc=0.1206 cat=0.0013
+    model_only   dots= 13000 sgmc=0.0204 cat=0.0013
+    full_noscat  dots= 12068 sgmc=0.1162 cat=0.0005
+    (fold 2 done, 287s elapsed)
+=== fold 3: eval domain 837530 px, held blocks 11
+    truth px: {'sgmc': 10328, 'cat': 9405}
+    full         dots= 13428 sgmc=0.0491 cat=0.0003
+    nodip        dots= 13534 sgmc=0.0562 cat=0.0004
+    model_only   dots= 12997 sgmc=0.0061 cat=0.0006
+    full_noscat  dots= 12051 sgmc=0.0483 cat=0.0001
+    (fold 3 done, 343s elapsed)
+=== fold 4: eval domain 1046373 px, held blocks 11
+    truth px: {'sgmc': 14373, 'cat': 13043}
+    full         dots= 13471 sgmc=0.1353 cat=0.0012
+    nodip        dots= 13540 sgmc=0.1321 cat=0.0009
+    model_only   dots= 12984 sgmc=0.0279 cat=0.0012
+    full_noscat  dots= 12034 sgmc=0.1326 cat=0.0011
+    (fold 4 done, 398s elapsed)
+
+=== GATE SUMMARY ===
+full vs incumbent_h33 (sgmc): 2/5 folds
+full vs nodip       (sgmc): 1/5 folds
+fold 0: full:0.0916  nodip:0.0961  full_noscat:0.0902  incumbent_h33:0.1319  incumbent_d28:0.1290  sgmc_prior:0.8729
+fold 1: full:0.0241  nodip:0.0269  full_noscat:0.0230  incumbent_h33:0.0811  incumbent_d28:0.0801  sgmc_prior:0.8783
+fold 2: full:0.1191  nodip:0.1206  full_noscat:0.1162  incumbent_h33:0.0838  incumbent_d28:0.0829  sgmc_prior:0.8739
+fold 3: full:0.0491  nodip:0.0562  full_noscat:0.0483  incumbent_h33:0.0968  incumbent_d28:0.0957  sgmc_prior:0.8760
+fold 4: full:0.1353  nodip:0.1321  full_noscat:0.1326  incumbent_h33:0.0902  incumbent_d28:0.0892  sgmc_prior:0.8758
+GATE: FAIL
+wrote docs/research/holdout_results.json (398s total)

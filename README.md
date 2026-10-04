@@ -2,7 +2,79 @@
 
 > **Recurring starting point:** reread this complete README before every substantive session. Keep the standing brief, evidence state, limitations, and next gates here for future agents and collaborators. Update the status/results after each work session; never replace a missing measurement with a claim.
 
-**Research status (2026-10-04 UTC):** this checkout contains an auditable DTI calculator, spatial-block validation utilities, a differentiable uncertainty-weighted orientation loss, a fail-closed template-based GeoTIFF writer, four ranked research hypotheses, and a static research site whose Pages root now redirects to `/docs/`. The official competition inputs/template and an attributable submission receipt are not available here. No competition model, real spatial holdout, winning local baseline, contest score, or upload-ready prediction exists. The only downloadable TIFF is a tiny synthetic QA fixture—**do not submit it**. Final local QA in this continuation: **33 tests passed** (including Torch-dependent differentiation tests), Ruff passed, and the root/docs site checks passed. The missing-input audit still fails closed because official files are absent.
+## User brief — verbatim, reread every session (recorded 2026-10-04)
+
+This is the owner's standing instruction, stored in full as the starting point for
+every session. The distilled operational rules follow below it; where they differ,
+the brief and the explicit owner corrections below govern.
+
+> **Goal:** get to the **top of the leaderboard** on the DOE GEMS Prize fault
+> discovery competition (DrivenData 306), GeoDAWN region. Core values for every
+> decision: **Maximize P(Win)** and **Own the Outcome.**
+>
+> 1. **MUST generate a UNIQUE TIF submission.** Never copy a previous
+> submission's pixels into ours — prior GEMSDOE sites/repositories are for
+> learning and forensics only.
+> 2. **Encode Anderson (1905) faulting / regional stress orientation as a
+> > CONSTRAINT in the differentiable training loss** (Raissi–Perdikaris–
+> > Karniadakis 2019 physics-informed style) — a soft orientation-consistency
+> > term, NOT a post-hoc compass filter. In a Great Basin normal-faulting regime
+> > (~60° dip), penalize candidates whose local strike deviates from the
+> > Anderson-predicted range given the known regional extension direction.
+> 3. **Analyze WHY h33-2-b2 (GEMSDOE32, owner-reported 0.2778) was the best**
+> > prior submission and design the strategy to beat the current top (owner-
+> > reported 0.3195). PhD-level analysis, from the forensics in the prior
+> > repos — never by copying their rasters.
+> 4. **Store this standing prompt in the repo README** as the reread-every-
+> > session starting point.
+> 5. **Fix the prior platform rejection** “Predicted values must be in range
+> > [0, 1]”: give the submission a unique name + short comment, and an
+> > executive-summary subpage explaining exactly how to submit. Fail closed on
+> > range/geometry so a recurrence is impossible.
+> 6. **Generate 3–5 new candidate geological hypotheses** (layers, physical
+> > signature, why each catches off-catalogue faults, difference from this
+> > repo) **ranked by expected DTI improvement vs cost.** Name the free
+> > official sources for any data that still needs verification.
+> 7. **Validate the top hypothesis on a spatially-blocked holdout BEFORE
+> > spending a weekly submission slot.** Never spend a slot on an idea that
+> > has not beaten the current holdout best.
+> 8. Work **autonomously end-to-end** (no manual input expected), in **3
+> > passes** (implement → bug review → re-check against the original request).
+> > **No hallucinations:** verify line by line from official/verified/trusted
+> > sources, provide links for manual review, and flag irregularities.
+> 9. AI disclosure is required per the official rules (narrative of extent/use).
+> > Then **PR and merge to `main`**, reporting success only after GitHub
+> > confirms.
+
+### Owner corrections and constraints (standing)
+
+- The TIF must be an **obvious, easy download on the site** — “as easy as
+  clicking a File to submit” — and this is stated in the executive summary /
+  very top of the site.
+- Never guess the submission format: single-band **float32** GeoTIFF,
+  **EPSG:32611, 100 m**, the **exact organizer grid**, **[0,1]** in-bounds,
+  **NaN/null outside**; ≤3 submissions/week; **one final file for both prize
+  rounds**, chosen without private scores.
+- Strain is not automatically stress: the orientation term needs a defensible
+  stress/extension source with spatial uncertainty (see `orientation.py`).
+
+**Research status (2026-10-04 UTC, session `arena/01a10834-gemsdoe36`):** the
+owner-supplied mirrors of the official competition rasters (SHA-256 pinned) are
+present under `data/` (19-band features, 60,988-pixel catalogue, sample
+template, 1 m LiDAR scarp features, GeoDAWN radiometric/extension grids, USGS
+SGMC proxy, GDR-1391 geothermal manifests). A full pipeline now exists:
+`scripts/prepare_data.py` (49-channel feature set), `anderson.py` (spatially
+varying extension field + dip projection + soft strike-consistency weight),
+`field.py` (multi-family corroboration belief field), `emitter.py`
+(exact-marginal-gain dot emission with support confinement and the validated
+200 m catalogue-flank exclusion), `model.py` (physics-informed U-Net with the
+Anderson orientation term **in the training loss**), and
+`scripts/run_holdout.py` (5-fold spatially-blocked gate vs the incumbent).
+Hypotheses are ranked in `docs/research/hypotheses.md`; the gate results land
+in `docs/research/holdout_results.json`. The upload-ready unique TIFF is
+published to the site **only after the 5-fold gate passes** — until then the
+landing page says so and only the QA fixture is downloadable (**do not submit
+it**).
 
 ## Full standing brief — reread before work
 
@@ -32,8 +104,8 @@ Build a scientifically grounded, auditable project for the DOE Geologic Enhanced
 
 - **Competition task:** predict fault confidence on the GeoDAWN region. The public problem page describes expert-labeled new faults absent from the existing public USGS database, a distance-weighted Tversky metric with \(\alpha=0.2\), \(\beta=0.8\), and triangular support \(R=300\) m. Official format text says one float32 band, EPSG:32611, 100 m, exact bounds/grid, [0,1] values and null/NaN outside.
 - **Known-fault mask:** DrivenData staff clarified that pixels corresponding to existing USGS/INGENIOUS faults are excluded from scoring, including re-evaluation. This does **not** justify an arbitrary 200 m catalogue buffer: nearby, distinct hidden faults may still receive credit within the 300 m metric. See the official [staff clarification](https://community.drivendata.org/t/scoring-clarification-are-known-usgs-ingenious-faults-masked-when-scoring-and-are-they-in-the-final-round-label-set/11516).
-- **Data access:** the official data tab redirected this unauthenticated workspace to login. No training raster, labels, or official sample template were acquired. No credentials were requested or stored; no access control was bypassed; no participant mirror was used.
-- **Model/holdout:** no model is trained, and there is no local spatial holdout best yet. DTI/orientation/fold utilities use synthetic tests only. Do not report a numeric expected improvement as measured.
+- **Data access:** Dropbox direct download is blocked from this sandbox; the competition rasters were instead obtained from the **owner's own GitHub repositories** (GEMSDOE @ c0c06ac8, GEMSDOE24 @ 07345ea0) as SHA-256-pinned mirrors of the official files (pins in `GEMSDOE32 registry/data_manifest.json`). These are owner-supplied mirrors — **not organizer-authenticated bytes**; provenance is recorded in `docs/research/sources.md` and `data/processed/manifest.json`. No credentials were used; no access control was bypassed.
+- **Model/holdout:** the belief-field + exact-gain-emission pipeline is built and running on real data; the 5-fold spatially-blocked gate (`scripts/run_holdout.py`) is the promotion gate and its results are in `docs/research/holdout_results.json`. A physics-informed U-Net (`model.py`) with the Anderson orientation term in the loss is configured (CPU) and is the H5 ensemble layer. Do not report a numeric expected improvement as measured until the gate table says so.
 - **Score attribution:** the user-supplied `0.2778` is not tied by an organizer receipt to GEMSDOE32 or a local file. GEMSDOE32's own README calls H33-2-B2 `0.2747` a projection, labels that artifact `UNSCORED`, and says no organizer score exists for its artifacts. GEMSDOE31 describes a `0.2708` geometry as owner-reported, while GEMSDOE32's later audit disputes that attribution; no receipt resolves the conflict. The user-supplied `0.3195` is not verified as the current public maximum; a one-time 2026-10-04 board read showed higher entries. No score table or participant names are mirrored. See [`docs/research/leaderboard.md`](docs/research/leaderboard.md) and the [official live board](https://www.drivendata.org/competitions/306/competition-doe-gems/leaderboard/).
 - **Prior site-history lesson:** GEMSDOE32 contains useful owner-reported experiments/projections but explicitly distinguishes them from organizer scores. A prior site's own audit also found a mismatch between its advertised primary download and its measured best artifact. Treat all inherited rankings as hypotheses until this repository reproduces them on authorized data and an uncontaminated spatial holdout. No prior TIFF or pixels are reused here.
 - **Official reference solution:** this repo began with only a README title; no prior model code existed. Compare against the [organizer reference](https://github.com/drivendataorg/gems-prize-reference-solution). Its example notebook writes an output without an explicit NoData tag, while the official problem text says null/NaN outside bounds. This format inconsistency remains unresolved until the authorized sample/organizer clarification is checked; this project follows the explicit format text and sample-template mask and does not claim platform acceptance.
