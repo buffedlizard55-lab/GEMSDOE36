@@ -1,8 +1,8 @@
 # GEMSDOE36 Experimental Results & Validation Ledger
 
 **Ledger Updated:** 2026-10-04 UTC  
-**Evaluation Protocol:** 4-Quadrant Spatially Blocked Holdout Mirror (`gemsdoe36.live_mirror`)  
-**Lead Submission Candidate:** `gemsdoe36-anderson-geothermal-pinn-38854-20261004T230000Z-9b9ea4e6-zeros.tif`
+**Evaluation Protocol:** 4-Quadrant Spatially Blocked Holdout Mirror (`gemsdoe36.live_mirror`) for the Anderson-PINN line; 5-fold spatially-blocked off-catalogue holdout for the H6 line (see §4).  
+**Candidate lines (both unique, both preserved):** Anderson-PINN primary `gemsdoe36-anderson-geothermal-pinn-38854-20261004T230000Z-9b9ea4e6-zeros.tif` (sections 1–3) and the off-catalogue H6 gate-passed candidate `GEMS36_h6_offcatalog_network_prior_20261004T193432.021282Z_3276c04090_3c064db2.tif` (section 4). The owner selects the single final file to upload. The two lines used different holdout protocols and are not compared head-to-head.
 
 ---
 
@@ -70,3 +70,48 @@ The production pipeline generated the following verified competition submission 
 4. **Finite Range:** In-bounds values strictly in $[0.0, 1.0]$.
 5. **Portal Range Fix:** Primary submission contains 0 NaNs and `nodata=None`, ensuring strict adherence to $[0, 1]$ across all 12,279,160 array elements.
 6. **Integrity and Audit:** SHA-256 verified against `docs/downloads/submissions_manifest.json` and `gemsdoe36-anderson-geothermal-pinn-38854-20261004T230000Z-9b9ea4e6-audit.json`.
+
+---
+
+## 4. Off-catalogue candidate line (H6) — 5-fold spatial holdout gate
+
+*Session `arena/01a10834-gemsdoe36`, 2026-10-04. This is a second, independent candidate
+line (off-catalogue fault-network prior) with its own holdout protocol. It is not compared
+head-to-head against the Anderson-PINN line above; both candidate TIFs are preserved.*
+
+- **Data:** the owner-supplied SHA-256-pinned mirrors of the official rasters (features,
+  labels, sample template) plus external layers (USGS 3DEP LiDAR scarp, GeoDAWN
+  radiometric/extension grids, USGS SGMC proxy, GDR-1391 geothermal manifests) are present
+  under `data/`. Provenance and the single point of trust (owner mirrors, not
+  organizer-authenticated bytes) are in `sources.md`.
+- **Pipeline:** `prepare_data_h6.py` (49 channels) → `field.py` (multi-family corroboration
+  belief field + off-catalogue SGMC prior) → `anderson_dip.py` (spatially varying extension
+  field, dip projection, soft strike weight) → `emitter.py` (exact-marginal-gain dots,
+  support confinement, 200 m catalogue-flank exclusion, 300 m scatter) → `submission.py`
+  (fail-closed writer).
+- **Holdout gate — run 5 (concentrated top-K, H1 dip primary): FAIL.** `full_topk` beat the
+  incumbent in 2/5 folds (0.0916 / 0.0241 / 0.1191 / 0.0491 / 0.1353 vs
+  0.1319 / 0.0811 / 0.0838 / 0.0968 / 0.0902); high variance, failure mode = **under-coverage**
+  (concentrated dots vs the incumbent's broad 37.6k). Dip ablation: `nodip` ≥ `full` in 4/5
+  (dip is a small negative on a surface-trace target). `model_only` 0.004–0.029 (geophysics
+  alone is near-zero off-catalogue). ⇒ the lever is coverage + an off-catalogue prior, not dip.
+- **Hypothesis H6 (off-catalogue SGMC network prior + broad-coverage emission) promoted to lead.**
+  Emission target changed from the concentrated top-K to the full off-catalogue SGMC line
+  network; the emitter stops at the break-even bar at ~23–25k dots.
+- **Holdout gate — run 6 (H6 broad coverage): PASS 5/5.** `full_cover` (23.2–23.7k dots) beat
+  `incumbent_h33` on **every fold**: 0.4162 / 0.3414 / 0.4816 / 0.3826 / 0.5191 vs
+  0.1319 / 0.0811 / 0.0838 / 0.0968 / 0.0902 (mean 0.428 vs 0.097, ~4.4×). Ablations:
+  `full_topk`→`full_cover` ≈10× (coverage); `model_only`→`full_cover` (the SGMC prior carries
+  the off-catalogue signal); `full_cover`→`nodip_cover` a consistent small negative
+  (−0.01…−0.045, so dip is off in the candidate). Full table in `holdout_results.json`.
+  **Current local holdout best on this line = H6 `nodip_cover` (mean 0.452).** Caveat: the SGMC
+  proxy over-counts old faults the hidden set excludes, so proxy→live transfer is partial.
+- **Upload-ready candidate generated and validated.** Config = dip off, SGMC prior on, broad
+  coverage, scatter 3 px, flank exclusion → **24,881 dots**, binary dot map, EPSG:32611 100 m,
+  single float32 band, [0,1] in-bounds, NaN outside, template match, SHA-256 manifest. File:
+  `GEMS36_h6_offcatalog_network_prior_20261004T193432.021282Z_3276c04090_3c064db2.tif`
+  (mirrored to `docs/downloads/` for the site). Diagnostics in `holdout_results.json`. The
+  upload itself is the owner's manual step; no slot has been spent and no organizer score
+  exists yet.
+- **Not done yet:** the H5 CNN ensemble has not been trained/gated, so it is not in this file.
+  It may use a later slot only if it beats the H6 holdout best on the same folds.

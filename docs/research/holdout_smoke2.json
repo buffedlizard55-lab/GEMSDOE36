@@ -1,0 +1,128 @@
+{
+  "generated_utc": "2026-10-04T19:13:36Z",
+  "config": {
+    "K_TARGET": 12500,
+    "budget": 40000,
+    "folds": 2,
+    "scatter_ablation_px": [
+      3,
+      0
+    ],
+    "dip_ablation": true,
+    "seed": 36,
+    "block_px": 512,
+    "collar_px": 30
+  },
+  "per_fold": {
+    "fold_0": {
+      "eval_domain_px": 2175171,
+      "truth_px": {
+        "sgmc": 20059,
+        "cat": 28778
+      },
+      "variants": {
+        "full": {
+          "dots": 13518,
+          "stopped_by": "bar",
+          "dti_vs_own_proxy": 0.975455537526104,
+          "score_sgmc": 0.03734741773023387,
+          "score_cat": 0.000437916969626216
+        },
+        "nodip": {
+          "dots": 13524,
+          "stopped_by": "bar",
+          "dti_vs_own_proxy": 0.9732667321402733,
+          "score_sgmc": 0.040227814443611884,
+          "score_cat": 0.0005029925136964342
+        },
+        "model_only": {
+          "dots": 13132,
+          "stopped_by": "bar",
+          "dti_vs_own_proxy": 0.9649267889654366,
+          "score_sgmc": 0.00745613674328198,
+          "score_cat": 0.0005749063643150038
+        },
+        "full_noscat": {
+          "dots": 12109,
+          "stopped_by": "empty",
+          "dti_vs_own_proxy": 0.9800395668070755,
+          "score_sgmc": 0.03647647822912569,
+          "score_cat": 0.0002293042938627064
+        },
+        "incumbent_h33": {
+          "dots": 37654,
+          "score_sgmc": 0.09108908963807816,
+          "score_cat": 0.006513960065724609
+        },
+        "incumbent_d28": {
+          "dots": 44090,
+          "score_sgmc": 0.08945790388159623,
+          "score_cat": 0.14442946570069617
+        },
+        "sgmc_prior": {
+          "dots": 40000,
+          "score_sgmc": 0.8768626813843219
+        }
+      }
+    },
+    "fold_1": {
+      "eval_domain_px": 3053299,
+      "truth_px": {
+        "sgmc": 42485,
+        "cat": 33247
+      },
+      "variants": {
+        "full": {
+          "dots": 13454,
+          "stopped_by": "bar",
+          "dti_vs_own_proxy": 0.9726579636481792,
+          "score_sgmc": 0.1118459021138685,
+          "score_cat": 0.0015537013301464588
+        },
+        "nodip": {
+          "dots": 13493,
+          "stopped_by": "bar",
+          "dti_vs_own_proxy": 0.9727405240948576,
+          "score_sgmc": 0.11232572730996832,
+          "score_cat": 0.001616082127717295
+        },
+        "model_only": {
+          "dots": 12933,
+          "stopped_by": "bar",
+          "dti_vs_own_proxy": 0.9593189497570336,
+          "score_sgmc": 0.019496248189159637,
+          "score_cat": 0.0021763444361892256
+        },
+        "full_noscat": {
+          "dots": 12048,
+          "stopped_by": "empty",
+          "dti_vs_own_proxy": 0.97730126128408,
+          "score_sgmc": 0.10960539906838673,
+          "score_cat": 0.0011307461323435196
+        },
+        "incumbent_h33": {
+          "dots": 37654,
+          "score_sgmc": 0.09631518501599129,
+          "score_cat": 0.00676421821309245
+        },
+        "incumbent_d28": {
+          "dots": 44090,
+          "score_sgmc": 0.09533018308950827,
+          "score_cat": 0.17502532427240833
+        },
+        "sgmc_prior": {
+          "dots": 40000,
+          "score_sgmc": 0.8769659446034499
+        }
+      }
+    }
+  },
+  "gate": {
+    "full_vs_incumbent_h33_wins": "1/2",
+    "full_vs_nodip_wins": "0/2",
+    "rule": "full > incumbent_h33 on sgmc in >=4/5 folds AND full > nodip in >=3/5 folds",
+    "PASS": "INCONCLUSIVE (fewer than 5 folds)"
+  },
+  "elapsed_s": 149.6,
+  "note": "sgmc truth = USGS SGMC faults >300 m from the provided catalogue (off-catalogue proxy; same truth for all variants). cat truth = held-out catalogue (leaky view, reference only). Incumbents are learning references, never copied into the submission."
+}

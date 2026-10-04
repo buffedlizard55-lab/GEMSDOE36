@@ -3,6 +3,7 @@
 /data/processed/
 /data/derived/
 /data/external/
+/data/study/
 /data/scored/
 /data/raw_parts/
 .cache/
@@ -16,7 +17,9 @@
 *.npz
 *.tif
 *.tiff
-# Audited submission deliverables in docs/downloads
+# Audited submission deliverables in docs/downloads — all tracked:
+# the gate-passed H6 candidate (the unique upload-ready file for both
+# rounds), the QA format fixture, and main's Anderson-PINN outputs.
 !/docs/downloads/*.tif
 !/docs/downloads/*.zip
 !/docs/downloads/*.json

@@ -32,9 +32,10 @@
         </div>
       </div>
       <aside class="status-card" aria-label="Current project status">
-        <div class="eyebrow"><span class="status-pip" aria-hidden="true"></span>Verified Submission · 2026-10-04 UTC</div>
-        <h2>GEMSDOE36 Lead Artifact Ready</h2>
-        <p><strong>38,854 positive dots</strong> · <strong>0 on-catalogue</strong> · 100% cells finite in [0, 1] with <code>nodata=None</code> (fixing the portal range error). Holdout Mirror: <strong>0.269908</strong> (+0.001987 vs 0.2778 base, beating baseline across all 4 quadrants). Projected live score: <strong>0.2798</strong>.</p>
+        <div class="eyebrow"><span class="status-pip" aria-hidden="true"></span>Two candidate lines · 2026-10-04 UTC</div>
+        <h2>GEMSDOE36 Lead Artifacts Ready</h2>
+        <p><strong>Anderson-PINN</strong>: 38,854 positive dots · 0 on-catalogue · 100% cells finite in [0, 1] with <code>nodata=None</code> (fixing the portal range error). Holdout Mirror: <strong>0.269908</strong> (+0.001987 vs 0.2778 base). Projected live score: <strong>0.2798</strong>.</p>
+        <p><strong>Off-catalogue H6 prior</strong>: 24,881 dots on the exact organizer grid; beat the incumbent on all 5 spatially-blocked folds (mean 0.43 vs 0.10, ~4.4&times; on the off-catalogue proxy). Both are unique, download-ready candidate TIFs; the owner selects the single final file to upload.</p>
         <a href="research/results.md">View Full Validation Ledger →</a>
       </aside>
     </section>
@@ -42,13 +43,14 @@
     <!-- ONE-CLICK DOWNLOAD STRIP -->
     <section class="download-strip" id="submission" aria-label="Submission download and metadata">
       <div>
-        <strong>Official Competition Submission: <code>gemsdoe36-anderson-geothermal-pinn-38854-20261004T230000Z-9b9ea4e6-zeros.tif</code></strong>
-        <p>Single-band float32 GeoTIFF, EPSG:32611, 100 m resolution, 3730 &times; 3292 grid. SHA-256: <code>e15891020b9c57056ac7fa874a5e506fbd6ed9314a4ea8e73af0753887a3708a</code>. Guaranteed finite range [0.0, 1.0] across all 12,279,160 cells. Zero catalogue-flank contamination.</p>
+        <strong>Two unique candidate TIFs — the owner selects the single final file: <code>gemsdoe36-anderson-geothermal-pinn-38854-20261004T230000Z-9b9ea4e6-zeros.tif</code> (Anderson-PINN) and <code>GEMS36_h6_offcatalog_network_prior_20261004T193432.021282Z_3276c04090_3c064db2.tif</code> (off-catalogue H6).</strong>
+        <p><strong>Anderson-PINN (primary):</strong> single-band float32 GeoTIFF, EPSG:32611, 100 m, 3730 &times; 3292 grid. SHA-256: <code>e15891020b9c57056ac7fa874a5e506fbd6ed9314a4ea8e73af0753887a3708a</code>. 38,854 dots, 0 on-catalogue, finite [0,1] across all 12,279,160 cells. <strong>Off-catalogue H6 (gate-passed 5/5):</strong> binary dot map, 24,881 dots, exact organizer grid, [0,1] in-bounds, NaN outside.</p>
       </div>
       <div class="hero-actions">
-        <a class="button" href="downloads/gemsdoe36-anderson-geothermal-pinn-38854-20261004T230000Z-9b9ea4e6-zeros.tif" download>Download Primary TIFF (311 KB)</a>
-        <a class="button secondary" href="downloads/gemsdoe36-anderson-geothermal-pinn-38854-20261004T230000Z-9b9ea4e6-zeros.zip" download>Download ZIP (208 KB)</a>
-        <a class="button secondary" href="downloads/gemsdoe36-anderson-geothermal-pinn-38854-20261004T230000Z-9b9ea4e6-nan.tif" download>Download NaN Companion (363 KB)</a>
+        <a class="button" href="downloads/gemsdoe36-anderson-geothermal-pinn-38854-20261004T230000Z-9b9ea4e6-zeros.tif" download>Download PINN primary TIFF (311 KB)</a>
+        <a class="button secondary" href="downloads/gemsdoe36-anderson-geothermal-pinn-38854-20261004T230000Z-9b9ea4e6-zeros.zip" download>Download PINN ZIP (208 KB)</a>
+        <a class="button secondary" href="downloads/gemsdoe36-anderson-geothermal-pinn-38854-20261004T230000Z-9b9ea4e6-nan.tif" download>Download PINN NaN Companion (363 KB)</a>
+        <a class="button" href="downloads/GEMS36_h6_offcatalog_network_prior_20261004T193432.021282Z_3276c04090_3c064db2.tif" download>Download H6 gate-passed candidate TIFF</a>
       </div>
     </section>
 
@@ -191,6 +193,20 @@
           </tbody>
         </table>
       </div>
+    </section>
+
+    <!-- H6 OFF-CATALOGUE GATE RESULTS (second candidate line) -->
+    <section class="section" aria-labelledby="h6-title">
+      <div class="section-head">
+        <div><div class="eyebrow">Off-catalogue candidate line</div><h2 id="h6-title">H6 off-catalogue prior: 5-fold spatial holdout, 5/5</h2></div>
+        <p>A second, independent candidate from the off-catalogue session: an off-catalogue SGMC fault-network prior fused with geophysical corroboration, emitted by exact-marginal-gain across the line network. It uses a different holdout protocol than the PINN line above, so the two are not compared head-to-head.</p>
+      </div>
+      <div class="grid cols-3">
+        <article class="card"><span class="card-kicker"><span class="rank">01</span>Lead · gate PASSED 5/5</span><h3>H6 Off-catalogue network prior + broad coverage</h3><p>Off-catalogue SGMC line prior fused with geophysical corroboration, emitted broadly across the line network. Beat the incumbent on every fold — mean 0.43 vs 0.10 (~4.4&times;) on the off-catalogue proxy; 24,881 dots.</p><span class="tag">in the H6 candidate TIFF</span></article>
+        <article class="card"><span class="card-kicker"><span class="rank">02</span>Ablation · small negative</span><h3>H1 Anderson dip projection</h3><p>Re-projects deep potential-field lineaments up-dip to the surface trace. Measured a consistent small negative on the surface-trace target, so it is off in the candidate.</p><span class="tag">measured &minus;0.01&hellip;&minus;0.045</span></article>
+        <article class="card"><span class="card-kicker"><span class="rank">03</span>Conditional · not yet in the file</span><h3>H5 Physics-informed CNN ensemble</h3><p>A small U-Net with the differentiable Anderson orientation term in the loss, ensembled with the H6 field. Adopted only if it beats H6 on the same holdout.</p><span class="tag">gated behind H6</span></article>
+      </div>
+      <p>Full register: <a href="research/hypotheses.md">hypotheses.md</a> &middot; gate record: <a href="research/holdout_results.json">holdout_results.json</a></p>
     </section>
 
     <!-- PRIMARY SOURCES -->

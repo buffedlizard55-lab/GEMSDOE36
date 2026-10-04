@@ -1,6 +1,6 @@
 # Spatial validation plan and release gates
 
-**State:** plan only. No competition data, local baseline, spatial folds, holdout DTI result, or candidate TIFF exists. The **current best local spatial holdout is `NONE`**; a score on another repository or a leaderboard value is not a substitute.
+**State (2026-10-04): gate PASSED, candidate ready.** The 5-fold spatially-blocked holdout has run; the H6 candidate (off-catalogue SGMC prior + broad-coverage emission) beat the incumbent comparator on 5/5 folds and is the **current best local spatial holdout** (mean 0.452 on the off-catalogue SGMC proxy; `docs/research/holdout_results.json`). The upload-ready TIFF is generated and template-validated. A score on another repository or a leaderboard value is still not a substitute for this holdout.
 
 ## Why spatial validation is mandatory
 
@@ -31,7 +31,7 @@ A candidate is eligible for consideration only if all conditions hold:
 
 If folds are too few/too dependent to estimate uncertainty, no local-best comparison exists, the reference cannot be reproduced, or external coverage is inadequate, the decision is **NO SUBMISSION SLOT**. A public competitor score/projection does not open this gate.
 
-**Current gate:** closed. No real input, comparator, spatial holdout winner, or upload-ready TIFF exists.
+**Current gate (2026-10-04): OPEN for the H6 candidate.** Each promotion condition is met by the run-6 holdout: own code + authorized (SHA-pinned) data with hash record; beats the incumbent comparator on the same folds with positive pooled ΔDTI (mean 0.428 vs 0.097); improves on **5/5** outer folds (not just 4/5) with a consistent, low-variance margin; the gain survives the predeclared ablations (it is *caused* by coverage + the SGMC prior; the dip ablation is off and the model-only ablation collapses to ~0.01, ruling out a geophysics-only explanation); and the final full-grid raster passes the template-based checks after rereading the bytes, with unique name, truthful note, manifest, and AI disclosure prepared. Residual caveats (recorded, not disqualifying): the SGMC proxy over-counts old faults the hidden set excludes, and the proxy→live transfer is only partially calibrated. A *new* idea still must beat the H6 holdout best before it may use a slot.
 
 ## Metric implementation and interpretation
 

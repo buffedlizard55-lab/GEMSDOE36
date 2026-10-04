@@ -1,11 +1,89 @@
-# GEMSDOE36: Anderson-Kinematic Physics-Informed Neural Network & Geothermal Conduit Mapping
+# GEMSDOE36: Two Independent Candidate Lines (Anderson-PINN + Off-Catalogue H6 Prior)
 
 > **Department of Energy (DOE) Geologic Enhanced Mapping System (GEMS) Prize Challenge**  
 > **Official Public Leaderboard Target:** 0.3195 (Historical Baseline: 0.2778)  
-> **Repository Branch:** `arena/01a10833-gemsdoe36`  
-> **Submission Status:** Fully Validated Primary GeoTIFF Generated & Sealed (`docs/downloads/`)
+> **Repository state:** merged to `main` from sessions `arena/01a10833-gemsdoe36` (Anderson-PINN) and `arena/01a10834-gemsdoe36` (off-catalogue H6)  
+> **Submission Status:** Two unique, validated candidate GeoTIFFs published to `docs/downloads/` — Anderson-PINN primary (sections 1–3) and off-catalogue H6 gate-passed candidate (section 8). The owner selects the single final file for both prize rounds.
 
----
+## User brief — verbatim, reread every session (recorded 2026-10-04)
+
+This is the owner's standing instruction, stored in full as the starting point for
+every session. The distilled operational rules follow below it; where they differ,
+the brief and the explicit owner corrections below govern.
+
+> **Goal:** get to the **top of the leaderboard** on the DOE GEMS Prize fault
+> discovery competition (DrivenData 306), GeoDAWN region. Core values for every
+> decision: **Maximize P(Win)** and **Own the Outcome.**
+>
+> 1. **MUST generate a UNIQUE TIF submission.** Never copy a previous
+> submission's pixels into ours — prior GEMSDOE sites/repositories are for
+> learning and forensics only.
+> 2. **Encode Anderson (1905) faulting / regional stress orientation as a
+> > CONSTRAINT in the differentiable training loss** (Raissi–Perdikaris–
+> > Karniadakis 2019 physics-informed style) — a soft orientation-consistency
+> > term, NOT a post-hoc compass filter. In a Great Basin normal-faulting regime
+> > (~60° dip), penalize candidates whose local strike deviates from the
+> > Anderson-predicted range given the known regional extension direction.
+> 3. **Analyze WHY h33-2-b2 (GEMSDOE32, owner-reported 0.2778) was the best**
+> > prior submission and design the strategy to beat the current top (owner-
+> > reported 0.3195). PhD-level analysis, from the forensics in the prior
+> > repos — never by copying their rasters.
+> 4. **Store this standing prompt in the repo README** as the reread-every-
+> > session starting point.
+> 5. **Fix the prior platform rejection** “Predicted values must be in range
+> > [0, 1]”: give the submission a unique name + short comment, and an
+> > executive-summary subpage explaining exactly how to submit. Fail closed on
+> > range/geometry so a recurrence is impossible.
+> 6. **Generate 3–5 new candidate geological hypotheses** (layers, physical
+> > signature, why each catches off-catalogue faults, difference from this
+> > repo) **ranked by expected DTI improvement vs cost.** Name the free
+> > official sources for any data that still needs verification.
+> 7. **Validate the top hypothesis on a spatially-blocked holdout BEFORE
+> > spending a weekly submission slot.** Never spend a slot on an idea that
+> > has not beaten the current holdout best.
+> 8. Work **autonomously end-to-end** (no manual input expected), in **3
+> > passes** (implement → bug review → re-check against the original request).
+> > **No hallucinations:** verify line by line from official/verified/trusted
+> > sources, provide links for manual review, and flag irregularities.
+> 9. AI disclosure is required per the official rules (narrative of extent/use).
+> > Then **PR and merge to `main`**, reporting success only after GitHub
+> > confirms.
+
+### Owner corrections and constraints (standing)
+
+- The TIF must be an **obvious, easy download on the site** — “as easy as
+  clicking a File to submit” — and this is stated in the executive summary /
+  very top of the site.
+- Never guess the submission format: single-band **float32** GeoTIFF,
+  **EPSG:32611, 100 m**, the **exact organizer grid**, **[0,1]** in-bounds,
+  **NaN/null outside**; ≤3 submissions/week; **one final file for both prize
+  rounds**, chosen without private scores.
+- Strain is not automatically stress: the orientation term needs a defensible
+  stress/extension source with spatial uncertainty (see `orientation.py`).
+
+**Research status (2026-10-04 UTC; merged from sessions `arena/01a10834-gemsdoe36`
+and `arena/01a10833-gemsdoe36`):** the owner-supplied mirrors of the official
+competition rasters (SHA-256 pinned) are present under `data/` (19-band features,
+60,988-pixel catalogue, sample template, 1 m LiDAR scarp features, GeoDAWN
+radiometric/extension grids, USGS SGMC proxy, GDR-1391 geothermal manifests).
+**Two candidate lines now coexist** (kept side by side by a non-destructive merge;
+they use different holdout protocols and are not compared head-to-head):
+- **Anderson-PINN (main):** `prepare_data.py` → `anderson.py` (kinematic
+  consistency) → `geothermal.py` → `run_pipeline.py`; LM-calibrated 4-quadrant
+  mirror; primary deliverable
+  `docs/downloads/gemsdoe36-anderson-geothermal-pinn-38854-20261004T230000Z-9b9ea4e6-zeros.tif`
+  (details in sections 1–3 below).
+- **Off-catalogue H6:** `prepare_data_h6.py` → `field.py` (multi-family
+  corroboration belief field + off-catalogue SGMC prior) → `anderson_dip.py`
+  (spatially varying extension field + dip projection + soft strike weight) →
+  `emitter.py` (exact-marginal-gain dots, 200 m catalogue-flank exclusion,
+  300 m scatter) → `submission.py` (fail-closed writer); 5-fold
+  spatially-blocked gate **PASS 5/5**; candidate
+  `docs/downloads/GEMS36_h6_offcatalog_network_prior_20261004T193432.021282Z_3276c04090_3c064db2.tif`
+  (details in section 8 below).
+Both candidate TIFs are unique and published to `docs/downloads/`. The upload
+(single final file for both prize rounds) is the owner's manual step; no slot has
+been spent and no organizer score exists yet.
 
 ## Required User Prompt & Project Mandate
 
@@ -165,7 +243,7 @@ GEMSDOE36/
 
 ### Quickstart & Verification:
 ```bash
-# Run the complete test suite (38 passing unit tests)
+# Run the complete test suite (56 passing unit tests; +1 skipped without torch)
 PYTHONPATH=src python3 -m pytest -v
 
 # Run the static site checker
@@ -187,3 +265,35 @@ python3 scripts/validate_submission.py \
 4. **DOE Geothermal Data Repository (GDR 1391):** *Nevada Geothermal Resource Assessment Database.* [GDR 1391](https://gdr.openei.org/submissions/1391).
 5. **Heidbach, O., et al. (2025).** *The World Stress Map database release 2025.* GFZ Data Services. [DOI: 10.5880/WSM.2025.001](https://doi.org/10.5880/WSM.2025.001).
 6. **USGS GeoDAWN Project (2024).** *Earth Mapping Resources Initiative (Earth MRI) airborne geophysical surveys over California and Nevada.* [ScienceBase ID 657e1d85d34e23d3533209f7](https://www.sciencebase.gov/catalog/item/657e1d85d34e23d3533209f7).
+---
+
+## 8. Off-catalogue candidate line (H6) — 5-fold spatial-holdout gate-passed
+
+*From session `arena/01a10834-gemsdoe36` (2026-10-04). A second, independent
+candidate line — an **off-catalogue** fault-network prior — kept side by side with the
+Anderson-PINN line above. Different holdout protocol; **not compared head-to-head**.*
+
+- **Method.** `prepare_data_h6.py` (49 channels) → `field.py` (multi-family
+  corroboration belief field + off-catalogue USGS SGMC line prior) →
+  `anderson_dip.py` (spatially varying extension field, dip projection, soft
+  strike-consistency weight) → `emitter.py` (exact-marginal-gain dots with support
+  confinement, the validated 200 m catalogue-flank exclusion, and 300 m scatter) →
+  `submission.py` (fail-closed writer). Dip projection is **off** in the candidate
+  (measured a small negative on a surface-trace target); coverage + the off-catalogue
+  prior carry the signal.
+- **Gate.** `scripts/run_holdout.py` — 5-fold spatially-blocked holdout vs the
+  incumbent, exact DTI. **PASS 5/5** (2026-10-04): `full_cover` beat `incumbent_h33`
+  on every fold, mean 0.428 vs 0.097 (~4.4×) on the off-catalogue SGMC proxy. Best
+  ablation `nodip_cover` mean 0.452. Full per-fold table in
+  [`docs/research/holdout_results.json`](docs/research/holdout_results.json); full
+  register in [`docs/research/hypotheses.md`](docs/research/hypotheses.md) (Line A)
+  and the gate record in
+  [`docs/research/results.md`](docs/research/results.md) (§4).
+- **Candidate.** `docs/downloads/GEMS36_h6_offcatalog_network_prior_20261004T193432.021282Z_3276c04090_3c064db2.tif`
+  — 24,881 dots, binary dot map, EPSG:32611, 100 m, single float32 band, [0,1]
+  in-bounds, NaN outside, exact organizer grid, SHA-256 manifest. Built and validated
+  with `scripts/build_h6_submission.py` + `scripts/validate_submission.py`. The upload
+  is the owner's manual step; no slot spent, no organizer score yet.
+- **Open.** The H5 physics-informed CNN ensemble has not been trained/gated, so it is
+  not in this file; it may use a later slot only if it beats the H6 holdout best on the
+  same folds.

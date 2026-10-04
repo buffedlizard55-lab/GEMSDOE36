@@ -1,0 +1,281 @@
+{
+  "generated_utc": "2026-10-04T19:33:31Z",
+  "config": {
+    "K_TARGET": 12500,
+    "budget": 40000,
+    "folds": 5,
+    "emission_target": "broad: full off-catalogue SGMC line network",
+    "scatter_ablation_px": [
+      3
+    ],
+    "dip_ablation": true,
+    "seed": 36,
+    "block_px": 512,
+    "collar_px": 30
+  },
+  "per_fold": {
+    "fold_0": {
+      "eval_domain_px": 1052106,
+      "truth_px": {
+        "sgmc": 9545,
+        "cat": 11924
+      },
+      "variants": {
+        "full_cover": {
+          "dots": 23274,
+          "stopped_by": "bar",
+          "dti_vs_own_proxy": 0.43045760515176273,
+          "score_sgmc": 0.4162226877849654,
+          "score_cat": 7.216929577348222e-05
+        },
+        "full_topk": {
+          "dots": 13490,
+          "stopped_by": "bar",
+          "dti_vs_own_proxy": 0.9754237462101701,
+          "score_sgmc": 0.09159143551071654,
+          "score_cat": 0.0007248768123420331
+        },
+        "nodip_cover": {
+          "dots": 24716,
+          "stopped_by": "bar",
+          "dti_vs_own_proxy": 0.45057198532990056,
+          "score_sgmc": 0.4386019099558991,
+          "score_cat": 6.627367734867158e-05
+        },
+        "model_only": {
+          "dots": 13023,
+          "stopped_by": "bar",
+          "dti_vs_own_proxy": 0.9627402250467584,
+          "score_sgmc": 0.029423393464075676,
+          "score_cat": 0.0011723369367105819
+        },
+        "incumbent_h33": {
+          "dots": 37654,
+          "score_sgmc": 0.1318617189448743,
+          "score_cat": 0.007366370858543602
+        },
+        "incumbent_d28": {
+          "dots": 44090,
+          "score_sgmc": 0.129027212631017,
+          "score_cat": 0.18692015212052746
+        },
+        "sgmc_prior": {
+          "dots": 40000,
+          "score_sgmc": 0.8728633742123427
+        }
+      }
+    },
+    "fold_1": {
+      "eval_domain_px": 877981,
+      "truth_px": {
+        "sgmc": 10032,
+        "cat": 8937
+      },
+      "variants": {
+        "full_cover": {
+          "dots": 23711,
+          "stopped_by": "bar",
+          "dti_vs_own_proxy": 0.43668916064825597,
+          "score_sgmc": 0.3413622281977962,
+          "score_cat": 0.00019205911292553352
+        },
+        "full_topk": {
+          "dots": 13478,
+          "stopped_by": "bar",
+          "dti_vs_own_proxy": 0.9737801955831146,
+          "score_sgmc": 0.024062920799815948,
+          "score_cat": 0.002218767663883819
+        },
+        "nodip_cover": {
+          "dots": 24804,
+          "stopped_by": "bar",
+          "dti_vs_own_proxy": 0.4519430329556931,
+          "score_sgmc": 0.3597758640362009,
+          "score_cat": 0.0002313925851461886
+        },
+        "model_only": {
+          "dots": 12997,
+          "stopped_by": "bar",
+          "dti_vs_own_proxy": 0.9598095251751796,
+          "score_sgmc": 0.0037524848755791677,
+          "score_cat": 0.003203533495846937
+        },
+        "incumbent_h33": {
+          "dots": 37654,
+          "score_sgmc": 0.08108053291630347,
+          "score_cat": 0.008944083120090467
+        },
+        "incumbent_d28": {
+          "dots": 44090,
+          "score_sgmc": 0.08008759235671564,
+          "score_cat": 0.15384069680031784
+        },
+        "sgmc_prior": {
+          "dots": 40000,
+          "score_sgmc": 0.8783182720757813
+        }
+      }
+    },
+    "fold_2": {
+      "eval_domain_px": 1449061,
+      "truth_px": {
+        "sgmc": 18859,
+        "cat": 19094
+      },
+      "variants": {
+        "full_cover": {
+          "dots": 23287,
+          "stopped_by": "bar",
+          "dti_vs_own_proxy": 0.43100707582313375,
+          "score_sgmc": 0.4815985772046847,
+          "score_cat": 3.884633416161374e-05
+        },
+        "full_topk": {
+          "dots": 13488,
+          "stopped_by": "bar",
+          "dti_vs_own_proxy": 0.9729702552560676,
+          "score_sgmc": 0.11908770621643137,
+          "score_cat": 0.0008673635940159362
+        },
+        "nodip_cover": {
+          "dots": 24643,
+          "stopped_by": "bar",
+          "dti_vs_own_proxy": 0.449490918297448,
+          "score_sgmc": 0.49861323760476134,
+          "score_cat": 7.888041329088359e-05
+        },
+        "model_only": {
+          "dots": 13000,
+          "stopped_by": "bar",
+          "dti_vs_own_proxy": 0.9603094652252012,
+          "score_sgmc": 0.020388152542744183,
+          "score_cat": 0.0012645144755453147
+        },
+        "incumbent_h33": {
+          "dots": 37654,
+          "score_sgmc": 0.08376667263339868,
+          "score_cat": 0.006197926810233181
+        },
+        "incumbent_d28": {
+          "dots": 44090,
+          "score_sgmc": 0.08286344504470794,
+          "score_cat": 0.15751662096257923
+        },
+        "sgmc_prior": {
+          "dots": 40000,
+          "score_sgmc": 0.8739427574541432
+        }
+      }
+    },
+    "fold_3": {
+      "eval_domain_px": 837530,
+      "truth_px": {
+        "sgmc": 10328,
+        "cat": 9405
+      },
+      "variants": {
+        "full_cover": {
+          "dots": 23207,
+          "stopped_by": "bar",
+          "dti_vs_own_proxy": 0.4302808140379933,
+          "score_sgmc": 0.3825953708813337,
+          "score_cat": 3.818787235805768e-05
+        },
+        "full_topk": {
+          "dots": 13428,
+          "stopped_by": "bar",
+          "dti_vs_own_proxy": 0.9725236268436944,
+          "score_sgmc": 0.04906272820378701,
+          "score_cat": 0.000251982663157282
+        },
+        "nodip_cover": {
+          "dots": 24836,
+          "stopped_by": "bar",
+          "dti_vs_own_proxy": 0.4523706226921678,
+          "score_sgmc": 0.4254686289390768,
+          "score_cat": 7.541160639796274e-05
+        },
+        "model_only": {
+          "dots": 12997,
+          "stopped_by": "bar",
+          "dti_vs_own_proxy": 0.9585852037039114,
+          "score_sgmc": 0.006147381074505607,
+          "score_cat": 0.0005824250045743021
+        },
+        "incumbent_h33": {
+          "dots": 37654,
+          "score_sgmc": 0.09678889581183675,
+          "score_cat": 0.005760185399261316
+        },
+        "incumbent_d28": {
+          "dots": 44090,
+          "score_sgmc": 0.09565347205414068,
+          "score_cat": 0.19360387831026504
+        },
+        "sgmc_prior": {
+          "dots": 40000,
+          "score_sgmc": 0.8759567013767131
+        }
+      }
+    },
+    "fold_4": {
+      "eval_domain_px": 1046373,
+      "truth_px": {
+        "sgmc": 14373,
+        "cat": 13043
+      },
+      "variants": {
+        "full_cover": {
+          "dots": 23727,
+          "stopped_by": "bar",
+          "dti_vs_own_proxy": 0.43702024375326387,
+          "score_sgmc": 0.5190652936704102,
+          "score_cat": 0.00010585547787753982
+        },
+        "full_topk": {
+          "dots": 13471,
+          "stopped_by": "bar",
+          "dti_vs_own_proxy": 0.9717266695024304,
+          "score_sgmc": 0.13525445987508244,
+          "score_cat": 0.001192695190690283
+        },
+        "nodip_cover": {
+          "dots": 24808,
+          "stopped_by": "bar",
+          "dti_vs_own_proxy": 0.4518520830303392,
+          "score_sgmc": 0.5382064919143067,
+          "score_cat": 8.375891738109228e-05
+        },
+        "model_only": {
+          "dots": 12984,
+          "stopped_by": "bar",
+          "dti_vs_own_proxy": 0.957129825069616,
+          "score_sgmc": 0.02788106422417761,
+          "score_cat": 0.0012378388541740433
+        },
+        "incumbent_h33": {
+          "dots": 37654,
+          "score_sgmc": 0.09020056887173447,
+          "score_cat": 0.005621294707767922
+        },
+        "incumbent_d28": {
+          "dots": 44090,
+          "score_sgmc": 0.08924986058433317,
+          "score_cat": 0.12316470844778284
+        },
+        "sgmc_prior": {
+          "dots": 40000,
+          "score_sgmc": 0.8758411750987801
+        }
+      }
+    }
+  },
+  "gate": {
+    "full_cover_vs_incumbent_h33_wins": "5/5",
+    "full_cover_vs_nodip_cover_wins": "0/5",
+    "rule": "full_cover > incumbent_h33 on sgmc in >=4/5 folds (H6). nodip_cover / full_topk / model_only are informational ablations.",
+    "PASS": true
+  },
+  "elapsed_s": 363.3,
+  "note": "sgmc truth = USGS SGMC faults >300 m from the provided catalogue (off-catalogue proxy; same truth for all variants). cat truth = held-out catalogue (leaky view, reference only). Incumbents are learning references, never copied into the submission."
+}
