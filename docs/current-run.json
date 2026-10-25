@@ -1,43 +1,33 @@
 {
-  "hypothesis": "Conditional conductivity morphology at basement transitions (proposed; lane unassigned)",
-  "mechanism": "Cross-scale curvature of conductivity residuals conditioned on basement depth and gravity",
-  "non_fault_mimic": "Saline basin-fill sediments and lithologic contacts",
-  "holdout": {
+  "hypothesis": "No assigned method lane; basin-floor flexural hinge is a proposal only",
+  "mechanism": "Signed multiscale basement-depth/gravity hinge pairs under smooth basin-floor topography; not tested",
+  "non_fault_mimic": "Sedimentary compaction or erosional basin margin",
+  "holdout_dti": {
     "label": "HOLDOUT-DTI",
     "evaluator_version": null,
     "withheld_positives": null,
-    "dti": null,
+    "value": null,
     "ci95": null,
-    "status": "not run; preflight blocked"
+    "status": "not run; shared segment evaluator and cache missing"
   },
-  "registry": {
-    "surface_rank_correlation": null,
-    "dot_rank_correlation": null,
-    "overlap_within_3px": null,
-    "passed": false,
-    "status": "not screened"
+  "registry_comparison": {
+    "surface_spearman": null,
+    "final_dot_overlap_within_3px": null,
+    "status": "not run; no candidate raster or complete registry"
   },
   "raster_sha256": null,
-  "validator": {
-    "passed": false,
-    "no_nan_inside": null,
-    "values_in_01": null,
-    "crs_match": null,
-    "shape_match": null,
-    "transform_match": null,
-    "status": "no new raster"
+  "validator_output": {
+    "no_nan_inside_footprint": null,
+    "values_in_0_1": null,
+    "crs_shape_transform_match": null,
+    "status": "no new raster; legacy-only validation in legacy-validation.json"
   },
   "submission_name": null,
-  "note": "Negative preflight: lane and shared template missing; no new raster; no competition slot selected.",
-  "verdict": "negative",
-  "slot_approved": false,
-  "new_tif_generated": false,
-  "blockers": [
-    "No identifiable assigned method paragraph",
-    "Shared template absent",
-    "No valid independent current holdout baseline",
-    "Registry not restored"
-  ],
+  "note": "Blocked: no assigned lane/shared evaluator. Historical rasters are education only; no new file approved.",
   "experiments_run": 0,
-  "organizer_confirmed_score": null
+  "slots_used": 0,
+  "verdict": "negative",
+  "result_type": "blocked, not an empirical rejection",
+  "submit_ready": false,
+  "slot_approved": false
 }

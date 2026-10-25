@@ -1,65 +1,119 @@
 [
   {
     "repo": "buffedlizard55-lab/GEMSDOE24",
-    "ref": "fc2bc6f350bf5c6ce8da5d7a2ab03578ea1259d1",
-    "source": "https://github.com/buffedlizard55-lab/GEMSDOE24/blob/fc2bc6f350bf5c6ce8da5d7a2ab03578ea1259d1/README.md",
-    "retrieved": true,
-    "error": ""
+    "commit": "fc2bc6f350bf5c6ce8da5d7a2ab03578ea1259d1",
+    "errors": [],
+    "docs/index.html": "24-docs-index.html.txt",
+    "index.html": "24-index.html.txt",
+    "README.md": "24-README.md.txt",
+    "snapshot_sha256": {
+      "docs/index.html": "e0851f4938f9777b520b4ddd8f07e2255fd2b652d18e583360ef5e103d58a5d6",
+      "index.html": "dab8da654ab937cd0d17e594985a46ac0792273dc9ea7635fa7e10230233e32d",
+      "README.md": "058ab4da751b11a7acd767341c6420b58831e2f792e50bc4eb0fa8df2b27dfb4"
+    }
   },
   {
     "repo": "buffedlizard55-lab/GEMSDOE25",
-    "ref": "e40b9b5e3871cb34d138f586bde97f5099658d01",
-    "source": "https://github.com/buffedlizard55-lab/GEMSDOE25/blob/e40b9b5e3871cb34d138f586bde97f5099658d01/README.md",
-    "retrieved": true,
-    "error": ""
+    "commit": "e40b9b5e3871cb34d138f586bde97f5099658d01",
+    "errors": [],
+    "docs/index.html": "25-docs-index.html.txt",
+    "index.html": "25-index.html.txt",
+    "README.md": "25-README.md.txt",
+    "snapshot_sha256": {
+      "docs/index.html": "445aa263eb9412a69c5e6e3814cca6e5d217dfc0832d374b7977e87aa25cf568",
+      "index.html": "abf3c8d88e68a4ca6bd6a739803af4cf534963ca0c5db96ac9ef3204dd941fcf",
+      "README.md": "5797d0f5742afcb27403b3a7c627330fd19d2b71b90ca79b1728094ddbfb345f"
+    }
   },
   {
     "repo": "buffedlizard55-lab/GEMSDOE27",
-    "ref": "cd6bdab32e82c4fd3bcf4ba15294cb11903e84eb",
-    "source": "https://github.com/buffedlizard55-lab/GEMSDOE27/blob/cd6bdab32e82c4fd3bcf4ba15294cb11903e84eb/README.md",
-    "retrieved": true,
-    "error": ""
+    "commit": "cd6bdab32e82c4fd3bcf4ba15294cb11903e84eb",
+    "errors": [],
+    "docs/index.html": "27-docs-index.html.txt",
+    "index.html": "27-index.html.txt",
+    "README.md": "27-README.md.txt",
+    "snapshot_sha256": {
+      "docs/index.html": "ddc0a2e28892840d6b35f8bf17c844f27cc86f0bb246090016d2859776241512",
+      "index.html": "95f099b1beddc95c385270d6e1c0c734fff5329003209376c17c881c30647ce2",
+      "README.md": "4ef08210646a52c02f5d94dd0129cc025563a5c702238946ef780fa5bf4e7dff"
+    }
   },
   {
     "repo": "buffedlizard55-lab/GEMSDOE28",
-    "ref": "e6321461066f89080e3b1bb670d3951ab20d3638",
-    "source": "https://github.com/buffedlizard55-lab/GEMSDOE28/blob/e6321461066f89080e3b1bb670d3951ab20d3638/README.md",
-    "retrieved": true,
-    "error": ""
+    "commit": "e6321461066f89080e3b1bb670d3951ab20d3638",
+    "errors": [],
+    "docs/index.html": "28-docs-index.html.txt",
+    "index.html": "28-index.html.txt",
+    "README.md": "28-README.md.txt",
+    "snapshot_sha256": {
+      "docs/index.html": "d514c4ad866209beebdfe5bc07b48dc167ac6633b6db9d31071de6204589af3f",
+      "index.html": "c1e2cb96b1a12f51d37a964f406cc62505a47097144e52b7fd2e7ee1a7a5f9f3",
+      "README.md": "e60f82e1b63fd2fc0f472c1bb32ada46aaeef53e6f6f78ea3e6830e34a30f11f"
+    }
   },
   {
     "repo": "buffedlizard55-lab/GEMSDOE30",
-    "ref": "3edad3641bcc3d72bd3cd05b77b719297617841c",
-    "source": "https://github.com/buffedlizard55-lab/GEMSDOE30/blob/3edad3641bcc3d72bd3cd05b77b719297617841c/README.md",
-    "retrieved": true,
-    "error": ""
+    "commit": "3edad3641bcc3d72bd3cd05b77b719297617841c",
+    "errors": [],
+    "docs/index.html": "30-docs-index.html.txt",
+    "index.html": "30-index.html.txt",
+    "README.md": "30-README.md.txt",
+    "snapshot_sha256": {
+      "docs/index.html": "86955f30ace3d92d3b87c691ac8cdcbbc322dbc8e605ddbccb2bc6fc753c89ef",
+      "index.html": "7915812231c6f9bf20ca1a65f9b19dca73ac340f49ac038f1eb847149e2be10d",
+      "README.md": "4a333784b00983e9a297188d246b4b2f397e8242af99bff6b4af0d93b5a3496f"
+    }
   },
   {
     "repo": "buffedlizard55-lab/GEMSDOE31",
-    "ref": "1ffc7ad5467a9860f7eb1554c5888d0bfd15db1e",
-    "source": "https://github.com/buffedlizard55-lab/GEMSDOE31/blob/1ffc7ad5467a9860f7eb1554c5888d0bfd15db1e/README.md",
-    "retrieved": true,
-    "error": ""
+    "commit": "1ffc7ad5467a9860f7eb1554c5888d0bfd15db1e",
+    "errors": [],
+    "docs/index.html": "31-docs-index.html.txt",
+    "index.html": "31-index.html.txt",
+    "README.md": "31-README.md.txt",
+    "snapshot_sha256": {
+      "docs/index.html": "599cd0a78fdcc92016bf79723122f2bcea5099236101b66a103c8421264f5270",
+      "index.html": "317a591311da033cfa38d9d71b3e51d0f13cf1127c5cf03adbbfc9b413049045",
+      "README.md": "8f118c75ac9ca6b17e51a1ef7173c142801869092bb50e47aa966f8e9751c853"
+    }
   },
   {
     "repo": "buffedlizard55-lab/GEMSDOE32",
-    "ref": "5786b21a1674b26ee525e8e9bf048e2e0f50fc0e",
-    "source": "https://github.com/buffedlizard55-lab/GEMSDOE32/blob/5786b21a1674b26ee525e8e9bf048e2e0f50fc0e/README.md",
-    "retrieved": true,
-    "error": ""
+    "commit": "5786b21a1674b26ee525e8e9bf048e2e0f50fc0e",
+    "errors": [],
+    "docs/index.html": "32-docs-index.html.txt",
+    "index.html": "32-index.html.txt",
+    "README.md": "32-README.md.txt",
+    "snapshot_sha256": {
+      "docs/index.html": "80dfe26321a56a2310fe9e2813d2798d5e773251d9c5f73c3b080b50bf59af96",
+      "index.html": "50b7fb053bba076bfc9699a317b59e5dc7753010cf7123d71715c1e658e64670",
+      "README.md": "4759a6052aa572759733d30207ae4753b5431659935a73e9ceb850091dc68387"
+    }
   },
   {
     "repo": "buffedlizard55-lab/GEMSDOE33",
-    "ref": "f618cc54773bd9b4d6c2b3ebf78103a05cc10cb6",
-    "source": "https://github.com/buffedlizard55-lab/GEMSDOE33/blob/f618cc54773bd9b4d6c2b3ebf78103a05cc10cb6/README.md",
-    "retrieved": true,
-    "error": ""
+    "commit": "f618cc54773bd9b4d6c2b3ebf78103a05cc10cb6",
+    "errors": [],
+    "docs/index.html": "33-docs-index.html.txt",
+    "index.html": "33-index.html.txt",
+    "README.md": "33-README.md.txt",
+    "snapshot_sha256": {
+      "docs/index.html": "7177c1368c904ed92d8c2c8f0efbd9abb52bc4ca9d0f7cb1b5881faa3fc39bd9",
+      "index.html": "8adf6a087f93f378de538d8908b52745cb59409ea5ace9f811278ce9a1548848",
+      "README.md": "9c26adf1e7668549f1b6ed99e2b98cc5ab3d8114e4bc357ece26156b8f3b01e3"
+    }
   },
   {
     "repo": "buffedlizard55-lab/GEMSDOE36",
-    "ref": "c9ad59ec6f969ed931d089a03044c1567a633e84",
-    "source": "https://github.com/buffedlizard55-lab/GEMSDOE36/blob/c9ad59ec6f969ed931d089a03044c1567a633e84/README.md",
-    "retrieved": true,
-    "error": ""
+    "commit": "c9ad59ec6f969ed931d089a03044c1567a633e84",
+    "errors": [],
+    "docs/index.html": "36-docs-index.html.txt",
+    "index.html": "36-index.html.txt",
+    "README.md": "36-README.md.txt",
+    "snapshot_sha256": {
+      "docs/index.html": "5ca9cd7902124d0c704fb91c07ccbf728510db87bbba51f6771796cd3c0d2548",
+      "index.html": "7167063f8b8c90fbf6fe6429ec4d1df118b7aa85dd030e5ccc245a13b0cd9ef5",
+      "README.md": "8721ef6355fe7baa263c9d23653f82424399bf172368b737fd154ee9ff08d235"
+    }
   }
 ]

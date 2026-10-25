@@ -1,3 +1,5 @@
+> **Parallel-session historical record:** environment availability statements below apply to that session. See [the subsequent safety audit](review-20261025.md) for restored mirror-template validation, current tests and retired legacy gates. No submission is approved.
+
 # GEMSDOE36 review — 2026-10-25 UTC
 
 ## Decision and scope

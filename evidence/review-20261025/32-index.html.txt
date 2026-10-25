@@ -1,0 +1,47 @@
+<!doctype html><html lang=en><head><meta charset=utf-8>
+<meta name=viewport content="width=device-width,initial-scale=1">
+<title>GEMSDOE32 — download the submission GeoTIFF</title>
+<link rel=canonical href="docs/index.html">
+<link rel=stylesheet href="docs/assets/site.css">
+<meta http-equiv=refresh content="0; url=docs/index.html"></head><body>
+<main class=wrap style="padding-top:26px">
+<h1>GEMSDOE32 — DOE GEMS Prize (DrivenData #306)</h1>
+<div class=dl style="border:3px solid #b91c1c">
+<h2>&#128308; DO NOT SUBMIT — automated gates FAILED (download for audit only)</h2>
+<p><b>New unique file (Arena41, 2026-10-25):</b> <code>gemsdoe32-arena41-pfonly-blindbasin-37654-20261025T202725Z-530d08d1-zeros.tif</code><br>
+<b>Unique submission name:</b> <code>GEMSDOE32-ARENA41-PFONLY</code> ·
+<b>Note (&le;140 chars):</b> <code>Arena41 PF-only blind-basin 37654d B2 zeros | HOLDOUT gates G2/G3 FAIL vs surf-ctrl | DO NOT SUBMIT</code><br>
+<b>sha256:</b> <code>f042f48e76d8ee25&hellip;</code> · 37,654 dots · verdict <b>negative</b></p>
+<p><a class="btn" href="docs/downloads/gemsdoe32-arena41-pfonly-blindbasin-37654-20261025T202725Z-530d08d1-zeros.tif">Download the Arena41 GeoTIFF (audit only — see gates)</a>
+<a class="btn alt" href="docs/downloads/gemsdoe32-arena41-pfonly-blindbasin-37654-20261025T202725Z-530d08d1-zeros.zip">.zip</a>
+<a href="docs/downloads/checks-gemsdoe32-arena41-pfonly-blindbasin-37654-20261025T202725Z-530d08d1-zeros.tif.json">automated format receipt</a></p>
+<p><b>Why red:</b> pre-registered gates G2/G3 failed — HOLDOUT-DTI (pooled, 22,232 withheld px)
+PF-ONLY <b>0.1205</b> [95% CI 0.0748–0.1642]
+vs surface-control 0.1571 and off-catalogue SGMC also loses. Format (G5) passes:
+all cells finite, [0,1], EPSG:32611, nodata=None — <b>portal-legal but predicted to score below the
+0.2778 champion, so do not spend a slot on it.</b> Full audit:
+<code>evidence/arena41_run_card.json</code>, <code>docs/research/arena41-report.md</code>.</p>
+<p class=warn><b>Champion status correction:</b> the H33-2-B2 file below was already submitted —
+owner-reported score <b>0.2778</b>. Do not resubmit it. <b>The Arena41 lane itself has no &#128994; file</b> — the registry primary further below is a <i>separate parallel lane&#x27;s</i> artifact; judge it by its own status line, not by this banner.</p>
+</div>
+<div class=dl>
+<h2>&#11015;&nbsp;ONE-CLICK FILE &mdash; READ ITS STATUS BELOW BEFORE UPLOADING</h2>
+
+<p><a class="btn" href="docs/downloads/gemsdoe32-h32-winning-46090-prune400-20261025T203017Z-c3459dcd-zeros.tif">Download gemsdoe32-h32-winning-46090-prune400-20261025T203017Z-c3459dcd-zeros.tif</a> <a class="btn alt" href="docs/downloads/gemsdoe32-h32-winning-46090-prune400-20261025T203017Z-c3459dcd-zeros.zip">.zip (single GeoTIFF inside)</a> </p>
+<p><b>Filename:</b> <code>gemsdoe32-h32-winning-46090-prune400-20261025T203017Z-c3459dcd-zeros.tif</code><br>
+<b>Unique submission name to use:</b> <code>GEMSDOE32-H32-WIN-46090</code><br>
+<b>Note to paste into the submit form's <em>Note (optional)</em> field
+(101/200 characters):</b><br>
+<code>H32-WIN 46090dots 0onCat prune400+add B50/C30/A20 HOLDOUT-DTI 0.1484 vs 0.1480 cat 0.0985 SGMC 0.0606</code></p>
+<p class=mut>single band · float32 · EPSG:32611 · 100 m · 3292&times;3730 ·
+46,090 predicted pixels · every cell finite · every value in [0, 1] ·
+0 NaN anywhere · no nodata tag · sha256 <code>04fd8a73eb584dd1&hellip;</code>
+· <a href="docs/downloads/gemsdoe32-h32-winning-46090-prune400-20261025T203017Z-c3459dcd-audit.json">format receipt (independent re-read)</a> </p>
+<p><b>Already-scored fallback:</b> <a href="docs/downloads/gems32-probe-S1-ANCHOR-identical-to-live-02600.tif">0.2708 anchor (already-scored base)</a> </p>
+<h3>Identification pack &mdash; the other two queries</h3><table><tr><th>slot</th><th>file</th><th>sha256</th><th>what it gives</th></tr><tr><td><b>SECONDARY (Tier 2 - previous primary)</b></td><td><a href="docs/downloads/gemsdoe32-h33-h33-2-b2-20261004T220000Z-e5eb6e7e-zeros.tif">gemsdoe32-h33-h33-2-b2-20261004T220000Z-e5eb6e7e-zeros.tif</a> </td><td class=mut>c55bafc470054e82&hellip;</td><td class=mut>Previous primary: 0.2708 base minus 2px flank (B=2), 37654 dots, 0 within 200m of catalogue, live-mirror +0.00487 safety 2.08 projected 0.2747</td></tr><tr><td><b>NaN-outside twin of the primary</b></td><td><a href="docs/downloads/gemsdoe32-h32-winning-46090-prune400-20261025T203017Z-c3459dcd-nan.tif">gemsdoe32-h32-winning-46090-prune400-20261025T203017Z-c3459dcd-nan.tif</a> </td><td class=mut>fe01ebd3961d6911&hellip;</td><td class=mut>the competition&#x27;s own format (identical values inside footprint)</td></tr></table>
+<p class=warn><b>Status.</b> PRIMARY = H32-WIN-46090 (2026-10-25): D2.8 minus 400 weakest speckles plus 2400 priority H32 B/C/A dots at 2.35px Poisson, 46090 dots, 0 on catalogue. HOLDOUT-DTI 0.14840 vs incumbent 0.14801, cat_hidden 0.09847 vs 0.09832, SGMC 0.06061 vs 0.06059 — beats all three holdout instruments. NO ORGANISER SCORE EXISTS for this or any artifact in this repository.</p>
+</div>
+<div class=card><b>Full site:</b> <a href="docs/index.html">evidence, instruments, hypotheses and the
+irregularity register &rarr;</a> &nbsp;·&nbsp; <a href="docs/executive-summary.html">how to submit, step by step &rarr;</a>
+&nbsp;·&nbsp; <a href="README.md">README</a> &nbsp;·&nbsp; <a href="https://github.com/buffedlizard55-lab/GEMSDOE32">repository</a></div>
+</main></body></html>

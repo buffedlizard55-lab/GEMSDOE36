@@ -1,21 +1,53 @@
-# Current starting point — 2026-10-25: DO NOT SUBMIT
+# Current submission status — 2026-10-25: NOT APPROVED
 
-**Read this section and [the current review](docs/research/review-20261025.md) at every session start.**
-**No new unique TIFF was generated this session.** Archived TIFFs are research downloads only. The historical “ready” claims below are superseded; they remain solely for audit history. The user's highest-urgency unique-TIFF objective remains incomplete, not silently replaced by a copied or renamed artifact.
+**Read this section and [the current review](docs/research/review-20261025.md) every session.**
+This notice supersedes the historical README below. No new unique submission has
+passed the current protocol. Old TIFFs are educational downloads only. Existing
+mirror scores, live projections and H6 gate claims do not establish promotion.
+The primary pipeline copied historical prediction pixels; the H6 proxy gate used
+evaluation truth for placement. Both legacy entry points now stop explicitly.
 
-- Maximize P(Win): independent evidence before scarce slots. Own the Outcome: disclose blockers, fix shared defects, and deliver negative results rather than fabricated success.
-- [Current site](docs/index.html) · [Executive submission guide](docs/executive-summary.html) · [Negative JSON card](docs/current-run.json) · [Nine pinned peer source snapshots](evidence/review-20261025/sources.json).
-- Current mandate: generate an independently computed unique TIFF; investigate GEMSDOE24/25/27/28/30/31/32/33/36; propose 3–5 ranked geological hypotheses before implementation; validate top allowed method before selection. Whole-segment buffered hide/recover, visible-only catalogue features, exact visible masking, pooled DTI with 0.2/0.8 and 300 m triangular kernel; per-feature two-polarity canaries; registry surface and final-dot stops above 0.90 rank correlation or 70% within 3 px. Label actual results HOLDOUT-DTI with evaluator/count/CI or ORGANIZER-CONFIRMED with a receipt; never label projections as scores. Maximum three experiments or two hours; separate selector and current weekly cap; final run card and three review passes; PR and merge. No manual inspector as a gate substitute.
-- There is **no identifiable assigned lane paragraph or shared-template location** in the current message/checkout. Do not invent either. Local `protocol.py` contains tested audit primitives, not a claimed private replacement of the shared template.
-- H6's SGMC prior/truth validation is circular; historical mirror projections do not establish hide/recover performance. Old receipt JSON files do not mean raw data exists in this checkout.
-- This is an actionable transcription of the current brief, **not a verbatim copy of the entire long chat message**. The earlier brief retained below is historical, not the current complete prompt.
-- Verification: `python -m venv .venv && .venv/bin/pip install -e '.[dev]'`; `.venv/bin/python -m pytest -q`; `.venv/bin/python scripts/check_site.py`. Torch-dependent tests require the optional training dependency.
+## Current owner mandate (operational update, not a verbatim transcript)
 
-Previous parallel reviews are retained: [session review](docs/research/session-review-2026-10-25.md) and [orientation-lane review](docs/research/review-2026-10-25.md). Their missing-dependency statements describe their own environments; this session installed CPU dependencies and ran the tests. Their proposed WSM lane was not an explicit assignment in this session’s prompt.
+Maximize P(Win); Own the Outcome. Generate original predictions, never copied
+submissions. Review GEMSDOE24/25/27/28/30/31/32/33/36 for learning only.
+Stay within the assigned single method lane (not supplied this turn). Reuse the
+shared cached stack, evaluate_holdout.py and submission_writer.py; do not fork.
+Use buffered whole-fault-segment hide-and-recover, visible-only catalogue features,
+pixel-exact masking of visible faults, pooled DTI with alpha .2, beta .8 and
+300 m triangular kernel. Test individual-feature leakage canaries; AUC above .90
+blocks use until explained. Stop on registry surface rank-correlation above .90
+or directed dot-overlap above .70 within 3 px, checking before and after placement.
+Limit to three experiments or two hours. Rank 3–5 geological hypotheses before
+implementation. Beat a comparable current holdout incumbent before promotion;
+never spend a weekly slot here. Label measurements with evaluator version,
+withheld-positive count and CI; organizer scores require a receipt. Never call a
+projection a score. Publish format/novelty/promotion status clearly beside the
+one-click download, a unique name and a note at most 140 characters. End with a
+JSON run card; negative/blocked results are deliverables. Verify in three passes,
+record sources, limitations and irregularities; PR and merge when requested.
+
+The older claim that data placement is the **single** blocker is incorrect:
+shared evaluator, lane assignment, complete registry and a valid incumbent gate
+are also missing. Official reference README supports CPU training.
 
 ---
 
-## Historical README (superseded status and projections; research provenance only)
+## Integrated parallel work
+
+The concurrent clean status/guide pages and tested `protocol.py` audit primitives
+are preserved. These primitives are **not** the missing official shared evaluator
+or a completed scientific holdout. See the [parallel protocol review](docs/research/parallel-protocol-review-20261025.md).
+
+## Parallel review records
+
+Concurrent reviews are preserved in [session review](docs/research/session-review-2026-10-25.md)
+and [orientation-prior review](docs/research/review-2026-10-25.md).
+Their environment/test-availability statements describe those sessions, not this
+session's restored template and completed tests. No lane is adopted from their
+proposals without an explicit assignment.
+
+## Historical README (not current approval)
 
 # GEMSDOE36: Two Independent Candidate Lines (Anderson-PINN + Off-Catalogue H6 Prior)
 

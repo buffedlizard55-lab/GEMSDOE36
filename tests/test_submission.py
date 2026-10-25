@@ -237,13 +237,27 @@ def test_unique_submission_names_are_sanitized_and_collision_resistant():
         unique_submission_name(np.zeros((1, 2, 3)))
 
 
-@pytest.mark.parametrize("invalid", [-0.001, 1.001, np.nan, np.inf])
-def test_bundle_rejects_invalid_values_without_clipping(tmp_path, invalid):
+@pytest.mark.parametrize("bad", [-0.01, 1.01, np.inf, np.nan, 1.0 + 1e-10])
+def test_bundle_rejects_invalid_values_without_clipping(tmp_path, bad):
     template = tmp_path / "template.tif"
     _write_template(template)
-    scores = np.zeros((12, 10), dtype=np.float32)
-    scores[4, 4] = invalid
+    scores = np.zeros((12, 10), dtype=np.float64)
+    scores[3, 3] = bad
     out = tmp_path / "bundle"
-    with pytest.raises(ValueError):
+    with pytest.raises(ValueError, match="finite and in"):
         write_submission_bundle(scores, template, out)
-    assert not list(out.glob("*.tif"))
+    assert not out.exists()
+
+
+def test_writer_rejects_unknown_mode(tmp_path):
+    template = tmp_path / "template.tif"
+    _write_template(template)
+    with pytest.raises(ValueError, match="mode must"):
+        write_submission(np.zeros((12, 10)), template, tmp_path / "x.tif", mode="typo")
+
+
+def test_bundle_rejects_overlong_note(tmp_path):
+    template = tmp_path / "template.tif"
+    _write_template(template)
+    with pytest.raises(ValueError, match="140"):
+        write_submission_bundle(np.zeros((12, 10)), template, tmp_path / "out", note="x" * 141)
