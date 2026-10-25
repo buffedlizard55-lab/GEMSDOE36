@@ -235,3 +235,15 @@ def test_unique_submission_names_are_sanitized_and_collision_resistant():
         unique_submission_name(scores, prefix=" / ")
     with pytest.raises(ValueError, match="two-dimensional"):
         unique_submission_name(np.zeros((1, 2, 3)))
+
+
+@pytest.mark.parametrize("invalid", [-0.001, 1.001, np.nan, np.inf])
+def test_bundle_rejects_invalid_values_without_clipping(tmp_path, invalid):
+    template = tmp_path / "template.tif"
+    _write_template(template)
+    scores = np.zeros((12, 10), dtype=np.float32)
+    scores[4, 4] = invalid
+    out = tmp_path / "bundle"
+    with pytest.raises(ValueError):
+        write_submission_bundle(scores, template, out)
+    assert not list(out.glob("*.tif"))

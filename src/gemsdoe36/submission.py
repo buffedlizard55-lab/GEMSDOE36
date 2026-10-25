@@ -329,7 +329,8 @@ def write_submission_bundle(
     out.mkdir(parents=True, exist_ok=True)
     array = np.ascontiguousarray(np.asarray(scores, dtype=np.float32))
 
-    clean = np.clip(array, 0.0, 1.0)
+    # Delegate range/finite checks to the shared writer; never silently clip errors.
+    clean = array
     digest8 = hashlib.sha256(np.packbits(clean > 0.5)).hexdigest()[:8]
     dot_count = int((clean > 0.5).sum())
 
