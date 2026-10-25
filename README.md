@@ -33,6 +33,14 @@ are also missing. Official reference README supports CPU training.
 
 ---
 
+## Parallel review records
+
+Concurrent reviews are preserved in [session review](docs/research/session-review-2026-10-25.md)
+and [orientation-prior review](docs/research/review-2026-10-25.md).
+Their environment/test-availability statements describe those sessions, not this
+session's restored template and completed tests. No lane is adopted from their
+proposals without an explicit assignment.
+
 ## Historical README (not current approval)
 
 # GEMSDOE36: Two Independent Candidate Lines (Anderson-PINN + Off-Catalogue H6 Prior)
