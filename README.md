@@ -1,3 +1,20 @@
+# Current starting point — 2026-10-25: DO NOT SUBMIT
+
+**Read this section and [the current review](docs/research/review-20261025.md) at every session start.**
+**No new unique TIFF was generated this session.** Archived TIFFs are research downloads only. The historical “ready” claims below are superseded; they remain solely for audit history. The user's highest-urgency unique-TIFF objective remains incomplete, not silently replaced by a copied or renamed artifact.
+
+- Maximize P(Win): independent evidence before scarce slots. Own the Outcome: disclose blockers, fix shared defects, and deliver negative results rather than fabricated success.
+- [Current site](docs/index.html) · [Executive submission guide](docs/executive-summary.html) · [Negative JSON card](docs/current-run.json) · [Nine pinned peer source snapshots](evidence/review-20261025/sources.json).
+- Current mandate: generate an independently computed unique TIFF; investigate GEMSDOE24/25/27/28/30/31/32/33/36; propose 3–5 ranked geological hypotheses before implementation; validate top allowed method before selection. Whole-segment buffered hide/recover, visible-only catalogue features, exact visible masking, pooled DTI with 0.2/0.8 and 300 m triangular kernel; per-feature two-polarity canaries; registry surface and final-dot stops above 0.90 rank correlation or 70% within 3 px. Label actual results HOLDOUT-DTI with evaluator/count/CI or ORGANIZER-CONFIRMED with a receipt; never label projections as scores. Maximum three experiments or two hours; separate selector and current weekly cap; final run card and three review passes; PR and merge. No manual inspector as a gate substitute.
+- There is **no identifiable assigned lane paragraph or shared-template location** in the current message/checkout. Do not invent either. Local `protocol.py` contains tested audit primitives, not a claimed private replacement of the shared template.
+- H6's SGMC prior/truth validation is circular; historical mirror projections do not establish hide/recover performance. Old receipt JSON files do not mean raw data exists in this checkout.
+- This is an actionable transcription of the current brief, **not a verbatim copy of the entire long chat message**. The earlier brief retained below is historical, not the current complete prompt.
+- Verification: `python -m venv .venv && .venv/bin/pip install -e '.[dev]'`; `.venv/bin/python -m pytest -q`; `.venv/bin/python scripts/check_site.py`. Torch-dependent tests require the optional training dependency.
+
+---
+
+## Historical README (superseded status and projections; research provenance only)
+
 # GEMSDOE36: Two Independent Candidate Lines (Anderson-PINN + Off-Catalogue H6 Prior)
 
 > **Department of Energy (DOE) Geologic Enhanced Mapping System (GEMS) Prize Challenge**  

@@ -1,0 +1,43 @@
+{
+  "hypothesis": "Conditional conductivity morphology at basement transitions (proposed; lane unassigned)",
+  "mechanism": "Cross-scale curvature of conductivity residuals conditioned on basement depth and gravity",
+  "non_fault_mimic": "Saline basin-fill sediments and lithologic contacts",
+  "holdout": {
+    "label": "HOLDOUT-DTI",
+    "evaluator_version": null,
+    "withheld_positives": null,
+    "dti": null,
+    "ci95": null,
+    "status": "not run; preflight blocked"
+  },
+  "registry": {
+    "surface_rank_correlation": null,
+    "dot_rank_correlation": null,
+    "overlap_within_3px": null,
+    "passed": false,
+    "status": "not screened"
+  },
+  "raster_sha256": null,
+  "validator": {
+    "passed": false,
+    "no_nan_inside": null,
+    "values_in_01": null,
+    "crs_match": null,
+    "shape_match": null,
+    "transform_match": null,
+    "status": "no new raster"
+  },
+  "submission_name": null,
+  "note": "Negative preflight: lane and shared template missing; no new raster; no competition slot selected.",
+  "verdict": "negative",
+  "slot_approved": false,
+  "new_tif_generated": false,
+  "blockers": [
+    "No identifiable assigned method paragraph",
+    "Shared template absent",
+    "No valid independent current holdout baseline",
+    "Registry not restored"
+  ],
+  "experiments_run": 0,
+  "organizer_confirmed_score": null
+}
