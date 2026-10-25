@@ -1,6 +1,1 @@
-SITE CHECK PASS
-Checked Pages entry: index.html -> docs/
-Checked pages: docs/index.html, docs/executive-summary.html
-Verified main deliverables: gemsdoe36-anderson-geothermal-pinn-38854-20261004T230000Z-9b9ea4e6-zeros.tif, gemsdoe36-anderson-geothermal-pinn-38854-20261004T230000Z-9b9ea4e6-nan.tif, gemsdoe36-anderson-geothermal-pinn-38854-20261004T230000Z-9b9ea4e6-zeros.zip, submissions_manifest.json
-historical H6 artifact present: docs/downloads/GEMS36_h6_offcatalog_network_prior_20261004T193432.021282Z_3276c04090_3c064db2.tif (307100 bytes)
-Historical file presence and blocking notices checked; no scientific promotion or external URL validation.
+SITE CHECK PASS — research only; no upload approval

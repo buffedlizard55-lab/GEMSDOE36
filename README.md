@@ -33,6 +33,12 @@ are also missing. Official reference README supports CPU training.
 
 ---
 
+## Integrated parallel work
+
+The concurrent clean status/guide pages and tested `protocol.py` audit primitives
+are preserved. These primitives are **not** the missing official shared evaluator
+or a completed scientific holdout. See the [parallel protocol review](docs/research/parallel-protocol-review-20261025.md).
+
 ## Parallel review records
 
 Concurrent reviews are preserved in [session review](docs/research/session-review-2026-10-25.md)
