@@ -1,5 +1,7 @@
 # GEMSDOE36: Two Independent Candidate Lines (Anderson-PINN + Off-Catalogue H6 Prior)
 
+> **Current-session checkpoint (2026-10-25 UTC):** read [`docs/research/review-2026-10-25.md`](docs/research/review-2026-10-25.md) at the start of project work. The historical candidate TIFFs are present, but the raw/processed feature data and Python dependencies required to rerun validation are absent in this checkout. Site-link checks pass; model tests and raster validation were not runnable. No new holdout, score, or submission file was produced. Do not present historical/projected numbers as organizer-confirmed; no new slot is eligible from this review. The sole proposed next lane is a WSM quality/regime-weighted orientation prior, conditional on acquiring official data and testing it under the documented gate. The full register/card records the negative result and source limitations.
+
 > **Department of Energy (DOE) Geologic Enhanced Mapping System (GEMS) Prize Challenge**  
 > **Official Public Leaderboard Target:** 0.3195 (Historical Baseline: 0.2778)  
 > **Repository state:** merged to `main` from sessions `arena/01a10833-gemsdoe36` (Anderson-PINN) and `arena/01a10834-gemsdoe36` (off-catalogue H6)  
