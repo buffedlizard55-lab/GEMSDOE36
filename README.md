@@ -1,4 +1,9 @@
-# GEMSDOE36: Two Independent Candidate Lines (Anderson-PINN + Off-Catalogue H6 Prior)
+# GEMSDOE36: Auditable DOE GEMS Fault-Discovery Research
+
+> **Current session status (2026-10-25): NO new competition-ready TIFF. Do not submit files from `docs/downloads/` based on this checkout.** Only historical candidates and an explicitly synthetic QA fixture are present; official raw rasters, prepared stack, and sample template are absent. The current branch's checks cannot run because pytest is not installed. The top-of-site download links and archived claims below predate this review and must not be interpreted as current validation or organizer confirmation. See [the 2026-10-25 review and run card](docs/research/session-review-2026-10-25.md).
+
+**Session rule:** Before project work, reread this standing brief and the dated review/run card. Preserve unique generation, leakage-safe spatial validation, registry-duplicate screening, source provenance, and explicit negative results. Never call a proxy score, projection, or user-reported leaderboard value an organizer score.
+
 
 > **Department of Energy (DOE) Geologic Enhanced Mapping System (GEMS) Prize Challenge**  
 > **Official Public Leaderboard Target:** 0.3195 (Historical Baseline: 0.2778)  
