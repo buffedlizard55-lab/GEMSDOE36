@@ -11,6 +11,8 @@
 - This is an actionable transcription of the current brief, **not a verbatim copy of the entire long chat message**. The earlier brief retained below is historical, not the current complete prompt.
 - Verification: `python -m venv .venv && .venv/bin/pip install -e '.[dev]'`; `.venv/bin/python -m pytest -q`; `.venv/bin/python scripts/check_site.py`. Torch-dependent tests require the optional training dependency.
 
+Previous parallel reviews are retained: [session review](docs/research/session-review-2026-10-25.md) and [orientation-lane review](docs/research/review-2026-10-25.md). Their missing-dependency statements describe their own environments; this session installed CPU dependencies and ran the tests. Their proposed WSM lane was not an explicit assignment in this session’s prompt.
+
 ---
 
 ## Historical README (superseded status and projections; research provenance only)
