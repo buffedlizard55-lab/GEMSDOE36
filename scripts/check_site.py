@@ -1,19 +1,8 @@
 #!/usr/bin/env python3
-"""Check the GitHub Pages entry point, local links, submission downloads, and metadata.
+"""Check local Pages links and visible submission-blocking status.
 
-GEMSDOE36 carries two independent candidate lines, kept side by side by a
-non-destructive merge of two parallel research sessions:
-
-  1. Anderson-PINN multi-physics (Anderson 1905 kinematics + Raissi et al. 2019
-     structure-tensor loss + GDR 1391 blind geothermal conduits) — the primary
-     download established on main (LM-calibrated 4-quadrant mirror).
-  2. Off-catalogue fault-network prior (H6) — the 5-fold spatially-blocked
-     holdout gate-passed candidate from the off-catalogue session.
-
-The two lines used different holdout protocols, so this check does NOT claim a
-head-to-head winner; it only verifies that BOTH candidate TIFs are present on the
-served tree and that both lines are referenced on the landing/executive pages.
-The owner selects the single final competition file to upload (a manual step).
+File presence is not scientific approval. Historical downloads stay accessible
+for education, with a superseding NOT APPROVED notice on both entry pages.
 """
 
 from __future__ import annotations
@@ -36,6 +25,7 @@ MANIFEST_FILE = "submissions_manifest.json"
 # The landing page must reference BOTH candidate lines and current honest status.
 REQUIRED_COPY = (
     "GEMSDOE36",
+    "NOT APPROVED TO SUBMIT",
     "Anderson",
     PRIMARY_TIF,            # main's PINN primary is referenced
     "off-catalogue",        # the H6 off-catalogue candidate line is referenced
@@ -48,6 +38,7 @@ FORBIDDEN_COPY = (
 )
 # Executive page must keep the exact submission-guide items and describe both lines.
 EXECUTIVE_COPY = (
+    "NOT APPROVED TO SUBMIT",
     "--submission-name",
     "--note",
     "spatial holdout",
@@ -104,7 +95,7 @@ def _check_local_links(path: Path, parser: LinkParser, errors: list[str]) -> Non
 
 
 def _h6_candidate() -> Path | None:
-    """Return the H6 gate-passed candidate TIF (off-catalogue line) in docs/downloads/."""
+    """Return the historical H6 artifact TIF (off-catalogue line) in docs/downloads/."""
     downloads = DOCS_ROOT / "downloads"
     if not downloads.is_dir():
         return None
@@ -167,12 +158,12 @@ def main() -> int:
         if not (downloads_dir / name).is_file():
             errors.append(f"missing {label}: {name}")
 
-    # Verify the H6 gate-passed candidate (off-catalogue line) is present.
+    # Verify the historical H6 artifact (off-catalogue line) is present.
     candidate = _h6_candidate()
     if candidate is None:
-        errors.append("missing H6 gate-passed candidate TIFF (GEMS36_h6_*) in docs/downloads/")
+        errors.append("missing historical H6 artifact TIFF (GEMS36_h6_*) in docs/downloads/")
     elif candidate.stat().st_size < 10_000:
-        errors.append("H6 gate-passed candidate TIFF is suspiciously small")
+        errors.append("historical H6 artifact TIFF is suspiciously small")
 
     if errors:
         print("SITE CHECK FAIL")
@@ -184,8 +175,8 @@ def main() -> int:
     print(f"Checked pages: {', '.join(f'docs/{page}' for page in REQUIRED_PAGES)}")
     print(f"Verified main deliverables: {PRIMARY_TIF}, {NAN_TIF}, {ZIP_FILE}, {MANIFEST_FILE}")
     if candidate is not None:
-        print(f"H6 gate-passed candidate present: docs/downloads/{candidate.name} ({candidate.stat().st_size} bytes)")
-    print("Both candidate lines referenced and verified; no external URLs were scraped.")
+        print(f"historical H6 artifact present: docs/downloads/{candidate.name} ({candidate.stat().st_size} bytes)")
+    print("Historical file presence and blocking notices checked; no scientific promotion or external URL validation.")
     return 0
 
 

@@ -1,3 +1,40 @@
+# Current submission status — 2026-10-25: NOT APPROVED
+
+**Read this section and [the current review](docs/research/review-20261025.md) every session.**
+This notice supersedes the historical README below. No new unique submission has
+passed the current protocol. Old TIFFs are educational downloads only. Existing
+mirror scores, live projections and H6 gate claims do not establish promotion.
+The primary pipeline copied historical prediction pixels; the H6 proxy gate used
+evaluation truth for placement. Both legacy entry points now stop explicitly.
+
+## Current owner mandate (operational update, not a verbatim transcript)
+
+Maximize P(Win); Own the Outcome. Generate original predictions, never copied
+submissions. Review GEMSDOE24/25/27/28/30/31/32/33/36 for learning only.
+Stay within the assigned single method lane (not supplied this turn). Reuse the
+shared cached stack, evaluate_holdout.py and submission_writer.py; do not fork.
+Use buffered whole-fault-segment hide-and-recover, visible-only catalogue features,
+pixel-exact masking of visible faults, pooled DTI with alpha .2, beta .8 and
+300 m triangular kernel. Test individual-feature leakage canaries; AUC above .90
+blocks use until explained. Stop on registry surface rank-correlation above .90
+or directed dot-overlap above .70 within 3 px, checking before and after placement.
+Limit to three experiments or two hours. Rank 3–5 geological hypotheses before
+implementation. Beat a comparable current holdout incumbent before promotion;
+never spend a weekly slot here. Label measurements with evaluator version,
+withheld-positive count and CI; organizer scores require a receipt. Never call a
+projection a score. Publish format/novelty/promotion status clearly beside the
+one-click download, a unique name and a note at most 140 characters. End with a
+JSON run card; negative/blocked results are deliverables. Verify in three passes,
+record sources, limitations and irregularities; PR and merge when requested.
+
+The older claim that data placement is the **single** blocker is incorrect:
+shared evaluator, lane assignment, complete registry and a valid incumbent gate
+are also missing. Official reference README supports CPU training.
+
+---
+
+## Historical README (not current approval)
+
 # GEMSDOE36: Two Independent Candidate Lines (Anderson-PINN + Off-Catalogue H6 Prior)
 
 > **Department of Energy (DOE) Geologic Enhanced Mapping System (GEMS) Prize Challenge**  

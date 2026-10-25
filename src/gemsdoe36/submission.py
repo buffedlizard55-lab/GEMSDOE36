@@ -182,6 +182,8 @@ def write_submission(
     mode: str = "nan",
 ) -> ValidationReport:
     """Write scores on the exact template grid, reread, validate, and atomically publish."""
+    if mode not in {"nan", "zeros"}:
+        raise ValueError("mode must be nan or zeros")
     scores = np.asarray(scores)
     if scores.ndim != 2:
         raise ValueError("scores must be a two-dimensional array")
@@ -325,11 +327,21 @@ def write_submission_bundle(
     meta: dict | None = None,
 ) -> dict[str, Any]:
     """Emit the complete submission bundle: -zeros.tif, -nan.tif, .zip, and audit sidecar."""
+    # Validate the original precision BEFORE float32 conversion; never repair a
+    # model silently. Outside-footprint NaNs remain a supported representation.
+    original = np.asarray(scores)
+    with rasterio.open(template_path) as template:
+        valid = _template_valid_mask(template)
+    if original.ndim != 2 or original.shape != valid.shape:
+        raise ValueError("score/template shape mismatch")
+    inside = original[valid]
+    if not np.all(np.isfinite(inside)) or np.any((inside < 0) | (inside > 1)):
+        raise ValueError("scores must be finite and in [0, 1] inside the footprint")
+    if len(note) > 140:
+        raise ValueError("submission note must be at most 140 characters")
     out = Path(out_dir)
     out.mkdir(parents=True, exist_ok=True)
-    array = np.ascontiguousarray(np.asarray(scores, dtype=np.float32))
-
-    clean = np.clip(array, 0.0, 1.0)
+    clean = np.ascontiguousarray(original, dtype=np.float32)
     digest8 = hashlib.sha256(np.packbits(clean > 0.5)).hexdigest()[:8]
     dot_count = int((clean > 0.5).sum())
 

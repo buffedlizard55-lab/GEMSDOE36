@@ -26,7 +26,6 @@ from gemsdoe36.anderson import (
     anderson_kinematic_consistency,
     compute_lineament_strike_azimuth,
 )
-from gemsdoe36.geothermal import compute_geothermal_reservoir_temperature_field
 from gemsdoe36.hypotheses import (
     fill_smooth,
     poisson_disk_thin_priority,
@@ -51,6 +50,9 @@ def load_band(bands_dir: Path, idx: int, name: str) -> np.ndarray:
 
 
 def main() -> int:
+    raise SystemExit('Legacy pipeline copies historical submission pixels and uses a calibrated proxy, not hide-and-recover. Retired under the 2026-10-25 protocol.')
+    # Historical implementation retained below for audit only.
+    from gemsdoe36.geothermal import compute_geothermal_reservoir_temperature_field
     t0 = time.time()
     ddir = data_dir()
     wdir = work_dir()

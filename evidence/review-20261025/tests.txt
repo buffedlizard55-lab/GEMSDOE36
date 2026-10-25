@@ -1,0 +1,4 @@
+.................................................................        [100%]
+=========================== short test summary info ============================
+SKIPPED [1] tests/test_orientation.py:5: could not import 'torch': No module named 'torch'
+65 passed, 1 skipped in 1.14s

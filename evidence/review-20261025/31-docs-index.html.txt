@@ -1,0 +1,230 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Download the new MAGREST research TIFF. Format-valid; not approved for upload.">
+  <title>Overview · GEMSDOE31</title>
+  <link rel="stylesheet" href="assets/site.css">
+</head>
+<body>
+  <header class="topbar">
+    <div class="wrap topbar-inner">
+      <a class="brand" href="index.html" aria-label="GEMSDOE31 home"><span class="brand-mark">G31</span><span>GEMSDOE31</span></a>
+      <nav class="nav" aria-label="Primary navigation">
+        <a href="index.html" aria-current="page">Overview</a><a href="executive-summary.html">Executive summary</a><a href="research.html">Research</a><a href="validation.html">Validation</a><a href="register/index.html">Register</a><a href="experiments/index.html">Experiments</a><a href="sources.html">Sources</a>
+      </nav>
+    </div>
+  </header>
+<section class="hero"><div class="wrap hero-grid"><div>
+      <p class="eyebrow">DOE GEMS Prize · new experiment, auditable outcome</p>
+      <h1>A new GeoTIFF.<br>A clear decision.</h1>
+      <p class="hero-lede">MAGREST tests displaced magnetic texture instead of copying the existing dot family.
+        The file has new, format-valid bytes but fails the literal shared-registry overlap rule. It is <strong>not approved for submission</strong>.</p>
+      <div class="actions"><a class="button button-primary" href="downloads/gemsdoe31-magrest-concordant-37654-20261025-2c800a59ff-zeros.tif" download>Download new research TIFF</a>
+        <a class="button button-light" href="executive-summary.html">Status + submission guide</a></div>
+      </div><aside class="hero-side" aria-label="Submission decision">
+        <strong>Research download only · DO NOT SUBMIT</strong>
+        <p>Literal registry overlap STOP at 100%; paired efficacy is also unestablished. No competition slot used.
+          A valid TIFF is not evidence of a winning fault detector.</p></aside></div></section>
+  <main class="wrap">
+<div class="notice notice-danger"><strong>Not approved for upload.</strong>
+      Automated verdict: NEGATIVE under the literal 695-raster shared-registry overlap rule. Download H31-M, H31-HVDC, H31-E2, or MAGREST for research, not for a weekly competition slot.</div>
+      <section id="h31m-submod" aria-labelledby="h31m-heading">
+      <div class="section-head"><div><p class="kicker">2026-10-25 Deconfounded Subsurface Concordance + 29-Cell Submodular Candidate · H31-M</p>
+        <h2 id="h31m-heading">H31-M BStep-XMod-Submod: Research Download Only · DO NOT SUBMIT</h2></div>
+        <p>Newly computed in this session from 8 label-free geophysical/structural channels + deconfounded dual-head Bayes OOF HGB +
+           exact 29-cell submodular DTI allocation. Beats GEMSDOE32 H33-2-B2 simultaneously on Piedmont Off-SGMC, 4-Block Off-SGMC,
+           Full Off-SGMC, and 21.25 km hide-and-recover holdout (4/4 folds on both seeds), and passes the 13-submission comparator subset —
+           but is <strong>held as research-only (DO NOT SUBMIT)</strong> under the unexempted 695-raster spacing-5 lattice STOP and inherited 21.25 km collar.</p></div>
+      <div class="card download-card">
+        <span class="badge badge-green">LOCAL FORMAT &amp; 11/11 EFFICACY GATES PASS · RESEARCH DOWNLOAD ONLY</span>
+        <span class="badge badge-red" style="margin-left:8px">DO NOT SUBMIT · REGISTRY STOP (slot_approved = false)</span>
+        <h3 style="margin-top:18px">gemsdoe31-h31m-bstep-xmod-submod-20261025-37654</h3>
+        <p>8 label-free geophysical channels (<code>bstep_grad_norm</code>, <code>bstep_inflect</code>, Miller–Singh <code>grav_tilt_zero</code>,
+           Blakely–Simpson <code>rtp_bandpass_crest</code>, <code>cond_grad_ridge</code>, <code>sub_tensor_coh</code>, <code>surf_piedmont_ridge</code>,
+           <code>xmod_strike_concordance</code>) + quadrant-deconfounded Dual-Head Bayes OOF HGB (<code>M_sub</code> 37 bands + <code>M_lidar</code> 48 bands) +
+           Minoux lazy-greedy 29-cell submodular DTI allocator with <code>B=2</code> (<code>d_cat &gt; 200 m</code>) hygiene (37,654 off-catalogue dots; 37.2% piedmont).</p>
+        <div class="actions">
+          <a class="button button-primary" href="downloads/gemsdoe31-h31m-bstep-xmod-submod-20261025-37654-nan.tif" download>Download H31-M Research .tif (NaN-outside)</a>
+          <a class="button" href="downloads/gemsdoe31-h31m-bstep-xmod-submod-20261025-37654-nan.zip" download>Download Single-TIFF .zip</a>
+          <a class="button" href="downloads/gemsdoe31-h31m-bstep-xmod-submod-20261025-37654-allfinite.tif" download>All-finite research encoding .tif</a>
+          <a class="button" href="downloads/gemsdoe31-h31m-bstep-xmod-submod-20261025-37654-format-check.json" download>Format receipt .json</a>
+        </div>
+        <p class="download-meta"><strong>Grid &amp; Range:</strong> 1-band float32 · EPSG:32611 · 3730 × 3292 · 0 NaN/Inf inside 5,167,373-cell footprint · footprint values strictly {0.0, 1.0} in [0.0, 1.0] · 0 dots within 200 m of public catalogue.<br>
+          <strong>SHA-256 (NaN primary):</strong> <code>ad9784c07456d9bbd897c5b47de56c96659bc619b0b23c5238c3d17846a3f3a6</code><br>
+          <strong>SHA-256 (Single-TIFF ZIP):</strong> <code>c24ea5d55e0ae385c9d04848676159b6afe654be0f0e9dafd5c624f3ab17c624</code><br>
+          <strong>SHA-256 (All-finite):</strong> <code>8434ac7c248bcd3f1b06859320c87f891488e601b6aeaffd961fe6756daa64f0</code><br>
+          <strong>Artifact Name (not uniqueness approval):</strong> <code>GEMSDOE31-H31M-BStep-XMod-Submod-37654</code><br>
+          <strong>Note (102/140):</strong> <code>H31-M OOF BStep+GravTilt+RTP+XMod+29cSubmod B=2: 37,654d; HOLDOUT v1 0.1350, Off4B 0.1077, Pied 0.0641</code></p>
+      </div>
+      <div class="table-wrap" style="margin-top:18px"><table>
+        <thead><tr><th>Automated Gate</th><th>Threshold</th><th>Measured H31-M Value</th><th>Status</th></tr></thead>
+        <tbody>
+          <tr><td><code>G1 · GeoTIFF Format &amp; [0, 1]</code></td><td>EPSG:32611, 3730×3292, float32, 0 NaN inside, [0, 1]</td><td>37,654 dots in {0.0, 1.0}; 0 NaN inside; 0 within 200 m of catalogue</td><td><span class="badge badge-green">PASS</span></td></tr>
+          <tr><td><code>G2 · Single-Feature Leakage</code></td><td>Two-sided ROC-AUC ≤ 0.90 across all 48 used features</td><td>max AUC = 0.7740 (new H31-M channels max = 0.6139)</td><td><span class="badge badge-green">PASS</span></td></tr>
+          <tr><td><code>G3a · 13-Submission Comparator Subset</code></td><td>Surface |ρ| ≤ 0.90 AND 3-px dot overlap ≤ 70.0%</td><td>max |ρ| = 0.7204; max 3-px = 53.16% (concurrent lanes ≤ 51.59%; 40.25% vs H33-2-B2)</td><td><span class="badge">SUBSET ONLY — NOT UNIQUENESS APPROVAL</span></td></tr>
+          <tr><td><code>G3b · 5×5 Calibration Lattice</code></td><td>Unexempted 695-raster shared registry (r13-lattice-s5)</td><td>99.6255% (37,513 / 37,654 dots within 3 px; |ρ| = 0.0018)</td><td><span class="badge badge-red">LITERAL STOP</span></td></tr>
+          <tr><td><code>G4a · Screen (seed 20261025, 21.25 km)</code></td><td>Paired 95% CI &gt; 0 and ≥ 3/4 spatial folds won</td><td>HOLDOUT-DTI 0.1350 vs 0.1135 (Δ CI [+0.0064, +0.0380], 4/4 folds)</td><td><span class="badge badge-green">PASS</span></td></tr>
+          <tr><td><code>G4b · Confirm (seed 20261026, n=58,625)</code></td><td>Fresh draw, paired 95% CI &gt; 0 and ≥ 3/4 folds won</td><td>HOLDOUT-DTI 0.1372 [0.1191, 0.1580] vs 0.1127 (4/4 folds)</td><td><span class="badge badge-green">PASS</span></td></tr>
+          <tr><td><code>G5a · Piedmont Off-Catalogue SGMC</code></td><td>Alluvial/piedmont habitat (slope ≤ 6 deg, n=11,573 px)</td><td>HOLDOUT-DTI 0.0641 vs GEMSDOE32 H33-2-B2 0.0586 (+9.4%) and H31-B 0.0052</td><td><span class="badge badge-green">PASS</span></td></tr>
+          <tr><td><code>G5b · All-Elevation &amp; 4-Block Off-SGMC</code></td><td>Strict simultaneous win &gt; H33-2-B2 (0.0940 / 0.0984)</td><td>Full Off-SGMC 0.1010 vs 0.0940 (+7.4%); 4-Block 0.1077 [0.0902, 0.1336] vs 0.0984 (+9.5%)</td><td><span class="badge badge-green">PASS</span></td></tr>
+          <tr><td><code>G6 · Own-Method Variogram &amp; Slot Gate</code></td><td>Candidate-specific residual range + unexempted registry pass</td><td>21.25 km collar inherited from historical buffer_derivation.json; r13-lattice-s5 STOP active</td><td><span class="badge badge-red">HOLD (slot_approved=false)</span></td></tr>
+        </tbody>
+      </table></div>
+      <p class="small">HOLDOUT-DTI evaluator: <code>gemsdoe31-holdout-v1</code> (n=58,625 withheld positives, 21,250 m spatial collar, 400 block-bootstrap replicates) and
+        <code>usgs-sgmc-offcat-gt300m-v1</code> (n=61,664 full / n=50,470 4-block collared / n=11,573 piedmont). None of these figures is a competition score or projection.
+        Receipts: <a href="https://github.com/buffedlizard55-lab/GEMSDOE31/blob/main/evidence/h31m_run_card.json">H31-M JSON run card</a> ·
+        <a href="https://github.com/buffedlizard55-lab/GEMSDOE31/blob/main/evidence/h31m_results.json">full EXP-1..3 measurements</a> ·
+        <a href="https://github.com/buffedlizard55-lab/GEMSDOE31/blob/main/knowledge/2026-10-25_h31m_subsurface_concordance_preregistration.md">frozen H31-M preregistration</a>.</p>
+    </section>
+      <section id="hvdc-submod" aria-labelledby="hvdc-heading">
+      <div class="section-head"><div><p class="kicker">2026-10-25 Dual-Specialist + 300 m CELF Submodular Candidate · H31-HVDC</p>
+        <h2 id="hvdc-heading">H31-HVDC-Submod300: Research Download · DO NOT SUBMIT</h2></div>
+        <p>Newly computed 4-fold OOF dual-specialist HGB + fold-visible vent/relay accommodation + Batch-Exact 300 m CELF submodular max-cover GeoTIFF.
+           Local format checks, 55-feature leakage canary, blocked 21.25 km hide-and-recover confirmation (+60.0%), and 34-comparator discrete separation all pass,
+           but the unexempted 695-raster shared registry triggers a literal overlap STOP (slot_approved = false).</p></div>
+      <div class="card download-card">
+        <span class="badge badge-green">LOCAL FORMAT CHECKS PASS · RESEARCH DOWNLOAD ONLY</span>
+        <span class="badge badge-red" style="margin-left:8px">DO NOT SUBMIT · REGISTRY STOP (slot_approved = false)</span>
+        <h3 style="margin-top:18px">gemsdoe31-h31-hvdc-submod300-37654-20261025-43714168</h3>
+        <p>Hydrothermal-volcanic-detachment concordance + fold-visible vent-to-tip &amp; relay-ramp accommodation + Bayes prevalence calibration +
+           Batch-Exact 300 m triangular-kernel submodular maximum coverage (37,654 binary {0.0, 1.0} dots, B &gt; 2 px outside public catalogue).</p>
+        <div class="actions">
+          <a class="button button-primary" href="downloads/gemsdoe31-h31-hvdc-submod300-37654-20261025-43714168-nan.tif" download>Download H31-HVDC Research .tif (NaN-outside)</a>
+          <a class="button" href="downloads/gemsdoe31-h31-hvdc-submod300-37654-20261025-43714168-nan.zip" download>Download Single-TIFF .zip</a>
+          <a class="button" href="downloads/gemsdoe31-h31-hvdc-submod300-37654-20261025-43714168-allfinite.tif" download>All-finite research encoding .tif</a>
+          <a class="button" href="downloads/gemsdoe31-h31-hvdc-submod300-37654-20261025-43714168-format-check.json" download>Format &amp; gate receipt .json</a>
+        </div>
+        <p class="download-meta"><strong>Grid &amp; Range:</strong> 1-band float32 · EPSG:32611 · 3730 x 3292 · 100 m · 0 NaN/Inf inside 5,167,373-cell footprint · footprint values strictly {0.0, 1.0} in [0.0, 1.0] · 0 dots within 200 m of public catalogue.<br>
+          <strong>SHA-256 (NaN primary):</strong> <code>2851825a2a33b3a7539aff02131d7a1d59becb5c2e89d1b9a0212652e1e8b1b2</code><br>
+          <strong>SHA-256 (One-TIFF .zip):</strong> <code>995d01e3ab88ba983e126d18846a371063389cfd4fbcd57f60279b4a727a5506</code><br>
+          <strong>SHA-256 (All-finite):</strong> <code>1cce914c6daa274ce84cfe215540cdb03bef88f880c952e528807378b826262d</code><br>
+          <strong>Artifact Name (not uniqueness approval):</strong> <code>gemsdoe31-h31-hvdc-submod300-37654-20261025-43714168</code><br>
+          <strong>Note (111/140):</strong> <code>H31-HVDC dual-specialist+300m CELF (37654 {0,1} dots; HOLDOUT-DTI 0.1247); research-only, literal registry STOP</code></p>
+      </div>
+      <div class="table-wrap" style="margin-top:18px"><table>
+        <thead><tr><th>Automated Gate</th><th>Threshold</th><th>Measured H31-HVDC Value</th><th>Status</th></tr></thead>
+        <tbody>
+          <tr><td><code>G1 · GeoTIFF Format &amp; [0, 1]</code></td><td>EPSG:32611, 3730x3292, float32, 0 NaN inside, [0, 1]</td><td>37,654 dots in {0.0, 1.0}; 0 NaN inside; 0 within 200 m of catalogue</td><td><span class="badge badge-green">PASS</span></td></tr>
+          <tr><td><code>G2 · Single-Feature Leakage</code></td><td>Two-sided ROC-AUC &lt;= 0.90 across all 55 features</td><td>max AUC = 0.7606 across 55 features (0 leaked)</td><td><span class="badge badge-green">PASS</span></td></tr>
+          <tr><td><code>G3a · 34-Comparator Discrete Subset</code></td><td>Surface |rho| &lt;= 0.90 AND 3-px dot overlap &lt;= 70.0%</td><td>max |rho| = 0.1455 (0.0626 vs GEMSDOE32 H33); max fwd 3-px = 47.62% (35.71% vs SCGP, 18.47% vs MAGREST)</td><td><span class="badge">SUBSET ONLY — NOT UNIQUENESS APPROVAL</span></td></tr>
+          <tr><td><code>G3b · 5x5 Lattice &amp; Continuous Registry</code></td><td>Unexempted 695-raster shared registry (r13-lattice-s5 / GEMSDOE48)</td><td>99.52% (37,472 / 37,654) vs r13-lattice-s5 (|rho| = 0.000001); 100.0% vs GEMSDOE48 continuous</td><td><span class="badge badge-red">LITERAL STOP</span></td></tr>
+          <tr><td><code>G4a · Screen (draws 101, 102; 21.25 km)</code></td><td>Paired gain over clean ArmD-Poisson (0.0733)</td><td>EXP-2 Physics-Poisson 0.0782; EXP-3 Submod300 HOLDOUT-DTI 0.1202 [0.1078, 0.1332]</td><td><span class="badge badge-green">PASS</span></td></tr>
+          <tr><td><code>G4b · Fresh Confirm (draws 201, 202) &amp; 4-Draw Pool</code></td><td>Untouched draws, n = 48,169 withheld positives pooled</td><td>Confirm HOLDOUT-DTI 0.1292 [0.1141, 0.1448]; Pooled 4-draw 0.1247 [0.1128, 0.1381] (+0.0468 / +60.0%, 4/4 draws)</td><td><span class="badge badge-green">PASS</span></td></tr>
+          <tr><td><code>G5 · Off-Catalogue SGMC (&gt;300 m)</code></td><td>Zero-leakage external SGMC evaluation proxy (never trained on)</td><td>OFFCAT-PROXY-DTI 0.0824 vs Clean ArmD 0.0731 (+12.7%) and legacy Arm D 0.0512 (+61.0%)</td><td><span class="badge badge-green">PASS</span></td></tr>
+        </tbody>
+      </table></div>
+      <p class="small">HOLDOUT-DTI evaluator: gemsdoe31-hide-recover-v1 (21.25 km variogram collar, 48,169 withheld positives across 4 draws, 1,000-rep 20 km spatial block bootstrap).
+        All prompt/sibling scores (0.2778, 0.3195, 0.4413) are USER-REPORTED with no organizer receipt. Under the unexempted 695-raster shared registry literal rule,
+        verdict = negative and slot_approved = false; artifacts are preserved as reproducible research downloads.</p>
+    </section>
+      <section id="scgp-submod" aria-labelledby="scgp-heading">
+      <div class="section-head"><div><p class="kicker">2026-10-25 Multi-Physics + 300 m Submodular Candidate · H31-E2</p>
+        <h2 id="scgp-heading">H31-E2 SCGP-Submod: Research Only · DO NOT SUBMIT</h2></div>
+        <p>Historical evidence below is not a new experiment or organizer acceptance. Local format checks pass,
+           but the broader registry gate FAILS. A pass against a selected comparator subset does not establish uniqueness.
+           The literal lattice STOP and failed mountain SGMC gate prohibit submission under the current protocol.</p></div>
+      <div class="card download-card">
+        <span class="badge badge-green">LOCAL FORMAT CHECKS PASS · RESEARCH DOWNLOAD ONLY</span>
+        <span class="badge badge-red" style="margin-left:8px">DO NOT SUBMIT · REGISTRY STOP (slot_approved = false)</span>
+        <h3 style="margin-top:18px">gemsdoe31-scgp-submod-37654-20261025-fa735287</h3>
+        <p>43-feature Gallardo–Meju structural cross-gradient concordance + 2D FFT upward-continuation residuals +
+           seam-free Dual-Expert 1 m 3DEP LiDAR scarp polarity + GeoDAWN K/Th/U &amp; GDR-1391 paleo-sinter +
+           strike-tip/relay bridge + Minoux lazy-greedy 300 m submodular DTI allocator (37,654 off-catalogue dots; 31.5% beyond 1.5 km).</p>
+        <div class="actions">
+          <a class="button button-primary" href="downloads/gemsdoe31-scgp-submod-37654-20261025-fa735287-nan.tif" download>Download H31-E2 Research .tif (NaN-outside)</a>
+          <a class="button" href="downloads/gemsdoe31-scgp-submod-37654-20261025-fa735287-nan.zip" download>Download Single-TIFF .zip</a>
+          <a class="button" href="downloads/gemsdoe31-scgp-submod-37654-20261025-fa735287-allfinite.tif" download>All-finite research encoding .tif</a>
+          <a class="button" href="downloads/gemsdoe31-scgp-submod-37654-20261025-fa735287-format-check.json" download>Format receipt .json</a>
+        </div>
+        <p class="download-meta"><strong>Grid &amp; Range:</strong> 1-band float32 · EPSG:32611 · 3730 × 3292 · 0 NaN/Inf inside 5,167,373-cell footprint · footprint values strictly {0.0, 1.0} in [0.0, 1.0] · 0 dots on public catalogue.<br>
+          <strong>SHA-256 (NaN primary):</strong> <code>d5ae3715c4ee727195ec6c023d5c852497538c3e60ff559997984f397b4d2fa8</code><br>
+          <strong>SHA-256 (All-finite):</strong> <code>88860b14b2808e910ad72544996e41ccb59a80e2e190cda1467d7f0eb16a2ed6</code><br>
+          <strong>Artifact Name (not uniqueness approval):</strong> <code>gemsdoe31-scgp-submod-37654-20261025-fa735287</code><br>
+          <strong>Note (79/140):</strong> <code>GEMSDOE31 H31-E SCGP-Submod 37654d | HOLDOUT-DTI 0.1145 vs 0.0886 | id fa735287</code></p>
+      </div>
+      <div class="table-wrap" style="margin-top:18px"><table>
+        <thead><tr><th>Automated Gate</th><th>Threshold</th><th>Measured H31-E2 Value</th><th>Status</th></tr></thead>
+        <tbody>
+          <tr><td><code>G1 · GeoTIFF Format &amp; [0, 1]</code></td><td>EPSG:32611, 3730×3292, float32, 0 NaN inside, [0, 1]</td><td>37,654 dots in {0.0, 1.0}; 0 NaN inside; 0 on catalogue</td><td><span class="badge badge-green">PASS</span></td></tr>
+          <tr><td><code>G2 · Single-Feature Leakage</code></td><td>Two-sided ROC-AUC ≤ 0.90 across all 86 features</td><td>max AUC = 0.7624 across 86 features</td><td><span class="badge badge-green">PASS</span></td></tr>
+          <tr><td><code>G3a · Historical 22-comparator subset</code></td><td>Surface |ρ| ≤ 0.90 AND 3-px dot overlap ≤ 70.0%</td><td>max |ρ| = 0.1073; max 3-px overlap = 51.53% (concurrent lanes ≤ 45.24%)</td><td><span class="badge">SUBSET ONLY — NOT UNIQUENESS APPROVAL</span></td></tr>
+          <tr><td><code>G3b · 5×5 Calibration Lattice</code></td><td>Unexempted 695-raster shared registry (r13-lattice-s5)</td><td>99.9655% of final H31-E2 dots (37,641 / 37,654); read-only byte audit, not a new experiment</td><td><span class="badge badge-red">LITERAL STOP</span></td></tr>
+          <tr><td><code>G4a · Screen (draw=101, 21.3 km)</code></td><td>Paired ΔDTI &gt; 0 and ≥ 3/4 spatial folds won</td><td>HOLDOUT-DTI 0.1274 vs 0.0922 (+0.0352, 4/4 folds)</td><td><span class="badge badge-green">PASS</span></td></tr>
+          <tr><td><code>G4b · Fresh Confirm (draws 202,303)</code></td><td>Untouched draws, n = 35,599, 95% CI &gt; 0</td><td>HOLDOUT-DTI 0.1145 [0.1071, 0.1232] vs 0.0886 (+0.0259, +29.3%)</td><td><span class="badge badge-green">PASS</span></td></tr>
+          <tr><td><code>G5a · Piedmont Off-Catalogue SGMC</code></td><td>Quaternary piedmont habitat (det_elev ≤ +50 m)</td><td>0.1233 vs Baseline-D 0.1147 and GEMSDOE32 H33-2-B2 0.1091 (+13.0%)</td><td><span class="badge badge-green">PASS</span></td></tr>
+          <tr><td><code>G5b · All-Elevation Mountain SGMC</code></td><td>Strict pre-declared &gt; H33-2-B2 (0.0940) across mountain SGMC</td><td>0.0816 vs Baseline-D 0.0718 (+13.6%), &lt; H33 0.0940</td><td><span class="badge badge-red">HOLD (slot_approved=false)</span></td></tr>
+        </tbody>
+      </table></div>
+      <p class="small">These are historical HOLDOUT-DTI/proxy results, not competition scores.
+        Holdout evaluator: gemsdoe31-hide-v2.0; screen n=17,900, confirmation n=35,599 withheld positives.
+        The inherited 21.3 km collar is not a newly measured candidate-specific correlation range.
+        Proxy independence and a same-instrument global-best comparison are not established.
+        See linked receipts for intervals; no high-score claim follows from these figures.</p>
+      <p class="small">Full artifact &amp; 3-experiment log (including stopped Exp 1 proximity-halo audit and Exp 2 submodular +0.0372 ablation):
+        <a href="experiments/12-h31e-scgp-submod.html">Experiment 12 · H31-E2 SCGP-Submod</a>.</p>
+    </section>
+      <section id="download" aria-labelledby="download-heading">
+      <div class="section-head"><div><p class="kicker">New artifact · 2026-10-25</p>
+        <h2 id="download-heading">OK to download. Not approved for upload.</h2></div>
+        <p>Research-only. Automated scientific gates failed; no human inspection is needed to reach that decision.</p></div>
+      <div class="card download-card">
+        <span class="badge badge-red">DO NOT SUBMIT · negative result</span>
+        <h3 style="margin-top:18px">MAGREST · magnetic texture restoration</h3>
+        <p>Newly computed from magnetic data, not copied or thinned from a prior submission.</p>
+        <div class="actions">
+          <a class="button button-dark" href="downloads/gemsdoe31-magrest-concordant-37654-20261025-2c800a59ff-zeros.tif" download>Download new research TIFF</a>
+          <a class="button" href="downloads/gemsdoe31-magrest-concordant-37654-20261025-2c800a59ff-zeros.zip" download>One-TIFF ZIP</a>
+          <a class="button" href="downloads/magrest-run-card.json" download>Validation + run card</a>
+        </div>
+        <p class="download-meta"><strong>Primary encoding:</strong> float32 · one band · EPSG:32611 · 3730 × 3292 · 100 m ·
+          values exactly 0 or 1 · finite everywhere · zero outside footprint · no nodata tag.<br>
+          <strong>SHA-256:</strong> <code>c101ceb7237df0890a0f650b4211cc501250b47c1ab9cfeca8ee4cb373eb48d9</code><br>
+          <strong>Name:</strong> <code>gemsdoe31-magrest-concordant-37654-20261025-2c800a59ff</code><br>
+          <strong>Note (128/140):</strong> <code>MAGREST reciprocal magnetic texture restoration; 2/4px same-sign concordance; independent dots; research-only, not slot-approved</code></p>
+        <p class="small" style="margin-top:18px"><a href="downloads/gemsdoe31-magrest-concordant-37654-20261025-2c800a59ff-nan.tif" download>NaN-outside version</a> ·
+          <a href="downloads/gemsdoe31-magrest-concordant-37654-20261025-2c800a59ff-nan.zip" download>NaN one-TIFF ZIP</a>.
+          Same predictions inside the footprint. The recorded problem-page wording uses NaN/null outside;
+          the all-finite primary is a defensive range-check encoding, not proof of organizer acceptance.
+          Both are research-only while the convention and submission gates remain unresolved.</p>
+      </div>
+    </section>
+      <section><div class="section-head"><div><p class="kicker">Four separate gates</p><h2>What passed, and what did not</h2></div>
+        <p>These statuses are rebuilt from the exact file, receipts, holdout terms and registry checks.</p></div>
+        <div class="grid grid-4">
+          <div class="card stat"><span class="badge badge-green">PASS</span><h3>File format</h3><p>Exact grid. No NaN inside. All values in [0,1].</p></div>
+          <div class="card stat"><span class="badge badge-red">STOP · 100% overlap</span><h3>Registry separation</h3><p>Nine-tree audit passed, but an authentic shared-registry lattice exceeds the literal 70% rule.</p></div>
+          <div class="card stat"><span class="badge badge-red">FAIL</span><h3>Scientific screen</h3><p>Paired 95% interval crosses zero; worst block exceeds loss limit.</p></div>
+          <div class="card stat"><span class="badge badge-red">BLOCKED</span><h3>Submit?</h3><p>No confirmation, no selector promotion, no organizer receipt.</p></div>
+        </div>
+      </section>
+      <section><div class="section-head"><div><p class="kicker">HOLDOUT-DTI · not a competition score</p><h2>A nominal gain is not a validated gain</h2></div>
+        <p>gems57-pooled-hide-v2 · 2,901 withheld positives · pooled metric · 95% spatial-block bootstrap CI.</p></div>
+        <div class="table-wrap"><table><thead><tr><th>Fixed arm</th><th>HOLDOUT-DTI [95% CI]</th><th>Meaning</th></tr></thead><tbody>
+          <tr><td>MAGREST concordant · preregistered primary</td><td>0.0530 <span class="small">[0.0413, 0.0653]</span></td><td>Deterministic, label-free texture-restoration surface</td></tr>
+          <tr><td>Same-run physical HGB control</td><td>0.0483 <span class="small">[0.0299, 0.0685]</span></td><td>Raw geophysics + existing LiDAR; spatially buffered fitting</td></tr>
+          <tr><td>Paired difference</td><td>+0.0047 [-0.0179, +0.0229]</td><td>Does not establish improvement; no fresh confirmation authorized</td></tr>
+        </tbody></table></div>
+        <p class="small">Registry diagnostics, not DTI: final max |Spearman ρ| 0.005422;
+          max dots within 3 px 100.00% (limits 0.90 / 70%).
+          The nine download-tree audit passed; the shared 695-raster registry contains a spacing-5 control covering every candidate dot. One valid counterexample is enough to STOP; no full broad-registry pass is claimed.</p>
+      </section>
+      <section><div class="section-head"><div><p class="kicker">Research, not optimism</p><h2>Why the previous family looked strong</h2></div>
+        <p>Geometry can be verified. A reported score cannot be authenticated without an organizer receipt.</p></div>
+        <div class="grid grid-2"><div class="card"><h3>H33 is a pruning rule, not a new detector</h3>
+          <p>Byte-level analysis confirms H33 = D2.8 minus dots within 2 pixels of the catalogue.
+            Sparse, separated emissions can reduce redundant false-positive cost under the triangular DTI kernel.</p></div>
+          <div class="card"><h3>Can we beat the reported 0.2778?</h3><p>Unknown. No result here establishes that.
+            New fault-specific information and a significant comparable holdout win are needed;
+            renaming, re-budgeting or copying the same dots does not establish discovery.</p></div></div>
+        <p><a href="research.html">Full nine-repository review, hypotheses and geological limits</a> ·
+          <a href="validation.html">Validation details</a> · <a href="register/index.html">Evidence registers</a></p>
+      </section><p class="small"><a href="register/index.html">Historical reference TIFFs</a> remain audit-only, never a new submission.</p>
+  </main>
+  <footer class="footer"><div class="wrap footer-inner">
+    <p>Maximize P(Win) · Own the Outcome · negative results preserved.</p>
+    <p><a href="feed.html">Evidence feed</a> · <a href="ai-disclosure.html">AI use</a> · <a href="https://github.com/buffedlizard55-lab/GEMSDOE31">Repository</a></p>
+  </div></footer>
+</body>
+</html>
