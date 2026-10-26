@@ -96,6 +96,35 @@ def restore_entry(entry: dict, root: Path) -> dict:
     }
 
 
+def collect_verified_entries(manifest: dict, root: Path, current_results: list[dict]) -> list[dict]:
+    """Return a truthful inventory of every manifest file currently present and hash-verified.
+
+    ``restore_receipt.json`` is a workspace snapshot, not a record of only the most
+    recent ``--group`` invocation. This prevents a later narrow restore from
+    overwriting evidence that another group is still present, and avoids claiming
+    absent or stale files as restored.
+    """
+    current_by_id = {row["id"]: row for row in current_results}
+    verified: list[dict] = []
+    for entry in manifest["files"]:
+        dest = root / entry["dest"]
+        if not dest.is_file():
+            continue
+        got = sha256_file(dest)
+        if got != entry["sha256"]:
+            continue
+        current = current_by_id.get(entry["id"])
+        verified.append({
+            "id": entry["id"],
+            "dest": entry["dest"],
+            "group": entry["group"],
+            "status": current["status"] if current else "present",
+            "bytes": dest.stat().st_size,
+            "sha256": got,
+        })
+    return verified
+
+
 def main() -> None:
     ap = argparse.ArgumentParser(description=__doc__)
     ap.add_argument("--group", default="all", choices=["core", "external", "scored", "all"])
@@ -114,15 +143,20 @@ def main() -> None:
             results.append(r)
             print(f"{r['status']:>8}  {e['dest']:60s}  sha256={r['sha256'][:16]}...")
 
+    verified = collect_verified_entries(man, root, results)
     receipt = {
         "schema_version": 1,
-        "verified_files_count": len(results),
+        "requested_group": args.group,
+        "verified_files_count": len(verified),
         "storage_root": str(root),
-        "files": results,
+        "files": verified,
     }
     (ROOT / "data").mkdir(parents=True, exist_ok=True)
     (ROOT / "data" / "restore_receipt.json").write_text(json.dumps(receipt, indent=2) + "\n")
-    print(f"\n[GEMSDOE36] Verified {len(results)} files; receipt written to data/restore_receipt.json")
+    print(
+        f"\n[GEMSDOE36] Verified {len(verified)} present files across all groups; "
+        "receipt written to data/restore_receipt.json"
+    )
 
 
 if __name__ == "__main__":

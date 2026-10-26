@@ -11,7 +11,7 @@ import pytest
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "scripts"))
-from build_mto_site import ensure_status, site_table  # noqa: E402
+from build_mto_site import current_branch, ensure_status, site_table  # noqa: E402
 from verify_mto_release import verify_all  # noqa: E402
 
 
@@ -43,6 +43,18 @@ def test_generator_fails_closed_if_verdict_or_historical_score_labels_forged() -
         ensure_status(card, fake_score)
 
 
+def test_working_branch_is_read_from_checkout_not_a_historical_run_card(monkeypatch) -> None:
+    class Result:
+        stdout = "arena/test-branch\n"
+
+    def fake_run(*args, **kwargs):
+        assert args[0] == ["git", "branch", "--show-current"]
+        return Result()
+
+    monkeypatch.setattr("build_mto_site.subprocess.run", fake_run)
+    assert current_branch() == "arena/test-branch"
+
+
 def test_nine_pinned_links_measured_not_organizer_authenticated() -> None:
     _, ledger = _card_and_ledger()
     table = site_table(ledger)
@@ -56,3 +68,23 @@ def test_nine_pinned_links_measured_not_organizer_authenticated() -> None:
     assert checked["nested_family_crosschecks"]["b2_vs_d28_gt_2px_xor"] == 0
     assert checked["nested_family_crosschecks"]["d28_removed_to_b2"] == 6436
     assert checked["nested_family_crosschecks"]["solo_removed_to_b2"] == 2545
+
+
+def test_nine_site_table_separates_history_estimates_and_uniqueness() -> None:
+    _, ledger = _card_and_ledger()
+    table = site_table(ledger)
+    assert table.count("Unavailable; no calibrated leaderboard estimate") == 9
+    assert table.count("NO · historical/reused or negative") == 9
+    assert "Estimated leaderboard score" in table
+    assert "Uniqueness / lineage evidence" in table
+    assert "Pixel-identical in footprint (0 XOR) to GEMSDOE30" in table
+    for item in ledger["focus_sites"]:
+        assert item["highest_historical_submission"]["name"] in table
+
+
+def test_executive_summary_includes_generated_nine_site_table() -> None:
+    _, ledger = _card_and_ledger()
+    summary = (ROOT / "docs/executive-summary.html").read_text()
+    assert summary.count("<!-- FOCUS9_EXEC:START -->") == 1
+    assert summary.count("<!-- FOCUS9_EXEC:END -->") == 1
+    assert site_table(ledger) in summary
