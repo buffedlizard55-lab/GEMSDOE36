@@ -29,6 +29,13 @@ jobs:
           echo "--- comcat sample (2020-05-15 Monte Cristo Range day):"; head -5 out/comcat_sample.csv || true
           echo "--- TNM 1 m total:"; python3 -c "import json;d=json.load(open('out/tnm_3dep_1m_products.json'));print(d.get('total'), [i.get('title') for i in d.get('items',[])][:2])" || true
           echo "--- TNM 1/3 arc-second total:"; python3 -c "import json;d=json.load(open('out/tnm_3dep_13arcsec_products.json'));print(d.get('total'), [i.get('title') for i in d.get('items',[])][:2])" || true
+      - name: Publish results as annotations (readable through api.github.com)
+        run: |
+          while read -r name code bytes url; do echo "::notice title=HTTP ${code} ${name}::${bytes} bytes from ${url}"; done < out/status.txt
+          echo "::notice title=ComCat M>=2.5 events 2000-01-01..2026-10-25 in footprint bbox::$(cat out/comcat_count_m2.5_2000-2026.txt 2>/dev/null | tr -d '\n')"
+          echo "::notice title=ComCat 2020-05-15 M>=3 sample rows::$(($(wc -l < out/comcat_sample.csv 2>/dev/null || echo 1)-1)) rows; first: $(sed -n 2p out/comcat_sample.csv 2>/dev/null | cut -c1-120)"
+          echo "::notice title=TNM 3DEP 1 m DEM products in bbox::$(python3 -c "import json;d=json.load(open('out/tnm_3dep_1m_products.json'));print('total', d.get('total'), '|', ' ; '.join(i.get('title','') for i in d.get('items',[])[:2]))" 2>&1 | cut -c1-300)"
+          echo "::notice title=TNM 3DEP 1/3 arc-second products in bbox::$(python3 -c "import json;d=json.load(open('out/tnm_3dep_13arcsec_products.json'));print('total', d.get('total'), '|', ' ; '.join(i.get('title','') for i in d.get('items',[])[:2]))" 2>&1 | cut -c1-300)"
       - uses: actions/upload-artifact@v4
         with:
           name: external-source-verification
