@@ -19,6 +19,7 @@ ROOT = Path(__file__).resolve().parents[1]
 DOCS = ROOT / "docs"
 CARD = ROOT / "evidence/mto36_run_card_20261026.json"
 HVG_CARD = ROOT / "evidence/hvg36_run_card_20261026.json"
+DW_CARD = ROOT / "evidence/dw36_run_card_20261026.json"
 LEDGER = ROOT / "evidence/focus_sites_9repo_summary_20261026.json"
 UNIQUENESS = ROOT / "evidence/focus_sites_pairwise_uniqueness_20261026.json"
 README = ROOT / "README.md"
@@ -181,9 +182,9 @@ def executive_card(card: dict, hvg: dict | None = None) -> str:
       <p><strong>Immediate Automated Answer (Zero Human Intervention Required):</strong></p>
       <ul>
         <li><strong>Which historical submission scored highest across the 9 focus sites?</strong> <code>GEMSDOE32</code>'s <code>gemsdoe32-h33-h33-2-b2-20261004T220000Z-e5eb6e7e-zeros.tif</code> achieved <strong><code>0.2778 OWNER-REPORTED</code></strong> (`37,654` dots, scored ID <code>c55bafc47005</code>). However, forensic byte analysis proves it is an exact <code>0-XOR</code> subset of <code>GEMSDOE25/30 D2.8</code> (<code>d_cat &gt; 2 px</code>) shared across <code>GEMSDOE25, 28, 30, 31, 32, 33, 36</code>. <strong>Do not re-upload historical family duplicates to DrivenData.</strong></li>
-        <li><strong>What is the newest unique GeoTIFF generated in <code>GEMSDOE36</code> &amp; is it OK to download and submit?</strong> This repository generated the unique whole-array <code>[0, 1]</code> GeoTIFF <a href="downloads/{e(hvg_tif)}" download><code>{e(hvg_tif)}</code></a> (<a href="downloads/{e(hvg_zip)}" download>ZIP</a> · <a href="downloads/hvg36-run-card.json" download>JSON Run Card</a> · <a href="research/hvg36-20261026.md">Monograph</a> · <a href="research/preregistration-hvg36-20261026.md">Preregistration</a>) from <strong>Lane <code>HVG-36</code> (<code>HVG-36-EXP-1</code>: Hydrothermal-Vent Structural-Conduit &amp; Cross-Scale Potential-Field Dipole Ensemble)</strong>, alongside <a href="downloads/{e(tif)}" download><code>{e(tif)}</code></a> (<a href="downloads/{e(zipn)}" download>ZIP</a> · <a href="downloads/mto36-run-card.json" download>MTO-36 Run Card</a>).
+        <li><strong>What is the latest downloadable research GeoTIFF in <code>GEMSDOE36</code> &amp; is it OK to download and submit?</strong> This repository generated a whole-array <code>[0, 1]</code> GeoTIFF, distinct from the nine site champions but failing the all-registry novelty gate, <a href="downloads/{e(hvg_tif)}" download><code>{e(hvg_tif)}</code></a> (<a href="downloads/{e(hvg_zip)}" download>ZIP</a> · <a href="downloads/hvg36-run-card.json" download>JSON Run Card</a> · <a href="research/hvg36-20261026.md">Monograph</a> · <a href="research/preregistration-hvg36-20261026.md">Preregistration</a>) from <strong>Lane <code>HVG-36</code> (<code>HVG-36-EXP-1</code>: Hydrothermal-Vent Structural-Conduit &amp; Cross-Scale Potential-Field Dipole Ensemble)</strong>, alongside <a href="downloads/{e(tif)}" download><code>{e(tif)}</code></a> (<a href="downloads/{e(zipn)}" download>ZIP</a> · <a href="downloads/mto36-run-card.json" download>MTO-36 Run Card</a>).
           <br><strong>Automated Gate Decision: <code>DOWNLOAD: YES (research) · DO NOT SUBMIT</code> (<code>verdict: negative</code>).</strong>
-          <code>HVG-36-EXP-1</code> achieved <strong><code>HOLDOUT-DTI = {hs['e1_dti']:.6f}</code></strong> (<code>95% CI [{hs['e1_ci'][0]:.6f}, {hs['e1_ci'][1]:.6f}]</code>, <code>gems-segment-pooled-v1</code>, <code>60,988</code> withheld positives), beating the matched 59-feature <code>B0</code> control (<code>{hs['b0_dti']:.6f}</code>, <code>delta = +{hs['delta_mean']:.6f}</code>, winning <strong>3 of 4 spatial folds</strong>: <code>NW = {hs['folds']['NW']:.5f}</code>, <code>NE_LidarGapHeavy = {hs['folds']['NE_LidarGapHeavy']:.5f}</code>, <code>SW = {hs['folds']['SW']:.5f}</code>, <code>SE = {hs['folds']['SE']:.5f}</code>) and setting the <strong>highest <code>HOLDOUT-DTI</code> of all 7 lanes in <code>GEMSDOE36</code></strong>. It is also <strong>100% unique against all 9 focus-site top champions</strong> (max 3-px dot overlap <code>44.48% &lt;= 70%</code>; <code>35.35%</code> vs <code>GEMSDOE32 B2</code>; pre-placement surface max <code>|rho| = 0.5713 &lt;= 0.90</code> PASS; all 14 features PASS leakage canary with max AUC <code>0.6440 &lt;= 0.90</code>). However, our automated fail-closed gate withholds live portal submission because: (1) the paired 95% CI vs <code>B0</code> (<code>[{hs['delta_ci'][0]:+.6f}, {hs['delta_ci'][1]:+.6f}]</code>) includes zero; (2) pooled <code>HOLDOUT-DTI</code> (<code>{hs['e1_dti']:.6f}</code>) remains below the recorded 9-site holdout best <code>0.14876</code> (<code>GEMSDOE24 H24-GVC1</code>); and (3) on the literal 203-raster registry check, 3-px overlap exceeds 70% against dense union-pool/blanket rasters (<code>72.01%</code> on <code>gems28-h37-1-probe-union-pool-r1</code>, <code>88.37%</code> on <code>GEMSDOE67 ovtr-ml-cover</code>, <code>100.00%</code> on <code>13GEMSDOE</code> 5-px lattice).</li>
+          <code>HVG-36-EXP-1</code> achieved <strong><code>HOLDOUT-DTI = {hs['e1_dti']:.6f}</code></strong> (<code>95% CI [{hs['e1_ci'][0]:.6f}, {hs['e1_ci'][1]:.6f}]</code>, <code>gems-segment-pooled-v1</code>, <code>60,988</code> withheld positives), beating the matched 59-feature <code>B0</code> control (<code>{hs['b0_dti']:.6f}</code>, <code>delta = +{hs['delta_mean']:.6f}</code>, winning <strong>3 of 4 spatial folds</strong>: <code>NW = {hs['folds']['NW']:.5f}</code>, <code>NE_LidarGapHeavy = {hs['folds']['NE_LidarGapHeavy']:.5f}</code>, <code>SW = {hs['folds']['SW']:.5f}</code>, <code>SE = {hs['folds']['SE']:.5f}</code>) and setting the <strong>highest <code>HOLDOUT-DTI</code> of all 7 lanes in <code>GEMSDOE36</code></strong>. It is also <strong>below the duplicate threshold against all 9 focus-site top champions</strong> (max 3-px dot overlap <code>44.48% &lt;= 70%</code>; <code>35.35%</code> vs <code>GEMSDOE32 B2</code>; pre-placement surface max <code>|rho| = 0.5713 &lt;= 0.90</code> PASS; all 14 features PASS leakage canary with max AUC <code>0.6440 &lt;= 0.90</code>). However, our automated fail-closed gate withholds live portal submission because: (1) the paired 95% CI vs <code>B0</code> (<code>[{hs['delta_ci'][0]:+.6f}, {hs['delta_ci'][1]:+.6f}]</code>) includes zero; (2) pooled <code>HOLDOUT-DTI</code> (<code>{hs['e1_dti']:.6f}</code>) remains below the recorded 9-site holdout best <code>0.14876</code> (<code>GEMSDOE24 H24-GVC1</code>); and (3) on the literal 203-raster registry check, 3-px overlap exceeds 70% against dense union-pool/blanket rasters (<code>72.01%</code> on <code>gems28-h37-1-probe-union-pool-r1</code>, <code>88.37%</code> on <code>GEMSDOE67 ovtr-ml-cover</code>, <code>100.00%</code> on <code>13GEMSDOE</code> 5-px lattice).</li>
       </ul>
       <div class="cta-row">
         <a class="btn" href="downloads/{e(hvg_tif)}" download>Download HVG-36 Research TIFF (0.135759 · do not submit)</a>
@@ -326,7 +327,7 @@ def site_table(ledger: dict, uniqueness: dict | None = None) -> str:
       <div class="table-wrap"><table><tr><th>Site</th><th>Exact pinned file for audit</th><th>Measured</th><th>Reported score (unverified)</th><th>Estimated leaderboard score &amp; Holdout-DTI</th><th>Uniqueness / lineage evidence</th><th>Safe now?</th></tr>
 """ + "\n".join(rows) + """
       </table></div>
-      <p>Highest reported in this set: GEMSDOE32 <code>0.2778 OWNER-REPORTED</code>, but its mask is an exact D2.8 subset (<code>0</code> XOR) after removing the 200 m known-fault collar (<code>6,436</code> collar FPs stripped; algebraic inversion across <code>D2.8 / R1 / B2 / PINN</code> fits with <code>R^2 = 0.998523</code>, yielding blind-test <code>TP_w = 5,151.3 px</code> and ground-truth weight <code>K = 12,852.7 px</code>). All nine historical files fail the 70% 3-px overlap uniqueness ceiling; see the <a href="downloads/focus-sites-pairwise-uniqueness.json">72-pair audit JSON</a>. By contrast, our newly generated <a href="downloads/gemsdoe36-hvg36-vent-dipole-20261026-b3ee97873192-zeros.tif" download><code>gemsdoe36-hvg36-vent-dipole-20261026-b3ee97873192-zeros.tif</code></a> achieves <code>HOLDOUT-DTI = 0.135759</code> (highest in <code>GEMSDOE36</code>) and is 100% unique against all 9 focus-site champions (<code>max 3-px overlap = 44.48%</code>), though it remains a <code>negative</code> research release. This is mask lineage, <strong>not</strong> proof that collar removal caused the blind score change. <a href="research/hvg36-20261026.md">HVG-36 Monograph</a> · <a href="research/mto36-evidence-and-nine-sites.md">MTO-36 &amp; Nine-Site Forensics</a>.</p>
+      <p>Highest reported in this set: GEMSDOE32 <code>0.2778 OWNER-REPORTED</code>, but its mask is an exact D2.8 subset (<code>0</code> XOR) after removing the 200 m known-fault collar (<code>6,436</code> collar FPs stripped; algebraic inversion across <code>D2.8 / R1 / B2 / PINN</code> fits with <code>R^2 = 0.998523</code>, yielding blind-test <code>TP_w = 5,151.3 px</code> and ground-truth weight <code>K = 12,852.7 px</code>). All nine historical files fail the 70% 3-px overlap uniqueness ceiling; see the <a href="downloads/focus-sites-pairwise-uniqueness.json">72-pair audit JSON</a>. By contrast, our newly generated <a href="downloads/gemsdoe36-hvg36-vent-dipole-20261026-b3ee97873192-zeros.tif" download><code>gemsdoe36-hvg36-vent-dipole-20261026-b3ee97873192-zeros.tif</code></a> achieves <code>HOLDOUT-DTI = 0.135759</code> (highest in <code>GEMSDOE36</code>) and is below the duplicate threshold against all 9 focus-site champions (<code>max 3-px overlap = 44.48%</code>), though it remains a <code>negative</code> research release. This is mask lineage, <strong>not</strong> proof that collar removal caused the blind score change. <a href="research/hvg36-20261026.md">HVG-36 Monograph</a> · <a href="research/mto36-evidence-and-nine-sites.md">MTO-36 &amp; Nine-Site Forensics</a>.</p>
     </section>"""
 
 
@@ -375,7 +376,39 @@ def readme_focus9_table(ledger: dict) -> str:
     return header + "\n" + "\n".join(rows) + f"\n{FOCUS9_README_END}"
 
 
+def dw36_status(dw: dict) -> str:
+    """Latest negative experiment banner; no upload link when the duplicate gate stops export."""
+    h = dw["holdout_dti"]
+    reg = dw["registry"]
+    if (dw["verdict"] != "negative" or dw["submit_ok"] or dw["raster_sha256"] is not None
+            or dw["duplicate_stop_stage"] != "final" or reg["missing"]
+            or reg["verified_count"] != reg["pinned_count"]):
+        raise RuntimeError("DW36 card disagrees with a fully audited negative duplicate stop")
+    if not reg["final"]["duplicates"]:
+        raise RuntimeError("DW36 stop has no recorded comparator")
+    return f'''<!-- DW36:START -->
+    <section class="verdict-banner" aria-labelledby="dw36-title">
+      <div class="verdict-head"><span class="verdict-pill">LATEST EXPERIMENT: NO NEW TIFF · DO NOT SUBMIT</span><span class="verdict-pill secondary">DW36 · failed automated novelty and holdout gates</span></div>
+      <h2 id="dw36-title">DW36: research result, not a competition file</h2>
+      <p><strong>HOLDOUT-DTI {h["pooled_candidate"]:.6f}</strong> (95% CI [{h["ci95_candidate"][0]:.6f}, {h["ci95_candidate"][1]:.6f}], gems-segment-pooled-v1, {h["withheld_positives"]:,} withheld pixels), below matched control {h["pooled_control"]:.6f}. The leakage canary passed. The pre-placement surface max |rho| was {reg["preplacement"]["max_abs_rank"]:.4f} across all {reg["verified_count"]} pinned rasters. Final candidate dots overlapped {reg["final"]["max_3px_overlap"]:.0%} of the 5-px calibration lattice within 3 px and up to {reg["final"]["focus9_max_3px_overlap"]:.2%} across the nine focus sites. A duplicate is defined by <strong>any</strong> registry raster, not only the nine champions; the process stopped <strong>before writing a TIFF</strong>. No DW36 raster SHA-256 or file exists; no portal upload occurred.</p>
+      <p><a href="downloads/dw36-run-card.json">Download DW36 evidence JSON</a> · <a href="research/dw36-20261026.md">Read experiment, irregularities and next steps</a>. Previous <a href="downloads/gemsdoe36-hvg36-vent-dipole-20261026-b3ee97873192-zeros.tif" download>validated research TIFF (HVG-36)</a> remains available below, but <strong>not approved for submission</strong>. Historical B2's 0.2778 is OWNER-REPORTED without portal receipt; a holdout number is not a forecast.</p>
+    </section>
+<!-- DW36:END -->'''
+
+
+def insert_dw36(page: str, dw: dict) -> str:
+    banner = dw36_status(dw)
+    if "<!-- DW36:START -->" in page:
+        return re.sub(r'<!-- DW36:START -->.*?<!-- DW36:END -->', lambda _: banner,
+                      page, count=1, flags=re.S)
+    anchor = '<main id="main" class="wrap">'
+    if anchor not in page:
+        raise RuntimeError("Main anchor missing from Pages")
+    return page.replace(anchor, anchor + "\n" + banner, 1)
+
+
 def main() -> int:
+    dw = json.loads(DW_CARD.read_text(encoding="utf-8"))
     card = json.loads(CARD.read_text(encoding="utf-8"))
     hvg = json.loads(HVG_CARD.read_text(encoding="utf-8"))
     ledger = json.loads(LEDGER.read_text(encoding="utf-8"))
@@ -384,18 +417,17 @@ def main() -> int:
     idx = INDEX.read_text(encoding="utf-8")
     if idx.count(START) != 1 or idx.count(END) != 1:
         raise RuntimeError("index.html missing single MTO-36 block markers")
+    # Earlier site builders each appended their own focus table. Remove all
+    # stale copies first, then regenerate exactly one from the pinned ledger.
+    idx = re.sub(r'\s*<section class="section" aria-labelledby="focus-sites-title">.*?</section>',
+                 '', idx, flags=re.S)
     replacement = executive_card(card, hvg) + "\n" + site_table(ledger)
-    updated = re.sub(
-        re.escape(START) + r".*?" + re.escape(END) + r"(?:\s*<section class=\"section\" aria-labelledby=\"focus-sites-title\">.*?</section>)?",
-        lambda _: replacement,
-        idx,
-        count=1,
-        flags=re.S,
-    )
+    updated = re.sub(re.escape(START) + r".*?" + re.escape(END),
+                     lambda _: replacement, idx, count=1, flags=re.S)
     script = '<script>fetch("current-run.json").then(r=>r.json()).then(d=>{if(d.slot_approved||d.ok_to_download_and_submit)throw new Error("invalid positive state");});</script>'
     if 'fetch("current-run.json")' not in updated:
         updated = updated.replace('</body>', '  ' + script + '\n</body>', 1)
-    INDEX.write_text(updated, encoding="utf-8")
+    INDEX.write_text(insert_dw36(updated, dw), encoding="utf-8")
 
     summary = SUMMARY.read_text(encoding="utf-8")
     if summary.count(START) == 1 and summary.count(END) == 1:
@@ -420,7 +452,7 @@ def main() -> int:
         )
     else:
         summary = summary.replace("<!-- MTO-36:END -->", "<!-- MTO-36:END -->\n" + block, 1)
-    SUMMARY.write_text(summary, encoding="utf-8")
+    SUMMARY.write_text(insert_dw36(summary, dw), encoding="utf-8")
 
     s = README.read_text(encoding="utf-8")
     if s.count("<!-- STATUS:START -->") != 1 or s.count("<!-- STATUS:END -->") != 1:
@@ -463,6 +495,14 @@ def main() -> int:
         "leakage_canary": card["leakage_canary"],
         "registry_uniqueness": card["registry"],
         "validator_output": card["validator_output"],
+        "latest_experiment": {
+            "lane_id": "DW36", "verdict": dw["verdict"],
+            "slot_approved": False, "ok_to_download_and_submit": False,
+            "research_tif": None, "raster_sha256": dw["raster_sha256"],
+            "duplicate_stop_stage": dw["duplicate_stop_stage"],
+            "holdout_dti": dw["holdout_dti"], "registry": dw["registry"],
+            "run_card": "downloads/dw36-run-card.json",
+        },
         "latest_hvg36_lane": {
             "lane_id": "HVG-36",
             "experiment_id": "HVG-36-EXP-1",
@@ -487,6 +527,7 @@ def main() -> int:
     for source, name in (
         (CARD, "mto36-run-card.json"),
         (HVG_CARD, "hvg36-run-card.json"),
+        (DW_CARD, "dw36-run-card.json"),
         (LEDGER, "focus9-verified-source-ledger.json"),
         (ROOT / "evidence/mto36_ninesite_forensics.json", "focus9-source-integrity.json"),
         (UNIQUENESS, "focus-sites-pairwise-uniqueness.json"),

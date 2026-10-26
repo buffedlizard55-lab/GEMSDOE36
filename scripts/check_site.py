@@ -24,6 +24,7 @@ MTO_CARD = REPO_ROOT / "evidence/mto36_run_card_20261026.json"
 MOE_CARD = REPO_ROOT / "evidence/moe36_run_card_20261026.json"
 WDP_CARD = REPO_ROOT / "evidence/wdp36_run_card_20261026.json"
 HVG_CARD = REPO_ROOT / "evidence/hvg36_run_card_20261026.json"
+DW_CARD = REPO_ROOT / "evidence/dw36_run_card_20261026.json"
 CURRENT_RUN = DOCS_ROOT / "current-run.json"
 BOTH_PAGES = ("DO NOT SUBMIT", "Research downloads only", "HOLDOUT-DTI", "ORGANIZER-CONFIRMED")
 REQUIRED_PAGES = ("index.html", "executive-summary.html")
@@ -117,6 +118,24 @@ def main() -> int:
     gps = json.loads(GPS_CARD.read_text(encoding="utf-8"))
     landing = " ".join(parsers.get("index.html", LinkParser()).text_chunks)
     execp = " ".join(parsers.get("executive-summary.html", LinkParser()).text_chunks)
+    if (DOCS_ROOT / "index.html").read_text().count('id="focus-sites-title"') != 1:
+        errors.append("landing must contain exactly one current focus-site table")
+    dw = json.loads(DW_CARD.read_text(encoding="utf-8"))
+    if (dw.get("verdict") != "negative" or dw.get("duplicate_stop_stage") != "final"
+            or dw.get("raster_sha256") is not None or dw.get("validator_output") is not None
+            or dw.get("submit_ok") or dw["registry"]["missing"]
+            or dw["registry"]["verified_count"] != dw["registry"]["pinned_count"]
+            or not dw["registry"]["final"]["duplicates"]
+            or dw["holdout_dti"]["evaluator_version"] != "gems-segment-pooled-v1"):
+        errors.append("DW36 latest negative duplicate-stop evidence inconsistent")
+    public_dw = DOCS_ROOT / "downloads/dw36-run-card.json"
+    if not public_dw.is_file() or public_dw.read_bytes() != DW_CARD.read_bytes():
+        errors.append("DW36 public card missing or not identical to run card")
+    if list((DOCS_ROOT / "downloads").glob("gemsdoe36-dw36*.tif")):
+        errors.append("DW36 duplicate stop must not publish TIFF")
+    for page, text in (("index.html", landing), ("executive-summary.html", execp)):
+        if "LATEST EXPERIMENT: NO NEW TIFF" not in text or "DW36" not in text:
+            errors.append(f"docs/{page} missing DW36 duplicate stop")
 
     # Verify ATVR-36 bundle on disk & pages
     atvr_tif = DOCS_ROOT / "downloads/gemsdoe36-atvr36-20261026.tif"
@@ -223,6 +242,9 @@ def main() -> int:
             cur.get("slot_approved") or cur.get("ok_to_download_and_submit")
             or cur.get("verdict") != "negative" or cur.get("lane_id") != "MTO-36"
             or cur.get("tif_sha256") != mto["raster_sha256"]
+            or cur.get("latest_experiment", {}).get("lane_id") != "DW36"
+            or cur["latest_experiment"].get("raster_sha256") is not None
+            or cur["latest_experiment"].get("ok_to_download_and_submit")
         ):
             errors.append("docs/current-run.json must reflect the MTO-36 negative verdict/hash")
     else:
