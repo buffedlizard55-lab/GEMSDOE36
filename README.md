@@ -1,6 +1,6 @@
-# Current submission status — 2026-10-25: NOT APPROVED
+# Current submission status — 2026-10-26: NOT APPROVED
 
-**Read this section and [the current review](docs/research/review-20261025.md) every session.**
+**Read this section and the [latest cross-repository review](docs/research/repo-review-20261026.md) every session.** The [2026-10-25 safety review](docs/research/review-20261025.md) remains the protocol/source audit; the 2026-10-26 report adds the requested nine-site best-reported-submission table and is the current session's run record.
 This notice supersedes the historical README below. No new unique submission has
 passed the current protocol. Old TIFFs are educational downloads only. Existing
 mirror scores, live projections and H6 gate claims do not establish promotion.
