@@ -1,0 +1,51 @@
+{
+  "schema": "gems36.kpl36.preregistration.v1",
+  "lane_id": "KPL-36",
+  "date": "2026-10-26",
+  "branch": "arena/8afe281d-gemsdoe36",
+  "hypotheses_ranked": [
+    {"rank": 1, "id": "H-KPL-A", "implemented_in": ["EXP-1", "EXP-2"],
+     "title": "Expert-traceability: 3-5 km oriented line coherence (structure tensor sigma=15px, line integrals half=15/25px, cross-channel orientation agreement)",
+     "layers": ["lid_step_max", "lid_ex_max", "org_det_elev_slope", "org_tmi_hg", "org_iso_grav_anom_hg"],
+     "named_non_fault_mimic": "Long straight roads/railways/pipelines, Lahontan shoreline benches, range-front erosional facets"},
+    {"rank": 2, "id": "H-KPL-B", "implemented_in": ["EXP-3"],
+     "title": "PU-spy decontaminated training (15% spies, RN threshold = spy 10th percentile)",
+     "layers": ["all EXP-2 features (statistical change only)"],
+     "named_non_fault_mimic": "Reliable-negative basin bias causing over-firing on erosional range fronts"},
+    {"rank": 3, "id": "H-KPL-C", "implemented_in": [],
+     "title": "DTI-exact budget x collar selection - sensitivity only, deploy budget frozen at 37654/B2",
+     "layers": ["n/a"], "named_non_fault_mimic": "n/a"},
+    {"rank": 4, "id": "H-KPL-D", "implemented_in": [],
+     "title": "Drainage-deflection/knickpoint alignment - NOT viable in sandbox; needs raw USGS 3DEP DEM via https://apps.nationalmap.gov/downloader/ (egress-blocked; owner-CI GitHub mirror route required)",
+     "layers": ["USGS 3DEP 1/3 arc-second DEM (external, not obtained)"],
+     "named_non_fault_mimic": "Lithologic knickpoints at hard/soft contacts"},
+    {"rank": 5, "id": "H-KPL-E", "implemented_in": [],
+     "title": "Least-cost-path tip completion between collinear catalogue tips",
+     "layers": ["fold-visible catalogue geometry + feature cost surface"],
+     "named_non_fault_mimic": "Drainage channels connecting segment tips"}
+  ],
+  "evaluator_version": "gems-segment-pooled-v1",
+  "buffer_px": 15,
+  "withheld_positives_expected": 60988,
+  "total_budget_dots": 37654,
+  "collar_px_exclusive": 2.0,
+  "experiments": [
+    {"id": "EXP-1", "name": "KPL-Single-101", "features": "BASE59+SA16+GVSC14+KPL12 (101)", "model": "2-seed HGB (GVSC_HGB) + Prentice-Pyke", "emission": "CELF submodular gamma=1.0 min_spacing=2 pool=240k"},
+    {"id": "EXP-2", "name": "KPL-Bridge-101", "features": "EXP-1 full expert + LiDAR-blind expert (101 minus lid_* and kpl_lid*, kpl_x*)", "model": "GVSC frozen regime fusion weights (0.55/0.30/0.15)", "emission": "CELF as EXP-1"},
+    {"id": "EXP-3", "name": "KPL-Bridge-PU", "features": "EXP-2 experts retrained PU-spy (full expert only; blind expert from EXP-2)", "model": "spy 15%, RN threshold spy-q10, retrain 2-seed HGB", "emission": "CELF as EXP-1"}
+  ],
+  "controls": [
+    {"id": "B0", "name": "Base-59 control (GVSC recipe, emit_dots)"},
+    {"id": "C-GVSC", "name": "GVSC-89 LiDAR-blind bridge replication (recorded repo best 0.158855)"}
+  ],
+  "gates": {
+    "G1_canary_max_two_polarity_auc": 0.90,
+    "G2_must_exceed_recorded_gvsc_exp3": 0.158855,
+    "G2_paired_vs_B0_ci95_strictly_positive": true,
+    "G3_surface_max_abs_spearman_focus9": 0.90,
+    "G3_final_dots_max_3px_overlap_vs_each_focus9_champion": 0.70,
+    "G4_strict_whole_array_0_1_and_template_match": true
+  },
+  "budget": {"max_experiments": 3, "max_walltime_seconds": 7200},
+  "deploy": "assembled OOF surface of best EXP arm; global d_catalogue>2px; CELF 37654; zeros outside footprint"
+}

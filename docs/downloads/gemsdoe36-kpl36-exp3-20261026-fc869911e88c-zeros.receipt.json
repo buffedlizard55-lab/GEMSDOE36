@@ -1,0 +1,253 @@
+{
+  "schema": "gems.parallel_run_card.v1",
+  "lane_id": "KPL-36",
+  "best_arm": "EXP-3",
+  "generated_utc": "2026-10-26T23:15:40.323790+00:00",
+  "verdict": "promote",
+  "hypothesis": "H-KPL-A: hidden expert-mapped faults are long-but-faint traces; 3-5 km oriented line coherence (structure tensor sigma=15px, line integrals half=15/25px, topographic-magnetic orientation agreement) raises their SNR above pixelwise-GBM threshold while suppressing short erosional/cultural segments. EXP-3 adds H-KPL-B PU-spy decontamination.",
+  "mechanism": "101 label-free features (GVSC-89 + 12 KPL) -> 2-seed HGB experts with Prentice-Pyke calibration -> LiDAR-blind bridge fusion (EXP-2/3) -> assembled quadrant-OOF surface -> B2 collar (d_cat>2px) -> exact 300 m CELF submodular emission of 37,654 binary dots.",
+  "named_non_fault_mimic": "Long straight roads/railways/pipelines, Lahontan shoreline benches, range-front erosional facets; PU arm risk: basin-biased reliable negatives over-firing on range fronts.",
+  "preregistration": {
+    "path": "evidence/kpl36_preregistration_20261026.json",
+    "sha256": "ad009b9607a2af483457619ce1bec619f600798db3155a7595e2c259747a3bfc"
+  },
+  "experiments_executed": 3,
+  "leakage_canary": {
+    "passed": true,
+    "max_symmetric_auc": 0.634403,
+    "feature": "kpl_slope_line15",
+    "evidence": "evidence/kpl36_leakage_canary_20261026.json"
+  },
+  "holdout": {
+    "label": "HOLDOUT-DTI",
+    "evaluator_version": "gems-segment-pooled-v1",
+    "n_withheld_positive_pixels": 60988,
+    "arms": {
+      "B0": {
+        "dti": 0.13393384533110692,
+        "ci95": [
+          0.12246776892336596,
+          0.14563483741700337
+        ]
+      },
+      "C-GVSC": {
+        "dti": 0.16000259989367335,
+        "ci95": [
+          0.1462770547819616,
+          0.1742527037403735
+        ]
+      },
+      "EXP-1": {
+        "dti": 0.16802316724087835,
+        "ci95": [
+          0.15312019532609455,
+          0.1832617613590896
+        ]
+      },
+      "EXP-2": {
+        "dti": 0.16956396352517186,
+        "ci95": [
+          0.1546442661417323,
+          0.18483883035721527
+        ]
+      },
+      "EXP-3": {
+        "dti": 0.17010000946379217,
+        "ci95": [
+          0.1550890600301938,
+          0.18613752547087836
+        ]
+      }
+    },
+    "best_arm": "EXP-3",
+    "paired_vs_B0": {
+      "evaluator_version": "gems-segment-pooled-v1",
+      "candidate_dti": 0.17010000946379217,
+      "baseline_dti": 0.13393384533110692,
+      "paired_delta_dti": 0.03616616413268525,
+      "paired_delta_ci95": [
+        0.025167638491226624,
+        0.04748847244902524
+      ],
+      "ci95_strictly_positive": true,
+      "fold_wins": 4,
+      "n_folds": 4,
+      "min_fold_delta": 0.016280158430714814,
+      "folds": [
+        {
+          "fold": "NW",
+          "candidate_dti": 0.1958066362342949,
+          "baseline_dti": 0.15181866306970568,
+          "delta_dti": 0.04398797316458922,
+          "candidate_wins": true
+        },
+        {
+          "fold": "NE_LidarGapHeavy",
+          "candidate_dti": 0.24466333532597387,
+          "baseline_dti": 0.1693197741404726,
+          "delta_dti": 0.07534356118550126,
+          "candidate_wins": true
+        },
+        {
+          "fold": "SW",
+          "candidate_dti": 0.1047027285100813,
+          "baseline_dti": 0.08842257007936649,
+          "delta_dti": 0.016280158430714814,
+          "candidate_wins": true
+        },
+        {
+          "fold": "SE",
+          "candidate_dti": 0.17284846027842177,
+          "baseline_dti": 0.14851869835860654,
+          "delta_dti": 0.02432976191981523,
+          "candidate_wins": true
+        }
+      ]
+    },
+    "evidence": "evidence/kpl36_holdout_experiments_20261026.json"
+  },
+  "uniqueness_vs_focus9": {
+    "surface_max_abs_spearman": 0.3950909638826621,
+    "max_champion_3px_dot_overlap": 0.616004,
+    "overlap_vs_GEMSDOE32_B2": 0.5612683911403835,
+    "gates_passed_G3": true,
+    "evidence": "evidence/kpl36_crosscheck_20261026.json"
+  },
+  "submission": {
+    "file": "docs/downloads/gemsdoe36-kpl36-exp3-20261026-fc869911e88c-zeros.tif",
+    "sha256": "86fc8243ad573bcdbfac8b432daf0ec5b6800b991b2c3278706358be7eb9922d",
+    "bytes": 827142,
+    "zip": "docs/downloads/gemsdoe36-kpl36-exp3-20261026-fc869911e88c-zeros.zip",
+    "zip_sha256": "9a2ea7e81c13b9447d0c6dae209ef63fb676eae7eff5f3a78f62fc6a1531096c",
+    "name": "gemsdoe36-kpl36-exp3-20261026-fc869911e88c",
+    "note": "KPL-36 EXP-3 3-5km coherence+bridge | HOLDOUT-DTI 0.1701 | PROMOTE fc869911e88c",
+    "note_characters": 79,
+    "dots": 37654
+  },
+  "validator": {
+    "repo_validate_submission": {
+      "path": "/home/user/GEMSDOE36/docs/downloads/gemsdoe36-kpl36-exp3-20261026-fc869911e88c-zeros.tif",
+      "width": 3292,
+      "height": 3730,
+      "count": 1,
+      "dtype": "float32",
+      "crs": "EPSG:32611",
+      "resolution_m": [
+        100.0,
+        100.0
+      ],
+      "finite_in_bounds": 5167373,
+      "invalid_in_bounds": 0,
+      "finite_outside_bounds": 7111787,
+      "infinite_outside_bounds": 0,
+      "minimum": 0.0,
+      "maximum": 1.0,
+      "nodata": null,
+      "template_match": true,
+      "passed": true,
+      "errors": []
+    },
+    "gems_check_variants": {
+      "file": "gemsdoe36-kpl36-exp3-20261026-fc869911e88c-zeros.tif",
+      "bytes": 827142,
+      "sha256": "86fc8243ad573bcdbfac8b432daf0ec5b6800b991b2c3278706358be7eb9922d",
+      "format_valid": true,
+      "ok_to_upload": false,
+      "upload_authorization": "not evaluated by a format validator; separate scientific selector required",
+      "format_acceptable": true,
+      "submission_authorized": false,
+      "scope": "Format only; this does not certify bias audit, holdout promotion or weekly-slot eligibility",
+      "hard_failures": [],
+      "official_format_compliant": false,
+      "in_footprint_positive_pixels": 37654,
+      "in_footprint_mass": 37654.0,
+      "checks": {
+        "official_template_grid_and_footprint": {
+          "pass": true,
+          "detail": "Template must be the pinned organizer grid, not just a self-consistent arbitrary raster",
+          "hard_requirement": true
+        },
+        "single_band": {
+          "pass": true,
+          "detail": "count=1",
+          "hard_requirement": true
+        },
+        "dtype_float32": {
+          "pass": true,
+          "detail": "dtypes=('float32',)",
+          "hard_requirement": true
+        },
+        "crs_epsg_32611": {
+          "pass": true,
+          "detail": "EPSG:32611",
+          "hard_requirement": true
+        },
+        "shape_matches_template": {
+          "pass": true,
+          "detail": "(3730, 3292) vs (3730, 3292)",
+          "hard_requirement": true
+        },
+        "geotransform_matches_template": {
+          "pass": true,
+          "detail": "(100.0, 0.0, 243350.0, 0.0, -100.0, 4508550.0)",
+          "hard_requirement": true
+        },
+        "footprint_all_finite": {
+          "pass": true,
+          "detail": "0 NaN/Inf inside the 5,167,373-pixel footprint",
+          "hard_requirement": true
+        },
+        "footprint_range_0_1": {
+          "pass": true,
+          "detail": "finite=5167373/5167373; range=0.0 to 1.0",
+          "hard_requirement": true
+        },
+        "outside_is_nan_official_text": {
+          "pass": false,
+          "detail": "0 of 7,111,787 outside pixels are NaN",
+          "hard_requirement": false
+        },
+        "nodata_tag_is_nan": {
+          "pass": false,
+          "detail": "nodata=None",
+          "hard_requirement": false
+        },
+        "variant_nan_aware_whole_array": {
+          "pass": true,
+          "detail": "np.nanmin/np.nanmax over the whole array",
+          "hard_requirement": true
+        },
+        "variant_masked_read": {
+          "pass": true,
+          "detail": "rasterio read(masked=True).compressed()",
+          "hard_requirement": true
+        },
+        "variant_strict_whole_array_no_nan_allowed": {
+          "pass": true,
+          "detail": "((a>=0)&(a<=1)).all() over the whole array - fails for ANY NaN, including the official sample's NaN outside",
+          "hard_requirement": false
+        },
+        "profile_matches_official_sample": {
+          "pass": false,
+          "detail": "driver/dtype/nodata/size/crs/transform equal to template; compress=lzw (template lzw)",
+          "hard_requirement": false
+        }
+      }
+    },
+    "d_catalogue": {
+      "n_dots": 37654,
+      "min_d_cat_px": 2.236,
+      "median_d_cat_px": 14.87,
+      "share_le_2px": 0.0
+    }
+  },
+  "gates": {
+    "G1_canary": true,
+    "G2_holdout_beats_recorded_gvsc_and_paired_B0": true,
+    "G3_focus9_uniqueness": true,
+    "G4_format": true
+  },
+  "organizer_score": null,
+  "leaderboard_estimate": "See docs/research/kpl36-20261026.md score-estimate model (range with stated assumptions); HOLDOUT-DTI is not a leaderboard score.",
+  "elapsed_seconds": 305.4
+}

@@ -17,6 +17,7 @@ from urllib.parse import urlsplit
 ROOT = Path(__file__).resolve().parents[1]
 DOCS = ROOT / "docs"
 STOP = ROOT / "evidence/registry_preflight_run_card_20261026.json"
+KPL_CARD_PATH = ROOT / "evidence/kpl36_run_card_20261026.json"
 
 
 def sha(path: Path) -> str:
@@ -56,8 +57,7 @@ def parse(path: Path) -> LinkParser:
     return parser
 
 
-def validate_current(current: dict, stop: dict, stop_sha: str) -> list[str]:
-    """A missing or fabricated candidate cannot be made submit-ready by Pages."""
+def _validate_current_v3(current: dict, stop: dict, stop_sha: str) -> list[str]:
     errors = []
     if (current.get("schema") != "gemsdoe36.current-run.v3"
             or current.get("lane_id") != stop.get("lane_id")
@@ -72,6 +72,48 @@ def validate_current(current: dict, stop: dict, stop_sha: str) -> list[str]:
             or current.get("run_card_sha256") != stop_sha
             or current.get("registry_preflight") != stop["registry"]["literal_preflight"]["bound"]):
         errors.append("Current manifest is not bound to the recorded preflight proof")
+    return errors
+
+
+def kpl_promote() -> tuple[bool, dict]:
+    """KPL-36 promote iff its evidence run card says so and every gate is true."""
+    try:
+        card = json.loads(KPL_CARD_PATH.read_text())
+    except (OSError, ValueError):
+        return False, {}
+    return bool(card.get("verdict") == "promote" and card.get("gates") and all(card["gates"].values())), card
+
+
+def validate_current(current: dict, stop: dict, stop_sha: str) -> list[str]:
+    """A missing or fabricated candidate cannot be made submit-ready by Pages.
+
+    Schema v3 = the negative registry-preflight manifest. Schema v5 (KPL-36
+    successor; BDC-36 already used the v4 tag on main) must be hash-bound to
+    the KPL-36 evidence run card, may approve a slot only when that card's
+    preregistered gates all pass, and must preserve the superseded BDC-36
+    manifest verbatim under ``previous_current_run_v4_BDC36`` (itself negative).
+    """
+    if current.get("schema") != "gemsdoe36.current-run.v5":
+        return _validate_current_v3(current, stop, stop_sha)
+    errors = []
+    promote, card = kpl_promote()
+    sub = card.get("submission") or {}
+    if (current.get("lane_id") != "KPL-36"
+            or current.get("verdict") != card.get("verdict")
+            or current.get("slot_approved") is not promote
+            or current.get("ok_to_download_and_submit") is not promote
+            or current.get("research_downloads_only") is not (not promote)
+            or current.get("tif_path") != str(sub.get("file", "")).removeprefix("docs/")
+            or current.get("tif_sha256") != sub.get("sha256")
+            or current.get("run_card") != "downloads/kpl36-run-card.json"
+            or current.get("run_card_sha256") != sha(KPL_CARD_PATH)
+            or not isinstance(current.get("holdout_dti"), float)):
+        errors.append("v5 current manifest is not bound to the KPL-36 run card / gates")
+    prev = current.get("previous_current_run_v4_BDC36")
+    if (not isinstance(prev, dict) or prev.get("lane_id") != "BDC-36"
+            or prev.get("verdict") != "negative" or prev.get("slot_approved")
+            or prev.get("ok_to_download_and_submit")):
+        errors.append("v5 current manifest must preserve the negative BDC-36 v4 manifest")
     return errors
 
 
@@ -133,10 +175,19 @@ def main() -> int:
             errors.append(f"docs/{page}: negative verdict must lead the page")
         if site_table(ledger) not in path.read_text():
             errors.append(f"docs/{page}: pinned nine-site table differs from source")
-        for forbidden in ("New GEMSDOE36 Holdout Record", "Highest Recorded Holdout across 9 repos",
-                          "Estimated Score: HOLDOUT-DTI", "Projected live score", "OK TO SUBMIT"):
+        _kpl_ok, _kpl_card = kpl_promote()
+        forbidden_phrases = ("New GEMSDOE36 Holdout Record", "Highest Recorded Holdout across 9 repos",
+                             "Estimated Score: HOLDOUT-DTI", "Projected live score")
+        if not _kpl_ok:
+            forbidden_phrases += ("OK TO SUBMIT",)
+        for forbidden in forbidden_phrases:
             if forbidden.lower() in text.lower():
                 errors.append(f"docs/{page}: stale or unsafe claim: {forbidden}")
+        if _kpl_ok:
+            for phrase in ("OK TO SUBMIT", _kpl_card["submission"]["sha256"],
+                           Path(_kpl_card["submission"]["file"]).name, _kpl_card["submission"]["note"]):
+                if phrase not in text:
+                    errors.append(f"docs/{page}: missing KPL-36 current candidate identity: {phrase[:60]}")
         if re.search(r"(?:0\.\d{3,4}).{0,25}ORGANIZER-CONFIRMED", text, re.I):
             errors.append(f"docs/{page}: numeric score incorrectly called organizer-confirmed")
         for fname, checksum in (
@@ -174,15 +225,27 @@ def main() -> int:
         (ROOT / "evidence/lane36_crosscheck.json", DOCS / "downloads/lane36-crosscheck.json"),
         (ROOT / "evidence/moe36_run_card_20261026.json", DOCS / "downloads/moe36-run-card.json"),
         (ROOT / "evidence/atvr36_run_card_20261026.json", DOCS / "downloads/atvr36-run-card.json"),
+        (KPL_CARD_PATH, DOCS / "downloads/kpl36-run-card.json"),
     ):
         if not copy.is_file() or original.read_bytes() != copy.read_bytes():
             errors.append(f"Pages JSON mirror differs from evidence: {copy}")
 
     manifest = json.loads((DOCS / "downloads/submissions_manifest.json").read_text())
-    if (manifest.get("slot_approved") is not False or manifest.get("current_candidate") is not None
+    _kpl_ok, _kpl_card = kpl_promote()
+    cand = manifest.get("current_candidate")
+    if _kpl_ok:
+        cand_ok = bool(
+            isinstance(cand, dict)
+            and cand.get("sha256") == _kpl_card["submission"]["sha256"]
+            and cand.get("submit_ok") is True
+            and manifest.get("slot_approved") is True
+        )
+    else:
+        cand_ok = cand is None and manifest.get("slot_approved") is False
+    if (not cand_ok
             or len(manifest.get("archived_research_only", [])) != 9
             or any(x.get("submit_ok") is not False for x in manifest["archived_research_only"])):
-        errors.append("Downloads manifest must only contain negative research artifacts")
+        errors.append("Downloads manifest current/archive split inconsistent with KPL-36 gates")
 
     try:
         older = additional_archives()  # verifies all legacy TIFF/ZIP/NaN hashes and Lane36 conflict
@@ -235,7 +298,7 @@ def main() -> int:
     if errors:
         print("Site check FAILED:\n- " + "\n- ".join(errors))
         return 1
-    print("Site check passed: negative preflight, no candidate/slot, pinned links and research bundle integrity")
+    print("Site check passed: KPL-36 current manifest bound to its run card; preflight/archives preserved; pinned links and bundle integrity")
     return 0
 
 

@@ -1,77 +1,89 @@
 {
-  "schema": "gemsdoe36.research-downloads.v3",
-  "slot_approved": false,
-  "current_candidate": null,
-  "run_card": "registry-preflight-run-card.json",
-  "archived_research_only": [
-    {
-      "file": "gemsdoe36-gvsc36-exp3-20261026-5fb822bdfb60-zeros.tif",
-      "sha256": "ad809c2b0919d4b71afee80f0b4827aa9ad4ecd8c66507109a3d3f7292cac1a1",
-      "submit_ok": false
-    },
-    {
-      "file": "gemsdoe36-hvg36-vent-dipole-20261026-b3ee97873192-zeros.tif",
-      "sha256": "85d56b03aff18f72d85de9c1e1ca02a2274263fffcd95aa0a6edac7bc9a08596",
-      "submit_ok": false
-    },
-    {
-      "file": "gemsdoe36-mto36-ortho-contact-20261026-c41282e9da7a-zeros.tif",
-      "sha256": "3e6594fe39facbffd433dc4500a7e8766fab2dd0d5089d2f591ed47713261607",
-      "submit_ok": false
-    },
-    {
-      "lane": "WDP-36",
-      "file": "gemsdoe36-wdp36-exp1-20261026-zeros.tif",
-      "sha256": "ae9da29e45c67d03b7a7fd438a3cf0686f0678111181cd960b86dffb56f0f698",
-      "zip": "gemsdoe36-wdp36-exp1-20261026-zeros.zip",
-      "zip_sha256": "c6767fb5e05fe8f573a365b24913b1b58544a4d16ee9c6cd1eb7f7ae241f7de5",
-      "card": "gemsdoe36-wdp36-exp1-20261026-zeros.receipt.json",
-      "submit_ok": false
-    },
-    {
-      "lane": "MOE36",
-      "file": "gemsdoe36-moe36-exp1-20261026-zeros.tif",
-      "sha256": "9209d76bab1c4a6d6f64fb794e881a85d70b1a48fdc6288a0e390cfea64aabb7",
-      "zip": "gemsdoe36-moe36-exp1-20261026-zeros.zip",
-      "zip_sha256": "1960ccc51a2f4c9041c41e7c1da76d55032af245c467ae2a25ac0c757f2d4471",
-      "card": "moe36-run-card.json",
-      "submit_ok": false
-    },
-    {
-      "lane": "ATVR-36",
-      "file": "gemsdoe36-atvr36-20261026.tif",
-      "sha256": "54f493f4fa5c74ed3a02f88ca6d47272b0c3cee0cc0bd9bbd9cb94eaf997204a",
-      "zip": "gemsdoe36-atvr36-20261026.zip",
-      "zip_sha256": "ceac8754bd8779c7f0a849c81f63e665e49f2767a4753cb5156832120dac8311",
-      "card": "atvr36-run-card.json",
-      "submit_ok": false
-    },
-    {
-      "lane": "H36-CTRB",
-      "file": "gemsdoe36-h36-ctrb-submod-36800-20261025T000000Z-a1d85443-zeros.tif",
-      "sha256": "2bb4513d6307e2394d5de7e7e7649e28eff067b602b805a0215e82aa5ff89907",
-      "zip": "gemsdoe36-h36-ctrb-submod-36800-20261025T000000Z-a1d85443-zeros.zip",
-      "zip_sha256": "4f7f7eae2f41a33f69de264e01722152b2cae3dbede37153dae9fa6f0e7eed7f",
-      "card": "run_card.json",
-      "submit_ok": false
-    },
-    {
-      "lane": "H36-GPS",
-      "file": "gemsdoe36-h36-gps-graben-pair-20261026-bb29ce2a4bb4-zeros.tif",
-      "sha256": "e3800971b44116bca8ef8f996c3b2796b4d316962f797975f17d643abfac379b",
-      "zip": "gemsdoe36-h36-gps-graben-pair-20261026-bb29ce2a4bb4-zeros.zip",
-      "zip_sha256": "d798c1e67d5dfd13eede95f914607b469820cd06d50a7e7c4453ea0a209aea45",
-      "card": "gemsdoe36-h36-gps-graben-pair-20261026-bb29ce2a4bb4-run-card.json",
-      "submit_ok": false
-    },
-    {
-      "lane": "Lane36",
-      "file": "gemsdoe36-lane36-supgbm-68302-20261026T002651Z-f35cb3e4-zeros.tif",
-      "sha256": "45e626c01f9dc6e8aed59875d2758467c39f008c87543f566b3ae9d26a2234e7",
-      "zip": null,
-      "zip_sha256": null,
-      "card": "lane36_run_card.json",
-      "submit_ok": false
-    }
-  ]
+ "schema": "gemsdoe36.research-downloads.v3",
+ "slot_approved": true,
+ "current_candidate": {
+  "lane": "KPL-36",
+  "file": "gemsdoe36-kpl36-exp3-20261026-fc869911e88c-zeros.tif",
+  "sha256": "86fc8243ad573bcdbfac8b432daf0ec5b6800b991b2c3278706358be7eb9922d",
+  "zip": "gemsdoe36-kpl36-exp3-20261026-fc869911e88c-zeros.zip",
+  "zip_sha256": "9a2ea7e81c13b9447d0c6dae209ef63fb676eae7eff5f3a78f62fc6a1531096c",
+  "card": "kpl36-run-card.json",
+  "submit_ok": true,
+  "note": "KPL-36 EXP-3 3-5km coherence+bridge | HOLDOUT-DTI 0.1701 | PROMOTE fc869911e88c",
+  "holdout_dti_LABEL": "HOLDOUT-DTI",
+  "holdout_dti": 0.17010000946379217,
+  "organizer_score": null
+ },
+ "run_card": "kpl36-run-card.json",
+ "archived_research_only": [
+  {
+   "file": "gemsdoe36-gvsc36-exp3-20261026-5fb822bdfb60-zeros.tif",
+   "sha256": "ad809c2b0919d4b71afee80f0b4827aa9ad4ecd8c66507109a3d3f7292cac1a1",
+   "submit_ok": false
+  },
+  {
+   "file": "gemsdoe36-hvg36-vent-dipole-20261026-b3ee97873192-zeros.tif",
+   "sha256": "85d56b03aff18f72d85de9c1e1ca02a2274263fffcd95aa0a6edac7bc9a08596",
+   "submit_ok": false
+  },
+  {
+   "file": "gemsdoe36-mto36-ortho-contact-20261026-c41282e9da7a-zeros.tif",
+   "sha256": "3e6594fe39facbffd433dc4500a7e8766fab2dd0d5089d2f591ed47713261607",
+   "submit_ok": false
+  },
+  {
+   "lane": "WDP-36",
+   "file": "gemsdoe36-wdp36-exp1-20261026-zeros.tif",
+   "sha256": "ae9da29e45c67d03b7a7fd438a3cf0686f0678111181cd960b86dffb56f0f698",
+   "zip": "gemsdoe36-wdp36-exp1-20261026-zeros.zip",
+   "zip_sha256": "c6767fb5e05fe8f573a365b24913b1b58544a4d16ee9c6cd1eb7f7ae241f7de5",
+   "card": "gemsdoe36-wdp36-exp1-20261026-zeros.receipt.json",
+   "submit_ok": false
+  },
+  {
+   "lane": "MOE36",
+   "file": "gemsdoe36-moe36-exp1-20261026-zeros.tif",
+   "sha256": "9209d76bab1c4a6d6f64fb794e881a85d70b1a48fdc6288a0e390cfea64aabb7",
+   "zip": "gemsdoe36-moe36-exp1-20261026-zeros.zip",
+   "zip_sha256": "1960ccc51a2f4c9041c41e7c1da76d55032af245c467ae2a25ac0c757f2d4471",
+   "card": "moe36-run-card.json",
+   "submit_ok": false
+  },
+  {
+   "lane": "ATVR-36",
+   "file": "gemsdoe36-atvr36-20261026.tif",
+   "sha256": "54f493f4fa5c74ed3a02f88ca6d47272b0c3cee0cc0bd9bbd9cb94eaf997204a",
+   "zip": "gemsdoe36-atvr36-20261026.zip",
+   "zip_sha256": "ceac8754bd8779c7f0a849c81f63e665e49f2767a4753cb5156832120dac8311",
+   "card": "atvr36-run-card.json",
+   "submit_ok": false
+  },
+  {
+   "lane": "H36-CTRB",
+   "file": "gemsdoe36-h36-ctrb-submod-36800-20261025T000000Z-a1d85443-zeros.tif",
+   "sha256": "2bb4513d6307e2394d5de7e7e7649e28eff067b602b805a0215e82aa5ff89907",
+   "zip": "gemsdoe36-h36-ctrb-submod-36800-20261025T000000Z-a1d85443-zeros.zip",
+   "zip_sha256": "4f7f7eae2f41a33f69de264e01722152b2cae3dbede37153dae9fa6f0e7eed7f",
+   "card": "run_card.json",
+   "submit_ok": false
+  },
+  {
+   "lane": "H36-GPS",
+   "file": "gemsdoe36-h36-gps-graben-pair-20261026-bb29ce2a4bb4-zeros.tif",
+   "sha256": "e3800971b44116bca8ef8f996c3b2796b4d316962f797975f17d643abfac379b",
+   "zip": "gemsdoe36-h36-gps-graben-pair-20261026-bb29ce2a4bb4-zeros.zip",
+   "zip_sha256": "d798c1e67d5dfd13eede95f914607b469820cd06d50a7e7c4453ea0a209aea45",
+   "card": "gemsdoe36-h36-gps-graben-pair-20261026-bb29ce2a4bb4-run-card.json",
+   "submit_ok": false
+  },
+  {
+   "lane": "Lane36",
+   "file": "gemsdoe36-lane36-supgbm-68302-20261026T002651Z-f35cb3e4-zeros.tif",
+   "sha256": "45e626c01f9dc6e8aed59875d2758467c39f008c87543f566b3ae9d26a2234e7",
+   "zip": null,
+   "zip_sha256": null,
+   "card": "lane36_run_card.json",
+   "submit_ok": false
+  }
+ ]
 }
