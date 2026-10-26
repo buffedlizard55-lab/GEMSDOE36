@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Fail-closed Pages link/status checks for current MTO-36 and four archived lanes.
+"""Fail-closed Pages link/status checks for MTO-36 and five archived lanes.
 
 Does not claim organizer portal acceptance or authenticate historical score claims.
 """
@@ -21,6 +21,7 @@ GPS_CARD = REPO_ROOT / "evidence/h36_run_card.json"
 LANE36_CARD = DOCS_ROOT / "downloads/lane36_run_card.json"
 LANE36_CC = REPO_ROOT / "evidence/lane36_crosscheck.json"
 MTO_CARD = REPO_ROOT / "evidence/mto36_run_card_20261026.json"
+MOE_CARD = REPO_ROOT / "evidence/moe36_run_card_20261026.json"
 CURRENT_RUN = DOCS_ROOT / "current-run.json"
 BOTH_PAGES = ("DO NOT SUBMIT", "Research downloads only", "HOLDOUT-DTI", "ORGANIZER-CONFIRMED")
 REQUIRED_PAGES = ("index.html", "executive-summary.html")
@@ -107,6 +108,7 @@ def main() -> int:
                 errors.append(f"docs/{page}: target=_blank without rel=noopener: {href}")
 
     mto = json.loads(MTO_CARD.read_text(encoding="utf-8"))
+    moe = json.loads(MOE_CARD.read_text(encoding="utf-8"))
     atvr = json.loads(ATVR_CARD.read_text(encoding="utf-8"))
     ctrb = json.loads(CTRB_CARD.read_text(encoding="utf-8"))
     gps = json.loads(GPS_CARD.read_text(encoding="utf-8"))
@@ -165,6 +167,8 @@ def main() -> int:
         Path(mto["download"]["tif"]).name,
         mto["raster_sha256"],
         mto["submission_note"],
+        moe["submission_note"],
+        moe["raster_sha256"],
         atvr_tif.name,
         atvr["raster_sha256"],
         atvr["submission_note"],
@@ -225,6 +229,16 @@ def main() -> int:
         errors.append("MTO-36 submission note exceeds 140 characters")
     if (DOCS_ROOT / "downloads/mto36-run-card.json").read_bytes() != MTO_CARD.read_bytes():
         errors.append("public MTO-36 run-card mirror differs from evidence")
+    for file, expected in (
+        (DOCS_ROOT / "downloads/gemsdoe36-moe36-exp1-20261026-zeros.tif", moe["raster_sha256"]),
+        (DOCS_ROOT / "downloads/gemsdoe36-moe36-exp1-20261026-zeros.zip", moe["zip_sha256"]),
+    ):
+        if not file.is_file() or _sha(file) != expected:
+            errors.append(f"MOE36 artifact missing / SHA-256 mismatch: {file.name}")
+    if moe["verdict"] != "negative" or moe["ok_to_download_and_submit"] or moe["registry_uniqueness"]["full_198_raster_crosscheck"]["passed"]:
+        errors.append("Archived MOE36 must remain a negative duplicate-flag release")
+    if len(moe["submission_note"]) > 140:
+        errors.append("MOE36 submission note exceeds 140 characters")
     for page, text in (("index.html", landing), ("executive-summary.html", execp)):
         if re.search(r"(?:0\.\d{3,4}).{0,25}ORGANIZER-CONFIRMED", text, re.I):
             errors.append(f"docs/{page}: numeric historical score incorrectly called organizer-confirmed")
@@ -253,7 +267,7 @@ def main() -> int:
         for err in errors:
             print(f"- {err}")
         return 1
-    print("SITE CHECK PASS — MTO-36 negative research release and 4 archived lanes verified")
+    print("SITE CHECK PASS — MTO-36 negative research release and 5 archived lanes verified")
     return 0
 
 

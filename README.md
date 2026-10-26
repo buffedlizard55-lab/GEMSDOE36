@@ -1,6 +1,6 @@
 # GEMSDOE36 — current decision & reproducible research
 
-**Working branch:** `arena/cee70ea1-gemsdoe36`. **Read this first** before starting work: the decision below is more recent than archived ATVR/CTRB/GPS pages. Core values: **Maximize P(Win)** and **Own the Outcome**. The [full standing owner brief](#full-standing-owner-brief-historical-wording) is preserved verbatim below; its historical leaderboard claims are not verified observations.
+**Working branch:** `arena/cee70ea1-gemsdoe36`. **Read this first** before starting work: the decision below is the current branch decision, alongside archived ATVR/CTRB/GPS/Lane36/MOE36 research lanes. Core values: **Maximize P(Win)** and **Own the Outcome**. The [full standing owner brief](#full-standing-owner-brief-historical-wording) is preserved verbatim below; its historical leaderboard claims are not verified observations.
 
 <!-- STATUS:START -->
 > ## CURRENT DECISION · `DOWNLOAD: YES (research)` · `DO NOT SUBMIT` · `verdict: negative`
@@ -10,7 +10,7 @@
 > - SHA-256: `3e6594fe39facbffd433dc4500a7e8766fab2dd0d5089d2f591ed47713261607`. Template, single band, CRS/shape/transform, all-grid finite `[0,1]` **PASS locally**; acceptance by DrivenData has **NOT** been tested.
 > - **HOLDOUT-DTI:** `0.067611` (95% CI `[0.058449, 0.077867]`; `gems-segment-pooled-v1`, `60,988` withheld positives; 1.5 km buffer). Matched control `0.066923`; paired CI `[-0.003002, +0.004433]` crosses zero; recorded group best `0.14876` **HOLDOUT-DTI** (same evaluator, not recomputed here).
 > - **Uniqueness:** surface max |rho| `0.4366` PASS; B2 champion overlap `23.76%`, nine focus max `65.73%`; **all 203 references max `100.00%` FAIL** (synthetic calibration lattice and four dense non-focus rasters &gt;70%). **Not unique under the literal protocol. Stop; no weekly slot spent.**
-> - Prior lanes: [ATVR-36](evidence/atvr36_run_card_20261026.json), [H36-CTRB](evidence/h36_ctrb_run_card_20261025.json), [H36-GPS](evidence/h36_run_card.json), [Lane36](evidence/lane36_crosscheck.json); all negative. [Nine-site SHA/dot crosscheck](evidence/mto36_ninesite_forensics.json) · [manual-review sources and next steps](docs/research/mto36-evidence-and-nine-sites.md).
+> - Prior/parallel lanes: [ATVR-36](evidence/atvr36_run_card_20261026.json), [H36-CTRB](evidence/h36_ctrb_run_card_20261025.json), [H36-GPS](evidence/h36_run_card.json), [Lane36](evidence/lane36_crosscheck.json), [MOE36](evidence/moe36_run_card_20261026.json) (HOLDOUT-DTI 0.124900, strict 198-raster duplicate-flag; [report](docs/research/moe36-20261026.md)); **all negative**. [Nine-site SHA/dot crosscheck](evidence/mto36_ninesite_forensics.json) · [manual-review sources and next steps](docs/research/mto36-evidence-and-nine-sites.md).
 > - Historical competition results are **OWNER-REPORTED**, not `ORGANIZER-CONFIRMED`: no submission-page receipts are archived. User-supplied public maxima `0.3195` and `0.4413` are inconsistent in date and not refreshed here. Live board: [DrivenData leaderboard](https://www.drivendata.org/competitions/306/competition-doe-gems/leaderboard/).
 <!-- STATUS:END -->
 

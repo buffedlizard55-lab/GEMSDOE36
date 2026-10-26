@@ -46,7 +46,7 @@ In the repository's local implementation, the distance-tolerant score is a weigh
 - **GEMSDOE31:** Solo mask equals GEMSDOE28 solo, reported 0.2708. Recent H31-M verdict negative; no unique promoted file.
 - **GEMSDOE32:** B2 37,654 dots, **highest of the nine reported scores (0.2778)**, equals D2.8 minus the known-fault 200 m collar. H-GEO-CONDUIT later marked negative. Do not resubmit B2 or a transformed copy.
 - **GEMSDOE33:** H33d 41,865 dots, reported 0.2632; subsequent A33-L1 negative.
-- **GEMSDOE36:** Legacy PINN 38,854 dots, reported 0.2750, contains B2 plus 1,200 and is not new. ATVR, CTRB and GPS lanes were all negative. This session's **MTO-36 is negative** and **DO NOT SUBMIT**.
+- **GEMSDOE36:** Legacy PINN 38,854 dots, reported 0.2750, contains B2 plus 1,200 and is not new. ATVR, CTRB, GPS and the parallel [MOE36](moe36-20261026.md) lanes were all negative. This branch's **MTO-36 is negative** and **DO NOT SUBMIT**.
 
 ## Ranked genuinely new geological hypotheses (frozen *before* testing)
 
@@ -76,7 +76,7 @@ Data obtainability: rank 1–3 rely on already cached owner-mirror features, ran
 | **Final dots vs *all* 203 pinned comparison rasters** | Max rank `|rho| = 0.5531`, but **1.0000 directed 3-px overlap** against 13GEMSDOE five-pixel calibration lattice. Four other non-lattice masks overlap 0.7551, 0.7409, 0.7402, 0.7147. Literal >0.70 duplicate gate **FAIL**. |
 | No hidden-data leaks / format | Canary PASS, entire-array validation PASS; no organizer upload performed. |
 
-The five-pixel lattice covers 99.8713% of the footprint within 3 px in the independent coverage audit; only 6,649 footprint pixels are more than 3 px from its dots. With a 37,654-dot budget, even the impossible ideal of placing all 6,649 there leaves ≥82.34% overlapping that one raster. This explains why tuning the emitter to evade it would be futile—and **would violate** the precommitted stop rule; excluding the lattice still leaves four other failures. The stopped run still archives a research file for independent QA; that does not reverse the duplicate finding. **Do not run a second experiment in this lane.**
+A parallel MOE36 raster merged into `main` after the frozen E1 registry snapshot. A [post-merge, artifact-only comparison](https://github.com/buffedlizard55-lab/GEMSDOE36/blob/arena/cee70ea1-gemsdoe36/evidence/mto36_postmerge_moe_comparison.json) gives MTO→MOE directed 3-px overlap 0.3341 and raw rank rho 0.0085; this adds no sixth duplicate and does not erase the five original failures. No second holdout or emitter run occurred. The five-pixel lattice covers 99.8713% of the footprint within 3 px in the independent coverage audit; only 6,649 footprint pixels are more than 3 px from its dots. With a 37,654-dot budget, even the impossible ideal of placing all 6,649 there leaves ≥82.34% overlapping that one raster. This explains why tuning the emitter to evade it would be futile—and **would violate** the precommitted stop rule; excluding the lattice still leaves four other failures. The stopped run still archives a research file for independent QA; that does not reverse the duplicate finding. **Do not run a second experiment in this lane.**
 
 ### Irregularities and inference boundaries
 

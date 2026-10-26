@@ -1,0 +1,18 @@
+{
+  "schema": "postmerge-comparator-audit-v1",
+  "date_utc": "2026-10-26",
+  "not_a_new_experiment": true,
+  "purpose": "New PR #17 MOE36 comparator merged after frozen MTO-36 E1. Compare archived full-grid binaries with shared novelty function; do not rewrite original preplacement or run card.",
+  "mto_tif_sha256": "3e6594fe39facbffd433dc4500a7e8766fab2dd0d5089d2f591ed47713261607",
+  "new_comparator_moe_tif_sha256": "9209d76bab1c4a6d6f64fb794e881a85d70b1a48fdc6288a0e390cfea64aabb7",
+  "shared_novelty_row": {
+    "registry_id": "parallel-pr17-MOE36",
+    "file": "GEMSDOE36/docs/downloads/gemsdoe36-moe36-exp1-20261026-zeros.tif",
+    "footprint_sha256": "b4fd735e352212e7ad153abe8f3e4930f98bb9dac41f5b3a969fdc72e399ce79",
+    "raw_spearman": 0.008523896626963937,
+    "kernel_spearman": 0.12895282706864056,
+    "candidate_dot_overlap_within_3px": 0.33406809369522494,
+    "duplicate": false
+  },
+  "already_negative_all_registry_stop_unchanged": true
+}

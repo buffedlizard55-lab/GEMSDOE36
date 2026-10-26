@@ -54,7 +54,7 @@
 <!-- MTO-36:END -->
 
     <section class="verdict verdict-bad" aria-labelledby="repo-title">
-      <div class="eyebrow">Repository decision · zero-human automated gate across all four GEMSDOE36 parallel lanes</div>
+      <div class="eyebrow">Repository decision · earlier negative parallel research lanes</div>
       <h1 id="repo-title">DO NOT SUBMIT — hold weekly live slot (Research downloads only)</h1>
       <p class="verdict-sub"><strong>DOWNLOAD: YES · LIVE WEEKLY SLOT: DO NOT SUBMIT</strong> — Earlier research GeoTIFFs below passed local template/grid and strict <code>[0, 1]</code> whole-array checks; the organizer has NOT accepted them and may run additional validation. None simultaneously clears the recorded group <code>HOLDOUT-DTI</code> best (<code>0.14876</code> / <code>repo B0 = 0.13375</code>) and the literal 201-raster uniqueness ceiling (<code>&le; 70%</code> against <code>41&ndash;55%</code> area blankets), so spending one of the 3 weekly live slots is blocked automatically to <strong>Maximize P(Win)</strong>.</p>
       <div class="table-wrap verdict-meta">
@@ -82,6 +82,23 @@
           </tr>
         </table>
       </div>
+    </section>
+
+    <!-- ARCHIVED PARALLEL MOE36 DOWNLOAD CARD (merged from PR #17) -->
+    <section class="verdict verdict-bad" id="download-moe36" aria-labelledby="moe36-verdict-title">
+      <div class="eyebrow">Earlier parallel lane · MOE36 · research only · PR #17 · 2026-10-26 UTC</div>
+      <h2 id="moe36-verdict-title">MOE36 EXP-1 (9209d76bab1c): DO NOT SUBMIT — original format-safe research download; strict registry duplicate</h2>
+      <p class="verdict-sub"><strong>DOWNLOAD: YES · SUBMIT: NO</strong> — Cross-fitted mixture of three disjoint experts (RAW19 GeoDAWN bands + CTRB local potential/hydrothermal/LiDAR + CTRB 1.5 km worm/relay structural), equal rank fusion. <strong>HOLDOUT-DTI 0.124900</strong> (95% CI [0.1165, 0.1339], <code>gems-segment-pooled-v1</code>, 60,988 withheld px) beats every single expert (+0.0101 vs best, paired CI [+0.0017, +0.0182]) but <strong>does not beat repo B0 = 0.13375</strong>, so the automated gate blocks a weekly slot. Surface correlation screening passed (max |Spearman| 0.41 over 198 rasters); final-dot literal check flags &gt;70% overlap vs five dense-coverage registry blankets (max 0.879, coverage-driven) — logged as a duplicate-flag, lane stopped. Full report: <a href="research/moe36-20261026.md">MOE36 report</a>.</p>
+      <div class="hero-actions">
+        <a class="button" href="downloads/gemsdoe36-moe36-exp1-20261026-zeros.tif" download>Download MOE36 GeoTIFF (research only) &#8595;</a>
+        <a class="button secondary" href="downloads/gemsdoe36-moe36-exp1-20261026-zeros.zip" download>ZIP (single GeoTIFF)</a>
+        <a class="button secondary" href="downloads/gemsdoe36-moe36-exp1-20261026-zeros.receipt.json">Validator receipt</a>
+      </div>
+      <div class="table-wrap verdict-meta"><table>
+        <tr><th>Submission name / note (109 &le; 140)</th><td><code>gemsdoe36-moe36-exp1-20261026</code> · <code>GEMSDOE36 MOE36 EXP-1 equal rank fusion RAW19+CTRB-local+struct | HOLDOUT-DTI 0.1249 | NEGATIVE do not submit</code></td></tr>
+        <tr><th>SHA-256</th><td>TIF <code>9209d76bab1c4a6d6f64fb794e881a85d70b1a48fdc6288a0e390cfea64aabb7</code> · ZIP <code>1960ccc51a2f4c9041c41e7c1da76d55032af245c467ae2a25ac0c757f2d4471</code></td></tr>
+        <tr><th>Format</th><td>37,654 dots, float32, EPSG:32611, 3730&times;3292, whole array finite in [0,1] — local template/range validator PASS; organizer portal acceptance unverified</td></tr>
+      </table></div>
     </section>
 
     <!-- ATVR-36 DOWNLOAD CARD -->
