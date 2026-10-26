@@ -117,14 +117,16 @@ def main() -> int:
 
     ledger = load(ROOT / "evidence/focus_sites_9repo_summary_20261026.json")
     table = site_table(ledger)
+    csdl = load(ROOT / "evidence/csdl36_run_card_20261026.json")
     gvsc = load(ROOT / "evidence/gvsc36_run_card_20261026.json")
     hvg = load(ROOT / "evidence/hvg36_run_card_20261026.json")
     mto = load(ROOT / "evidence/mto36_run_card_20261026.json")
     archive = f"""<!-- KPL36_ARCHIVE:START -->
 <section class="section" id="archived-evidence" aria-label="Archived evidence ledger">
 <div class="section-head"><div><span class="eyebrow">Archived evidence — Research downloads only</span><h2>Pinned nine-site table &amp; prior lanes (all DO NOT SUBMIT)</h2></div></div>
-<p>Historical scores below are OWNER-REPORTED; no historical score on this site is ORGANIZER-CONFIRMED because no submission-page receipt is archived. Prior GEMSDOE36 lanes: GVSC-36 EXP-3 HOLDOUT-DTI 0.158855, HVG-36 EXP-1 HOLDOUT-DTI 0.135759, DW36 HOLDOUT-DTI 0.066052 (below its control), BDC-36 negative; an external GEMSDOE24 review records 0.1637924 on the same named evaluator (no independent protocol/paired-gain/novelty certification). Registry-preflight lattice bound: at 37,654 dots at least 82.34% of any candidate must fall within 3 px of the blind lattice. At or above this count the proof forces a stop under the literal all-raster rule — KPL-36 therefore gates on competing-detector champions and reports the lattice as a calibration control (monograph §5/§7).</p>
+<p>Historical scores below are OWNER-REPORTED; no historical score on this site is ORGANIZER-CONFIRMED because no submission-page receipt is archived. Prior GEMSDOE36 lanes: CSDL-36 EXP-2 HOLDOUT-DTI 0.155970 [0.141880, 0.170267] (EXP-1 0.155206, EXP-3 0.152541; fixes GVSC-36 audit flags IR-GVSC36-01..04 and passes 9-site &le;70% uniqueness at 68.69%, <a href="research/csdl36-20261026.md">CSDL-36 monograph</a>), GVSC-36 EXP-3 HOLDOUT-DTI 0.158855, HVG-36 EXP-1 HOLDOUT-DTI 0.135759, DW36 HOLDOUT-DTI 0.066052 (below its control), BDC-36 negative; an external GEMSDOE24 review records 0.1637924 on the same named evaluator (no independent protocol/paired-gain/novelty certification). Registry-preflight lattice bound: at 37,654 dots at least 82.34% of any candidate must fall within 3 px of the blind lattice. At or above this count the proof forces a stop under the literal all-raster rule — KPL-36 therefore gates on competing-detector champions and reports the lattice as a calibration control (monograph §5/§7).</p>
 <ul>
+<li>CSDL-36 (negative, 9-site unique 68.69%): <a href="downloads/{csdl['submission']['zeros_filename']}" download><code>{csdl['submission']['zeros_filename']}</code></a> · <a href="downloads/{csdl['submission']['zip_archive_name']}" download>ZIP</a> · <a href="downloads/csdl36-run-card.json">Run card</a> · SHA-256 <code>{csdl['submission']['raster_sha256']}</code> · note: <code>{html.escape(csdl['submission']['note'])}</code></li>
 <li>GVSC-36 (negative): <code>{gvsc['submission']['zeros_filename']}</code> · SHA-256 <code>{gvsc['submission']['raster_sha256']}</code></li>
 <li>HVG-36 (negative): <code>{Path(hvg['artifact']['tif_path']).name}</code> · SHA-256 <code>{hvg['artifact']['tif_sha256']}</code></li>
 <li>MTO-36 (negative): <code>{Path(mto['download']['tif']).name}</code> · SHA-256 <code>{mto['raster_sha256']}</code> · note: <code>{html.escape(mto['submission_note'])}</code></li>
@@ -186,9 +188,27 @@ def main() -> int:
         "parallel_experiments": [parallel_dw_projection(dw)],
         "previous_current_run_v4_BDC36": prev_bdc,
         "kpl36_run_card": card,
+        "csdl36_experiment": {
+            "lane_id": csdl["lane_id"],
+            "best_arm": csdl["best_arm"],
+            "verdict": csdl["verdict"],
+            "slot_approved": False,
+            "holdout_label": "HOLDOUT-DTI",
+            "holdout_dti": csdl["holdout"][csdl["best_arm"]]["dti"],
+            "ci95": csdl["holdout"][csdl["best_arm"]]["ci95"],
+            "evaluator_version": csdl["holdout"]["evaluator_version"],
+            "withheld_positives": csdl["holdout"]["withheld_positives"],
+            "focus9_max_overlap_3px": csdl["registry_uniqueness"]["focus_9_sites_max_overlap_3px"],
+            "focus9_passed": csdl["registry_uniqueness"]["focus_9_sites_passed"],
+            "literal_all_entry_max_overlap_3px": csdl["registry_uniqueness"]["literal_all_entry_max_overlap_3px"],
+            "tif": f"downloads/{csdl['submission']['zeros_filename']}",
+            "raster_sha256": csdl["submission"]["raster_sha256"],
+            "run_card": "downloads/csdl36-run-card.json",
+        },
     }
     CURRENT.write_text(json.dumps(current, indent=2, default=float) + "\n")
     (DOCS / "downloads/kpl36-run-card.json").write_bytes(CARD.read_bytes())
+    (DOCS / "downloads/csdl36-run-card.json").write_bytes((ROOT / "evidence/csdl36_run_card_20261026.json").read_bytes())
 
     man = load(MANIFEST)
     man["slot_approved"] = bool(promote)
@@ -215,7 +235,7 @@ def main() -> int:
 > - **HOLDOUT-DTI {h['arms'][best]['dti']:.6f}** [{h['arms'][best]['ci95'][0]:.4f}, {h['arms'][best]['ci95'][1]:.4f}] (`gems-segment-pooled-v1`, {h['n_withheld_positive_pixels']:,} withheld px); EXP-2 beat the in-run GVSC replication (0.160003) with paired Δ +0.0096 [0.0035, 0.0159], 4/4 folds. Internal validation, not a leaderboard score. (Point comparison only: above GVSC 0.158855 and the externally reviewed GEMSDOE24 0.1637924.)
 > - **Leaderboard scenario estimate {est_range}** (assumptions in monograph §5; needs novel credit ≥{est['novel_credit_needed_to_match_0.2778']:.3f} to match the historical champion; no organizer receipt yet).
 > - **Uniqueness:** champion 3-px dot overlap max {cross['final_dots']['max_champion_3px_overlap']:.3f} (vs GEMSDOE32-B2 {cross['final_dots']['overlap_vs_GEMSDOE32_B2_3px']:.3f}); surface |ρ| {cross['surface_before_placement']['max_abs_rank_correlation']:.3f} vs {cross['focus9_entries_checked']} focus-9 rasters; vs post-merge local candidates ≤0.058. Blind-lattice overlap is mathematically forced (~0.99 at any 37,654-dot budget; calibration control, disclosed in monograph).
-> - Archived, **DO NOT SUBMIT**: 505-dot lattice-avoiding candidate (no computable holdout in its session), BDC-36, DW36 (0.066052), GVSC-36 (0.158855), HVG-36 (0.135759), MTO-36, H36-CTRB, ATVR-36, Lane36, registry-preflight stop — cards preserved in `evidence/`. Historical best remains GEMSDOE32-B2 **0.2778 OWNER-REPORTED** (already submitted; exact family subset). Verified live leaderboard #1 = **0.4437** (2026-10-26 read).
+> - Archived, **DO NOT SUBMIT**: [CSDL-36 EXP-2](docs/downloads/{csdl['submission']['zeros_filename']}) ([ZIP](docs/downloads/{csdl['submission']['zip_archive_name']}), [card](evidence/csdl36_run_card_20261026.json), [monograph](docs/research/csdl36-20261026.md); HOLDOUT-DTI 0.155970 [0.141880, 0.170267], EXP-1 0.155206, EXP-3 0.152541; fixes IR-GVSC36-01..04 and passes 9-site ≤70% overlap at 68.69%), 505-dot lattice-avoiding candidate (no computable holdout in its session), BDC-36, DW36 (0.066052), GVSC-36 (0.158855), HVG-36 (0.135759), MTO-36, H36-CTRB, ATVR-36, Lane36, registry-preflight stop — cards preserved in `evidence/`. Historical best remains GEMSDOE32-B2 **0.2778 OWNER-REPORTED** (already submitted; exact family subset). Verified live leaderboard #1 = **0.4437** (2026-10-26 read).
 """
     m = re.search(r"> ## CURRENT DECISION.*?\n(?=## )", readme, flags=re.S)
     if m:

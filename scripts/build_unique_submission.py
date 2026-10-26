@@ -145,8 +145,6 @@ def main() -> int:
         template_arr = tmpl.read(1)
         template_crs = tmpl.crs
         template_transform = tmpl.transform
-        template_count = tmpl.count
-        template_dtypes = tmpl.dtypes
     competition_footprint = np.isfinite(template_arr)
     H, W = competition_footprint.shape
     if (H, W) != (3730, 3292):

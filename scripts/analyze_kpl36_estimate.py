@@ -27,9 +27,10 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "src"))
 sys.path.insert(0, str(ROOT / "scripts"))
 
+from run_gvsc36 import fold_budgets, load_labels  # noqa: E402
+
 from gems.holdout import SegmentHoldout  # noqa: E402
 from gemsdoe36.submodular_emit import emit_submodular_cover  # noqa: E402
-from run_gvsc36 import fold_budgets, load_labels  # noqa: E402
 
 OUT = ROOT / "evidence" / "kpl36_score_estimate_20261026.json"
 N_PRIME = 12_541

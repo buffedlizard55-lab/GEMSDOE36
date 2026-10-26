@@ -13,7 +13,9 @@ import hashlib
 import json
 import subprocess
 import sys
+import tarfile
 import time
+import urllib.request
 from concurrent.futures import ThreadPoolExecutor
 from datetime import datetime, timezone
 from pathlib import Path
@@ -49,19 +51,91 @@ def gh(endpoint, retries: int = 4):
 
 def discover(number):
     repo = f"buffedlizard55-lab/GEMSDOE{number}"
-    info = json.loads(gh(f"repos/{repo}"))
-    ref = json.loads(gh(f"repos/{repo}/commits/{info['default_branch']}"))["sha"]
-    tree = json.loads(gh(f"repos/{repo}/git/trees/{ref}?recursive=1"))
-    files = []
-    for x in tree["tree"]:
-        path = x["path"]
-        if x["type"] != "blob":
+    try:
+        info = json.loads(gh(f"repos/{repo}"))
+        ref = json.loads(gh(f"repos/{repo}/commits/{info['default_branch']}"))["sha"]
+        tree = json.loads(gh(f"repos/{repo}/git/trees/{ref}?recursive=1"))
+        files = []
+        for x in tree["tree"]:
+            path = x["path"]
+            if x["type"] != "blob":
+                continue
+            if (
+                path.endswith(".tif") and path.startswith("docs/downloads/")
+            ) or path in ("registry/submissions.json",):
+                files.append({"path": path, "blob_sha": x["sha"], "bytes": x.get("size")})
+        return {"repo": repo, "ref": ref, "files": files}
+    except Exception:
+        ref = (
+            subprocess.check_output(
+                ["git", "ls-remote", f"https://github.com/{repo}.git", "HEAD"],
+                text=True,
+            )
+            .split()[0]
+            .strip()
+        )
+        files = []
+        url = f"https://codeload.github.com/{repo}/tar.gz/{ref}"
+        with urllib.request.urlopen(url, timeout=60) as resp:
+            with tarfile.open(fileobj=resp, mode="r|gz") as tf:
+                for member in tf:
+                    if not member.isfile():
+                        continue
+                    parts = member.name.split("/", 1)
+                    if len(parts) < 2:
+                        continue
+                    path = parts[1]
+                    if (
+                        path.endswith(".tif") and path.startswith("docs/downloads/")
+                    ) or path in ("registry/submissions.json",):
+                        fobj = tf.extractfile(member)
+                        if fobj is None:
+                            continue
+                        raw = fobj.read()
+                        blob = hashlib.sha1(f"blob {len(raw)}\0".encode() + raw).hexdigest()
+                        dest = CACHE / repo.split("/")[-1] / path
+                        dest.parent.mkdir(parents=True, exist_ok=True)
+                        dest.write_bytes(raw)
+                        files.append({"path": path, "blob_sha": blob, "bytes": len(raw)})
+        return {"repo": repo, "ref": ref, "files": files}
+
+
+def _hydrate_missing_from_codeload(sources: list[dict]) -> None:
+    for s in sources:
+        repo = s["repo"]
+        ref = s["ref"]
+        short_repo = repo.split("/")[-1]
+        missing = {}
+        for entry in s["files"]:
+            dest = CACHE / short_repo / entry["path"]
+            if not dest.exists():
+                missing[entry["path"]] = (dest, entry["blob_sha"])
+        if not missing:
             continue
-        if (
-            path.endswith(".tif") and path.startswith("docs/downloads/")
-        ) or path in ("registry/submissions.json",):
-            files.append({"path": path, "blob_sha": x["sha"], "bytes": x.get("size")})
-    return {"repo": repo, "ref": ref, "files": files}
+        url = f"https://codeload.github.com/{repo}/tar.gz/{ref}"
+        try:
+            with urllib.request.urlopen(url, timeout=60) as resp:
+                with tarfile.open(fileobj=resp, mode="r|gz") as tf:
+                    for member in tf:
+                        if not member.isfile():
+                            continue
+                        parts = member.name.split("/", 1)
+                        if len(parts) < 2:
+                            continue
+                        rel = parts[1]
+                        if rel not in missing:
+                            continue
+                        fobj = tf.extractfile(member)
+                        if fobj is None:
+                            continue
+                        raw = fobj.read()
+                        dest, expected_blob = missing[rel]
+                        blob = hashlib.sha1(f"blob {len(raw)}\0".encode() + raw).hexdigest()
+                        if blob == expected_blob:
+                            dest.parent.mkdir(parents=True, exist_ok=True)
+                            dest.write_bytes(raw)
+        except Exception:
+            continue
 
 
 def cache_one(task):
@@ -96,6 +170,7 @@ def main():
         with ThreadPoolExecutor(max_workers=4) as pool:
             sources = list(pool.map(discover, REPOS))
         snapshot_file.write_text(json.dumps({"sources": sources}, indent=2) + "\n")
+    _hydrate_missing_from_codeload(sources)
     tasks = [(s["repo"], s["ref"], e) for s in sources for e in s["files"]]
     with ThreadPoolExecutor(max_workers=6) as pool:
         cached = list(pool.map(cache_one, tasks))

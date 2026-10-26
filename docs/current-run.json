@@ -1,6 +1,6 @@
 {
   "schema": "gemsdoe36.current-run.v5",
-  "updated_utc": "2026-10-26T23:27:17.123716+00:00",
+  "updated_utc": "2026-10-26T23:52:45.208413+00:00",
   "lane_id": "KPL-36",
   "verdict": "promote",
   "slot_approved": true,
@@ -320,5 +320,25 @@
     "organizer_score": null,
     "leaderboard_estimate": "See docs/research/kpl36-20261026.md score-estimate model (range with stated assumptions); HOLDOUT-DTI is not a leaderboard score.",
     "elapsed_seconds": 305.4
+  },
+  "csdl36_experiment": {
+    "lane_id": "CSDL-36",
+    "best_arm": "EXP-2",
+    "verdict": "negative",
+    "slot_approved": false,
+    "holdout_label": "HOLDOUT-DTI",
+    "holdout_dti": 0.15597,
+    "ci95": [
+      0.14187967394466613,
+      0.17026697127531537
+    ],
+    "evaluator_version": "gems-segment-pooled-v1",
+    "withheld_positives": 60988,
+    "focus9_max_overlap_3px": 0.686859,
+    "focus9_passed": true,
+    "literal_all_entry_max_overlap_3px": 0.9941042120359059,
+    "tif": "downloads/gemsdoe36-csdl36-exp2-20261026-12962cc72ae1-zeros.tif",
+    "raster_sha256": "d840ce6aa03c8fc6c44d6ab761b7be1590859a00c711d623e4c9eb5479cfc778",
+    "run_card": "downloads/csdl36-run-card.json"
   }
 }

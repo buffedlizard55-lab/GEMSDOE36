@@ -28,21 +28,6 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "src"))
 sys.path.insert(0, str(ROOT / "scripts"))
 
-from gems.holdout import SegmentHoldout  # noqa: E402
-from gems.novelty import compare_registry  # noqa: E402
-from gems.submission import check_variants, write_submission, zip_single  # noqa: E402
-from gemsdoe36.gvsc_features import (  # noqa: E402
-    BASE_FEATURES,
-    EXP2_FEATURES,
-    EXP3_BLIND_FEATURES,
-    LIDAR_FEATURE_SET,
-    build_gvsc_feature_store,
-)
-from gemsdoe36.h36_emission import emit_dots  # noqa: E402
-from gemsdoe36.h36_features import FeatureStore  # noqa: E402
-from gemsdoe36.kpl_features import KPL_FEATURES, KPL_LIDAR_FEATURES, build_kpl_features  # noqa: E402
-from gemsdoe36.submodular_emit import emit_submodular_cover  # noqa: E402
-from gemsdoe36.submission import validate_submission  # noqa: E402
 from run_gvsc36 import (  # noqa: E402
     B0_SEED,
     GVSC_HGB,
@@ -57,6 +42,21 @@ from run_gvsc36 import (  # noqa: E402
     train_predict_gvsc_expert,
     unfold_column,
 )
+
+from gems.holdout import SegmentHoldout  # noqa: E402
+from gems.novelty import compare_registry  # noqa: E402
+from gems.submission import check_variants, write_submission, zip_single  # noqa: E402
+from gemsdoe36.gvsc_features import (  # noqa: E402
+    EXP2_FEATURES,
+    EXP3_BLIND_FEATURES,
+    LIDAR_FEATURE_SET,
+    build_gvsc_feature_store,
+)
+from gemsdoe36.h36_emission import emit_dots  # noqa: E402
+from gemsdoe36.h36_features import FeatureStore  # noqa: E402
+from gemsdoe36.kpl_features import KPL_FEATURES, KPL_LIDAR_FEATURES, build_kpl_features  # noqa: E402
+from gemsdoe36.submission import validate_submission  # noqa: E402
+from gemsdoe36.submodular_emit import emit_submodular_cover  # noqa: E402
 
 PREREG_PATH = ROOT / "evidence" / "kpl36_preregistration_20261026.json"
 EXPECTED_PREREG_SHA256 = "ad009b9607a2af483457619ce1bec619f600798db3155a7595e2c259747a3bfc"

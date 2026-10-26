@@ -122,6 +122,7 @@ def main() -> int:
     # self-consistent but fabricated positive manifest.
     from build_mto_site import (
         additional_archives,
+        ensure_csdl_card,
         ensure_parallel_dw,
         ensure_status,
         ensure_stop_card,
@@ -133,12 +134,14 @@ def main() -> int:
     mto = json.loads((ROOT / "evidence/mto36_run_card_20261026.json").read_text())
     hvg = json.loads((ROOT / "evidence/hvg36_run_card_20261026.json").read_text())
     gvsc = json.loads((ROOT / "evidence/gvsc36_run_card_20261026.json").read_text())
+    csdl = json.loads((ROOT / "evidence/csdl36_run_card_20261026.json").read_text())
     stop = json.loads(STOP.read_text())
     dw = json.loads((ROOT / "evidence/dw36_run_card_20261026.json").read_text())
     ledger = json.loads((ROOT / "evidence/focus_sites_9repo_summary_20261026.json").read_text())
     try:
         ensure_status(mto, ledger, hvg)
         ensure_stop_card(stop, gvsc)
+        ensure_csdl_card(csdl)
         ensure_parallel_dw(dw)
     except (RuntimeError, OSError, KeyError, StopIteration, ValueError) as exc:
         errors.append(f"Release evidence invalid: {exc}")
@@ -167,7 +170,7 @@ def main() -> int:
             if "noopener" not in rel.split():
                 errors.append(f"docs/{page}: target=_blank without rel=noopener: {href}")
         for phrase in ("DO NOT SUBMIT", "DOWNLOAD: YES", "Research downloads only", "HOLDOUT-DTI",
-                       "ORGANIZER-CONFIRMED", "0.158855", "0.135759", "0.1637924", "0.2778", "DW36", "0.066052"):
+                       "ORGANIZER-CONFIRMED", "0.155970", "0.158855", "0.135759", "0.1637924", "0.2778", "DW36", "0.066052"):
             if phrase not in text:
                 errors.append(f"docs/{page}: missing {phrase}")
         first_screen = text[: max(1, len(text) // 4)]
@@ -191,6 +194,7 @@ def main() -> int:
         if re.search(r"(?:0\.\d{3,4}).{0,25}ORGANIZER-CONFIRMED", text, re.I):
             errors.append(f"docs/{page}: numeric score incorrectly called organizer-confirmed")
         for fname, checksum in (
+            (csdl["submission"]["zeros_filename"], csdl["submission"]["raster_sha256"]),
             (gvsc["submission"]["zeros_filename"], gvsc["submission"]["raster_sha256"]),
             (Path(hvg["artifact"]["tif_path"]).name, hvg["artifact"]["tif_sha256"]),
             (Path(mto["download"]["tif"]).name, mto["raster_sha256"]),
@@ -219,6 +223,7 @@ def main() -> int:
         (ROOT / "evidence/mto36_run_card_20261026.json", DOCS / "downloads/mto36-run-card.json"),
         (ROOT / "evidence/hvg36_run_card_20261026.json", DOCS / "downloads/hvg36-run-card.json"),
         (ROOT / "evidence/gvsc36_run_card_20261026.json", DOCS / "downloads/gvsc36-run-card.json"),
+        (ROOT / "evidence/csdl36_run_card_20261026.json", DOCS / "downloads/csdl36-run-card.json"),
         (ROOT / "evidence/focus_sites_9repo_summary_20261026.json", DOCS / "downloads/focus9-verified-source-ledger.json"),
         (ROOT / "evidence/focus_sites_pairwise_uniqueness_20261026.json", DOCS / "downloads/focus-sites-pairwise-uniqueness.json"),
         (ROOT / "evidence/mto36_ninesite_forensics.json", DOCS / "downloads/focus9-source-integrity.json"),
@@ -260,8 +265,10 @@ def main() -> int:
     except (RuntimeError, OSError, KeyError, ValueError) as exc:
         errors.append(f"Archived research evidence invalid: {exc}")
 
-    # Preserve hash/ZIP integrity checks for the three displayed research bundles.
+    # Preserve hash/ZIP integrity checks for the displayed research bundles.
     artifacts = [
+        (DOCS / "downloads" / csdl["submission"]["zeros_filename"],
+         DOCS / "downloads" / csdl["submission"]["zip_archive_name"], csdl["submission"]["raster_sha256"]),
         (DOCS / "downloads" / gvsc["submission"]["zeros_filename"],
          DOCS / "downloads" / gvsc["submission"]["zip_archive_name"], gvsc["submission"]["raster_sha256"]),
         (ROOT / hvg["artifact"]["tif_path"], ROOT / hvg["artifact"]["zip_path"], hvg["artifact"]["tif_sha256"]),
