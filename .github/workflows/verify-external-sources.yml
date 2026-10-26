@@ -1,0 +1,35 @@
+name: verify-external-sources
+# Verifies that the free official external sources named in the H36 hypotheses are obtainable
+# for the GeoDAWN footprint (the Arena sandbox cannot reach USGS hosts). Read-only: it downloads
+# only small JSON/count responses and uploads them as an artifact; it never touches DrivenData.
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - ".github/workflows/verify-external-sources.yml"
+permissions:
+  contents: read
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Query official endpoints (footprint bbox -120.1,37.3,-116.1,40.8)
+        run: |
+          set -u
+          mkdir -p out
+          q() { name="$1"; url="$2"; code=$(curl -sS -L -m 60 -o "out/$name" -w '%{http_code}' "$url" || echo 000); echo "$name $code $(wc -c < "out/$name" 2>/dev/null || echo 0) $url" | tee -a out/status.txt; }
+          q comcat_count_m2.5_2000-2026.txt "https://earthquake.usgs.gov/fdsnws/event/1/count?starttime=2000-01-01&endtime=2026-10-25&minlatitude=37.3&maxlatitude=40.8&minlongitude=-120.1&maxlongitude=-116.1&minmagnitude=2.5"
+          q comcat_sample.csv "https://earthquake.usgs.gov/fdsnws/event/1/query?format=csv&starttime=2020-05-15&endtime=2020-05-16&minlatitude=37.3&maxlatitude=40.8&minlongitude=-120.1&maxlongitude=-116.1&minmagnitude=3"
+          q tnm_3dep_1m_products.json "https://tnmaccess.nationalmap.gov/api/v1/products?datasets=Digital%20Elevation%20Model%20(DEM)%201%20meter&bbox=-120.1,37.3,-116.1,40.8&max=2&outputFormat=JSON"
+          q tnm_3dep_13arcsec_products.json "https://tnmaccess.nationalmap.gov/api/v1/products?datasets=National%20Elevation%20Dataset%20(NED)%201/3%20arc-second&bbox=-120.1,37.3,-116.1,40.8&max=2&outputFormat=JSON"
+          q gdr_1391.html "https://gdr.openei.org/submissions/1391"
+          q geodawn_doi.html "https://doi.org/10.5066/P93LGLVQ"
+          echo "--- comcat count:"; cat out/comcat_count_m2.5_2000-2026.txt || true; echo
+          echo "--- comcat sample (2020-05-15 Monte Cristo Range day):"; head -5 out/comcat_sample.csv || true
+          echo "--- TNM 1 m total:"; python3 -c "import json;d=json.load(open('out/tnm_3dep_1m_products.json'));print(d.get('total'), [i.get('title') for i in d.get('items',[])][:2])" || true
+          echo "--- TNM 1/3 arc-second total:"; python3 -c "import json;d=json.load(open('out/tnm_3dep_13arcsec_products.json'));print(d.get('total'), [i.get('title') for i in d.get('items',[])][:2])" || true
+      - uses: actions/upload-artifact@v4
+        with:
+          name: external-source-verification
+          path: out/
