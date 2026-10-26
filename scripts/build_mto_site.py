@@ -142,16 +142,17 @@ def site_table(ledger: dict) -> str:
         rows.append(
             "<tr><td><code>{site}</code></td><td><a href=\"{link}\" target=\"_blank\" rel=\"noopener\"><code>{name}</code></a> "
             "<small>SHA-256 {sha}</small></td><td>{dots:,} dots</td><td><strong>{score:.4f} OWNER-REPORTED</strong> "
-            "(receipt missing)</td><td>NO · historical/reused or negative</td></tr>".format(
+            "(receipt missing)</td><td>Unavailable; no calibrated leaderboard estimate</td><td>{novelty}</td><td>NO · historical/reused or negative</td></tr>".format(
                 site=e(item["site"]), link=e(h["pinned_raster_source_url"]),
                 name=e(h["name"]), sha=e(h["sha256_full"][:12]), dots=h["dots"],
                 score=h["score"],
+                novelty=e(h.get("forensic_note", "Not certified unique under the full registry protocol")),
             )
         )
     return """    <section class="section" aria-labelledby="focus-sites-title">
       <div class="section-head"><div><div class="eyebrow">Pinned byte-forensics, not live receipts</div><h2 id="focus-sites-title">Nine Focus Sites — best historical owner-reported results</h2></div>
       <p>All nine historical TIFF hashes, dots and grids were rechecked from pinned GitHub snapshots. No organizer submission-page receipt was available. Do not choose an old file to resubmit.</p></div>
-      <div class="table-wrap"><table><tr><th>Site</th><th>Exact pinned file for audit</th><th>Measured</th><th>Reported score (unverified)</th><th>Safe now?</th></tr>
+      <div class="table-wrap"><table><tr><th>Site</th><th>Exact pinned file for audit</th><th>Measured</th><th>Reported score (unverified)</th><th>Estimated leaderboard score</th><th>Uniqueness / lineage evidence</th><th>Safe now?</th></tr>
 """ + "\n".join(rows) + """
       </table></div>
       <p>Highest reported in this set: GEMSDOE32 <code>0.2778</code>, but <code>0</code> XOR from the GEMSDOE25 dotted family after pruning the 200 m known-fault collar. This is byte-verified lineage, <strong>not</strong> proof that collar removal caused the blind score change. <a href="research/mto36-evidence-and-nine-sites.md">Method, data provenance and next steps</a>.</p>
@@ -195,11 +196,22 @@ def main() -> int:
         updated = updated.replace('</body>', '  ' + script + '\n</body>', 1)
     INDEX.write_text(updated, encoding="utf-8")
 
+    summary = SUMMARY.read_text(encoding="utf-8")
+    start, end = "<!-- FOCUS9_EXEC:START -->", "<!-- FOCUS9_EXEC:END -->"
+    block = start + "\n" + site_table(ledger) + "\n" + end
+    if start in summary:
+        if summary.count(start) != 1 or summary.count(end) != 1:
+            raise RuntimeError("Executive nine-site markers missing/duplicated")
+        summary = re.sub(re.escape(start) + r".*?" + re.escape(end),
+                         lambda _: block, summary, count=1, flags=re.S)
+    else:
+        summary = summary.replace("<!-- MTO-36:END -->", "<!-- MTO-36:END -->\n" + block, 1)
+    SUMMARY.write_text(summary, encoding="utf-8")
+
     s = README.read_text(encoding="utf-8")
     if s.count("<!-- STATUS:START -->") != 1 or s.count("<!-- STATUS:END -->") != 1:
         raise RuntimeError("README status markers missing/duplicated")
     s = re.sub(r'<!-- STATUS:START -->.*?<!-- STATUS:END -->', readme_status(card), s, count=1, flags=re.S)
-    s = re.sub(r'^\*\*Working Branch:\*\*.*$', '**Working Branch:** `arena/cee70ea1-gemsdoe36`', s, count=1, flags=re.M)
     README.write_text(s, encoding="utf-8")
 
     current = {
