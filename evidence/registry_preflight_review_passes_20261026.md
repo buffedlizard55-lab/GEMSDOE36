@@ -25,3 +25,7 @@
 ## Concurrent-main reconciliation
 
 During the final GitHub check, `main` had advanced with a separate DW36 experiment and a pinned GEMSDOE79 registry-fetch fix. Merged those upstream changes into the same session branch, retained the experiment/code/tests, and displayed its negative 0.066052 holdout, 100% lattice overlap and no-export status separately from this lane's zero-experiment preflight. The upstream experiment was not independently rerun here. Corrected its stale best-score context without changing its frozen result. Re-ran the full checks after conflict resolution: **145 passed, one skipped** (optional `torch` absent); Ruff, site/archived-release verifiers, Node syntax, byte-idempotent regeneration and diff checks all passed.
+
+## Post-deployment check
+
+The public Pages deployment succeeded. A live read revealed that “above” could exclude the boundary itself; corrected the copy to “at or above 22,164” and added a regression test. Also clarified which archived cards explicitly record the outside-NoData conflict. Final rerun: **146 passed, one skipped** (optional `torch` absent); Ruff, site checker and Node syntax passed.
