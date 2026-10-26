@@ -56,11 +56,11 @@ from scipy.ndimage import binary_dilation
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "src"))
 
-from gemsdoe36.anderson_dip import local_extension_field  # noqa: E402
-from gemsdoe36.emitter import emit_dots  # noqa: E402
-from gemsdoe36.field import FieldConfig, build_belief_field  # noqa: E402
-from gemsdoe36.metric import distance_weighted_tversky  # noqa: E402
-from gemsdoe36.spatial_cv import make_spatial_folds  # noqa: E402
+from gemsdoe36.anderson_dip import local_extension_field
+from gemsdoe36.emitter import emit_dots
+from gemsdoe36.field import FieldConfig, build_belief_field
+from gemsdoe36.metric import distance_weighted_tversky
+from gemsdoe36.spatial_cv import make_spatial_folds
 
 H, W = 3730, 3292
 K_TARGET = 12500  # owner-verified hidden-truth mass estimate (~12,226-12,691 px)
@@ -176,7 +176,7 @@ def main() -> int:
                 for k, v in truths.items() if v.sum() > 0
             }
             row["variants"][variant] = {
-                "dots": int(len(res.dots)),
+                "dots": len(res.dots),
                 "stopped_by": res.stopped_by,
                 "dti_vs_own_proxy": res.dti_estimate,
                 "score_sgmc": scores.get("sgmc"),
@@ -209,7 +209,7 @@ def main() -> int:
             sgmc_dots = sgmc_dots[order[:BUDGET]]
             smap = dots_to_map(sgmc_dots)
             s = distance_weighted_tversky(smap, truths["sgmc"], valid_mask=eval_dom) if n_truth["sgmc"] else 0.0
-            row["variants"]["sgmc_prior"] = {"dots": int(len(sgmc_dots)), "score_sgmc": s}
+            row["variants"]["sgmc_prior"] = {"dots": len(sgmc_dots), "score_sgmc": s}
             del smap
 
         results[f"fold_{fi}"] = row
@@ -271,8 +271,8 @@ def main() -> int:
     print(f"full vs nodip       (sgmc): {wins_full_vs_nodip}/{n_valid_nodip} folds")
     for f in range(args.folds):
         r = results[f"fold_{f}"]["variants"]
-        def g(v, k):
-            x = r.get(v, {}).get(k)
+        def g(v, k, row=r):
+            x = row.get(v, {}).get(k)
             return f"{x:.4f}" if isinstance(x, float) else "   -  "
         print(f"fold {f}: " + "  ".join(
             f"{v}:{g(v, 'score_sgmc')}" for v in ("full_cover", "full_topk", "nodip_cover",

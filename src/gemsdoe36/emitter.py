@@ -166,8 +166,7 @@ def emit_dots(
         for dy, dx, k in zip(_DY, _DX, _K, strict=True):
             r, c = row + dy, col + dx
             if 0 <= r < h and 0 <= c < w and truth[r, c] > 0:
-                if k > kmax:
-                    kmax = k
+                kmax = max(kmax, k)
                 if k > best_credit[r, c]:
                     dts += k - best_credit[r, c]
         return float(dts), float(kmax)

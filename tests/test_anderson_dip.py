@@ -15,7 +15,7 @@ import pytest
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "src"))
 
-from gemsdoe36.anderson_dip import (  # noqa: E402
+from gemsdoe36.anderson_dip import (
     ExtensionField,
     axial_distance,
     azimuth_to_raster,
@@ -71,7 +71,7 @@ def test_circular_mean_axial_same_line():
 
 def test_circular_mean_axial_orthogonal_cancels():
     # {0, pi/2} are orthogonal lines -> resultant cancels, R=0.
-    mean, r = circular_mean_axial(np.array([0.0, T]))
+    _mean, r = circular_mean_axial(np.array([0.0, T]))
     assert r == pytest.approx(0.0, abs=1e-9)
 
 
@@ -223,7 +223,7 @@ def test_dip_project_shifts_mass_up_dip():
         confidence=np.ones((120, 120), np.float32),
     )
     out = dip_project(ev, ef, tile_px=120)
-    ys, xs = np.nonzero(out > 0.05)
+    _ys, xs = np.nonzero(out > 0.05)
     assert len(xs) > 0
     src_centroid = np.mean(np.nonzero(ev > 0)[1])
     out_centroid = np.mean(xs)

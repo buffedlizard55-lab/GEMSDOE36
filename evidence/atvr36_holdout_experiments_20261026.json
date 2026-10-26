@@ -1,0 +1,920 @@
+{
+  "schema": "gems36.atvr36.experiments.v1",
+  "date_utc": "2026-10-26",
+  "preregistration_path": "evidence/atvr36_preregistration_20261026.json",
+  "preregistration_sha256": "351a9ad89ce058ee6ed910b4a423f81e0783fe2a50ee0a69de04e5db01dc0ab1",
+  "evaluator_version": "gems36-segment-audit-v1",
+  "score_provenance_label": "HOLDOUT-DTI",
+  "n_withheld_positives_px": 60988,
+  "n_withheld_segments": 3199,
+  "buffer_px": 30,
+  "dot_budget": 37654,
+  "leakage_canary_summary": {
+    "n_features_tested": 50,
+    "n_flagged_gt_0p90": 0,
+    "max_two_polarity_auc": 0.58811,
+    "max_feature": "h36a_elev_hessian_trough_s2",
+    "top10_features": [
+      {
+        "feature": "h36a_elev_hessian_trough_s2",
+        "auc": 0.58811,
+        "two_polarity_auc": 0.58811,
+        "passed": true,
+        "flagged": false
+      },
+      {
+        "feature": "h36a_elev_dog_2_8",
+        "auc": 0.413023,
+        "two_polarity_auc": 0.586977,
+        "passed": true,
+        "flagged": false
+      },
+      {
+        "feature": "04_geod_2ndinv",
+        "auc": 0.56955,
+        "two_polarity_auc": 0.56955,
+        "passed": true,
+        "flagged": false
+      },
+      {
+        "feature": "h36a_slope_rel_relief25",
+        "auc": 0.568888,
+        "two_polarity_auc": 0.568888,
+        "passed": true,
+        "flagged": false
+      },
+      {
+        "feature": "07_geod_shearrate",
+        "auc": 0.568458,
+        "two_polarity_auc": 0.568458,
+        "passed": true,
+        "flagged": false
+      },
+      {
+        "feature": "16_ieq_n100a15",
+        "auc": 0.567992,
+        "two_polarity_auc": 0.567992,
+        "passed": true,
+        "flagged": false
+      },
+      {
+        "feature": "h36c_seismic_strain_corridor",
+        "auc": 0.558507,
+        "two_polarity_auc": 0.558507,
+        "passed": true,
+        "flagged": false
+      },
+      {
+        "feature": "19_det_elev_slope",
+        "auc": 0.557085,
+        "two_polarity_auc": 0.557085,
+        "passed": true,
+        "flagged": false
+      },
+      {
+        "feature": "h36c_regime_basin_prob",
+        "auc": 0.444528,
+        "two_polarity_auc": 0.555472,
+        "passed": true,
+        "flagged": false
+      },
+      {
+        "feature": "h36a_lidar_toe_crest_sym",
+        "auc": 0.553235,
+        "two_polarity_auc": 0.553235,
+        "passed": true,
+        "flagged": false
+      }
+    ],
+    "all_features": [
+      {
+        "feature": "h36a_elev_hessian_trough_s2",
+        "auc": 0.58811,
+        "two_polarity_auc": 0.58811,
+        "passed": true,
+        "flagged": false
+      },
+      {
+        "feature": "h36a_elev_dog_2_8",
+        "auc": 0.413023,
+        "two_polarity_auc": 0.586977,
+        "passed": true,
+        "flagged": false
+      },
+      {
+        "feature": "04_geod_2ndinv",
+        "auc": 0.56955,
+        "two_polarity_auc": 0.56955,
+        "passed": true,
+        "flagged": false
+      },
+      {
+        "feature": "h36a_slope_rel_relief25",
+        "auc": 0.568888,
+        "two_polarity_auc": 0.568888,
+        "passed": true,
+        "flagged": false
+      },
+      {
+        "feature": "07_geod_shearrate",
+        "auc": 0.568458,
+        "two_polarity_auc": 0.568458,
+        "passed": true,
+        "flagged": false
+      },
+      {
+        "feature": "16_ieq_n100a15",
+        "auc": 0.567992,
+        "two_polarity_auc": 0.567992,
+        "passed": true,
+        "flagged": false
+      },
+      {
+        "feature": "h36c_seismic_strain_corridor",
+        "auc": 0.558507,
+        "two_polarity_auc": 0.558507,
+        "passed": true,
+        "flagged": false
+      },
+      {
+        "feature": "19_det_elev_slope",
+        "auc": 0.557085,
+        "two_polarity_auc": 0.557085,
+        "passed": true,
+        "flagged": false
+      },
+      {
+        "feature": "h36c_regime_basin_prob",
+        "auc": 0.444528,
+        "two_polarity_auc": 0.555472,
+        "passed": true,
+        "flagged": false
+      },
+      {
+        "feature": "h36a_lidar_toe_crest_sym",
+        "auc": 0.553235,
+        "two_polarity_auc": 0.553235,
+        "passed": true,
+        "flagged": false
+      },
+      {
+        "feature": "h36a_lidar_scarp_break",
+        "auc": 0.552386,
+        "two_polarity_auc": 0.552386,
+        "passed": true,
+        "flagged": false
+      },
+      {
+        "feature": "06_tc",
+        "auc": 0.447616,
+        "two_polarity_auc": 0.552384,
+        "passed": true,
+        "flagged": false
+      },
+      {
+        "feature": "10_deq_n100a15",
+        "auc": 0.549891,
+        "two_polarity_auc": 0.549891,
+        "passed": true,
+        "flagged": false
+      },
+      {
+        "feature": "h36a_tc_rel_relief25",
+        "auc": 0.454727,
+        "two_polarity_auc": 0.545273,
+        "passed": true,
+        "flagged": false
+      },
+      {
+        "feature": "13_iso_grav_anom",
+        "auc": 0.459637,
+        "two_polarity_auc": 0.540363,
+        "passed": true,
+        "flagged": false
+      },
+      {
+        "feature": "h36b_geodawn_k_th_ratio",
+        "auc": 0.464978,
+        "two_polarity_auc": 0.535022,
+        "passed": true,
+        "flagged": false
+      },
+      {
+        "feature": "h36c_basement_grad",
+        "auc": 0.533706,
+        "two_polarity_auc": 0.533706,
+        "passed": true,
+        "flagged": false
+      },
+      {
+        "feature": "h36a_piedmont_zone_score",
+        "auc": 0.533352,
+        "two_polarity_auc": 0.533352,
+        "passed": true,
+        "flagged": false
+      },
+      {
+        "feature": "h36c_regime_piedmont_prob",
+        "auc": 0.533352,
+        "two_polarity_auc": 0.533352,
+        "passed": true,
+        "flagged": false
+      },
+      {
+        "feature": "05_iso_grav_anom_slope",
+        "auc": 0.533024,
+        "two_polarity_auc": 0.533024,
+        "passed": true,
+        "flagged": false
+      },
+      {
+        "feature": "h36a_grav_tilt",
+        "auc": 0.530252,
+        "two_polarity_auc": 0.530252,
+        "passed": true,
+        "flagged": false
+      },
+      {
+        "feature": "11_iso_grav_anom_vg",
+        "auc": 0.527427,
+        "two_polarity_auc": 0.527427,
+        "passed": true,
+        "flagged": false
+      },
+      {
+        "feature": "03_tmi_hg",
+        "auc": 0.526307,
+        "two_polarity_auc": 0.526307,
+        "passed": true,
+        "flagged": false
+      },
+      {
+        "feature": "08_geod_dilaterate",
+        "auc": 0.525049,
+        "two_polarity_auc": 0.525049,
+        "passed": true,
+        "flagged": false
+      },
+      {
+        "feature": "h36a_grav_hessian_ridge_s3",
+        "auc": 0.521947,
+        "two_polarity_auc": 0.521947,
+        "passed": true,
+        "flagged": false
+      },
+      {
+        "feature": "h36a_lidar_valid",
+        "auc": 0.520745,
+        "two_polarity_auc": 0.520745,
+        "passed": true,
+        "flagged": false
+      },
+      {
+        "feature": "h36b_cond_surf_local_anom",
+        "auc": 0.520135,
+        "two_polarity_auc": 0.520135,
+        "passed": true,
+        "flagged": false
+      },
+      {
+        "feature": "h36a_fold_anderson_align",
+        "auc": 0.518738,
+        "two_polarity_auc": 0.518738,
+        "passed": true,
+        "flagged": false
+      },
+      {
+        "feature": "17_cond_surf",
+        "auc": 0.482842,
+        "two_polarity_auc": 0.517158,
+        "passed": true,
+        "flagged": false
+      },
+      {
+        "feature": "h36b_geodawn_tmi_trough",
+        "auc": 0.516531,
+        "two_polarity_auc": 0.516531,
+        "passed": true,
+        "flagged": false
+      },
+      {
+        "feature": "h36a_joint_potential_concord",
+        "auc": 0.516441,
+        "two_polarity_auc": 0.516441,
+        "passed": true,
+        "flagged": false
+      },
+      {
+        "feature": "12_det_elev",
+        "auc": 0.484693,
+        "two_polarity_auc": 0.515307,
+        "passed": true,
+        "flagged": false
+      },
+      {
+        "feature": "h36b_rtp_trough_x_tilt",
+        "auc": 0.514882,
+        "two_polarity_auc": 0.514882,
+        "passed": true,
+        "flagged": false
+      },
+      {
+        "feature": "h36b_rtp_trough_2_15",
+        "auc": 0.513981,
+        "two_polarity_auc": 0.513981,
+        "passed": true,
+        "flagged": false
+      },
+      {
+        "feature": "h36c_basement_grav_concord",
+        "auc": 0.513753,
+        "two_polarity_auc": 0.513753,
+        "passed": true,
+        "flagged": false
+      },
+      {
+        "feature": "09_tmi_vg",
+        "auc": 0.486659,
+        "two_polarity_auc": 0.513341,
+        "passed": true,
+        "flagged": false
+      },
+      {
+        "feature": "h36b_fold_cond_playa_residual",
+        "auc": 0.486985,
+        "two_polarity_auc": 0.513015,
+        "passed": true,
+        "flagged": false
+      },
+      {
+        "feature": "h36a_mag_thdr",
+        "auc": 0.511669,
+        "two_polarity_auc": 0.511669,
+        "passed": true,
+        "flagged": false
+      },
+      {
+        "feature": "15_depth_to_base_surf",
+        "auc": 0.511379,
+        "two_polarity_auc": 0.511379,
+        "passed": true,
+        "flagged": false
+      },
+      {
+        "feature": "14_tmi",
+        "auc": 0.489016,
+        "two_polarity_auc": 0.510984,
+        "passed": true,
+        "flagged": false
+      },
+      {
+        "feature": "h36a_grav_thdr",
+        "auc": 0.51087,
+        "two_polarity_auc": 0.51087,
+        "passed": true,
+        "flagged": false
+      },
+      {
+        "feature": "01_mag_anom",
+        "auc": 0.491385,
+        "two_polarity_auc": 0.508615,
+        "passed": true,
+        "flagged": false
+      },
+      {
+        "feature": "h36a_mag_tilt",
+        "auc": 0.491623,
+        "two_polarity_auc": 0.508377,
+        "passed": true,
+        "flagged": false
+      },
+      {
+        "feature": "h36b_gdr_geotherm_chalc_idw",
+        "auc": 0.508124,
+        "two_polarity_auc": 0.508124,
+        "passed": true,
+        "flagged": false
+      },
+      {
+        "feature": "h36a_lidar_coh100",
+        "auc": 0.506837,
+        "two_polarity_auc": 0.506837,
+        "passed": true,
+        "flagged": false
+      },
+      {
+        "feature": "h36b_gdr_thermal_spring_idw",
+        "auc": 0.495675,
+        "two_polarity_auc": 0.504325,
+        "passed": true,
+        "flagged": false
+      },
+      {
+        "feature": "h36a_elev_hessian_ridge_s2",
+        "auc": 0.503347,
+        "two_polarity_auc": 0.503347,
+        "passed": true,
+        "flagged": false
+      },
+      {
+        "feature": "02_rtp",
+        "auc": 0.497969,
+        "two_polarity_auc": 0.502031,
+        "passed": true,
+        "flagged": false
+      },
+      {
+        "feature": "h36c_basement_flexure",
+        "auc": 0.499101,
+        "two_polarity_auc": 0.500899,
+        "passed": true,
+        "flagged": false
+      },
+      {
+        "feature": "18_iso_grav_anom_hg",
+        "auc": 0.499706,
+        "two_polarity_auc": 0.500294,
+        "passed": true,
+        "flagged": false
+      }
+    ]
+  },
+  "baselines": {
+    "C0_repo_field": {
+      "evaluator_version": "gems36-segment-audit-v1",
+      "label_tag": "HOLDOUT-DTI",
+      "withheld_positives_px": 60988,
+      "independent_cells": 15,
+      "total_dots_emitted": 37654,
+      "pooled_16block_dti": 0.018492,
+      "pooled_16block_ci95": [
+        0.009837,
+        0.03004
+      ],
+      "pooled_unsplit_dti": 0.018516,
+      "pooled_unsplit_tp_w": 1042.39,
+      "pooled_unsplit_fp_w": 36496.8,
+      "subdomains": {
+        "mountain": {
+          "dti": 0.025415,
+          "weighted_tp": 877.43,
+          "positives": 35744.0,
+          "weighted_recall": 0.0245,
+          "dots_emitted": 29627
+        },
+        "piedmont": {
+          "dti": 0.011514,
+          "weighted_tp": 88.22,
+          "positives": 9106.0,
+          "weighted_recall": 0.0097,
+          "dots_emitted": 1979
+        },
+        "basin": {
+          "dti": 0.003741,
+          "weighted_tp": 52.79,
+          "positives": 16138.0,
+          "weighted_recall": 0.0033,
+          "dots_emitted": 6048
+        },
+        "lidar_covered": {
+          "dti": 0.022312,
+          "weighted_tp": 1023.44,
+          "positives": 48465.0,
+          "weighted_recall": 0.0211,
+          "dots_emitted": 35600
+        },
+        "non_lidar_gap": {
+          "dti": 0.001699,
+          "weighted_tp": 17.72,
+          "positives": 12523.0,
+          "weighted_recall": 0.0014,
+          "dots_emitted": 2054
+        }
+      }
+    },
+    "B1_raw19_hgb_d28": {
+      "evaluator_version": "gems36-segment-audit-v1",
+      "label_tag": "HOLDOUT-DTI",
+      "withheld_positives_px": 60988,
+      "independent_cells": 15,
+      "total_dots_emitted": 37654,
+      "pooled_16block_dti": 0.039523,
+      "pooled_16block_ci95": [
+        0.027195,
+        0.054596
+      ],
+      "pooled_unsplit_dti": 0.040417,
+      "pooled_unsplit_tp_w": 2261.24,
+      "pooled_unsplit_fp_w": 33523.37,
+      "subdomains": {
+        "mountain": {
+          "dti": 0.04659,
+          "weighted_tp": 1574.09,
+          "positives": 35744.0,
+          "weighted_recall": 0.044,
+          "dots_emitted": 27412
+        },
+        "piedmont": {
+          "dti": 0.034851,
+          "weighted_tp": 296.3,
+          "positives": 9106.0,
+          "weighted_recall": 0.0325,
+          "dots_emitted": 6324
+        },
+        "basin": {
+          "dti": 0.01279,
+          "weighted_tp": 174.94,
+          "positives": 16138.0,
+          "weighted_recall": 0.0108,
+          "dots_emitted": 3918
+        },
+        "lidar_covered": {
+          "dti": 0.041924,
+          "weighted_tp": 1867.14,
+          "positives": 48465.0,
+          "weighted_recall": 0.0385,
+          "dots_emitted": 30437
+        },
+        "non_lidar_gap": {
+          "dti": 0.034466,
+          "weighted_tp": 393.32,
+          "positives": 12523.0,
+          "weighted_recall": 0.0314,
+          "dots_emitted": 7217
+        }
+      }
+    }
+  },
+  "experiments": {
+    "EXP-1": {
+      "experiment_id": "EXP-1",
+      "hypothesis": "H36-A",
+      "n_features": 36,
+      "elapsed_sec": 305.2,
+      "metrics": {
+        "evaluator_version": "gems36-segment-audit-v1",
+        "label_tag": "HOLDOUT-DTI",
+        "withheld_positives_px": 60988,
+        "independent_cells": 15,
+        "total_dots_emitted": 37654,
+        "pooled_16block_dti": 0.110598,
+        "pooled_16block_ci95": [
+          0.075495,
+          0.145617
+        ],
+        "pooled_unsplit_dti": 0.112064,
+        "pooled_unsplit_tp_w": 6382.82,
+        "pooled_unsplit_fp_w": 34448.96,
+        "subdomains": {
+          "mountain": {
+            "dti": 0.125732,
+            "weighted_tp": 4284.87,
+            "positives": 35744.0,
+            "weighted_recall": 0.1199,
+            "dots_emitted": 25391
+          },
+          "piedmont": {
+            "dti": 0.073893,
+            "weighted_tp": 625.84,
+            "positives": 9106.0,
+            "weighted_recall": 0.0687,
+            "dots_emitted": 5636
+          },
+          "basin": {
+            "dti": 0.054258,
+            "weighted_tp": 776.59,
+            "positives": 16138.0,
+            "weighted_recall": 0.0481,
+            "dots_emitted": 6627
+          },
+          "lidar_covered": {
+            "dti": 0.121746,
+            "weighted_tp": 5570.61,
+            "positives": 48465.0,
+            "weighted_recall": 0.1149,
+            "dots_emitted": 32187
+          },
+          "non_lidar_gap": {
+            "dti": 0.071816,
+            "weighted_tp": 804.32,
+            "positives": 12523.0,
+            "weighted_recall": 0.0642,
+            "dots_emitted": 5467
+          }
+        }
+      },
+      "vs_C0_repo_field": {
+        "delta_point": 0.092106,
+        "delta_ci95_lo": 0.058522,
+        "delta_ci95_hi": 0.12558,
+        "prob_cand_gt_base": 1.0
+      },
+      "vs_B1_raw19_hgb_d28": {
+        "delta_point": 0.071075,
+        "delta_ci95_lo": 0.046363,
+        "delta_ci95_hi": 0.093128,
+        "prob_cand_gt_base": 1.0
+      },
+      "variational_pde_diagnostics": [
+        {
+          "stress_energy_before": 0.9118254109461973,
+          "stress_energy_after": 0.9097393850650487,
+          "stress_energy_delta": -0.00208602588114859,
+          "mean_prob_before": 0.000603847554884851,
+          "mean_prob_after": 0.0006038068095222116
+        },
+        {
+          "stress_energy_before": 0.8832800274425318,
+          "stress_energy_after": 0.8810192138392573,
+          "stress_energy_delta": -0.0022608136032744586,
+          "mean_prob_before": 0.00012418672849889845,
+          "mean_prob_after": 0.00012422371946740896
+        },
+        {
+          "stress_energy_before": 0.88295636778884,
+          "stress_energy_after": 0.8800359329305449,
+          "stress_energy_delta": -0.0029204348582950734,
+          "mean_prob_before": 0.0009625459788367152,
+          "mean_prob_after": 0.0009626795654185116
+        },
+        {
+          "stress_energy_before": 0.8139815474609455,
+          "stress_energy_after": 0.8099121695799982,
+          "stress_energy_delta": -0.0040693778809473,
+          "mean_prob_before": 0.0008132891380228102,
+          "mean_prob_after": 0.0008135292446240783
+        }
+      ],
+      "fold_regime_scales": []
+    },
+    "EXP-2": {
+      "experiment_id": "EXP-2",
+      "hypothesis": "H36-A + H36-B",
+      "n_features": 44,
+      "elapsed_sec": 321.77,
+      "metrics": {
+        "evaluator_version": "gems36-segment-audit-v1",
+        "label_tag": "HOLDOUT-DTI",
+        "withheld_positives_px": 60988,
+        "independent_cells": 15,
+        "total_dots_emitted": 37654,
+        "pooled_16block_dti": 0.114542,
+        "pooled_16block_ci95": [
+          0.078547,
+          0.151221
+        ],
+        "pooled_unsplit_dti": 0.115835,
+        "pooled_unsplit_tp_w": 6599.77,
+        "pooled_unsplit_fp_w": 34326.59,
+        "subdomains": {
+          "mountain": {
+            "dti": 0.131171,
+            "weighted_tp": 4471.25,
+            "positives": 35744.0,
+            "weighted_recall": 0.1251,
+            "dots_emitted": 25357
+          },
+          "piedmont": {
+            "dti": 0.076733,
+            "weighted_tp": 659.69,
+            "positives": 9106.0,
+            "weighted_recall": 0.0724,
+            "dots_emitted": 6269
+          },
+          "basin": {
+            "dti": 0.051661,
+            "weighted_tp": 733.07,
+            "positives": 16138.0,
+            "weighted_recall": 0.0454,
+            "dots_emitted": 6028
+          },
+          "lidar_covered": {
+            "dti": 0.124697,
+            "weighted_tp": 5701.86,
+            "positives": 48465.0,
+            "weighted_recall": 0.1176,
+            "dots_emitted": 31984
+          },
+          "non_lidar_gap": {
+            "dti": 0.07904,
+            "weighted_tp": 889.09,
+            "positives": 12523.0,
+            "weighted_recall": 0.071,
+            "dots_emitted": 5670
+          }
+        }
+      },
+      "vs_C0_repo_field": {
+        "delta_point": 0.096049,
+        "delta_ci95_lo": 0.062309,
+        "delta_ci95_hi": 0.130944,
+        "prob_cand_gt_base": 1.0
+      },
+      "vs_B1_raw19_hgb_d28": {
+        "delta_point": 0.075018,
+        "delta_ci95_lo": 0.049224,
+        "delta_ci95_hi": 0.099602,
+        "prob_cand_gt_base": 1.0
+      },
+      "variational_pde_diagnostics": [
+        {
+          "stress_energy_before": 0.8996587796942673,
+          "stress_energy_after": 0.897996053087815,
+          "stress_energy_delta": -0.0016627266064522805,
+          "mean_prob_before": 0.0006376091041602194,
+          "mean_prob_after": 0.0006376332021318376
+        },
+        {
+          "stress_energy_before": 0.8750199219340707,
+          "stress_energy_after": 0.8726049871002127,
+          "stress_energy_delta": -0.002414934833858018,
+          "mean_prob_before": 0.00011588876077439636,
+          "mean_prob_after": 0.00011591813381528482
+        },
+        {
+          "stress_energy_before": 0.8732032104910582,
+          "stress_energy_after": 0.8704181530232883,
+          "stress_energy_delta": -0.0027850574677699136,
+          "mean_prob_before": 0.0009410965139977634,
+          "mean_prob_after": 0.0009412135696038604
+        },
+        {
+          "stress_energy_before": 0.7891416200964884,
+          "stress_energy_after": 0.7849155430431639,
+          "stress_energy_delta": -0.004226077053324451,
+          "mean_prob_before": 0.0007887223619036376,
+          "mean_prob_after": 0.000789012701716274
+        }
+      ],
+      "fold_regime_scales": []
+    },
+    "EXP-3": {
+      "experiment_id": "EXP-3",
+      "hypothesis": "H36-A + H36-B + H36-C",
+      "n_features": 50,
+      "elapsed_sec": 347.09,
+      "metrics": {
+        "evaluator_version": "gems36-segment-audit-v1",
+        "label_tag": "HOLDOUT-DTI",
+        "withheld_positives_px": 60988,
+        "independent_cells": 15,
+        "total_dots_emitted": 37654,
+        "pooled_16block_dti": 0.113705,
+        "pooled_16block_ci95": [
+          0.078494,
+          0.148428
+        ],
+        "pooled_unsplit_dti": 0.115229,
+        "pooled_unsplit_tp_w": 6565.53,
+        "pooled_unsplit_fp_w": 34373.78,
+        "subdomains": {
+          "mountain": {
+            "dti": 0.132714,
+            "weighted_tp": 4528.77,
+            "positives": 35744.0,
+            "weighted_recall": 0.1267,
+            "dots_emitted": 25478
+          },
+          "piedmont": {
+            "dti": 0.087719,
+            "weighted_tp": 761.59,
+            "positives": 9106.0,
+            "weighted_recall": 0.0836,
+            "dots_emitted": 6640
+          },
+          "basin": {
+            "dti": 0.036457,
+            "weighted_tp": 512.85,
+            "positives": 16138.0,
+            "weighted_recall": 0.0318,
+            "dots_emitted": 5536
+          },
+          "lidar_covered": {
+            "dti": 0.125004,
+            "weighted_tp": 5721.65,
+            "positives": 48465.0,
+            "weighted_recall": 0.1181,
+            "dots_emitted": 32177
+          },
+          "non_lidar_gap": {
+            "dti": 0.074486,
+            "weighted_tp": 834.63,
+            "positives": 12523.0,
+            "weighted_recall": 0.0666,
+            "dots_emitted": 5477
+          }
+        }
+      },
+      "vs_C0_repo_field": {
+        "delta_point": 0.095213,
+        "delta_ci95_lo": 0.062087,
+        "delta_ci95_hi": 0.128055,
+        "prob_cand_gt_base": 1.0
+      },
+      "vs_B1_raw19_hgb_d28": {
+        "delta_point": 0.074182,
+        "delta_ci95_lo": 0.049782,
+        "delta_ci95_hi": 0.09698,
+        "prob_cand_gt_base": 1.0
+      },
+      "variational_pde_diagnostics": [
+        {
+          "stress_energy_before": 0.8988020019982724,
+          "stress_energy_after": 0.8967708592452942,
+          "stress_energy_delta": -0.002031142752978221,
+          "mean_prob_before": 0.0005761666689068079,
+          "mean_prob_after": 0.0005761513602919877
+        },
+        {
+          "stress_energy_before": 0.8959024252076255,
+          "stress_energy_after": 0.8942441013143906,
+          "stress_energy_delta": -0.0016583238932349476,
+          "mean_prob_before": 0.00011719723988790065,
+          "mean_prob_after": 0.00011723028001142666
+        },
+        {
+          "stress_energy_before": 0.8768729158926923,
+          "stress_energy_after": 0.8741425988327785,
+          "stress_energy_delta": -0.0027303170599138893,
+          "mean_prob_before": 0.0008430295274592936,
+          "mean_prob_after": 0.0008431627647951245
+        },
+        {
+          "stress_energy_before": 0.7998817284804857,
+          "stress_energy_after": 0.7969195228825866,
+          "stress_energy_delta": -0.002962205597899059,
+          "mean_prob_before": 0.0007546796114183962,
+          "mean_prob_after": 0.0007549006259068847
+        }
+      ],
+      "fold_regime_scales": [
+        {
+          "mountain": 0.9549,
+          "piedmont": 0.95547,
+          "basin": 0.94954
+        },
+        {
+          "mountain": 0.94857,
+          "piedmont": 0.92424,
+          "basin": 0.95543
+        },
+        {
+          "mountain": 0.93187,
+          "piedmont": 0.9146,
+          "basin": 0.93162
+        },
+        {
+          "mountain": 0.94879,
+          "piedmont": 0.9389,
+          "basin": 0.9386
+        }
+      ]
+    }
+  },
+  "winning_experiment": "EXP-2",
+  "full_fit_diagnostics": {
+    "variational_pde": {
+      "deployment_mode": "spatial_out_of_fold_cross_fitted_4fold",
+      "mean_stress_energy_delta": -0.002772
+    },
+    "regime_scales": {
+      "folds": []
+    },
+    "submodular_objective": 1679.64
+  },
+  "automated_gates": {
+    "leakage_canary_passed": true,
+    "beats_C0_repo_field_95ci": true,
+    "beats_B1_raw19_hgb_d28_95ci": true,
+    "portal_geotiff_valid": true,
+    "registry_uniqueness_passed": true,
+    "all_passed": true,
+    "verdict": "promote"
+  },
+  "submission_receipt_summary": {
+    "submission_name": "gemsdoe36-atvr36-exp-2-20261026",
+    "submission_note": "ATVR-36 EXP-2: tilt/LiDAR+hydrothermal+Anderson PDE+300m CELF cover (zero SGMC, zero prior rasters; 37654 dots)",
+    "tif_path": "docs/downloads/gemsdoe36-atvr36-20261026.tif",
+    "tif_sha256": "54f493f4fa5c74ed3a02f88ca6d47272b0c3cee0cc0bd9bbd9cb94eaf997204a",
+    "tif_bytes": 292540,
+    "zip_path": "docs/downloads/gemsdoe36-atvr36-20261026.zip",
+    "zip_sha256": "ceac8754bd8779c7f0a849c81f63e665e49f2767a4753cb5156832120dac8311",
+    "zip_bytes": 170670,
+    "max_abs_surface_spearman_rho": 0.108421,
+    "max_abs_surface_spearman_ref": "scored:8GEMSDOE_Hedge-v2_submission.tif",
+    "max_geological_dot_overlap_3px": 0.595687,
+    "max_geological_dot_overlap_ref": "scored:gems10-h25-ctx-ridge-20260927T232947704150Z-6452ae1d00.tif",
+    "synthetic_lattice_disclosure": [
+      {
+        "reference": "scored:13gems_20261001_r13-lattice-s5_v2_nan-outside.tif",
+        "sha256_12": "b4570b406efe",
+        "n_ref_dots_off_catalogue": 204504,
+        "surface_spearman_rho": -0.000191,
+        "dot_overlap_3px_forward": 0.985022,
+        "dot_overlap_3px_reverse": 0.079832,
+        "note": "Synthetic 5x5 uniform calibration lattice (204,504 off-catalogue dots); max Euclidean distance from any grid cell to nearest 5x5 node is sqrt(2^2+2^2)=2.83 <= 3.0 px (99.9% map coverage by pigeonhole geometry)."
+      }
+    ]
+  },
+  "total_runtime_sec": 1316.53
+}

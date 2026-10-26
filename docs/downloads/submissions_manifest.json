@@ -1,105 +1,85 @@
 {
-  "schema_version": 1,
-  "built_utc": "2026-10-04T18:56:26+00:00",
-  "primary_file": "gemsdoe36-anderson-geothermal-pinn-38854-20261004T230000Z-9b9ea4e6-zeros.tif",
-  "primary_sha256": "e15891020b9c57056ac7fa874a5e506fbd6ed9314a4ea8e73af0753887a3708a",
-  "companion_nan_file": "gemsdoe36-anderson-geothermal-pinn-38854-20261004T230000Z-9b9ea4e6-nan.tif",
-  "zip_archive": "gemsdoe36-anderson-geothermal-pinn-38854-20261004T230000Z-9b9ea4e6-zeros.zip",
-  "submission_name": "GEMSDOE36-Anderson-PINN-MultiPhysics-20261004",
-  "note": "GEMSDOE36 Anderson PINN | H36-1/3 GDR geotherm conduit + B=2 catalogue-flank prune: 38,854 dots; 0 on-cat; LM holdout 0.2699 (+0.0020 vs 0.2778 base, 1/4 quads); projected 0.2798",
-  "emitted_dots": 38854,
+  "schema_version": 2,
+  "built_utc": "2026-10-26T00:00:00Z",
+  "lane_id": "ATVR-36",
+  "verdict": "promote",
+  "ok_to_download_and_submit": true,
+  "primary_file": "gemsdoe36-atvr36-20261026.tif",
+  "primary_sha256": "54f493f4fa5c74ed3a02f88ca6d47272b0c3cee0cc0bd9bbd9cb94eaf997204a",
+  "primary_bytes": 305744,
+  "zip_archive": "gemsdoe36-atvr36-20261026.zip",
+  "zip_sha256": "ceac8754bd8779c7f0a849c81f63e665e49f2767a4753cb5156832120dac8311",
+  "zip_bytes": 200501,
+  "receipt_file": "gemsdoe36-atvr36-20261026.receipt.json",
+  "submission_name": "gemsdoe36-atvr36-exp-2-20261026",
+  "note": "ATVR-36 EXP-2: tilt/LiDAR+hydrothermal+Anderson PDE+300m CELF cover (zero SGMC, zero prior rasters; 37654 dots)",
+  "emitted_dots": 37654,
   "on_catalogue_dots": 0,
-  "holdout_results": {
-    "BASE-0.2778": {
-      "candidate_id": "BASE-0.2778",
-      "hypothesis": "H33-2-B2",
-      "description": "Baseline GEMSDOE32 B=2 catalogue-flank pruned emission (37,654 dots, official LB 0.2778)",
-      "emitted_dots": 37654,
-      "on_catalogue_dots": 0,
-      "lm_calibrated_mean": 0.26792053156904116,
-      "lm_per_fold": {
-        "foldNW": 0.17845441391442363,
-        "foldNE": 0.4228785103493363,
-        "foldSW": 0.21382513739581266,
-        "foldSE": 0.2565240646165921
-      },
-      "margin_vs_base": 0.0,
-      "folds_beat_base": 0,
-      "projected_live_score": 0.2778,
-      "slot_eligible": false
+  "outside_footprint_mode": "zeros (nodata=None; 100% finite float32 in [0.0, 1.0] across all 12,279,160 cells)",
+  "holdout_evaluation": {
+    "score_provenance_label": "HOLDOUT-DTI",
+    "evaluator_version": "gems36-segment-audit-v1",
+    "withheld_positives_px": 60988,
+    "withheld_segments": 3199,
+    "buffer_px": 30,
+    "independent_cells": 15,
+    "C0_repo_field": {
+      "label": "HOLDOUT-DTI",
+      "dti": 0.018492,
+      "ci95": [0.009837, 0.03004],
+      "unsplit_dti": 0.018489
     },
-    "H36-1-StepOver": {
-      "candidate_id": "H36-1-StepOver",
-      "hypothesis": "H36-1",
-      "description": "H36-1 Geodetic Kostrov step-over dilatation + Anderson orientation constraint",
-      "emitted_dots": 38554,
-      "on_catalogue_dots": 0,
-      "lm_calibrated_mean": 0.26795648509561404,
-      "lm_per_fold": {
-        "foldNW": 0.17845441391442363,
-        "foldNE": 0.4228785103493363,
-        "foldSW": 0.21396895150210407,
-        "foldSE": 0.2565240646165921
-      },
-      "margin_vs_base": 3.595352657287387e-05,
-      "folds_beat_base": 1,
-      "projected_live_score": 0.27783595352657287,
-      "slot_eligible": false
+    "B1_raw19_hgb_d28": {
+      "label": "HOLDOUT-DTI",
+      "dti": 0.039523,
+      "ci95": [0.027195, 0.054596],
+      "unsplit_dti": 0.040417
     },
-    "H36-2-BasementStep": {
-      "candidate_id": "H36-2-BasementStep",
-      "hypothesis": "H36-2",
-      "description": "H36-2 Potential-field basement step asymmetry + MT clay-cap conjunction",
-      "emitted_dots": 38554,
-      "on_catalogue_dots": 0,
-      "lm_calibrated_mean": 0.26913495040562574,
-      "lm_per_fold": {
-        "foldNW": 0.18248721687645034,
-        "foldNE": 0.4222563885007223,
-        "foldSW": 0.21620977624759638,
-        "foldSE": 0.255586419997734
-      },
-      "margin_vs_base": 0.0012144188365845743,
-      "folds_beat_base": 2,
-      "projected_live_score": 0.27901441883658457,
-      "slot_eligible": true
+    "EXP-1": {
+      "label": "HOLDOUT-DTI",
+      "hypothesis": "H36-A",
+      "dti": 0.110598,
+      "ci95": [0.075495, 0.145617],
+      "unsplit_dti": 0.112064
     },
-    "H36-3-GeothermalConduit": {
-      "candidate_id": "H36-3-GeothermalConduit",
-      "hypothesis": "H36-3",
-      "description": "H36-3 GDR 1391 measured geothermometer upflow conduits (>130C) + Anderson constraint",
-      "emitted_dots": 38854,
-      "on_catalogue_dots": 0,
-      "lm_calibrated_mean": 0.26977848144562167,
-      "lm_per_fold": {
-        "foldNW": 0.17695568232873643,
-        "foldNE": 0.42236563592190146,
-        "foldSW": 0.22615416851282213,
-        "foldSE": 0.2536384390190267
-      },
-      "margin_vs_base": 0.0018579498765805003,
-      "folds_beat_base": 1,
-      "projected_live_score": 0.2796579498765805,
-      "slot_eligible": false
+    "EXP-2": {
+      "label": "HOLDOUT-DTI",
+      "hypothesis": "H36-A + H36-B (WINNER)",
+      "dti": 0.114542,
+      "ci95": [0.078547, 0.151221],
+      "unsplit_dti": 0.115835,
+      "paired_delta_vs_B1": 0.075018,
+      "paired_delta_vs_B1_ci95": [0.049224, 0.099602]
     },
-    "GEMSDOE36-LEAD-PINN": {
-      "candidate_id": "GEMSDOE36-LEAD-PINN",
-      "hypothesis": "H36-PINN-Lead",
-      "description": "GEMSDOE36 Multi-Physics Anderson PINN: B=2 base + Anderson-consistent geothermal & step-over conduits (38,854 dots)",
-      "emitted_dots": 38854,
-      "on_catalogue_dots": 0,
-      "lm_calibrated_mean": 0.2699079014319995,
-      "lm_per_fold": {
-        "foldNW": 0.17699779396397708,
-        "foldNE": 0.42234235300524403,
-        "foldSW": 0.22497167953959424,
-        "foldSE": 0.25531977921918264
-      },
-      "margin_vs_base": 0.0019873698629583325,
-      "folds_beat_base": 1,
-      "projected_live_score": 0.2797873698629583,
-      "slot_eligible": false
+    "EXP-3": {
+      "label": "HOLDOUT-DTI",
+      "hypothesis": "H36-A + H36-B + H36-C",
+      "dti": 0.113705,
+      "ci95": [0.078494, 0.148428],
+      "unsplit_dti": 0.115229
     }
   },
-  "elapsed_seconds": 30.6
+  "retired_legacy_files": [
+    {
+      "file": "gemsdoe36-anderson-geothermal-pinn-38854-20261004T230000Z-9b9ea4e6-zeros.tif",
+      "sha256": "e15891020b9c57056ac7fa874a5e506fbd6ed9314a4ea8e73af0753887a3708a",
+      "status": "RETIRED_DO_NOT_SUBMIT",
+      "reason": "Pixel-exact superset of GEMSDOE32 B2 (37,654 copied dots) + 1,200 broad thermal IDW dots; already scored ORGANIZER-CONFIRMED 0.2750."
+    },
+    {
+      "file": "gemsdoe36-anderson-geothermal-pinn-38854-20261004T230000Z-9b9ea4e6-nan.tif",
+      "status": "RETIRED_DO_NOT_SUBMIT",
+      "reason": "NaN-outside companion of retired 38,854-dot B2 superset."
+    },
+    {
+      "file": "GEMS36_h6_offcatalog_network_prior_20261004T193432.021282Z_3276c04090_3c064db2.tif",
+      "status": "RETIRED_DO_NOT_SUBMIT",
+      "reason": "Legacy H6 blended USGS SGMC into belief field and evaluated against SGMC (circular proxy)."
+    },
+    {
+      "file": "GEMS36_FORMAT_TEST_NOT_SUBMISSION.tif",
+      "status": "SYNTHETIC_QA_ONLY",
+      "reason": "Format verification test file only."
+    }
+  ]
 }

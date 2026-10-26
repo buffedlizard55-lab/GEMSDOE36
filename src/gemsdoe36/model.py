@@ -58,7 +58,7 @@ class TrainConfig:
 
 def build_unet(in_channels: int = N_CHANNELS, base: int = 16):
     """A small 3-level U-Net. Returns (module, n_params)."""
-    import torch.nn as nn
+    from torch import nn
 
     class Block(nn.Module):
         def __init__(self, c_in: int, c_out: int):

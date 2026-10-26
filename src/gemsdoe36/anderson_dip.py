@@ -334,8 +334,8 @@ def dip_pullback_offsets(
             offsets: list[tuple[int, int, float]] = []
             for z, wz in zip(depth_bank_m, depth_weights, strict=True):
                 dist_px = z * cot / 100.0
-                dy = int(round(-d_row * dist_px))
-                dx = int(round(-d_col * dist_px))
+                dy = round(-d_row * dist_px)
+                dx = round(-d_col * dist_px)
                 if (dy, dx) == (0, 0):
                     dy, dx = int(np.sign(-d_row)), int(np.sign(-d_col))
                 offsets.append((dy, dx, float(wz)))
@@ -386,8 +386,8 @@ def dip_project(
                 # 100 m grid (must match dip_pullback_offsets; a missing /100 here is a
                 # 100x shift that pushes the deep evidence out of tile).
                 dist_px = z * cot / 100.0
-                dy = int(round(-d_row * dist_px))
-                dx = int(round(-d_col * dist_px))
+                dy = round(-d_row * dist_px)
+                dx = round(-d_col * dist_px)
                 if dy == 0 and dx == 0:
                     continue
                 # Up-dip gather: out_local[oy, ox] += block[oy - dy, ox - dx].

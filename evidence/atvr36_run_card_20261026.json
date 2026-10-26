@@ -1,0 +1,90 @@
+{
+  "lane_id": "ATVR-36",
+  "winning_experiment": "EXP-2",
+  "hypothesis": "H36-A + H36-B: Andersonian Tilt-Variational & Deconfounded Geothermal-Piedmont Submodular Fault Discovery (44 physical/fold features; zero SGMC, zero prior rasters)",
+  "mechanism": "Combines depth-invariant Verduzco gravity/magnetic tilt derivatives, relief-deconfounded piedmont scarp-toe curvature, missingness-gated USGS 3DEP 1 m LiDAR scarp breaks, hydrothermal magnetite-destruction 02_rtp troughs + playa-deconfounded 17_cond_surf clay-cap residuals + GeoDAWN K/Th + DOE GDR 1391 physical geothermometers, Raissi-Anderson anisotropic structure-tensor variational diffusion, and exact 25-offset Euclidean 300 m CELF submodular expected-credit dot cover.",
+  "named_non_fault_mimic": "Closed-basin evaporite playas / saline mudflats with low resistivity and broad silicic caldera magnetic lows (deconfounded via fold-regressed depth/playa 17_cond_surf residual and 02_rtp trough x magnetic-THDR coupling)",
+  "holdout_dti": {
+    "label": "HOLDOUT-DTI",
+    "evaluator_version": "gems36-segment-audit-v1",
+    "n_withheld_positives": 60988,
+    "n_withheld_segments": 3199,
+    "independent_cells": 15,
+    "buffer_px": 30,
+    "dti": 0.114542,
+    "ci95": [
+      0.078547,
+      0.151221
+    ],
+    "unsplit_pooled_dti": 0.115835,
+    "baseline_C0_repo_field_dti": 0.018492,
+    "baseline_B1_raw19_hgb_d28_dti": 0.039523,
+    "paired_delta_vs_C0": {
+      "delta_point": 0.096049,
+      "delta_ci95_lo": 0.062309,
+      "delta_ci95_hi": 0.130944,
+      "prob_cand_gt_base": 1.0
+    },
+    "paired_delta_vs_B1": {
+      "delta_point": 0.075018,
+      "delta_ci95_lo": 0.049224,
+      "delta_ci95_hi": 0.099602,
+      "prob_cand_gt_base": 1.0
+    }
+  },
+  "leakage_canary": {
+    "n_features_tested": 50,
+    "auc_cap": 0.9,
+    "max_two_polarity_auc": 0.58811,
+    "max_feature": "h36a_elev_hessian_trough_s2",
+    "flagged_count": 0
+  },
+  "registry_uniqueness": {
+    "n_unique_registry_rasters_checked": 32,
+    "n_geological_rasters_enforced": 31,
+    "max_abs_surface_spearman_rho": 0.108421,
+    "max_abs_surface_spearman_ref": "scored:8GEMSDOE_Hedge-v2_submission.tif",
+    "max_geological_dot_overlap_3px": 0.595687,
+    "max_geological_dot_overlap_ref": "scored:gems10-h25-ctx-ridge-20260927T232947704150Z-6452ae1d00.tif",
+    "synthetic_lattice_pigeonhole_disclosure": [
+      {
+        "reference": "scored:13gems_20261001_r13-lattice-s5_v2_nan-outside.tif",
+        "sha256_12": "b4570b406efe",
+        "n_ref_dots_off_catalogue": 204504,
+        "surface_spearman_rho": -0.000191,
+        "dot_overlap_3px_forward": 0.985022,
+        "dot_overlap_3px_reverse": 0.079832,
+        "note": "Synthetic 5x5 uniform calibration lattice (204,504 off-catalogue dots); max Euclidean distance from any grid cell to nearest 5x5 node is sqrt(2^2+2^2)=2.83 <= 3.0 px (99.9% map coverage by pigeonhole geometry)."
+      }
+    ],
+    "duplicate_gate_passed": true
+  },
+  "raster_sha256": "54f493f4fa5c74ed3a02f88ca6d47272b0c3cee0cc0bd9bbd9cb94eaf997204a",
+  "zip_sha256": "ceac8754bd8779c7f0a849c81f63e665e49f2767a4753cb5156832120dac8311",
+  "validator_output": {
+    "valid_for_portal": true,
+    "crs": "EPSG:32611",
+    "shape": [
+      3730,
+      3292
+    ],
+    "pixel_size_m": [
+      100.0,
+      100.0
+    ],
+    "dtype": "float32",
+    "nodata": null,
+    "nan_inside_footprint": 0,
+    "nan_outside_footprint": 0,
+    "inf_count": 0,
+    "min_inside_footprint": 0.0,
+    "max_inside_footprint": 1.0,
+    "values_in_0_1": true,
+    "positive_dots_emitted": 37654,
+    "known_fault_overlap_px": 0,
+    "errors": []
+  },
+  "submission_name": "gemsdoe36-atvr36-exp-2-20261026",
+  "submission_note": "ATVR-36 EXP-2: tilt/LiDAR+hydrothermal+Anderson PDE+300m CELF cover (zero SGMC, zero prior rasters; 37654 dots)",
+  "verdict": "promote"
+}
