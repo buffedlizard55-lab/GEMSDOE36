@@ -34,7 +34,7 @@
    "nn_spacing_median_px": 2.23606797749979
   },
   "d2.8 (0.2600)": {
-   "file": "data/registry/g25_d28_nan.tif",
+   "file": "data/registry/scored/GEMSDOE25__gems25-dotted-h19-5-d2-8-20261002-e56ea318af89-nan.tif",
    "positive_pixels": 44090,
    "values": [
     0.0,
@@ -50,7 +50,7 @@
    "nn_spacing_median_px": 3.0
   },
   "poisson300m (0.2600)": {
-   "file": "data/registry/g30_d28_poisson300m.tif",
+   "file": "data/registry/scored/GEMSDOE30__gemsdoe30-d28-poisson300m-offcat-44090-20261003T233156Z-91eae1ca.tif",
    "positive_pixels": 44090,
    "values": [
     0.0,
@@ -66,7 +66,7 @@
    "nn_spacing_median_px": 3.0
   },
   "solo B=1 (0.2708)": {
-   "file": "data/registry/g31_solo_d28_nan.tif",
+   "file": "data/registry/scored/GEMSDOE31__gemsdoe31-h27-4-solo-d28-20261004-8acb75e1-nan.tif",
    "positive_pixels": 40199,
    "values": [
     0.0,
@@ -82,7 +82,7 @@
    "nn_spacing_median_px": 3.0
   },
   "h33-2-b2 B=2 (0.2778)": {
-   "file": "data/registry/g32_h33-2-b2_zeros.tif",
+   "file": "data/registry/scored/GEMSDOE32__gemsdoe32-h33-h33-2-b2-20261004T220000Z-e5eb6e7e-zeros.tif",
    "positive_pixels": 37654,
    "values": [
     0.0,

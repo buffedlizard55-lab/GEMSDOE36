@@ -887,7 +887,8 @@ python3 scripts/analyze_scored_registry.py            # forensics of 118 owner-s
 python3 scripts/forensics_champion.py                 # 0.2778 anatomy + B-ladder inversion
 python3 scripts/build_h36_features.py                 # 66 label-free feature columns (.cache/h36)
 python3 scripts/run_h36_experiment.py --e2            # E1 paired holdout + canary, E2 physics-only
-python3 scripts/build_uniqueness_registry.py          # needs data/registry/* (see registry/*.json)
+python3 scripts/fetch_registry_rasters.py             # comparison-only rasters -> data/registry (sha-verified)
+python3 scripts/build_uniqueness_registry.py
 python3 scripts/build_h36_submission.py               # TIF + gates + run card
 python3 scripts/build_site.py && python3 scripts/check_site.py
 PYTHONPATH=src python3 -m pytest -q

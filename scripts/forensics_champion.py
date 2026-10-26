@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Byte-level forensics of the owner-reported best file (GEMSDOE32 h33-2-b2, 0.2778) and its family.
+"""Byte-level forensics (inputs: `scripts/restore_data.py` + `scripts/fetch_registry_rasters.py`) of the owner-reported best file (GEMSDOE32 h33-2-b2, 0.2778) and its family.
 
 LEARNING/EDUCATION ONLY - no pixel of these rasters is copied into a GEMSDOE36 candidate.
 Every score below is OWNER-REPORTED (2026-10-25 brief), not an organizer receipt.
@@ -26,10 +26,10 @@ ROOT = Path(__file__).resolve().parents[1]
 FAMILY = {
     "H19-5 solid (0.1922)": "data/raw/scored/gems19-h19-5-powerlaw-budget-multiline-corroborated-20260930-e27054cf-nan.tif",
     "d1.5 (0.2477)": "data/raw/scored/gems24-h25-1-dotted-h19-5-d1-5-20261002-989f59505db1-nan.tif",
-    "d2.8 (0.2600)": "data/registry/g25_d28_nan.tif",
-    "poisson300m (0.2600)": "data/registry/g30_d28_poisson300m.tif",
-    "solo B=1 (0.2708)": "data/registry/g31_solo_d28_nan.tif",
-    "h33-2-b2 B=2 (0.2778)": "data/registry/g32_h33-2-b2_zeros.tif",
+    "d2.8 (0.2600)": "data/registry/scored/GEMSDOE25__gems25-dotted-h19-5-d2-8-20261002-e56ea318af89-nan.tif",
+    "poisson300m (0.2600)": "data/registry/scored/GEMSDOE30__gemsdoe30-d28-poisson300m-offcat-44090-20261003T233156Z-91eae1ca.tif",
+    "solo B=1 (0.2708)": "data/registry/scored/GEMSDOE31__gemsdoe31-h27-4-solo-d28-20261004-8acb75e1-nan.tif",
+    "h33-2-b2 B=2 (0.2778)": "data/registry/scored/GEMSDOE32__gemsdoe32-h33-h33-2-b2-20261004T220000Z-e5eb6e7e-zeros.tif",
     "GEMSDOE36 anderson (0.2750)": "docs/downloads/gemsdoe36-anderson-geothermal-pinn-38854-20261004T230000Z-9b9ea4e6-zeros.tif",
 }
 LATTICE = "data/raw/scored/13gems_20261001_r13-lattice-s5_v2_nan-outside.tif"
@@ -113,9 +113,8 @@ def main() -> int:
     # lattice: T = cov N ; M ~= 0.12 N (6-px strip x mean kernel 0.5 / 25) ; solve D = T/(0.2(T+S-M)+0.8N)
     m_frac = 6 * 0.5 / 25
     D = SCORES["lattice"]
-    n_eff = D * 0.2 * lat_S / (cov - D * (0.2 * cov - 0.2 * m_frac + 0.8 * (1 - cov) + 0.0) - 0.0) if False else None
-    # explicit algebra: D (0.2 (cov N + S - m N) + 0.8 (N - cov N)) + D cov N ... keep it simple and exact:
-    # D = cov N / (cov N + 0.2 (S - m N) + 0.8 (1 - cov) N)  (FP_w = S - M, FN = N - T)
+    # D = T / (T + 0.2 FP + 0.8 FN) with T = cov N, FP = S - m N, FN = (1 - cov) N
+    # => D (cov N + 0.2 S - 0.2 m N + 0.8 (1 - cov) N) = cov N  => solve for N:
     n_eff = D * 0.2 * lat_S / (cov - D * (cov - 0.2 * m_frac + 0.8 * (1 - cov)))
     ladder = {}
     for N in (8000, 12000, round(n_eff)):

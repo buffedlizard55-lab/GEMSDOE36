@@ -54,7 +54,7 @@ Hidden test faults are, by construction, **new faults not in the USGS database**
 **[official: page 967; rules PDF §2]** and the scorer masks known faults (organizer forum
 clarification recorded as IR-07). Dots within ~200 m of a mapped fault are therefore almost
 worthless: they pay the 0.2 FP tax and earn ~1–5 % of an average dot. The registry confirms it
-independently: eight owner-scored rasters whose median distance to the catalogue is ≤ 3 px scored
+independently: seven owner-scored rasters whose median distance to the catalogue is ≤ 3 px scored
 **0.0005–0.0461** (`evidence/scored_registry_analysis.json`).
 
 So 0.2778 = (the best field in the family) × (dot emission at ~3 px) × (denominator thrift from
@@ -64,7 +64,7 @@ already-predicted dots were kept.
 ## 4. Why most later attempts scored lower **[measured]**
 
 Across 118 owner-scored rasters, every file ≥ 0.2600 is a member or near-copy of the H19-5 dot
-family. Other detectors placed 37–44 k dots but earned roughly 0.02–0.05 credit per dot (a
+family (≥ 96.9 % of each file's dots are H19-5 pixels; 8 of 11 files are 100 %). Other detectors placed 37–44 k dots but earned roughly 0.02–0.05 credit per dot (a
 regression of score on distance bands is ill-conditioned — RMSE 0.047 DTI — so it is reported only
 qualitatively). Lanes placing dots near the catalogue (tilt rings, collars, fault-zone buffers)
 collapsed to ≤ 0.05.
