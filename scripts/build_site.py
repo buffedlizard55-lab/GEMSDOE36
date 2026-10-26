@@ -15,6 +15,8 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 CARD = ROOT / "evidence/h36_run_card.json"
 DOCS = ROOT / "docs"
+LANE36_CARD = DOCS / "downloads/lane36_run_card.json"  # parallel GEMSDOE36 session (merged via PR #12)
+LANE36_CC = ROOT / "evidence/lane36_crosscheck.json"  # this session's independent template cross-check
 
 COMP = "https://www.drivendata.org/competitions/306/competition-doe-gems/"
 PROBLEM = "https://www.drivendata.org/competitions/306/competition-doe-gems/page/967/"
@@ -33,6 +35,18 @@ GATE_TEXT = {
     "G4b_unique_final_dots": "Uniqueness — final dots (≤ 70% within 3 px of any competing registry raster; |ρ| ≤ 0.90)",
     "G5_format_and_strict_range": "Format: exact CRS/shape/transform, single band float32, finite, strict [0, 1]",
 }
+
+
+def lane36_status():
+    """(card, crosscheck, status) where status is ok / conflict / negative / None (absent)."""
+    if not LANE36_CARD.exists():
+        return None, None, None
+    c = json.loads(LANE36_CARD.read_text())
+    cc = json.loads(LANE36_CC.read_text()) if LANE36_CC.exists() else None
+    own_ok = c.get("verdict") == "promote" and bool(c.get("ok_to_submit"))
+    cc_ok = bool(cc and cc["template_format_valid"] and cc["strict_whole_array_0_1"] and cc["final_dot_uniqueness_passed"])
+    status = "ok" if (own_ok and cc_ok) else ("conflict" if own_ok else "negative")
+    return c, cc, status
 
 
 def e(x) -> str:
@@ -127,6 +141,58 @@ def banner(card: dict) -> str:
 """
 
 
+def repo_decision(card: dict) -> str:
+    c36, cc36, st36 = lane36_status()
+    h36_ok = card["verdict"] == "promote"
+    items = [(Path(card["raster"]["zeros_tif"]).name, "this session (H36-GPS)", "OK TO SUBMIT" if h36_ok else "DO NOT SUBMIT — negative verdict")]
+    if c36:
+        label = {"ok": "OK TO SUBMIT (selector decides the slot)", "conflict": "DO NOT SUBMIT until resolved — its own card says promote, the independent template cross-check fails", "negative": "DO NOT SUBMIT"}[st36]
+        items.insert(0, (c36["raster"]["file"], "parallel GEMSDOE36 session (Lane36, PR #12)", label))
+    any_ok = h36_ok or st36 == "ok"
+    rows = "".join(f"<tr><td><code>{e(f)}</code></td><td>{e(src)}</td><td><strong>{e(lab)}</strong></td></tr>" for f, src, lab in items)
+    head = ("OK TO SUBMIT — one file passed every automatic gate" if any_ok else "DO NOT SUBMIT — no file in this repository is cleared right now")
+    cls = "verdict-ok" if any_ok else "verdict-bad"
+    return f"""
+    <section class="verdict {cls}" aria-labelledby="repo-title">
+      <div class="eyebrow">Repository decision · generated from the run cards by scripts/build_site.py</div>
+      <h1 id="repo-title">{head}</h1>
+      <p class="verdict-sub">DOWNLOAD: YES for every file below (research and inspection). SUBMIT: only a file marked OK; spending one of the three weekly slots is a separate selector step.</p>
+      <div class="table-wrap verdict-meta"><table><tr><th>File</th><th>Produced by</th><th>Automatic status</th></tr>{rows}</table></div>
+    </section>
+"""
+
+
+def lane36_section() -> str:
+    c, cc, st = lane36_status()
+    if not c:
+        return ""
+    h = c["holdout"]
+    over = cc["competing_rasters_over_0.70"] if cc else []
+    over_rows = "".join(f"<tr><td><code>{e(r['file'])}</code></td><td>{r['overlap']:.4f}</td></tr>" for r in over[:8])
+    cc_html = (
+        f"""<p>Independent cross-check with the shared template (<code>scripts/crosscheck_candidate.py</code> → <code>evidence/lane36_crosscheck.json</code>): format valid <strong>{cc['template_format_valid']}</strong>; strict whole-array [0, 1] <strong>{cc['strict_whole_array_0_1']}</strong>; {cc['dots']:,} dots, spacing min {cc['dot_spacing_px']['min']:.1f} px; final-dot uniqueness vs {cc['registry_rasters_compared']} registry rasters <strong>{'PASS' if cc['final_dot_uniqueness_passed'] else 'FAIL'}</strong> (max competing overlap {cc['max_competing_dot_overlap']:.4f}, max |ρ| {cc['max_abs_rank_correlation']:.4f}).</p>"""
+        + (f"""<div class="table-wrap"><table><tr><th>Competing registry raster over the 70% limit</th><th>Share of Lane36 dots within 3 px</th></tr>{over_rows}</table></div>""" if over else "")
+        if cc
+        else "<p>Independent cross-check not run.</p>"
+    )
+    status_line = {"ok": "OK TO SUBMIT (selector decides the slot)", "conflict": "DO NOT SUBMIT until resolved", "negative": "DO NOT SUBMIT"}[st]
+    return f"""
+    <section class="section" aria-labelledby="lane36-title">
+      <div class="section-head"><div><div class="eyebrow">Parallel GEMSDOE36 session · merged via PR #12</div><h2 id="lane36-title">Lane36 supervised-GBM file — {e(status_line)}</h2></div>
+      <p>Its own run card says <code>verdict: {e(c.get('verdict'))}</code>. Its holdout used the session's own protocol ({e(h.get('protocol'))}), not the shared template evaluator, so its numbers are not directly comparable with the H36 numbers above.</p></div>
+      <div class="hero-actions"><a class="button secondary" href="downloads/{e(c['raster']['file'])}" download>Download Lane36 GeoTIFF</a> <a class="button secondary" href="downloads/lane36_run_card.json">Lane36 run card</a></div>
+      <div class="table-wrap" style="margin-top:1rem"><table>
+        <tr><th>Lane36 claim (its card)</th><th>Value</th></tr>
+        <tr><td>HOLDOUT-DTI (its protocol, {h.get('withheld_positives'):,} withheld positives)</td><td>{fmt(h.get('lane_dti'), 4)} [{fmt(h['ci95_segment_bootstrap_fp_fixed'][0], 4)}, {fmt(h['ci95_segment_bootstrap_fp_fixed'][1], 4)}] vs champion-analog {fmt(h.get('champion_analog_dti'), 4)}</td></tr>
+        <tr><td>Prevalence-calibrated (recorded in the same card)</td><td>lane {fmt(h.get('prevalence_calibrated_lane'), 4)} vs champion-analog {fmt(h.get('prevalence_calibrated_champion_analog'), 4)}</td></tr>
+        <tr><td>Uniqueness (its card)</td><td>checked against 7 rasters; max overlap {max(c['uniqueness']['dot_overlap_le3px'].values()):.4f}</td></tr>
+        <tr><td>Name / note</td><td><code>{e(c.get('submission_name'))}</code> · <code>{e(c.get('note_140'))}</code></td></tr>
+      </table></div>
+      {cc_html}
+    </section>
+"""
+
+
 def gate_table(card: dict) -> str:
     rows = "".join(
         f"<tr><td>{e(GATE_TEXT.get(k, k))}</td><td class=\"{'pass' if v else 'fail'}\">{'PASS' if v else 'FAIL'}</td></tr>"
@@ -189,6 +255,7 @@ def index_page(card: dict) -> str:
     return (
         header("Download & verdict")
         + '  <main id="main" class="wrap">\n'
+        + repo_decision(card)
         + banner(card)
         + gate_table(card)
         + holdout_section(card)
@@ -206,6 +273,8 @@ def index_page(card: dict) -> str:
       {duplicate_block(dots)}
     </section>
 
+    {lane36_section()}
+
     <section class="section" aria-labelledby="why-title">
       <div class="section-head"><div><div class="eyebrow">Forensics on the published bytes</div><h2 id="why-title">Why GEMSDOE32 h33-2-b2 scored 0.2778</h2></div></div>
       <div class="grid cols-3">
@@ -217,7 +286,7 @@ def index_page(card: dict) -> str:
     </section>
 
     <section class="section" aria-labelledby="old-title">
-      <div class="section-head"><div><div class="eyebrow">History · kept for audit</div><h2 id="old-title">Earlier GEMSDOE36 files — DO NOT SUBMIT</h2></div></div>
+      <div class="section-head"><div><div class="eyebrow">History · kept for audit</div><h2 id="old-title">Earlier GEMSDOE36 files — DO NOT SUBMIT</h2></div><p>Research downloads only.</p></div>
       <div class="table-wrap"><table>
         <tr><th>File</th><th>Status</th></tr>
         <tr><td><code>gemsdoe36-anderson-geothermal-pinn-38854-20261004T230000Z-9b9ea4e6-zeros.tif</code></td><td>Owner-reported live 0.2750 &lt; 0.2778 (it is h33-2-b2 + 1,200 dots); the earlier projection on this site was wrong. Already scored — do not resubmit.</td></tr>
@@ -240,6 +309,18 @@ def index_page(card: dict) -> str:
     )
 
 
+def lane36_exec_line() -> str:
+    c, cc, st = lane36_status()
+    if not c:
+        return ""
+    msg = {
+        "ok": "is OK TO SUBMIT after the selector step (its own card and the independent cross-check agree).",
+        "conflict": "is marked promote by its own card, but the independent template cross-check failed, so it is DO NOT SUBMIT until the conflict is resolved (details on the home page).",
+        "negative": "is DO NOT SUBMIT.",
+    }[st]
+    return f'<div class="callout warning"><p><strong>Parallel Lane36 file</strong> <code>{e(c["raster"]["file"])}</code> {msg}</p></div>'
+
+
 def exec_page(card: dict) -> str:
     ok = card["verdict"] == "promote"
     sub = card["submission"]
@@ -257,8 +338,10 @@ def exec_page(card: dict) -> str:
     <section class="page-hero">
       <div class="eyebrow">Executive summary · {e(card['generated_utc'])}</div>
       <h1>Exactly how to submit a GEMS prediction</h1>
-      <p class="lede">The current GEMSDOE36 file is <code>{e(zeros)}</code>. Automatic verdict: <strong>{'OK TO SUBMIT (after selector)' if ok else 'DO NOT SUBMIT'}</strong>.</p>
+      <p class="lede">This session's file is <code>{e(zeros)}</code>. Automatic verdict: <strong>{'OK TO SUBMIT (after selector)' if ok else 'DO NOT SUBMIT'}</strong>.</p>
       {decision}
+      {lane36_exec_line()}
+      <p class="small">Research downloads only unless a file is marked OK on the <a href="index.html">home page</a>; every status is generated from a JSON run card and HOLDOUT-DTI evidence, never typed by hand.</p>
     </section>
 
     <section class="section" aria-labelledby="steps-title">
@@ -314,7 +397,22 @@ def readme_status(card: dict) -> str:
 > * Uniqueness vs {dots['registry_unique_rasters']} registry rasters: max |ρ| {dots['max_abs_rank_correlation']:.4f} (≤ 0.90); max 3-px dot overlap with a competing method {dots.get('max_competing_dot_overlap') or 0:.4f} (≤ 0.70).
 > * Gates: {gates}
 > * Organizer score: none. Generated {card['generated_utc']}.
-<!-- STATUS:END -->"""
+{lane36_readme_line()}<!-- STATUS:END -->"""
+
+
+def lane36_readme_line() -> str:
+    c, cc, st = lane36_status()
+    if not c:
+        return ""
+    label = {"ok": "OK TO SUBMIT after the selector step", "conflict": "DO NOT SUBMIT until resolved (its card says promote; the independent template cross-check fails)", "negative": "DO NOT SUBMIT"}[st]
+    extra = (
+        f" Cross-check: format {'PASS' if cc['template_format_valid'] else 'FAIL'}, final-dot uniqueness {'PASS' if cc['final_dot_uniqueness_passed'] else 'FAIL'} (max overlap {cc['max_competing_dot_overlap']:.4f}, {len(cc['competing_rasters_over_0.70'])} rasters > 0.70)."
+        if cc
+        else ""
+    )
+    return f""">
+> **Parallel Lane36 file** [`{c['raster']['file']}`](docs/downloads/{c['raster']['file']}): **{label}**.{extra} [Cross-check JSON](evidence/lane36_crosscheck.json)
+"""
 
 
 def update_readme(card: dict) -> None:

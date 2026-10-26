@@ -19,6 +19,10 @@ from urllib.parse import urlsplit
 REPO_ROOT = Path(__file__).resolve().parents[1]
 DOCS_ROOT = REPO_ROOT / "docs"
 CARD = REPO_ROOT / "evidence/h36_run_card.json"
+LANE36_CARD = DOCS_ROOT / "downloads/lane36_run_card.json"
+LANE36_CC = REPO_ROOT / "evidence/lane36_crosscheck.json"
+BLOCKED_REVIEW = DOCS_ROOT / "current-run.json"  # parallel review card; must never authorize a slot
+BOTH_PAGES = ("DO NOT SUBMIT", "Research downloads only", "HOLDOUT-DTI")
 REQUIRED_PAGES = ("index.html", "executive-summary.html")
 FORBIDDEN_COPY = (
     "Projected live score",
@@ -118,8 +122,6 @@ def main() -> int:
     first_screen = landing[: max(1, len(landing) // 3)]
     if zeros.name not in first_screen:
         errors.append("current download is not on the first screen of the landing page")
-    if card["verdict"] != "promote" and "OK TO SUBMIT" in landing:
-        errors.append("landing page shows OK TO SUBMIT for a negative verdict")
     for phrase in FORBIDDEN_COPY:
         if phrase.lower() in (landing + execp).lower():
             errors.append(f"stale/incorrect claim present: {phrase}")
@@ -128,6 +130,27 @@ def main() -> int:
             errors.append(f"executive summary missing: {phrase[:80]}")
     if len(card["submission"]["note"]) > 140:
         errors.append("note exceeds 140 characters")
+    for page, text in (("index.html", landing), ("executive-summary.html", execp)):
+        for phrase in BOTH_PAGES:
+            if phrase not in text:
+                errors.append(f"docs/{page}: missing {phrase}")
+    if BLOCKED_REVIEW.exists():
+        blocked = json.loads(BLOCKED_REVIEW.read_text())
+        if blocked.get("slot_approved") or blocked.get("verdict") != "negative":
+            errors.append("docs/current-run.json (blocked review) must not authorize a submission")
+    any_ok = card["verdict"] == "promote"
+    if LANE36_CARD.exists():
+        lc = json.loads(LANE36_CARD.read_text())
+        lf = DOCS_ROOT / "downloads" / lc["raster"]["file"]
+        if not lf.is_file() or _sha(lf) != lc["raster"]["sha256"]:
+            errors.append("Lane36 download missing or SHA-256 mismatch")
+        if lc["raster"]["file"] not in landing:
+            errors.append("landing page does not list the Lane36 file")
+        cc = json.loads(LANE36_CC.read_text()) if LANE36_CC.exists() else None
+        cc_ok = bool(cc and cc["template_format_valid"] and cc["strict_whole_array_0_1"] and cc["final_dot_uniqueness_passed"])
+        any_ok = any_ok or (lc.get("verdict") == "promote" and lc.get("ok_to_submit") and cc_ok)
+    if not any_ok and "OK TO SUBMIT" in landing:
+        errors.append("landing page shows OK TO SUBMIT although no file is cleared")
     if errors:
         print("SITE CHECK FAIL")
         for err in errors:

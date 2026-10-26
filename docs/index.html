@@ -21,6 +21,13 @@
   </header>
   <main id="main" class="wrap">
 
+    <section class="verdict verdict-bad" aria-labelledby="repo-title">
+      <div class="eyebrow">Repository decision · generated from the run cards by scripts/build_site.py</div>
+      <h1 id="repo-title">DO NOT SUBMIT — no file in this repository is cleared right now</h1>
+      <p class="verdict-sub">DOWNLOAD: YES for every file below (research and inspection). SUBMIT: only a file marked OK; spending one of the three weekly slots is a separate selector step.</p>
+      <div class="table-wrap verdict-meta"><table><tr><th>File</th><th>Produced by</th><th>Automatic status</th></tr><tr><td><code>gemsdoe36-lane36-supgbm-68302-20261026T002651Z-f35cb3e4-zeros.tif</code></td><td>parallel GEMSDOE36 session (Lane36, PR #12)</td><td><strong>DO NOT SUBMIT until resolved — its own card says promote, the independent template cross-check fails</strong></td></tr><tr><td><code>gemsdoe36-h36-gps-graben-pair-20261026-bb29ce2a4bb4-zeros.tif</code></td><td>this session (H36-GPS)</td><td><strong>DO NOT SUBMIT — negative verdict</strong></td></tr></table></div>
+    </section>
+
     <section class="verdict verdict-bad" id="download" aria-labelledby="verdict-title">
       <div class="verdict-row">
         <div>
@@ -79,6 +86,22 @@
       <div class="table-wrap"><table><tr><th>Registry raster (top rows shown)</th><th>Share of our dots within 3 px</th><th>Its 3-px footprint coverage</th></tr><tr><td><code>GEMSDOE77/docs/downloads/gems85-h85-edti-collar35-skel-r33-20261021-d97b248e-zeros.tif</code></td><td>0.8985</td><td>0.554</td></tr><tr><td><code>GEMSDOE67/docs/downloads/gemsdoe67-ovtr-ml-cover-tau3p0-20261012-nan.tif</code></td><td>0.8635</td><td>0.548</td></tr><tr><td><code>GEMSDOE22/docs/downloads/gems22-h23-b-dti-optimal-emission-10pct-20261002-86176698-nan.tif</code></td><td>0.8549</td><td>0.534</td></tr><tr><td><code>GEMSDOE37/docs/downloads/gemsdoe37-h6-physics-dotted-80k-20261005T055000Z-0bef9211631c.tif</code></td><td>0.8288</td><td>0.266</td></tr><tr><td><code>12GEMSDOE/docs/downloads/12GEMSDOE_r7-nms3-dem10-scarp_0c9199f14e62.tif</code></td><td>0.8228</td><td>0.322</td></tr><tr><td><code>GEMSDOE22/docs/downloads/gems22-h23-a-dti-optimal-emission-6pct-20261002-e2ec4b49-nan.tif</code></td><td>0.7694</td><td>0.413</td></tr><tr><td><code>GEMSDOE28/docs/downloads/gems28-h37-1-probe-union-pool-r1-20261003-52a13184267e-allfinite.tif</code></td><td>0.7020</td><td>0.190</td></tr></table></div>
     </section>
 
+    
+    <section class="section" aria-labelledby="lane36-title">
+      <div class="section-head"><div><div class="eyebrow">Parallel GEMSDOE36 session · merged via PR #12</div><h2 id="lane36-title">Lane36 supervised-GBM file — DO NOT SUBMIT until resolved</h2></div>
+      <p>Its own run card says <code>verdict: promote</code>. Its holdout used the session's own protocol (hide-and-recover, whole segments in 5 spatial strips, 500m buffer, visible masked pixel-exact, pooled organizer DTI a0.2 b0.8 R300m (gemsdoe36.metric v1)), not the shared template evaluator, so its numbers are not directly comparable with the H36 numbers above.</p></div>
+      <div class="hero-actions"><a class="button secondary" href="downloads/gemsdoe36-lane36-supgbm-68302-20261026T002651Z-f35cb3e4-zeros.tif" download>Download Lane36 GeoTIFF</a> <a class="button secondary" href="downloads/lane36_run_card.json">Lane36 run card</a></div>
+      <div class="table-wrap" style="margin-top:1rem"><table>
+        <tr><th>Lane36 claim (its card)</th><th>Value</th></tr>
+        <tr><td>HOLDOUT-DTI (its protocol, 60,988 withheld positives)</td><td>0.1777 [0.1639, 0.1914] vs champion-analog 0.1615</td></tr>
+        <tr><td>Prevalence-calibrated (recorded in the same card)</td><td>lane 0.0948 vs champion-analog 0.1079</td></tr>
+        <tr><td>Uniqueness (its card)</td><td>checked against 7 rasters; max overlap 0.4372</td></tr>
+        <tr><td>Name / note</td><td><code>GEMSDOE36-Lane36-SupGBM-20261026T002651Z</code> · <code>Lane36 supervised GBM lineament surf, seg-holdout DTI 0.178 vs champ-analog 0.162; s2.0 b68302 B2</code></td></tr>
+      </table></div>
+      <p>Independent cross-check with the shared template (<code>scripts/crosscheck_candidate.py</code> → <code>evidence/lane36_crosscheck.json</code>): format valid <strong>True</strong>; strict whole-array [0, 1] <strong>True</strong>; 68,302 dots, spacing min 2.0 px; final-dot uniqueness vs 198 registry rasters <strong>FAIL</strong> (max competing overlap 0.9317, max |ρ| 0.6644).</p><div class="table-wrap"><table><tr><th>Competing registry raster over the 70% limit</th><th>Share of Lane36 dots within 3 px</th></tr><tr><td><code>GEMSDOE37/docs/downloads/gemsdoe37-h6-physics-dotted-80k-20261005T055000Z-0bef9211631c.tif</code></td><td>0.9317</td></tr><tr><td><code>GEMSDOE67/docs/downloads/gemsdoe67-ovtr-ml-cover-tau3p0-20261012-nan.tif</code></td><td>0.9119</td></tr><tr><td><code>12GEMSDOE/docs/downloads/12GEMSDOE_r7-nms3-dem10-scarp_0c9199f14e62.tif</code></td><td>0.9078</td></tr><tr><td><code>GEMSDOE30/docs/downloads/gemsdoe30-g30s20-disc-60000dots-20261025T224159Z-24de17a6fa-zeros.tif</code></td><td>0.8823</td></tr><tr><td><code>GEMSDOE43/docs/downloads/gems43-sup01-hgb21-sep40-n40000-20261006-bc2e4e9a8d6f-nan.tif</code></td><td>0.8651</td></tr><tr><td><code>GEMSDOE30/docs/downloads/gemsdoe30-g30s19-habitat-edge-60000dots-20261025T210221Z-b527922d7f-zeros.tif</code></td><td>0.8544</td></tr><tr><td><code>GEMSDOE22/docs/downloads/gems22-h23-b-dti-optimal-emission-10pct-20261002-86176698-nan.tif</code></td><td>0.8425</td></tr><tr><td><code>GEMSDOE10/docs/downloads/gems10-h25-ctx-ridge-20260927T232947704150Z-6452ae1d00.tif</code></td><td>0.8223</td></tr></table></div>
+    </section>
+
+
     <section class="section" aria-labelledby="why-title">
       <div class="section-head"><div><div class="eyebrow">Forensics on the published bytes</div><h2 id="why-title">Why GEMSDOE32 h33-2-b2 scored 0.2778</h2></div></div>
       <div class="grid cols-3">
@@ -90,7 +113,7 @@
     </section>
 
     <section class="section" aria-labelledby="old-title">
-      <div class="section-head"><div><div class="eyebrow">History · kept for audit</div><h2 id="old-title">Earlier GEMSDOE36 files — DO NOT SUBMIT</h2></div></div>
+      <div class="section-head"><div><div class="eyebrow">History · kept for audit</div><h2 id="old-title">Earlier GEMSDOE36 files — DO NOT SUBMIT</h2></div><p>Research downloads only.</p></div>
       <div class="table-wrap"><table>
         <tr><th>File</th><th>Status</th></tr>
         <tr><td><code>gemsdoe36-anderson-geothermal-pinn-38854-20261004T230000Z-9b9ea4e6-zeros.tif</code></td><td>Owner-reported live 0.2750 &lt; 0.2778 (it is h33-2-b2 + 1,200 dots); the earlier projection on this site was wrong. Already scored — do not resubmit.</td></tr>

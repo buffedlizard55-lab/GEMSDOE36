@@ -62,6 +62,12 @@ transfer is therefore only partially calibrated; this is stated on the site
 and does not change the fact that the candidate beat the incumbent on every
 fold before the slot was spent.
 
+- 2026-10-25/26 (Lane36 session): an AI coding agent designed and executed the
+  supervised-GBM lane end-to-end (feature engineering, segment holdout, emission,
+  validation, site/README updates) under the owner's standing brief and parallel-run
+  protocol. All code, metrics, and the generated GeoTIFF in this session are
+  AI-produced; the upload decision and any submission-slot expenditure remain the
+  owner's. Update this narrative in the competition form accordingly.
 
 ## 2026-10-25 session (H36-GPS)
 

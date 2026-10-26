@@ -117,3 +117,20 @@ head-to-head against the Anderson-PINN line above; both candidate TIFs are prese
   exists yet.
 - **Not done yet:** the H5 CNN ensemble has not been trained/gated, so it is not in this file.
   It may use a later slot only if it beats the H6 holdout best on the same folds.
+
+## Lane36 (2026-10-26) — hide-and-recover, organizer metric (gemsdoe36.metric), 60,988 withheld positives
+
+| Candidate | Dots | Pooled HOLDOUT-DTI | Note |
+|---|---|---|---|
+| Champion h33-2-b2 as-submitted | 37,654 | 0.0066 | Handicapped (its B=2 used full catalogue incl. withheld truth) — lower bound only |
+| Champion-analog (d2.8, B=2 vs visible/fold) | 44,090 raw | **0.1615** | Fair comparator |
+| Anderson-PINN (this repo, prior) | 38,854 | 0.0069 | Same handicap; ~97% champion overlap → duplicate lane |
+| H6 SGMC prior (this repo, prior) | 24,881 | 0.0001 | Prior 5/5 gate circular (SGMC feature+proxy truth) — void |
+| **Lane36 SupGBM s2.0 b80k (OOF)** | 62,765 in-domain | **0.1777 [0.164, 0.191]** | Segment-cluster bootstrap CI (FP fixed); prevalence-calibrated (~12.6k truth px): lane 0.095 vs analog 0.108 (noisy tie; seed range lane 0.088–0.108) |
+
+Leakage canary: max single-feature AUC 0.603 (`gmag1_lidar_step_max`); deliberate leak
+feature (distance-to-visible-catalogue) AUC 0.888 → excluded by design. At matched
+~44k dots lane is 0.154 vs analog 0.162 (per-dot slightly below); the win at b80k comes
+from budget headroom on a differently-ranked surface (ρ=0.10 OOF). Final file 68,302
+dots, verdict **promote** (gates: ρ=0.126≤0.90, max overlap 43.7%≤70%, validator PASS).
+Live expectation is deliberately NOT projected as a number.

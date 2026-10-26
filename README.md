@@ -12,6 +12,8 @@
 > * Uniqueness vs 198 registry rasters: max |ρ| 0.5279 (≤ 0.90); max 3-px dot overlap with a competing method 0.8985 (≤ 0.70).
 > * Gates: G1 FAIL · G2 FAIL · G3 PASS · G4a PASS · G4b FAIL · G5 PASS
 > * Organizer score: none. Generated 2026-10-26T00:32:13+00:00.
+>
+> **Parallel Lane36 file** [`gemsdoe36-lane36-supgbm-68302-20261026T002651Z-f35cb3e4-zeros.tif`](docs/downloads/gemsdoe36-lane36-supgbm-68302-20261026T002651Z-f35cb3e4-zeros.tif): **DO NOT SUBMIT until resolved (its card says promote; the independent template cross-check fails)**. Cross-check: format PASS, final-dot uniqueness FAIL (max overlap 0.9317, 29 rasters > 0.70). [Cross-check JSON](evidence/lane36_crosscheck.json)
 <!-- STATUS:END -->
 
 **Live site:** https://buffedlizard55-lab.github.io/GEMSDOE36/docs/ ·
@@ -867,6 +869,89 @@ Go ahead and create a pull request and then merge the pull request onto the main
 
 In practice here: no slot is spent on an idea that has not beaten the current holdout best; negative
 results are published with the same care as positive ones.
+
+## Parallel GEMSDOE36 sessions merged from `main` (PRs #6–#12)
+
+Seven other GEMSDOE36 sessions merged into `main` while this session ran. Their README text is
+preserved verbatim below (headings demoted). **Where it conflicts with the machine-generated status
+block at the top, the status block wins**: in particular, the Lane36 file's own run card says
+`promote`, but this session's independent cross-check with the shared template
+(`evidence/lane36_crosscheck.json`) finds that 93.2% of its 68,302 dots lie within 3 px of the dots
+of GEMSDOE37 `h6-physics-dotted-80k` (owner-reported 0.1193) and > 70% for 28 further competing registry
+rasters (29 in total), and 34% of its dots lie within 300 m of the catalogue. By the parallel-run lane rule it is a
+duplicate, so the site shows it as **DO NOT SUBMIT until resolved**. Its own card also records a
+prevalence-calibrated DTI below its champion analog (0.0948 vs 0.1079).
+
+<details>
+<summary>Preserved README header from <code>main</code> @ 1f92ee9 (parallel sessions)</summary>
+
+### Lane36 gate-passed candidate (parallel lane session, 2026-10-26)
+
+> **Download:** [`docs/downloads/gemsdoe36-lane36-supgbm-68302-20261026T002651Z-f35cb3e4-zeros.tif`](docs/downloads/gemsdoe36-lane36-supgbm-68302-20261026T002651Z-f35cb3e4-zeros.tif) — unique supervised-GBM TIF, 68,302 dots, all cells finite in [0,1], validator PASS, SHA-256 `45e626c01f9dc6e8aed59875d2758467c39f008c87543f566b3ae9d26a2234e7`.
+> **Name:** `GEMSDOE36-Lane36-SupGBM-20261026T002651Z` · **Note:** `Lane36 supervised GBM lineament surf, seg-holdout DTI 0.178 vs champ-analog 0.162; s2.0 b68302 B2`
+> HOLDOUT-DTI **0.1777 [0.164, 0.191]** (hide-and-recover, 60,988 withheld, organizer metric) vs champion-analog 0.1615; canary ≤0.603 AUC; uniqueness ρ=0.13 / overlap ≤43.7%. Run card: `docs/downloads/lane36_run_card.json`; forensics: `docs/research/lane36_20261025.md`. This resolves the blockers listed below *for this lane* (data restored, shared metric/writer reused, evaluator run); **slot promotion remains the separate selector step (§6)** and no organizer score exists yet. Legacy-file DO-NOT-SUBMIT status below is unchanged.
+
+---
+
+### Current submission status — 2026-10-26: NOT APPROVED
+
+**Read this section and [the current review](docs/research/review-20261026.md) every session.** The [2026-10-25 safety review](docs/research/review-20261025.md) remains the protocol/source audit. This 2026-10-26 review includes the nine-site historical shortlist; current-session test reruns and PR status are recorded in its verification section.
+This notice supersedes the historical README below. No new unique submission has
+passed the current protocol. Old TIFFs are educational downloads only. Existing
+mirror scores, live projections and H6 gate claims do not establish promotion.
+The primary pipeline copied historical prediction pixels; the H6 proxy gate used
+evaluation truth for placement. Both legacy entry points now stop explicitly.
+
+#### Current owner mandate (operational update, not a verbatim transcript)
+
+Maximize P(Win); Own the Outcome. Generate original predictions, never copied
+submissions. Review GEMSDOE24/25/27/28/30/31/32/33/36 for learning only.
+Stay within the assigned single method lane (not supplied this turn). Reuse the
+shared cached stack, evaluate_holdout.py and submission_writer.py; do not fork.
+Use buffered whole-fault-segment hide-and-recover, visible-only catalogue features,
+pixel-exact masking of visible faults, pooled DTI with alpha .2, beta .8 and
+300 m triangular kernel. Test individual-feature leakage canaries; AUC above .90
+blocks use until explained. Stop on registry surface rank-correlation above .90
+or directed dot-overlap above .70 within 3 px, checking before and after placement.
+Limit to three experiments or two hours. Rank 3–5 geological hypotheses before
+implementation. Beat a comparable current holdout incumbent before promotion;
+never spend a weekly slot here. Label measurements with evaluator version,
+withheld-positive count and CI; organizer scores require a receipt. Never call a
+projection a score. Publish format/novelty/promotion status clearly beside the
+one-click download, a unique name and a note at most 140 characters. End with a
+JSON run card; negative/blocked results are deliverables. Verify in three passes,
+record sources, limitations and irregularities; PR and merge when requested.
+
+The older claim that data placement is the **single** blocker is incorrect:
+shared evaluator, lane assignment, complete registry and a valid incumbent gate
+are also missing. Official reference README supports CPU training.
+
+---
+
+#### Current-session findings (2026-10-26)
+
+The requested nine-site comparison and ranked research shortlist are recorded in
+[the 2026-10-26 review](docs/research/review-20261026.md). Site scores are copied
+from the owner-supplied prompt, not organizer receipts. No new TIFF is approved or
+generated: the exact shared hide-and-recover evaluator, assigned lane, feature
+cache, and complete novelty registry are unavailable. The review includes the
+three-pass audit, source links, blockers, and required JSON negative run card.
+
+#### Integrated parallel work
+
+The concurrent clean status/guide pages and tested `protocol.py` audit primitives
+are preserved. These primitives are **not** the missing official shared evaluator
+or a completed scientific holdout. See the [parallel protocol review](docs/research/parallel-protocol-review-20261025.md).
+
+#### Parallel review records
+
+Concurrent reviews are preserved in [session review](docs/research/session-review-2026-10-25.md)
+and [orientation-prior review](docs/research/review-2026-10-25.md).
+Their environment/test-availability statements describe those sessions, not this
+session's restored template and completed tests. No lane is adopted from their
+proposals without an explicit assignment.
+
+</details>
 
 ## How the verdict is produced (no human inspector)
 
