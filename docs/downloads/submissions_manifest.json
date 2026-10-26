@@ -1,10 +1,11 @@
 {
-  "schema_version": 2,
+  "schema_version": 3,
   "generated_from": [
     "evidence/atvr36_run_card_20261026.json",
     "evidence/h36_ctrb_run_card_20261025.json",
     "evidence/h36_run_card.json",
-    "docs/downloads/lane36_run_card.json"
+    "docs/downloads/lane36_run_card.json",
+    "evidence/wdp36_run_card_20261026.json"
   ],
   "current_atvr36": {
     "file": "gemsdoe36-atvr36-20261026.tif",
@@ -67,5 +68,22 @@
       "status": "format fixture only"
     }
   ],
-  "superseded_manifest": "submissions_manifest_2026-10-04_superseded.json (contains projections that were never scores)"
+  "superseded_manifest": "submissions_manifest_2026-10-04_superseded.json (contains projections that were never scores)",
+  "current_wdp36": {
+    "file": "gemsdoe36-wdp36-exp1-20261026-zeros.tif",
+    "sha256": "ae9da29e45c67d03b7a7fd438a3cf0686f0678111181cd960b86dffb56f0f698",
+    "zip": "gemsdoe36-wdp36-exp1-20261026-zeros.zip",
+    "zip_sha256": "c6767fb5e05fe8f573a365b24913b1b58544a4d16ee9c6cd1eb7f7ae241f7de5",
+    "receipt": "gemsdoe36-wdp36-exp1-20261026-zeros.receipt.json",
+    "submission_name": "gemsdoe36-wdp36-exp1-20261026",
+    "note": "GEMSDOE36 WDP-36 EXP-1 | worm persistence 0-800m only | HOLDOUT-DTI 0.0933 | NEGATIVE hold slot",
+    "holdout_dti": 0.093269,
+    "verdict": "negative",
+    "status": "DO_NOT_SUBMIT",
+    "ok_to_download": true,
+    "ok_to_submit": false,
+    "organizer_score": null,
+    "nan_twin": null,
+    "nan_twin_note": "Intentionally zeros-only: no NaN twin, eliminating the portal [0,1] upload error path."
+  }
 }

@@ -1,6 +1,19 @@
 # Known Irregularities & Forensic Audit Flags
 
-Updated **2026-10-26 UTC** on branch `arena/62b9a92c-gemsdoe36` (reconciled across `ATVR-36`, `H36-CTRB`, `H36-GPS`, and `Lane36`). Every irregularity encountered across repository history, sibling-lane forensics, raw competition rasters, and pass-by-pass QA is documented below without omission.
+Updated **2026-10-26 UTC** on branch `arena/b8f55e32-gemsdoe36` (reconciled across `WDP-36`, `ATVR-36`, `H36-CTRB`, `H36-GPS`, and `Lane36`). Every irregularity encountered across repository history, sibling-lane forensics, raw competition rasters, and pass-by-pass QA is documented below without omission.
+
+## `WDP-36` Audit Discoveries (`arena/b8f55e32-gemsdoe36`, `2026-10-26`)
+
+| ID | Irregularity Discovered | Forensic Proof | Resolution Implemented |
+|---|---|---|---|
+| **IR-36-WDP-01** | **Generated submission note misdescribed the winner** (`+strain/seis` although EXP-1 is persistence-only) | Pass-2 line-by-line review of the run card vs preregistered arm definitions. | Fixed generator (per-arm descriptions) + patched run card & receipt with a logged `corrections` entry; TIF SHA-256 unchanged. Regression-guarded in `tests/test_wdp36.py` + site checker exact-note assertions. |
+| **IR-36-WDP-02** | **Portal “[0, 1]” error path fully characterised** | Whole-array audit of all 10 downloads: `-zeros` strict-PASS; `-nan` strict-FAIL (7,111,787 outside NaNs); `FORMAT_TEST` 32×48. | WDP-36 ships **zeros-only**; site quarantines `*-nan.tif` as DO-NOT-UPLOAD, fixture as NEVER upload. |
+| **IR-36-WDP-03** | **One blanket drives literal uniqueness failure** | Surface \|ρ\|max 0.264 PASS; focus-9 max 0.4909; champion 0.2360; only GEMSDOE67 `ovtr-ml-cover` (54.8% coverage) exceeds 0.70 at 0.7227. | Fail-closed negative; dots not perturbed to evade (forbidden). Scopes reported separately. |
+| **IR-36-WDP-04** | **Strain gradients hurt; persistence ≈ single-scale** | EXP-2 0.091090 < EXP-1 0.093269; paired CI includes 0. | Reported negative; no post-hoc reweighting. |
+| **IR-36-WDP-05** | **External-data hypotheses sandbox-unobtainable** | Measured `curl 000` (drivendata/usgs/asf/gdr) vs `200` (github.com). | H-INSAR/H-FLIGHTLINE deferred with official free sources named; zero numbers claimed. |
+| **IR-36-WDP-06** | **Canary scope note** | 8 surfaces canaried; strain sub-bands only via composite (max 0.6145). | Disclosed; future lanes canary every atomic channel. |
+
+---
 
 ## `ATVR-36` Audit Discoveries (`arena/62b9a92c-gemsdoe36`, `2026-10-26`)
 

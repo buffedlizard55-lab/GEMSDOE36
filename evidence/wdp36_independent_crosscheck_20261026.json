@@ -1,0 +1,33 @@
+{
+ "file": "docs/downloads/gemsdoe36-wdp36-exp1-20261026-zeros.tif",
+ "sha256": "ae9da29e45c67d03b7a7fd438a3cf0686f0678111181cd960b86dffb56f0f698",
+ "template_format_valid": true,
+ "template_hard_failures": [],
+ "strict_whole_array_0_1": true,
+ "dots": 37654,
+ "unique_values_in_footprint": [
+  0.0,
+  1.0
+ ],
+ "dot_spacing_px": {
+  "min": 2.0,
+  "median": 2.23606797749979
+ },
+ "distance_to_catalogue_px": {
+  "min": 2.23606797749979,
+  "share_le_2px": 0.0,
+  "share_le_3px": 0.08737451532373719
+ },
+ "registry_rasters_compared": 198,
+ "max_abs_rank_correlation": 0.25099699520512014,
+ "max_competing_dot_overlap": 0.7226589472565995,
+ "final_dot_uniqueness_passed": false,
+ "competing_rasters_over_0.70": [
+  {
+   "file": "GEMSDOE67/docs/downloads/gemsdoe67-ovtr-ml-cover-tau3p0-20261012-nan.tif",
+   "overlap": 0.7226589472565995,
+   "footprint_3px_coverage": 0.5481466114406682
+  }
+ ],
+ "scope": "Format + final-dot uniqueness only; holdout claims of the candidate's own lane are not re-run (a final full-catalogue model cannot be scored on a hide-and-recover holdout without leakage)."
+}

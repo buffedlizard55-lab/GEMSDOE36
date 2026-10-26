@@ -1,12 +1,16 @@
-# GEMSDOE36 — DOE GEMS Prize: Subsurface Fault Discovery (`ATVR-36`, `H36-CTRB`, `H36-GPS`, `Lane36`)
+# GEMSDOE36 — DOE GEMS Prize: Subsurface Fault Discovery (`WDP-36`, `ATVR-36`, `H36-CTRB`, `H36-GPS`, `Lane36`)
 
 **Live GitHub Pages Site & One-Click Download Portal:** [`docs/index.html`](docs/index.html) · [`docs/executive-summary.html`](docs/executive-summary.html)  
-**Working Branch:** `arena/62b9a92c-gemsdoe36`
+**Working Branch:** `arena/b8f55e32-gemsdoe36`
 
 <!-- STATUS:START -->
 > ## Automated Repository Release Gate: `DO NOT SUBMIT — HOLD WEEKLY LIVE SLOT` (`DOWNLOAD: YES` for format-safe `[0, 1]` research & cross-lane ensemble inspection)
 >
-> * **Current Branch Deliverable (`ATVR-36 EXP-2`, `arena/62b9a92c-gemsdoe36`):** [`gemsdoe36-atvr36-20261026.tif`](docs/downloads/gemsdoe36-atvr36-20261026.tif) · [ZIP](docs/downloads/gemsdoe36-atvr36-20261026.zip) · [Receipt](docs/downloads/gemsdoe36-atvr36-20261026.receipt.json) · [Run Card](evidence/atvr36_run_card_20261026.json)
+> * **Current Branch Deliverable (`WDP-36 EXP-1`, `arena/b8f55e32-gemsdoe36`, zeros-only):** [`gemsdoe36-wdp36-exp1-20261026-zeros.tif`](docs/downloads/gemsdoe36-wdp36-exp1-20261026-zeros.tif) · [ZIP](docs/downloads/gemsdoe36-wdp36-exp1-20261026-zeros.zip) · [Receipt / Run Card](docs/downloads/gemsdoe36-wdp36-exp1-20261026-zeros.receipt.json) · [Monograph](docs/research/wdp36-20261026.md)
+>   * Name: `gemsdoe36-wdp36-exp1-20261026` · SHA-256: `ae9da29e45c67d03b7a7fd438a3cf0686f0678111181cd960b86dffb56f0f698` (ZIP `c6767fb5e05fe8f573a365b24913b1b58544a4d16ee9c6cd1eb7f7ae241f7de5`)
+>   * Note (`95 <= 140` chars): `GEMSDOE36 WDP-36 EXP-1 | worm persistence 0-800m only | HOLDOUT-DTI 0.0933 | NEGATIVE hold slot`
+>   * **HOLDOUT-DTI:** **`0.093269`** (`95% CI [0.083380, 0.103501]`, `gems-segment-pooled-v1`, 1.5 km buffer, 60,988 withheld px; unsupervised persistence vs single-scale `A0 = 0.091901`, paired `+0.001368 [-0.004578, +0.006991]`; strain hurt, seismic neutral) — **below** `repo B0 = 0.13375` / group best `0.14876`, so fail-closed **negative**. Canary PASS (`max AUC 0.6145`); surface `|rho|max 0.264`; focus-9 dot overlap max `0.4909` (`0.2360` vs champion); literal expanded gate FAIL on one 54.8%-coverage blanket (`0.7227`). No organizer score (not submitted).
+> * **Previous Branch Deliverable (`ATVR-36 EXP-2`):** [`gemsdoe36-atvr36-20261026.tif`](docs/downloads/gemsdoe36-atvr36-20261026.tif) · [ZIP](docs/downloads/gemsdoe36-atvr36-20261026.zip) · [Receipt](docs/downloads/gemsdoe36-atvr36-20261026.receipt.json) · [Run Card](evidence/atvr36_run_card_20261026.json)
 >   * Name: `gemsdoe36-atvr36-exp-2-20261026` · SHA-256: `54f493f4fa5c74ed3a02f88ca6d47272b0c3cee0cc0bd9bbd9cb94eaf997204a`
 >   * Note (`116 <= 140` chars): `GEMSDOE36 ATVR-36 EXP-2 | tilt/LiDAR+hydrothermal+Anderson PDE+CELF | HOLDOUT-DTI 0.1145/0.1179 | NEGATIVE hold slot`
 >   * **HOLDOUT-DTI:** **`0.114542`** (`95% CI [0.078547, 0.151221]`, `gems36-segment-audit-v1`, 3 km buffer, `+0.075018` vs `B1` `0.039523`, `p = 1.0000`) and **`0.117925`** (`95% CI [0.101961, 0.132998]`, `gems-segment-pooled-v1`, 1.5 km buffer; **repository-best `NW = 0.15048` & `SE = 0.15438`**; `SW = 0.11115`, `NE = 0.05312`).
@@ -44,7 +48,7 @@ Full machine-readable ledger: [`evidence/focus_sites_9repo_summary_20261026.json
 | [`GEMSDOE31`](https://github.com/buffedlizard55-lab/GEMSDOE31) | `h27-4-solo` (`40,199` dots): `0.2708` (`ORGANIZER-CONFIRMED`) | `0` XOR vs `GEMSDOE28` `solo` | `H31-M` (`37,654` dots) = `DO NOT SUBMIT` | **No** |
 | [`GEMSDOE32`](https://github.com/buffedlizard55-lab/GEMSDOE32) | `h33-h33-2-b2` (`37,654` dots): **`0.2778`** (`ORGANIZER-CONFIRMED`) | **9-site champion**, `0` XOR vs `(d2.8 & d_cat > 2 px)` | `H-GEO-CONDUIT` (`37,654` dots) = `DO NOT SUBMIT` | **No** |
 | [`GEMSDOE33`](https://github.com/buffedlizard55-lab/GEMSDOE33) | `h33d` (`41,865` dots): `0.2632` (`ORGANIZER-CONFIRMED`) | Partial `(0, 2] px` flank retention | `A33-L1` (`37,654` dots) = `NOT OK TO SUBMIT` | **No** |
-| [`GEMSDOE36`](https://github.com/buffedlizard55-lab/GEMSDOE36) | Legacy `pinn-38854`: `0.2750` (`ORGANIZER-CONFIRMED`) | Copied `B2 + 1,200` thermal dots | `ATVR-36` (`0.1179`), `H36-CTRB` (`0.1144`), `H36-GPS` (`0.1320`) — all fail-closed `negative` | **No (Hold Slot)** |
+| [`GEMSDOE36`](https://github.com/buffedlizard55-lab/GEMSDOE36) | Legacy `pinn-38854`: `0.2750` (`ORGANIZER-CONFIRMED`) | Copied `B2 + 1,200` thermal dots | `WDP-36` (`0.0933`), `ATVR-36` (`0.1179`), `H36-CTRB` (`0.1144`), `H36-GPS` (`0.1320`) — all `HOLDOUT-DTI`, all fail-closed `negative` | **No (Hold Slot)** |
 
 ---
 
@@ -56,7 +60,22 @@ Full machine-readable ledger: [`evidence/focus_sites_9repo_summary_20261026.json
 
 ---
 
-## 3. `ATVR-36` Ranked Geological Hypotheses & 3-Experiment Buffered Holdout Results
+## 3. `WDP-36` Ranked Hypotheses & 3-Experiment Buffered Holdout Results (this branch, negative)
+
+Five ranked hypotheses (2 deferred as sandbox-unobtainable: ASF OPERA InSAR, GeoDAWN flight-line CSVs) and the full detector/gate definitions were locked **before any holdout number** in [`evidence/wdp36_preregistration_20261026.json`](evidence/wdp36_preregistration_20261026.json) (SHA-256 `860f7a35...`) + [`docs/research/preregistration-wdp36-20261026.md`](docs/research/preregistration-wdp36-20261026.md); monograph: [`docs/research/wdp36-20261026.md`](docs/research/wdp36-20261026.md). Evaluator: shared `gems-segment-pooled-v1` (whole components, 1.5 km buffer, pooled DTI, 60,988 withheld px). The detector is **unsupervised** (no catalogue-trained parameter; bands 14/13 only for EXP-1).
+
+| Arm | Surface | `HOLDOUT-DTI` [95% CI] | Folds NW / NE / SW / SE |
+|---|---|---|---|
+| `A0` (control) | Single-scale THDR worms (h=0) | `0.091901 [0.081491, 0.101408]` | 0.0821 / 0.0800 / 0.0936 / 0.1050 |
+| **`EXP-1` (winner)** | **0–800 m worm persistence (TMI+grav)** | **`0.093269 [0.083380, 0.103501]`** | 0.0902 / 0.0835 / 0.0884 / 0.1082 |
+| `EXP-2` | PERS 0.70 + strain ridges 0.30 | `0.091090 [0.081887, 0.100339]` (strain hurt) | 0.0895 / 0.0798 / 0.0863 / 0.1062 |
+| `EXP-3` | PERS 0.60 + strain 0.25 + seismic 0.15 | `0.093156 [0.083076, 0.103199]` | 0.0896 / 0.0826 / 0.0855 / 0.1121 |
+
+Paired EXP-1−A0 `+0.001368 [-0.004578, +0.006991]` (CI includes 0) → persistence unsupported on catalogue-style recovery; verdict **negative / DO NOT SUBMIT** (G2 + literal-blanket G3b fail; canary/format/focus-uniqueness pass). Reproduce: `bash scripts/download_competition_data.sh` (core restore) then `.venv/bin/python scripts/run_wdp36.py`.
+
+---
+
+## 4. `ATVR-36` Ranked Geological Hypotheses & 3-Experiment Buffered Holdout Results
 
 Locked prior to execution in [`evidence/atvr36_preregistration_20261026.json`](evidence/atvr36_preregistration_20261026.json) (`SHA-256: 351a9ad89ce0...`) and evaluated on `gems36-segment-audit-v1` (`3,000 m` buffer, `60,988` withheld px, `3,199` whole segments) + cross-checked on `gems-segment-pooled-v1` (`1,500 m` buffer):
 
@@ -72,7 +91,7 @@ Locked prior to execution in [`evidence/atvr36_preregistration_20261026.json`](e
 
 ---
 
-## 4. Verification & Official Sources
+## 5. Verification & Official Sources
 
 ```bash
 .venv/bin/pytest -q

@@ -1,0 +1,71 @@
+{
+  "schema": "gems-preregistration-v1",
+  "lane": "GEMSDOE36 / WDP-36 (Worm Depth-Persistence buried-fault lane)",
+  "branch": "arena/b8f55e32-gemsdoe36",
+  "locked_utc": "2026-10-26",
+  "locked_before_any_wdp36_holdout_number": true,
+  "protocol": {
+    "evaluator": "gems.holdout.SegmentHoldout (shared template GEMSDOE24@fc2bc6f, byte-pinned)",
+    "evaluator_version": "gems-segment-pooled-v1",
+    "buffer_px": 15,
+    "buffer_m": 1500,
+    "holdout": "hide-and-recover: whole 8-connected fault components touching a quadrant fold or its 1.5 km collar are hidden everywhere; visible catalogue masked pixel-exactly before credit/FP; pooled DTI alpha=0.2 beta=0.8, 300 m triangular kernel",
+    "catalogue_use": "WDP-36 detector is unsupervised and reads NO catalogue-derived feature. The catalogue is used only for (a) holdout truth/visible definitions and (b) the d>2px dot-exclusion mask (fold-visible catalogue in holdout; full catalogue at deployment). The visible-only rule is therefore satisfied by construction.",
+    "experiments_max": 3,
+    "walltime_max_s": 7200,
+    "dot_budget_total": 37654,
+    "per_fold_budget": "round(37654 * |fold.valid| / |footprint|)",
+    "emission": "gemsdoe36.submodular_emit.emit_submodular_cover (exact 25-offset Euclidean 300 m CELF cover), eligible = valid & (distance to visible catalogue > 2.0 px)",
+    "score_labels": "Every number labelled HOLDOUT-DTI (evaluator version, n withheld positives, 95% CI) or ORGANIZER-CONFIRMED (portal receipt). Projections are never written as scores."
+  },
+  "inputs_allowed": {
+    "bands": {
+      "14_tmi": "Total magnetic intensity (primary potential field)",
+      "13_iso_grav_anom": "Isostatic gravity anomaly (primary potential field)",
+      "04_geod_2ndinv": "Geodetic strain-rate second invariant (EXP-2+)",
+      "07_geod_shearrate": "Geodetic shear strain rate (EXP-2+)",
+      "08_geod_dilaterate": "Geodetic dilatation rate (EXP-2+)",
+      "10_deq_n100a15": "Seismic distance parameter per band tags (EXP-3, sign-flipped)",
+      "16_ieq_n100a15": "Seismic intensity/density per band tags (EXP-3)"
+    },
+    "bands_excluded_with_reason": {
+      "06_tc": "Excluded: band tags claim tilt/total-curvature but repo forensics measured Spearman 0.999886 vs radiometric total count (IR-36-ATVR-02); mislabelled channel not trusted in this lane.",
+      "11_iso_grav_anom_vg_and_18_iso_grav_anom_hg": "Excluded: repo forensics show signed directional derivatives, not magnitude/vertical derivatives (IR-36-ATVR-03); WDP-36 computes its own spectral derivatives from band 13.",
+      "topography_lidar_hydrothermal_radiometrics": "Excluded by lane design: ATVR-36 / H36-CTRB / H36-GPS already exploit scarp/topo/hydrothermal evidence; WDP-36 must stay decorrelated (basin-interior buried structures) to satisfy the parallel-run lane rule."
+    },
+    "forbidden": [
+      "Any prior submission raster pixel (registry rasters are comparison-only, never inputs)",
+      "SGMC derived faults raster and any label-derived CSV column (e.g. dist_known_fault_px)",
+      "Any catalogue-distance, catalogue-density or continuation feature"
+    ]
+  },
+  "detector_definition": {
+    "upward_continuation": "For F in {band14 tmi, band13 iso_grav_anom}: replace sentinel (-3.4028235e+38) / non-finite / outside-footprint cells with the footprint median, demean over the full grid, rFFT, multiply by exp(-|k|*h) for h in {0, 200, 400, 800} m with |k| = 2*pi*sqrt(fx^2+fy^2), f from fftfreq with d=100 m. THDR_h = sqrt((dF_h/dx)^2 + (dF_h/dy)^2) from spectral derivatives (i*kx, i*ky) of the same continued spectrum.",
+    "rank_normalisation": "Each THDR_h converted to footprint percentile ranks r_h in [0,1] (average handling by stable argsort order; outside footprint = 0).",
+    "persistence_per_field": "P_F = (prod_h (r_h + 1e-6))^(1/4): geometric mean across continuation heights. Deep (basement fault) edges stay strong at all heights; shallow volcanic/cultural edges and 200-400 m flight-line striping (GeoDAWN azimuth 90 deg lines) decay with h and are suppressed.",
+    "persistence_combined": "PERS = footprint percentile rank of 0.5*P_tmi + 0.5*P_grav.",
+    "strain_ridge": "For each of bands 04/07/08: footprint-median fill, Gaussian smooth sigma=1.5 px, gradient magnitude via numpy.gradient, footprint percentile rank. STRAIN = percentile rank of the mean of the three ranks.",
+    "seismic_composite": "SEIS_RAW = 0.5*rank(band16) + 0.5*rank(-band10) over footprint, Gaussian smooth sigma=2.0 px, SEIS = percentile rank of smoothed composite.",
+    "ablation_control_A0": "Single-scale worms: A0 = percentile rank of 0.5*r_0(tmi) + 0.5*r_0(grav) using only h=0. Isolates the value of persistence. A0 is a frozen control, not one of the 3 experiments (same convention as ATVR-36 C0/B1 controls).",
+    "experiments": {
+      "EXP-1": "Surface = PERS",
+      "EXP-2": "Surface = percentile rank of 0.70*PERS + 0.30*STRAIN",
+      "EXP-3": "Surface = percentile rank of 0.60*PERS + 0.25*STRAIN + 0.15*SEIS"
+    },
+    "winner_rule": "Highest pooled HOLDOUT-DTI among EXP-1..3 becomes the deployment surface; all three numbers are reported regardless."
+  },
+  "gates_fail_closed": {
+    "G1_leakage_canary": "SegmentHoldout.canary on every component + fused surface; pass iff two-polarity AUC <= 0.90 for all (pooled and per-fold as implemented by the template).",
+    "G2_holdout_promotion": "Pass iff winning EXP pooled HOLDOUT-DTI > 0.14876 (recorded group pooled best) AND compare_paired vs A0 favours the winner (point delta > 0; CI reported). Repo B0 = 0.13375 also reported. Both bars are HOLDOUT-DTI on gems-segment-pooled-v1 from prior run cards, not organizer scores.",
+    "G3_uniqueness": "Pass iff pre-placement surface |Spearman rho| <= 0.90 AND final-dot 3 px overlap <= 0.70 against competing registry rasters (focus-9 and expanded registry reported separately; dense area-blankets flagged, never hidden). Overlap vs GEMSDOE32 0.2778 champion and vs ATVR-36/H36-CTRB/H36-GPS reported individually.",
+    "G4_format": "Pass iff gems.submission.check_variants format_valid AND strict whole-array finite [0,1] for the primary zeros GeoTIFF AND CRS/shape/transform match template AND exactly 37654 dots AND 0 dots within 2.0 px of the full catalogue.",
+    "verdict": "promote iff G1+G2+G3+G4 all pass; otherwise negative = DO NOT SUBMIT (hold weekly slot), DOWNLOAD: YES for research/ensemble. No human inspector step exists in the gate."
+  },
+  "named_non_fault_mimics": [
+    "Deep non-fault basement lithologic contacts (e.g. pluton margins) also persist under upward continuation; persistence alone cannot prove faulting.",
+    "Smooth regional strain gradients and volcanic inflation can mimic strain-rate discontinuities.",
+    "Diffuse aftershock clouds and geothermal-plant induced seismicity can mimic blind-fault seismic lineaments.",
+    "Residual GeoDAWN flight-line levelling stripes (E-W, azimuth 90 deg) are short-wavelength; persistence suppresses but does not mathematically eliminate them."
+  ],
+  "known_holdout_limitation_stated_in_advance": "Hide-and-recover withholds catalogue-style (mostly surface-expressed) faults. A buried-fault detector can therefore be penalised by the holdout even if it finds genuine blind structures. The gate is still applied fail-closed: the Final Prize Round expanded-label rescore (official page 967) is noted as context for a separate human selector, never as a reason to override a negative holdout in this lane."
+}

@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="GEMSDOE36 — DOE GEMS Prize (DrivenData #306): ATVR-36, H36-CTRB &amp; H36-GPS GeoTIFFs, automated fail-closed release gate, 9-site forensic audit, and submission guide.">
+  <meta name="description" content="GEMSDOE36 — DOE GEMS Prize (DrivenData #306): WDP-36, ATVR-36, H36-CTRB &amp; H36-GPS GeoTIFFs, automated fail-closed release gate, 9-site forensic audit, and submission guide.">
   <title>GEMS DOE 36 — Download &amp; Automated Gate Verdict</title>
   <link rel="stylesheet" href="assets/site.css">
 </head>
@@ -14,6 +14,7 @@
     <nav class="nav" aria-label="Main navigation">
       <a href="index.html">Download &amp; verdict</a>
       <a href="executive-summary.html">Executive summary &amp; how to submit</a>
+      <a href="research/wdp36-20261026.md">WDP-36 Monograph</a>
       <a href="research/forensic-9sites-and-atvr36-20261026.md">ATVR-36 &amp; 9-Site Monograph</a>
       <a href="research/forensic_audit_and_results_2026-10-25.md">CTRB Audit</a>
       <a href="research/known_irregularities.md">Irregularities</a>
@@ -23,12 +24,17 @@
   <main id="main" class="wrap">
 
     <section class="verdict verdict-bad" aria-labelledby="repo-title">
-      <div class="eyebrow">Repository decision · zero-human automated gate across all four GEMSDOE36 parallel lanes</div>
+      <div class="eyebrow">Repository decision · zero-human automated gate across all five GEMSDOE36 parallel lanes</div>
       <h1 id="repo-title">DO NOT SUBMIT — hold weekly live slot (Research downloads only)</h1>
       <p class="verdict-sub"><strong>DOWNLOAD: YES · LIVE WEEKLY SLOT: DO NOT SUBMIT</strong> — Every GeoTIFF below is 100% portal-valid and strict <code>[0, 1]</code> whole-array verified (<code>12,279,160 / 12,279,160</code> finite <code>float32</code> cells, permanently preventing <code>"Predicted values must be in range [0, 1]"</code>). None simultaneously clears the recorded group <code>HOLDOUT-DTI</code> best (<code>0.14876</code> / <code>repo B0 = 0.13375</code>) and the literal 201-raster uniqueness ceiling (<code>&le; 70%</code> against <code>41&ndash;55%</code> area blankets), so spending one of the 3 weekly live slots is blocked automatically to <strong>Maximize P(Win)</strong>.</p>
       <div class="table-wrap verdict-meta">
         <table>
           <tr><th>Candidate GeoTIFF</th><th>Lane &amp; Key Discovery</th><th>Automatic Gate Verdict</th></tr>
+          <tr>
+            <td><a href="downloads/gemsdoe36-wdp36-exp1-20261026-zeros.tif" download><code>gemsdoe36-wdp36-exp1-20261026-zeros.tif</code></a></td>
+            <td><strong>WDP-36 EXP-1</strong> (unsupervised 0&ndash;800 m upward-continuation worm persistence, TMI+gravity only; <code>arena/b8f55e32-gemsdoe36</code>)</td>
+            <td><strong>DO NOT SUBMIT — automatic NEGATIVE verdict (<code>HOLDOUT-DTI 0.093269</code> &lt; group best <code>0.14876</code>; one dense-blanket literal overlap <code>0.7227</code>; focus-9 max overlap only <code>0.4909</code>, <code>0.2360</code> vs <code>B2</code>)</strong></td>
+          </tr>
           <tr>
             <td><a href="downloads/gemsdoe36-atvr36-20261026.tif" download><code>gemsdoe36-atvr36-20261026.tif</code></a></td>
             <td><strong>ATVR-36 EXP-2</strong> (44-feat tilt/LiDAR + hydrothermal + Raissi&ndash;Anderson PDE + 300 m CELF cover; <code>arena/62b9a92c-gemsdoe36</code>)</td>
@@ -50,6 +56,35 @@
             <td><strong>DO NOT SUBMIT — independent 198-raster cross-check fails (max overlap <code>0.9317</code>)</strong></td>
           </tr>
         </table>
+      </div>
+    </section>
+
+    <!-- WDP-36 DOWNLOAD CARD -->
+    <section class="verdict verdict-bad" id="download-wdp36" aria-labelledby="wdp36-verdict-title">
+      <div class="verdict-row">
+        <div>
+          <div class="eyebrow">Current branch deliverable · WDP-36 EXP-1 · arena/b8f55e32-gemsdoe36 · 2026-10-26 UTC</div>
+          <h2 id="wdp36-verdict-title">WDP-36 EXP-1 (ae9da29e45c6): DO NOT SUBMIT — Format-Safe [0, 1] Research Download (zeros-only)</h2>
+          <p class="verdict-sub"><strong>DOWNLOAD: YES · FORMAT &amp; [0, 1] RANGE VALID: PASS · LIVE SLOT: HOLD (NEGATIVE)</strong> — New unsupervised buried-fault lane (zero catalogue-trained parameters): <code>HOLDOUT-DTI 0.093269</code> (95% CI <code>[0.083380, 0.103501]</code>, <code>gems-segment-pooled-v1</code>, 60,988 withheld positives) vs single-scale control <code>A0 = 0.091901</code> (paired &Delta; <code>+0.001368</code>, CI includes 0; strain add-on hurt, seismic neutral). Canary PASS (max AUC <code>0.6145</code>), surface &rho; max <code>0.264</code>, focus-9 dot overlap max <code>0.4909</code> (<code>0.2360</code> vs GEMSDOE32 champion) — genuinely unique geography (median <code>2.1 km</code> from catalogue) that still trails the <code>0.14876</code> promotion bar, so the weekly slot is held automatically. This lane ships <strong>zeros-only</strong> (no NaN twin) so the file below is the only “File to submit” candidate and cannot trigger the portal range error. Negative results are deliverables.</p>
+          <div class="hero-actions">
+            <a class="button" href="downloads/gemsdoe36-wdp36-exp1-20261026-zeros.tif" download>Download WDP-36 GeoTIFF (gemsdoe36-wdp36-exp1-20261026-zeros.tif) &#8595;</a>
+            <a class="button secondary" href="downloads/gemsdoe36-wdp36-exp1-20261026-zeros.zip" download>WDP-36 ZIP (single GeoTIFF)</a>
+            <a class="button secondary" href="downloads/gemsdoe36-wdp36-exp1-20261026-zeros.receipt.json">WDP-36 Run Card / Receipt</a>
+            <a class="button secondary" href="research/wdp36-20261026.md">WDP-36 Monograph</a>
+          </div>
+        </div>
+      </div>
+      <div class="table-wrap verdict-meta">
+        <table>
+          <tr><th>Submission name</th><td><code>gemsdoe36-wdp36-exp1-20261026</code> (file: <code>gemsdoe36-wdp36-exp1-20261026-zeros.tif</code>)</td></tr>
+          <tr><th>Note (95 &le; 140 chars)</th><td><code>GEMSDOE36 WDP-36 EXP-1 | worm persistence 0-800m only | HOLDOUT-DTI 0.0933 | NEGATIVE hold slot</code></td></tr>
+          <tr><th>SHA-256 (zeros TIF / ZIP)</th><td><code>ae9da29e45c67d03b7a7fd438a3cf0686f0678111181cd960b86dffb56f0f698</code> · ZIP: <code>c6767fb5e05fe8f573a365b24913b1b58544a4d16ee9c6cd1eb7f7ae241f7de5</code></td></tr>
+          <tr><th>Grid &amp; [0, 1] Contract</th><td>37,654 off-catalogue dots (<code>d_cat &gt; 2.0 px</code>, <code>median d_cat = 21.1 px</code>, <code>0</code> on-catalogue), <code>float32</code>, <code>EPSG:32611</code>, <code>3730 &times; 3292</code>, <code>nodata=None</code>, all <code>12,279,160</code> cells finite in <code>[0.0, 1.0]</code></td></tr>
+          <tr><th>HOLDOUT-DTI</th><td><code>0.093269</code> · 95% CI <code>[0.083380, 0.103501]</code> (<code>gems-segment-pooled-v1</code>, 1.5 km buffer; <code>NW 0.090245</code>, <code>NE 0.083541</code>, <code>SW 0.088357</code>, <code>SE 0.108190</code>) — labelled HOLDOUT-DTI, never an ORGANIZER-CONFIRMED score (organizer score: none; not submitted)</td></tr>
+        </table>
+      </div>
+      <div class="fig-card">
+        <img src="assets/wdp36_overview.png" alt="3-panel overview: WDP-36 worm-persistence surface, catalogue faults, and 37,654 emitted dots with 2.1 km median distance from the catalogue">
       </div>
     </section>
 
@@ -152,7 +187,7 @@
           <tr><td><code>GEMSDOE31</code></td><td><code>h27-4-solo</code> (<code>40,199</code> dots; <code>0</code> XOR vs <code>GEMSDOE28</code>)</td><td><code>0.2708</code> ORGANIZER-CONFIRMED</td><td><code>H31-M</code> = <code>verdict: negative</code></td><td>NO — DO NOT SUBMIT</td></tr>
           <tr><td><strong><code>GEMSDOE32</code></strong></td><td><strong><code>h33-h33-2-b2</code></strong> (<code>37,654</code> dots; <code>0</code> XOR vs <code>d2.8 &and; d_cat &gt; 2 px</code>)</td><td><strong><code>0.2778</code> ORGANIZER-CONFIRMED</strong></td><td><code>H-GEO-CONDUIT</code> = <code>verdict: negative</code></td><td>NO — B2 ALREADY SCORED</td></tr>
           <tr><td><code>GEMSDOE33</code></td><td><code>h33d</code> (<code>41,865</code> dots)</td><td><code>0.2632</code> ORGANIZER-CONFIRMED</td><td><code>A33-L1</code> = <code>verdict: negative</code></td><td>NO — DO NOT SUBMIT</td></tr>
-          <tr><td><strong><code>GEMSDOE36</code></strong></td><td>Legacy <code>pinn-38854</code> (<code>B2 + 1,200</code> thermal dots)</td><td><code>0.2750</code> ORGANIZER-CONFIRMED</td><td><code>ATVR-36</code> (<code>0.1179</code>), <code>H36-CTRB</code> (<code>0.1144</code>), <code>H36-GPS</code> (<code>0.1320</code>) — all fail-closed <code>negative</code> vs <code>0.14876</code> group bar</td><td>NO — HOLD WEEKLY SLOT</td></tr>
+          <tr><td><strong><code>GEMSDOE36</code></strong></td><td>Legacy <code>pinn-38854</code> (<code>B2 + 1,200</code> thermal dots)</td><td><code>0.2750</code> ORGANIZER-CONFIRMED</td><td><code>WDP-36</code> (<code>0.0933</code>), <code>ATVR-36</code> (<code>0.1179</code>), <code>H36-CTRB</code> (<code>0.1144</code>), <code>H36-GPS</code> (<code>0.1320</code>) — all HOLDOUT-DTI, all fail-closed <code>negative</code> vs <code>0.14876</code> group bar</td><td>NO — HOLD WEEKLY SLOT</td></tr>
         </table>
       </div>
     </section>
@@ -196,7 +231,8 @@
         <tr><th>File</th><th>Status</th></tr>
         <tr><td><code>gemsdoe36-anderson-geothermal-pinn-38854-20261004T230000Z-9b9ea4e6-zeros.tif</code></td><td>ORGANIZER-CONFIRMED <code>0.2750 &lt; 0.2778</code> (96.91% overlap with GEMSDOE32: copied 37,654 dots + 1,200 radial IDW dots). Archived; do not resubmit.</td></tr>
         <tr><td><code>GEMS36_h6_offcatalog_network_prior_20261004T193432.021282Z_3276c04090_3c064db2.tif</code></td><td>ORGANIZER-CONFIRMED <code>0.0512</code>; circular SGMC proxy (honest HOLDOUT-DTI <code>0.000094</code>). Archived; do not submit.</td></tr>
-        <tr><td><code>GEMS36_FORMAT_TEST_NOT_SUBMISSION.tif</code></td><td>Format demonstration fixture only.</td></tr>
+        <tr><td><code>GEMS36_FORMAT_TEST_NOT_SUBMISSION.tif</code></td><td>32 &times; 48 format demonstration fixture only — NEVER upload (wrong shape; kept for validator tests).</td></tr>
+        <tr><td>Any <code>*-nan.tif</code> twin</td><td>GIS companion with NaN outside the footprint (official-text style). DO NOT UPLOAD — strict whole-array portal checks reject NaN with “Predicted values must be in range [0, 1]”. Upload only <code>*-zeros.tif</code> (or its single-GeoTIFF ZIP) if a future gate ever clears a file.</td></tr>
       </table></div>
     </section>
 

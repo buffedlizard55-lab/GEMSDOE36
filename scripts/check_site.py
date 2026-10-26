@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """Fail-closed check of the GitHub Pages site against the machine-written JSON run cards
-across all four GEMSDOE36 parallel lanes (ATVR-36, H36-CTRB, H36-GPS, and Lane36).
+across all five GEMSDOE36 parallel lanes (WDP-36, ATVR-36, H36-CTRB, H36-GPS, and Lane36).
 """
 
 from __future__ import annotations
@@ -14,6 +14,7 @@ from urllib.parse import urlsplit
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
 DOCS_ROOT = REPO_ROOT / "docs"
+WDP_CARD = REPO_ROOT / "evidence/wdp36_run_card_20261026.json"
 ATVR_CARD = REPO_ROOT / "evidence/atvr36_run_card_20261026.json"
 CTRB_CARD = REPO_ROOT / "evidence/h36_ctrb_run_card_20261025.json"
 GPS_CARD = REPO_ROOT / "evidence/h36_run_card.json"
@@ -104,11 +105,29 @@ def main() -> int:
             if "noopener" not in rel.split():
                 errors.append(f"docs/{page}: target=_blank without rel=noopener: {href}")
 
+    wdp = json.loads(WDP_CARD.read_text(encoding="utf-8"))
     atvr = json.loads(ATVR_CARD.read_text(encoding="utf-8"))
     ctrb = json.loads(CTRB_CARD.read_text(encoding="utf-8"))
     gps = json.loads(GPS_CARD.read_text(encoding="utf-8"))
     landing = " ".join(parsers.get("index.html", LinkParser()).text_chunks)
     execp = " ".join(parsers.get("executive-summary.html", LinkParser()).text_chunks)
+
+    # Verify WDP-36 bundle on disk & pages (zeros-only portal bundle)
+    wdp_tif = DOCS_ROOT / "downloads" / wdp["submission_file"]
+    wdp_zip = DOCS_ROOT / "downloads" / wdp["submission_zip"]
+    for f, exp_sha in (
+        (wdp_tif, wdp["raster_sha256"]),
+        (wdp_zip, wdp["zip_sha256"]),
+    ):
+        if not f.is_file():
+            errors.append(f"missing WDP-36 download {f.name}")
+        elif _sha(f) != exp_sha:
+            errors.append(f"SHA-256 mismatch for {f.name}")
+    if len(wdp["submission_note"]) > 140:
+        errors.append("WDP-36 note exceeds 140 characters")
+    wdp_receipt = DOCS_ROOT / "downloads" / (wdp_tif.stem + ".receipt.json")
+    if not wdp_receipt.is_file() or wdp_receipt.read_bytes() != WDP_CARD.read_bytes():
+        errors.append("WDP-36 receipt JSON missing or differs from evidence run card")
 
     # Verify ATVR-36 bundle on disk & pages
     atvr_tif = DOCS_ROOT / "downloads/gemsdoe36-atvr36-20261026.tif"
@@ -154,11 +173,15 @@ def main() -> int:
         errors.append("H36-GPS note exceeds 140 characters")
 
     any_ok = (
-        (atvr["verdict"] == "promote")
+        (wdp["verdict"] == "promote")
+        or (atvr["verdict"] == "promote")
         or (ctrb["verdict"] == "promote")
         or (gps["verdict"] == "promote")
     )
     must = [
+        wdp_tif.name,
+        wdp["raster_sha256"],
+        wdp["submission_note"],
         atvr_tif.name,
         atvr["raster_sha256"],
         atvr["submission_note"],
@@ -176,7 +199,7 @@ def main() -> int:
             errors.append(f"landing page missing: {phrase[:80]}")
 
     first_screen = landing[: max(1, len(landing) // 3)]
-    for top_fname in (atvr_tif.name, ctrb_zeros.name, gps_zeros.name):
+    for top_fname in (wdp_tif.name, atvr_tif.name, ctrb_zeros.name, gps_zeros.name):
         if top_fname not in first_screen:
             errors.append(f"{top_fname} is not on the first screen of the landing page")
 
@@ -185,6 +208,8 @@ def main() -> int:
             errors.append(f"stale/incorrect claim present: {phrase}")
 
     for phrase in EXECUTIVE_COPY + (
+        wdp["submission_note"],
+        wdp_tif.name,
         atvr["submission_note"],
         atvr_tif.name,
         ctrb_sub["note"],
@@ -229,7 +254,7 @@ def main() -> int:
         for err in errors:
             print(f"- {err}")
         return 1
-    print("SITE CHECK PASS — all 4 lanes (ATVR-36, H36-CTRB, H36-GPS, Lane36) verified")
+    print("SITE CHECK PASS — all 5 lanes (WDP-36, ATVR-36, H36-CTRB, H36-GPS, Lane36) verified")
     return 0
 
 
