@@ -23,6 +23,7 @@ LANE36_CC = REPO_ROOT / "evidence/lane36_crosscheck.json"
 MTO_CARD = REPO_ROOT / "evidence/mto36_run_card_20261026.json"
 MOE_CARD = REPO_ROOT / "evidence/moe36_run_card_20261026.json"
 WDP_CARD = REPO_ROOT / "evidence/wdp36_run_card_20261026.json"
+HVG_CARD = REPO_ROOT / "evidence/hvg36_run_card_20261026.json"
 CURRENT_RUN = DOCS_ROOT / "current-run.json"
 BOTH_PAGES = ("DO NOT SUBMIT", "Research downloads only", "HOLDOUT-DTI", "ORGANIZER-CONFIRMED")
 REQUIRED_PAGES = ("index.html", "executive-summary.html")
@@ -265,6 +266,35 @@ def main() -> int:
     wdp_receipt = DOCS_ROOT / "downloads" / (Path(wdp["submission_file"]).stem + ".receipt.json")
     if not wdp_receipt.is_file() or wdp_receipt.read_bytes() != WDP_CARD.read_bytes():
         errors.append("public WDP-36 receipt mirror differs from evidence")
+
+    if not HVG_CARD.is_file():
+        errors.append("missing HVG-36 run card in evidence/")
+    else:
+        hvg = json.loads(HVG_CARD.read_text(encoding="utf-8"))
+        hvg_tif = REPO_ROOT / hvg["artifact"]["tif_path"]
+        hvg_zip = REPO_ROOT / hvg["artifact"]["zip_path"]
+        for file, expected in (
+            (hvg_tif, hvg["artifact"]["tif_sha256"]),
+            (hvg_zip, hvg["artifact"]["zip_sha256"]),
+        ):
+            if not file.is_file() or _sha(file) != expected:
+                errors.append(f"HVG-36 artifact missing / SHA-256 mismatch: {file.name}")
+        if (
+            hvg["verdict"] != "negative"
+            or hvg["submission"]["ok_to_submit_to_live_portal"]
+            or hvg["registry_uniqueness"]["final_dots"]["literal_all_203_passed"]
+        ):
+            errors.append("HVG-36 must remain a negative research release")
+        if len(hvg["submission"]["note"]) > 140:
+            errors.append("HVG-36 submission note exceeds 140 characters")
+        hvg_mirror = DOCS_ROOT / "downloads/hvg36-run-card.json"
+        if not hvg_mirror.is_file() or hvg_mirror.read_bytes() != HVG_CARD.read_bytes():
+            errors.append("public HVG-36 run-card mirror differs from evidence")
+        for phrase in (hvg_tif.name, hvg["artifact"]["tif_sha256"], hvg["submission"]["note"]):
+            if phrase not in landing:
+                errors.append(f"landing page missing HVG-36: {phrase[:80]}")
+            if phrase not in execp:
+                errors.append(f"executive summary missing HVG-36: {phrase[:80]}")
     for page, text in (("index.html", landing), ("executive-summary.html", execp)):
         if re.search(r"(?:0\.\d{3,4}).{0,25}ORGANIZER-CONFIRMED", text, re.I):
             errors.append(f"docs/{page}: numeric historical score incorrectly called organizer-confirmed")

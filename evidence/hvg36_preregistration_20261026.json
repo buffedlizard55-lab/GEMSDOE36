@@ -1,0 +1,126 @@
+{
+  "schema": "gems36.hvg36.preregistration.v1",
+  "locked_utc": "2026-10-26T16:20:00Z",
+  "branch": "arena/d98aabea-gemsdoe36",
+  "lane_id": "HVG-36",
+  "lane_name": "Hydrothermal-Vent Structural-Conduit & Cross-Scale Phase-Dipole Out-of-Fold Discovery",
+  "evaluator_version": "gems-segment-pooled-v1",
+  "buffer_px": 15,
+  "buffer_m": 1500,
+  "total_dot_budget": 37654,
+  "fold_budgets": [8414, 10404, 10410, 8426],
+  "matched_baseline": {
+    "name": "B0_base59",
+    "features_count": 59,
+    "recorded_holdout_dti": 0.13374902762916088,
+    "recorded_ci95": [0.12224121364275631, 0.1460350349691107]
+  },
+  "recorded_group_best": {
+    "name": "GEMSDOE24_H24_GVC1",
+    "holdout_dti": 0.14876,
+    "ci95": [0.13413, 0.16370],
+    "evaluator_version": "gems-segment-pooled-v1"
+  },
+  "ranked_hypotheses": [
+    {
+      "rank": 1,
+      "id": "HVG-36-A",
+      "title": "Anisotropic Hydrothermal-Vent & Upflow Structural-Conduit + Slope-Deconfounded Radiometric Metasomatism (RAD-ANISO)",
+      "layers": [
+        "external/gdr_volcanic_vents_in_footprint.csv (row, col)",
+        "external/gdr_wellspring_in_footprint.csv (row, col, temp_c, thermalclass, geothermchalc_c, geothermquartz_c, geothermcat_c; dist_known_fault_px BANNED)",
+        "02_rtp",
+        "03_tmi_hg",
+        "17_cond_surf",
+        "12_det_elev",
+        "19_det_elev_slope",
+        "15_depth_to_base_surf",
+        "external/geodawn_rad_u8.tif (K, Th, U, TC)",
+        "external/geodawn_extensions_u8.tif (ThK, UK, UTh)"
+      ],
+      "physical_signature": "Strike-projected axial conduit bridging Quaternary volcanic vents and >=80C geothermometer anomalies along potential-field strike; lateral gradient edge of fold-regressed playa-deconfounded 17_cond_surf clay-cap residual; strike-parallel minus cross-strike integral of slope-deconfounded K/Th and U/Th ratios (RAD-ANISO).",
+      "named_non_fault_mimic": "Evaporite playa margins, lacustrine shorelines, and equant volcanic flow boundaries.",
+      "implemented_in": ["EXP-1", "EXP-2", "EXP-3"]
+    },
+    {
+      "rank": 2,
+      "id": "HVG-36-B",
+      "title": "Cross-Scale RTP-to-150m Magnetic Phase Persistence (P-TMI) & Paired Signed Basement-Flexure Dipole (D-PAIR)",
+      "layers": [
+        "02_rtp",
+        "03_tmi_hg",
+        "09_tmi_vg",
+        "14_tmi",
+        "external/geodawn_extensions_u8.tif (TMI_up150)",
+        "13_iso_grav_anom",
+        "11_iso_grav_anom_vg",
+        "18_iso_grav_anom_hg",
+        "15_depth_to_base_surf",
+        "12_det_elev",
+        "19_det_elev_slope",
+        "04_geod_2ndinv",
+        "07_geod_shearrate",
+        "08_geod_dilaterate",
+        "10_deq_n100a15",
+        "16_ieq_n100a15"
+      ],
+      "physical_signature": "Cosine phase agreement between surface 02_rtp gradient and 150m upward-continued TMI_up150 gradient + Verduzco tilt angle (P-TMI); across-strike dipole product of opposing signed curvatures in 15_depth_to_base_surf and 13_iso_grav_anom at 300-600m offset (D-PAIR); relief-deconfounded piedmont scarp-toe curvature + Walker Lane seismic-strain corridor.",
+      "named_non_fault_mimic": "Differential sediment compaction over unfaulted buried paleotopographic highs or flight-line leveling seams.",
+      "implemented_in": ["EXP-1", "EXP-2", "EXP-3"]
+    },
+    {
+      "rank": 3,
+      "id": "HVG-36-C",
+      "title": "LiDAR-Regime Tail-Calibrated Probability Fusion of Multi-Sensor (E_BASE59) and LiDAR-Free Subsurface-Geothermal (E_HVG_SUBSURF) Out-of-Fold Experts",
+      "layers": [
+        "59 B0 multi-scale DEM/LiDAR/GeoDAWN features (E_BASE59)",
+        "39 LiDAR-free subsurface/geothermal/piedmont/dipole features (E_HVG_SUBSURF)",
+        "WDP-36 0-800m upward-continuation worm persistence (E_WDP)"
+      ],
+      "physical_signature": "Out-of-fold specialist probability fusion preserving heavy-tailed posterior probabilities across LiDAR-covered and LiDAR-gap regimes before 1-px Hessian ridge-NMS 3-px greedy dot placement.",
+      "named_non_fault_mimic": "Multi-sensor topographic co-variation along steep erosional range fronts.",
+      "implemented_in": ["EXP-2", "EXP-3"]
+    },
+    {
+      "rank": 4,
+      "id": "HVG-36-D",
+      "title": "Raw USGS GeoDAWN 1D Flight-Line Crossover Profiles & NASA OPERA Sentinel-1 InSAR Velocity Steps (External Data Route)",
+      "layers": [
+        "USGS GeoDAWN 1D flight-line CSVs (doi:10.5066/P93LGLVQ, CC0)",
+        "NASA/ASF OPERA_L3_DISP-S1_V1 Sentinel-1 LOS velocity rasters"
+      ],
+      "physical_signature": "Along-track 1D CWT magnetic vertical-derivative crossovers + active interseismic creep / groundwater-baffle velocity steps.",
+      "named_non_fault_mimic": "Power-line cultural magnetic noise and agricultural groundwater pumping bowls.",
+      "implemented_in": []
+    }
+  ],
+  "experiments": [
+    {
+      "id": "EXP-1",
+      "name": "HVG-Single-73",
+      "description": "Single out-of-fold HGB on 59 B0 + 14 HVG-36 features (73 features) + emit_dots (sigma=1.0, block=2)."
+    },
+    {
+      "id": "EXP-2",
+      "name": "HVG-DualExpert-ProbFuse",
+      "description": "Probability-space geometric fusion of out-of-fold E_BASE59 (59 features) and LiDAR-free E_HVG_SUBSURF (39 features) with training-fold LiDAR-gap tail matching + emit_dots (sigma=1.0, block=2)."
+    },
+    {
+      "id": "EXP-3",
+      "name": "HVG-TriExpert-B2-Collar",
+      "description": "Probability-space fusion of E_BASE59 + E_HVG_SUBSURF + unsupervised WDP-36 worm persistence with strict d_vis > 2 px (200 m catalogue collar exclusion) + emit_dots (sigma=1.0, block=2)."
+    }
+  ],
+  "budget": {
+    "max_experiments": 3,
+    "max_walltime_seconds": 7200
+  },
+  "gates": {
+    "canary_max_two_polarity_auc": 0.90,
+    "surface_max_abs_spearman": 0.90,
+    "final_dots_max_3px_overlap": 0.70,
+    "require_paired_ci95_gt_0_vs_B0": true,
+    "require_gt_recorded_group_best_0_14876": true,
+    "require_strict_whole_array_0_1": true
+  }
+}
