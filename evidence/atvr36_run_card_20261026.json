@@ -1,0 +1,118 @@
+{
+  "schema": "gems-parallel-run-card-v1",
+  "generated_utc": "2026-10-26T03:35:00Z",
+  "lane": "GEMSDOE36 / ATVR-36",
+  "branch": "arena/62b9a92c-gemsdoe36",
+  "winning_experiment": "EXP-2",
+  "hypothesis": "H36-A + H36-B: Andersonian Tilt-Variational & Deconfounded Geothermal-Piedmont Submodular Fault Discovery (44 physical/fold features; zero SGMC, zero prior rasters)",
+  "mechanism": "Combines depth-invariant Verduzco gravity/magnetic tilt derivatives, relief-deconfounded piedmont scarp-toe curvature, missingness-gated USGS 3DEP 1 m LiDAR scarp breaks, hydrothermal magnetite-destruction 02_rtp troughs + playa-deconfounded 17_cond_surf clay-cap residuals + GeoDAWN K/Th + DOE GDR 1391 physical geothermometers, Chernozhukov spatial out-of-fold HGB cross-fitting, Raissi-Anderson anisotropic structure-tensor variational diffusion, and exact 25-offset Euclidean 300 m CELF submodular expected-credit dot cover outside d_cat <= 2.0 px.",
+  "named_non_fault_mimic": "Closed-basin evaporite playas / saline mudflats with low resistivity, steep mountain-interior crags (accessibility bias), and broad equant silicic caldera magnetic lows (deconfounded via fold-regressed depth/playa 17_cond_surf residual, 2.5 km relief normalization, and 02_rtp trough x magnetic-THDR coupling).",
+  "holdout_dti": {
+    "primary_lane_holdout": {
+      "label": "HOLDOUT-DTI",
+      "evaluator_version": "gems36-segment-audit-v1",
+      "n_withheld_positives": 60988,
+      "n_withheld_segments": 3199,
+      "independent_cells": 15,
+      "buffer_px": 30,
+      "buffer_m": 3000,
+      "dti": 0.114542,
+      "ci95": [0.078547, 0.151221],
+      "unsplit_pooled_dti": 0.115835,
+      "baseline_C0_repo_field_dti": 0.018492,
+      "baseline_B1_raw19_hgb_d28_dti": 0.039523,
+      "paired_delta_vs_B1": {
+        "delta_point": 0.075018,
+        "delta_ci95": [0.049224, 0.099602],
+        "prob_cand_gt_base": 1.0
+      }
+    },
+    "shared_template_segment_holdout": {
+      "label": "HOLDOUT-DTI",
+      "evaluator_version": "gems-segment-pooled-v1",
+      "n_withheld_positives": 60988,
+      "n_withheld_segments": 3199,
+      "buffer_m": 1500,
+      "dti": 0.117925,
+      "ci95": [0.101961, 0.132998],
+      "folds": {
+        "NW": 0.15048,
+        "NE_LidarGapHeavy": 0.05312,
+        "SW": 0.11115,
+        "SE": 0.15438
+      },
+      "beats_parallel_H36_CTRB_0_114425": true,
+      "beats_repo_B0_0_133749": false,
+      "beats_recorded_group_best_0_14876": false
+    }
+  },
+  "experiment_budget": {
+    "max_experiments_allowed": 3,
+    "experiments_executed": 3,
+    "max_walltime_seconds": 7200,
+    "elapsed_walltime_seconds": 1316.5
+  },
+  "leakage_canary": {
+    "passed": true,
+    "n_features_tested": 50,
+    "auc_cap": 0.9,
+    "max_two_polarity_auc": 0.58811,
+    "max_feature": "h36a_elev_hessian_trough_s2",
+    "flagged_count": 0
+  },
+  "registry_uniqueness": {
+    "focus_9_sites_and_local_scored": {
+      "passed": true,
+      "max_abs_surface_spearman_rho": 0.108421,
+      "max_geological_dot_overlap_3px": 0.6328,
+      "overlap_vs_GEMSDOE32_champion_B2": 0.359377,
+      "overlap_vs_parallel_H36_CTRB": 0.373639,
+      "overlap_vs_parallel_H36_GPS": 0.461677,
+      "overlap_vs_parallel_Lane36": 0.439316
+    },
+    "expanded_201_uniqueness_registry": {
+      "crosscheck_file": "evidence/atvr36_crosscheck_20261026.json",
+      "n_competing_checked": 200,
+      "max_abs_surface_spearman_rho": 0.174621,
+      "max_abs_dots_spearman_rho": 0.054078,
+      "normal_coverage_lt_40pct_max_overlap": 0.6328,
+      "max_literal_dot_overlap_3px": 0.893637,
+      "n_dense_blankets_over_0_70": 8,
+      "literal_passed": false
+    }
+  },
+  "raster_sha256": "54f493f4fa5c74ed3a02f88ca6d47272b0c3cee0cc0bd9bbd9cb94eaf997204a",
+  "zip_sha256": "ceac8754bd8779c7f0a849c81f63e665e49f2767a4753cb5156832120dac8311",
+  "validator_output": {
+    "ok_to_download_research_tif": true,
+    "safe_to_download_and_submit": false,
+    "valid_for_portal": true,
+    "crs": "EPSG:32611",
+    "shape": [3730, 3292],
+    "pixel_size_m": [100.0, 100.0],
+    "dtype": "float32",
+    "nodata": null,
+    "nan_inside_footprint": 0,
+    "nan_outside_footprint": 0,
+    "inf_count": 0,
+    "min_inside_footprint": 0.0,
+    "max_inside_footprint": 1.0,
+    "values_in_0_1": true,
+    "positive_dots_emitted": 37654,
+    "known_fault_overlap_px": 0,
+    "errors": []
+  },
+  "gates": {
+    "G1_beats_matched_local_controls": true,
+    "G2_beats_group_holdout_best": false,
+    "G3_leakage_canary": true,
+    "G4a_unique_surface": true,
+    "G4b_unique_focus_9_sites": true,
+    "G4c_unique_expanded_201_blankets": false,
+    "G5_format_and_strict_range": true
+  },
+  "submission_name": "gemsdoe36-atvr36-exp-2-20261026",
+  "submission_note": "GEMSDOE36 ATVR-36 EXP-2 | tilt/LiDAR+hydrothermal+Anderson PDE+CELF | HOLDOUT-DTI 0.1145/0.1179 | NEGATIVE hold slot",
+  "verdict": "negative",
+  "status": "DO_NOT_SUBMIT"
+}

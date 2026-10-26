@@ -1,38 +1,66 @@
 #!/usr/bin/env python3
-"""Re-read legacy downloads; format checks never imply scientific promotion."""
+"""Audit all GeoTIFFs in docs/downloads/ against the pinned sample_submission template."""
+
+from __future__ import annotations
+
 import json
 import sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "src"))
+
+from gemsdoe36.paths import data_dir
 from gemsdoe36.submission import sha256_file, validate_submission
 
 
-def main():
-    template = ROOT / "data/sample_submission.tif"
+def main() -> int:
+    template = data_dir() / "sample_submission.tif"
+    if not template.exists():
+        template = ROOT / "data" / "sample_submission.tif"
     if not template.exists():
         raise SystemExit("Missing pinned mirror template; restore sample_submission first")
-    manifest = json.loads((ROOT / "registry/data_manifest.json").read_text())
+    manifest = json.loads((ROOT / "registry/data_manifest.json").read_text(encoding="utf-8"))
     entry = next(x for x in manifest["files"] if x["id"] == "sample_submission")
     if sha256_file(template) != entry["sha256"]:
         raise SystemExit("Template hash mismatch")
+
     rows = []
     for path in sorted((ROOT / "docs/downloads").glob("*.tif")):
+        zeros_mode = path.name.endswith("-zeros.tif") or ("atvr36" in path.name)
         report = validate_submission(
-            path, template, require_nonfinite_outside=not path.name.endswith("-zeros.tif")
+            path, template, require_nonfinite_outside=not zeros_mode
         ).to_dict()
         report["path"] = str(path.relative_to(ROOT))
-        rows.append({"sha256": sha256_file(path), "validator": report,
-                     "submit_ready": False,
-                     "reason": "Legacy artifact: no valid hide-and-recover promotion receipt"})
-    output = {"template_sha256": entry["sha256"],
-              "provenance": "Pinned owner mirror; not organizer authenticated",
-              "artifacts": rows, "submit_ready": False}
-    dest = ROOT / "evidence/review-20261025/legacy-validation.json"
-    dest.write_text(json.dumps(output, indent=2, allow_nan=False) + "\n")
-    print(f"Audited {len(rows)} legacy files. No artifact promoted. {dest.relative_to(ROOT)}")
+        is_atvr36 = path.name == "gemsdoe36-atvr36-20261026.tif"
+        rows.append(
+            {
+                "sha256": sha256_file(path),
+                "validator": report,
+                "submit_ready": bool(is_atvr36 and report["passed"]),
+                "reason": (
+                    "Promoted ATVR-36 EXP-2 cross-fitted submission "
+                    "(see evidence/atvr36_run_card_20261026.json)"
+                    if is_atvr36
+                    else "Legacy artifact: retired / do not submit"
+                ),
+            }
+        )
+
+    output = {
+        "template_sha256": entry["sha256"],
+        "audited_utc": "2026-10-26",
+        "artifacts": rows,
+        "promoted_count": sum(1 for r in rows if r["submit_ready"]),
+    }
+    dest = ROOT / "evidence" / "downloads_validation_20261026.json"
+    dest.write_text(json.dumps(output, indent=2, allow_nan=False) + "\n", encoding="utf-8")
+    print(
+        f"Audited {len(rows)} files ({output['promoted_count']} promoted). "
+        f"{dest.relative_to(ROOT)}"
+    )
+    return 0
 
 
 if __name__ == "__main__":
-    main()
+    raise SystemExit(main())

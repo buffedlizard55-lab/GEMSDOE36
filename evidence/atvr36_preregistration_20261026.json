@@ -1,0 +1,134 @@
+{
+  "schema_version": 1,
+  "preregistered_utc": "2026-10-26T00:35:00Z",
+  "lane_id": "ATVR-36",
+  "lane_title": "Andersonian Tilt-Variational & Deconfounded Geothermal-Piedmont Submodular Fault Discovery",
+  "protocol_rules": {
+    "evaluator_version": "gems36-segment-audit-v1",
+    "holdout_scheme": "4-quadrant whole-8-connected-segment withholding with 30 px (3.0 km) training exclusion collar; visible-only catalogue features; pixel-exact visible-fault masking; 16-spatial-block bootstrap (2000 draws, seed=36)",
+    "metric": {
+      "name": "distance_weighted_tversky",
+      "alpha": 0.2,
+      "beta": 0.8,
+      "radius_m": 300.0,
+      "kernel": "triangular max(0, 1 - d/300m)"
+    },
+    "leakage_canary_max_two_polarity_auc": 0.90,
+    "banned_inputs": [
+      "any prior submission GeoTIFF pixels",
+      "derived_sgmc_faults_100m_u8.tif",
+      "gdr_wellspring_in_footprint.csv:dist_known_fault_px",
+      "gdr_qfaults_traces.csv",
+      "sample_submission.tif pixel values (footprint finite mask only)"
+    ],
+    "registry_surface_abs_spearman_max": 0.90,
+    "registry_dot_overlap_3px_max": 0.70,
+    "max_experiments": 3,
+    "max_wallclock_seconds": 7200,
+    "dot_budget": 37654,
+    "catalogue_flank_exclusion_px": 2.0,
+    "min_self_spacing_px": 2.0
+  },
+  "ranked_hypotheses": [
+    {
+      "rank": 1,
+      "id": "H36-A",
+      "title": "Phase-Equalized Verduzco Tilt & Piedmont-Deconfounded Multi-Physics with Variational Anderson-Raissi Structure-Tensor Diffusion + 300 m Submodular Cover",
+      "layers": [
+        "tmi_vg", "tmi_hg", "tmi", "rtp", "tc",
+        "iso_grav_anom_vg", "iso_grav_anom_hg", "iso_grav_anom_slope",
+        "det_elev", "det_elev_slope", "geod_dilaterate", "geod_shearrate", "geod_2ndinv",
+        "deq_n100a15", "ieq_n100a15",
+        "lidar_step_max", "lidar_downface_max", "lidar_upface_max",
+        "lidar_lapneg_max", "lidar_lappos_max", "lidar_coh100", "lidar_valid"
+      ],
+      "physical_signature": "Verduzco tilt angle arctan(VG/HGM) + THDR |grad(tilt)| + multi-scale Hessian ridge/scarp-toe eigenvalues + relief-deconfounded piedmont scarp contrast + Raissi-Anderson structure-tensor diffusion + 300m CELF submodular cover",
+      "off_catalogue_rationale": "Equalizes 1/z^2 burial decay beneath alluvial aprons, resolves the 24.63% 3DEP LiDAR coverage gap via missingness-aware potential-field splits, suppresses steep mountain-wall false positives, and damps E-W sigma_3-parallel acquisition striping",
+      "non_fault_mimic": "Pluvial Lake Lahontan paleo-shoreline benches and NNE-striking basaltic feeder dikes",
+      "cost": "low-medium",
+      "testable_now": true
+    },
+    {
+      "rank": 2,
+      "id": "H36-B",
+      "title": "Hydrothermal Demagnetization Trough & Depth-Conditioned Clay-Cap Upflow Discordance",
+      "layers": [
+        "rtp", "tmi_vg", "tmi_hg", "cond_surf", "depth_to_base_surf",
+        "rad_k", "rad_th", "rad_u", "ext_thk", "ext_uk", "ext_tmi_up150",
+        "gdr_wellspring_in_footprint.csv (temp_c, geothermquartz_c, geothermchalc_c, geothermcat_c)"
+      ],
+      "physical_signature": "Magnetite-destruction local RTP trough flanked by steep tilt walls + fold-regressed log(1+cond_surf) residual given basement depth + K/Th potassic metasomatic gradient + GDR geothermometer reservoir plume",
+      "off_catalogue_rationale": "Blind geothermal faults (~39-50% of Great Basin systems) lack surface scarps yet host ascending hydrothermal brines that oxidize magnetite, form smectite clay caps, and enrich K/Th",
+      "non_fault_mimic": "Saline evaporite playa brines adjacent to felsic ash-flow tuff margins",
+      "cost": "low",
+      "testable_now": true
+    },
+    {
+      "rank": 3,
+      "id": "H36-C",
+      "title": "Basin-Floor Basement Flexural Hinge & 3-Regime Geomorphic Prevalence Calibration",
+      "layers": [
+        "depth_to_base_surf", "iso_grav_anom", "iso_grav_anom_vg",
+        "det_elev", "det_elev_slope"
+      ],
+      "physical_signature": "Signed second-derivative hinge of basement depth concordant with gravity vertical-gradient zero-crossing + fold-learned 3-regime (Mountain Block / Piedmont Apron / Basin Floor) prevalence calibration",
+      "off_catalogue_rationale": "Recovers concealed intra-basin horst/graben growth faults beneath >250 m alluvium while preventing steep erosional mountain blocks from monopolizing probability ranks",
+      "non_fault_mimic": "Differential sedimentary compaction hinge over buried pre-Tertiary paleo-topography",
+      "cost": "low",
+      "testable_now": true
+    },
+    {
+      "rank": 4,
+      "id": "H36-D",
+      "title": "Raw GeoDAWN Tie-Line Crossover Micro-Levelling Residual",
+      "layers": ["USGS GeoDAWN raw line-located magnetic/radiometric flight profiles (DOI: 10.5066/P93LGLVQ)"],
+      "physical_signature": "Along-track 10-50 m dipole edge steps surviving tie-line crossover levelling residualization",
+      "off_catalogue_rationale": "Captures narrow (<100 m) intra-basin fault offsets attenuated by 100 m minimum-curvature gridding",
+      "non_fault_mimic": "Linear cultural ferromagnetics (pipelines, powerlines, highway guardrails)",
+      "cost": "high",
+      "testable_now": false,
+      "external_source_status": "Official public-domain USGS ScienceBase release doi:10.5066/P93LGLVQ; not obtainable inside sandbox due to outbound host allowlist"
+    },
+    {
+      "rank": 5,
+      "id": "H36-E",
+      "title": "Sentinel-1 OPERA InSAR Aquifer-Baffle Phase-Gradient & Coherence Step",
+      "layers": ["NASA/ASF OPERA_L3_DISP-S1_V1 North America Surface Displacement 30 m time series"],
+      "physical_signature": "Persistent horizontal LOS velocity step and seasonal poroelastic phase-gradient discontinuity across fault clay-core hydraulic barriers",
+      "off_catalogue_rationale": "Concealed clay-rich fault cores compartmentalize alluvial aquifers even with zero surface scarp and weak magnetic contrast",
+      "non_fault_mimic": "Agricultural pumping drawdown boundaries and stratigraphic clay-gravel pinchouts",
+      "cost": "high",
+      "testable_now": false,
+      "external_source_status": "Official NASA/ASF DAAC open product; requires Earthdata login and asf.alaska.edu outbound access unavailable in sandbox"
+    }
+  ],
+  "experiments": [
+    {
+      "id": "EXP-1",
+      "name": "ATVR36-Core",
+      "hypotheses": ["H36-A"],
+      "description": "OOF HistGradientBoosting on H36-A phase-equalized tilt + piedmont-deconfounded terrain/LiDAR + Raissi-Anderson variational structure-tensor diffusion + 300m CELF submodular cover (37,654 dots, d_vis > 2 px)"
+    },
+    {
+      "id": "EXP-2",
+      "name": "ATVR36-HydroAlter",
+      "hypotheses": ["H36-A", "H36-B"],
+      "description": "Adds H36-B hydrothermal magnetite-destruction trough, fold-regressed depth-conditioned conductivity clay-cap residual, GeoDAWN K/Th + TMI_up150 contrast, and GDR 1391 geothermometer plume"
+    },
+    {
+      "id": "EXP-3",
+      "name": "ATVR36-RegimeCal",
+      "hypotheses": ["H36-A", "H36-B", "H36-C"],
+      "description": "Adds H36-C basement flexural hinge concordance + fold-learned 3-regime (Mountain/Piedmont/Basin) prevalence calibration before Raissi-Anderson diffusion and 300m CELF submodular cover"
+    }
+  ],
+  "promotion_criteria": {
+    "canary_all_pass": true,
+    "beat_c0_repo_field_pooled_dti": true,
+    "beat_b1_raw19_hgb_pooled_dti": true,
+    "paired_delta_vs_b1_ci95_lower_gt_0": true,
+    "quadrant_wins_vs_b1_ge": 3,
+    "geological_registry_uniqueness_pass": true,
+    "geotiff_validator_all_pass": true
+  }
+}

@@ -36,10 +36,10 @@ from scipy.ndimage import binary_dilation
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "src"))
 
-from gemsdoe36.anderson_dip import local_extension_field  # noqa: E402
-from gemsdoe36.emitter import emit_dots  # noqa: E402
-from gemsdoe36.field import FieldConfig, build_belief_field  # noqa: E402
-from gemsdoe36.metric import distance_weighted_tversky  # noqa: E402
+from gemsdoe36.anderson_dip import local_extension_field
+from gemsdoe36.emitter import emit_dots
+from gemsdoe36.field import FieldConfig, build_belief_field
+from gemsdoe36.metric import distance_weighted_tversky
 
 BUDGET = 40000
 
@@ -100,7 +100,7 @@ def main() -> int:
             "emission_target": "full off-catalogue SGMC line network",
             "nominate_quantile": cfg.nominate_quantile,
         },
-        "dots": int(len(res.dots)),
+        "dots": len(res.dots),
         "stopped_by": res.stopped_by,
         "credit_T": round(float(res.credit), 3),
         "fp_mass_F": round(float(res.fp_mass), 3),

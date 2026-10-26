@@ -1,33 +1,41 @@
 {
-  "hypothesis": "No assigned method lane; basin-floor flexural hinge is a proposal only",
-  "mechanism": "Signed multiscale basement-depth/gravity hinge pairs under smooth basin-floor topography; not tested",
-  "non_fault_mimic": "Sedimentary compaction or erosional basin margin",
+  "schema_version": "gemsdoe36-current-run-v2",
+  "updated_utc": "2026-10-26T03:35:00Z",
+  "lane_id": "ATVR-36",
+  "winning_experiment": "EXP-2",
+  "verdict": "negative",
+  "slot_approved": false,
+  "ok_to_download_research_tif": true,
+  "ok_to_download_and_submit": false,
+  "status_banner": "DOWNLOAD: YES · LIVE SLOT: DO NOT SUBMIT (HOLD WEEKLY SLOT)",
+  "download_tif_href": "downloads/gemsdoe36-atvr36-20261026.tif",
+  "download_zip_href": "downloads/gemsdoe36-atvr36-20261026.zip",
+  "tif_sha256": "54f493f4fa5c74ed3a02f88ca6d47272b0c3cee0cc0bd9bbd9cb94eaf997204a",
+  "zip_sha256": "ceac8754bd8779c7f0a849c81f63e665e49f2767a4753cb5156832120dac8311",
+  "submission_name": "gemsdoe36-atvr36-exp-2-20261026",
+  "submission_note": "GEMSDOE36 ATVR-36 EXP-2 | tilt/LiDAR+hydrothermal+Anderson PDE+CELF | HOLDOUT-DTI 0.1145/0.1179 | NEGATIVE hold slot",
   "holdout_dti": {
     "label": "HOLDOUT-DTI",
-    "evaluator_version": null,
-    "withheld_positives": null,
-    "value": null,
-    "ci95": null,
-    "status": "not run; shared segment evaluator and cache missing"
+    "audit_v1_3000m_dti": 0.114542,
+    "audit_v1_3000m_ci95": [0.078547, 0.151221],
+    "shared_segment_pooled_v1_1500m_dti": 0.117925,
+    "shared_segment_pooled_v1_1500m_ci95": [0.101961, 0.132998],
+    "folds_segment_pooled_v1": {
+      "NW": 0.15048,
+      "NE_LidarGapHeavy": 0.05312,
+      "SW": 0.11115,
+      "SE": 0.15438
+    },
+    "repo_B0_reference": 0.133749,
+    "recorded_group_best_reference": 0.14876
   },
-  "registry_comparison": {
-    "surface_spearman": null,
-    "final_dot_overlap_within_3px": null,
-    "status": "not run; no candidate raster or complete registry"
-  },
-  "raster_sha256": null,
-  "validator_output": {
-    "no_nan_inside_footprint": null,
-    "values_in_0_1": null,
-    "crs_shape_transform_match": null,
-    "status": "no new raster; legacy-only validation in legacy-validation.json"
-  },
-  "submission_name": null,
-  "note": "Blocked: no assigned lane/shared evaluator. Historical rasters are education only; no new file approved.",
-  "experiments_run": 0,
-  "slots_used": 0,
-  "verdict": "negative",
-  "result_type": "blocked, not an empirical rejection",
-  "submit_ready": false,
-  "slot_approved": false
+  "automated_gates": {
+    "leakage_canary_passed": true,
+    "beats_matched_local_controls": true,
+    "beats_group_holdout_best": false,
+    "portal_geotiff_valid": true,
+    "focus_9_sites_unique": true,
+    "expanded_201_blanket_literal_unique": false,
+    "all_passed": false
+  }
 }

@@ -16,7 +16,7 @@ import pytest
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "src"))
 
-from gemsdoe36.emitter import emit_dots  # noqa: E402
+from gemsdoe36.emitter import emit_dots
 
 H = W = 24
 C = 12  # centre row/col

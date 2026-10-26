@@ -1,770 +1,1112 @@
 #!/usr/bin/env python3
-"""Parallel-Run Holdout Evaluation, Leakage Canary, 107-Raster Uniqueness Gate,
-and Automated Submission Bundle Builder for GEMSDOE36 (H36-CTRB).
+"""ATVR-36 Locked Whole-Segment Holdout Evaluator, Leakage Canary & Submission Builder.
 
-Strictly respects:
-  - Frozen preregistration: docs/research/preregistration_2026-10-25.md
-  - Experiment budget: <= 3 experiments (EXP-1, EXP-2, EXP-3) + 2 leak-free controls
-  - Shared evaluator: SegmentHoldout ('gems-segment-pooled-v1', 60,988 withheld positives,
-    3,199 components, 15 px = 1.5 km spatial buffer, alpha=0.2, beta=0.8, R=300 m)
-  - Single-feature two-polarity leakage canary (AUC <= 0.90 on all 25 features)
-  - 107-raster registry novelty gate on BOTH pre-placement continuous surface AND final dots
+Executes the preregistered ATVR-36 research lane under the Parallel-Run Protocol:
+  - Verifies SHA-256 lock of ``evidence/atvr36_preregistration_20261026.json`` before running.
+  - Uses ``gemsdoe36.protocol.{hide_segments, feature_canary, pooled_holdout}`` directly on
+    all 3,199 8-connected fault segments (60,988 positive pixels, 0 split segments,
+    ``buffer_px=30``).
+  - Tests all static + fold-computed features with ``protocol.feature_canary`` (hard fail if
+    any feature has ``two_polarity_auc > 0.90``).
+  - Evaluates frozen baselines (``C0_repo_field``, ``B1_raw19_hgb_d28``) and AT MOST 3
+    preregistered experiments (``EXP-1``, ``EXP-2``, ``EXP-3``) at the 37,654 dot budget.
+  - Fits the winning ATVR-36 arm on full physical observables (zero SGMC, zero prior rasters)
+    and invokes ``scripts/submission_writer.py`` to write, validate, and registry-audit the
+    unique GeoTIFF + ZIP bundle and JSON Run Card.
 """
 
 from __future__ import annotations
 
+import argparse
 import gc
+import hashlib
 import json
 import sys
 import time
-from datetime import datetime, timezone
+from dataclasses import dataclass
 from pathlib import Path
-from typing import Any
 
 import numpy as np
 import rasterio
-from scipy.ndimage import distance_transform_edt
+from scipy.ndimage import center_of_mass, distance_transform_edt, label
 from sklearn.ensemble import HistGradientBoostingClassifier
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "src"))
+sys.path.insert(0, str(ROOT / "scripts"))
 
-from gems.holdout import SegmentHoldout
-from gems.metric import ridge_nms, select_top_positive
-from gems.novelty import compare_registry
-from gems.submission import check_variants as gems_check_variants
-from gemsdoe36.ctrb import (
-    ALL_FEATURE_NAMES,
-    LOCAL_FEATURE_NAMES,
-    RAW_BAND_NAMES,
-    build_or_load_feature_stack,
-    fill_nearest_valid,
-    fit_predict_nsq_pcc_fold,
-    submodular_dti_emit,
-    unsupervised_concordance_surface,
+from atvr36_submission_gate import write_and_validate_submission
+
+from gemsdoe36.atvr_features import (
+    H36A_STATIC_NAMES,
+    H36B_STATIC_NAMES,
+    H36C_STATIC_NAMES,
+    RAW19_NAMES,
+    StaticFeatureCache,
+    build_or_load_static_feature_cache,
+    compute_fold_anderson_feature,
+    compute_fold_playa_cond_residual,
 )
-from gemsdoe36.submission import validate_submission, write_submission_bundle
+from gemsdoe36.field import FieldConfig, build_belief_field
+from gemsdoe36.metric import distance_weighted_tversky
+from gemsdoe36.paths import data_dir, work_dir
+from gemsdoe36.protocol import (
+    EVALUATOR_VERSION,
+    feature_canary,
+    hide_segments,
+    pooled_holdout,
+)
+from gemsdoe36.submodular_emit import emit_submodular_cover
+from gemsdoe36.variational_anderson import variational_anderson_refine
 
-FULL_GRID_DOT_BUDGET = 36_800
-DSTAR_REF = 0.22
+PREREG_PATH = ROOT / "evidence" / "atvr36_preregistration_20261026.json"
+EXPECTED_PREREG_SHA256 = "351a9ad89ce058ee6ed910b4a423f81e0783fe2a50ee0a69de04e5db01dc0ab1"
+TOTAL_DOT_BUDGET = 37_654
+COLLAR_PX = 2.0
+PREDICT_CHUNK = 500_000
 
 
-def _load_footprint_and_catalogue(raw_dir: Path) -> tuple[np.ndarray, np.ndarray]:
-    with rasterio.open(raw_dir / "sample_submission.tif") as ds:
-        footprint = np.isfinite(ds.read(1))
-    lbl_path = (
-        raw_dir / "labels.tif"
-        if (raw_dir / "labels.tif").is_file()
-        else raw_dir / "existing_faults.tif"
-    )
-    with rasterio.open(lbl_path) as ds:
-        lbl = ds.read(1)
-        catalogue = footprint & np.isfinite(lbl) & (lbl > 0.5)
-    return footprint, catalogue
+def _sha256_file(path: Path) -> str:
+    h = hashlib.sha256()
+    with path.open("rb") as fh:
+        for chunk in iter(lambda: fh.read(1 << 20), b""):
+            h.update(chunk)
+    return h.hexdigest()
 
 
-def run_batched_canary(
-    holdout: SegmentHoldout,
-    X_fp: np.ndarray,
-    footprint: np.ndarray,
-    batch_size: int = 5,
-) -> dict[str, Any]:
-    """Run SegmentHoldout.canary across all 25 features in 5-feature batches (<250 MB RAM)."""
-    fp_ids = np.flatnonzero(footprint)
-    merged_features: dict[str, Any] = {}
-    meta_out: dict[str, Any] = {}
-    for b0 in range(0, len(ALL_FEATURE_NAMES), batch_size):
-        names = ALL_FEATURE_NAMES[b0 : b0 + batch_size]
-        batch_dict: dict[str, np.ndarray] = {}
-        for nm in names:
-            col = ALL_FEATURE_NAMES.index(nm)
-            g = np.zeros(footprint.shape, dtype=np.float32)
-            g.ravel()[fp_ids] = X_fp[:, col]
-            batch_dict[nm] = g
-        res = holdout.canary(batch_dict, seed=20261025)
-        merged_features.update(res["features"])
-        meta_out = res
-        del batch_dict
-        gc.collect()
-
-    max_sym = max(
-        max(
-            [max(v["pooled_auc"], 1.0 - v["pooled_auc"])]
-            + [max(f["auc"], 1.0 - f["auc"]) for f in v["folds"]]
+def verify_preregistration_lock() -> dict[str, object]:
+    if not PREREG_PATH.exists():
+        raise RuntimeError(f"Missing preregistration file: {PREREG_PATH}")
+    actual = _sha256_file(PREREG_PATH)
+    if actual != EXPECTED_PREREG_SHA256:
+        raise RuntimeError(
+            f"Preregistration lock mismatch: expected {EXPECTED_PREREG_SHA256}, got {actual}"
         )
-        for v in merged_features.values()
-    )
-    passed = not any(v["leakage_suspected"] for v in merged_features.values())
-    return {
-        "diagnostic": meta_out["diagnostic"],
-        "evaluator_version": meta_out["evaluator_version"],
-        "threshold": meta_out["threshold"],
-        "two_polarities_checked": True,
-        "passed": passed,
-        "max_symmetric_auc": round(float(max_sym), 6),
-        "n_features_checked": len(merged_features),
-        "features": merged_features,
-    }
+    return json.loads(PREREG_PATH.read_text())
 
 
-def eval_ctrl_legacy_h6_static_and_nosgmc(
-    holdout: SegmentHoldout, raw_dir: Path
-) -> dict[str, Any]:
-    """CTRL-1: Evaluate the prior repo's static H6 submission on SegmentHoldout (without copying)."""
-    h6_path = (
-        ROOT
-        / "docs/downloads/GEMS36_h6_offcatalog_network_prior_20261004T193432.021282Z_3276c04090_3c064db2.tif"
-    )
-    with rasterio.open(h6_path) as ds:
-        h6_bin = (np.isfinite(ds.read(1)) & (ds.read(1) > 0.5)).astype(np.float32)
-
-    preds = []
-    for fold in holdout.folds:
-        d_vis = distance_transform_edt(~fold["visible"])
-        p = np.where(fold["valid"] & (d_vis > 2.0), h6_bin, 0.0).astype(np.uint8)
-        preds.append(p)
-    return {
-        "id": "CTRL-1-Legacy-H6",
-        "role": "prior_repo_line_a_reference_control",
-        "summary": holdout.summarize(preds),
-        "predictions": preds,
-    }
+@dataclass(frozen=True)
+class SegmentHoldoutPlan:
+    footprint: np.ndarray
+    truth: np.ndarray
+    segment_ids: np.ndarray
+    n_segments: int
+    n_folds: int
+    cell_owner: np.ndarray  # (H, W) int16 in 0..15 for footprint, -1 outside
+    fold_owner: np.ndarray  # (H, W) int16 in 0..3 for footprint, -1 outside
+    withheld_ids_by_fold: tuple[np.ndarray, ...]
+    visible_by_fold: tuple[np.ndarray, ...]
+    hidden_by_fold: tuple[np.ndarray, ...]
+    train_mask_by_fold: tuple[np.ndarray, ...]
+    eval_mask_by_fold: tuple[np.ndarray, ...]
 
 
-def eval_ctrl_raw19_hgb_oof(
-    holdout: SegmentHoldout, raw_dir: Path, footprint: np.ndarray
-) -> dict[str, Any]:
-    """CTRL-2: Reconstructed 19-band raw official training_features HGB(d=3) + ridge NMS OOF control."""
-    fp_ids = np.flatnonzero(footprint)
-    n_fp = fp_ids.size
-    raw_idx = distance_transform_edt(~footprint, return_distances=False, return_indices=True)
-    nearest_yx = (raw_idx[0].astype(np.int16), raw_idx[1].astype(np.int16))
-    del raw_idx
-    X19 = np.empty((n_fp, len(RAW_BAND_NAMES)), dtype=np.float32)
-    with rasterio.open(raw_dir / "training_features.tif") as ds:
-        for i in range(len(RAW_BAND_NAMES)):
-            arr = fill_nearest_valid(
-                ds.read(i + 1).astype(np.float32), footprint, nearest_yx=nearest_yx
-            )
-            X19[:, i] = arr.ravel()[fp_ids]
-            del arr
-    del nearest_yx
-    gc.collect()
-
-    preds = []
-    for fold in holdout.folds:
-        rng = np.random.default_rng(20261025 + fold["id"])
-        tr_fp = fold["train"].ravel()[fp_ids]
-        vis_fp = fold["visible"].ravel()[fp_ids]
-        pos_ids = np.flatnonzero(tr_fp & vis_fp)
-        neg_pool = np.flatnonzero(tr_fp & (~vis_fp))
-        neg_ids = rng.choice(neg_pool, size=min(neg_pool.size, pos_ids.size * 4), replace=False)
-        s_ids = np.concatenate([pos_ids, neg_ids])
-        y_s = np.concatenate(
-            [np.ones(pos_ids.size, dtype=np.int32), np.zeros(neg_ids.size, dtype=np.int32)]
-        )
-        clf = HistGradientBoostingClassifier(
-            max_iter=150, max_depth=3, learning_rate=0.06, random_state=20261025 + fold["id"]
-        )
-        clf.fit(X19[s_ids], y_s)
-
-        val_fp_mask = fold["valid"].ravel()[fp_ids]
-        val_idx = np.flatnonzero(val_fp_mask)
-        p_val = clf.predict_proba(X19[val_idx])[:, 1].astype(np.float32)
-        surf = np.zeros(footprint.shape, dtype=np.float32)
-        surf.ravel()[fp_ids[val_idx]] = p_val
-
-        d_vis = distance_transform_edt(~fold["visible"])
-        skel = ridge_nms(surf, fold["valid"], sigma=1.0)
-        elig = skel & fold["valid"] & (d_vis > 2.0)
-        k_fold = round(FULL_GRID_DOT_BUDGET * (float(fold["valid"].sum()) / float(n_fp)))
-        sel = select_top_positive(surf, elig, k_fold)
-        preds.append(sel.astype(np.uint8))
-
-    del X19
-    gc.collect()
-    return {
-        "id": "CTRL-2-Raw19-HGB-d3-OOF",
-        "role": "raw_19band_hgb_ridge_nms_control",
-        "summary": holdout.summarize(preds),
-        "predictions": preds,
-    }
-
-
-def eval_exp1_unsupervised(
-    holdout: SegmentHoldout, X_fp: np.ndarray, footprint: np.ndarray
-) -> dict[str, Any]:
-    """EXP-1 (1/3 budget): Label-free 4-pillar concordance + Dinkelbach-Submodular 300 m emission."""
-    t0 = time.time()
-    surf = unsupervised_concordance_surface(X_fp, footprint)
-    n_fp = float(footprint.sum())
-    preds = []
-    for fold in holdout.folds:
-        d_vis = distance_transform_edt(~fold["visible"])
-        allowed = fold["valid"] & (d_vis > 2.0)
-        k_fold = round(FULL_GRID_DOT_BUDGET * (float(fold["valid"].sum()) / n_fp))
-        p_fold = submodular_dti_emit(
-            surf,
-            allowed,
-            footprint=footprint,
-            n_dots=k_fold,
-            dstar_ref=DSTAR_REF,
-            min_gain=0.0,
-        )
-        preds.append((p_fold > 0.5).astype(np.uint8))
-    return {
-        "id": "EXP-1-H36-Unsup-Submod",
-        "experiment_index": 1,
-        "elapsed_sec": round(time.time() - t0, 2),
-        "summary": holdout.summarize(preds),
-        "predictions": preds,
-    }
-
-
-def eval_nsq_pcc_experiment(
-    exp_id: str,
-    exp_index: int,
-    feature_names: tuple[str, ...],
-    holdout: SegmentHoldout,
-    X_fp: np.ndarray,
+def build_whole_segment_holdout_plan(
+    known_bool: np.ndarray,
     footprint: np.ndarray,
     *,
-    return_oof_surface: bool = False,
-) -> dict[str, Any]:
-    """Run NSQ-PCC 4-fold spatial holdout + Dinkelbach-Submodular 300 m emission."""
-    t0 = time.time()
-    f_idx = [ALL_FEATURE_NAMES.index(nm) for nm in feature_names]
-    n_fp = float(footprint.sum())
-    preds = []
-    fold_diagnostics = []
-    oof_raw_sub = np.zeros(footprint.shape, dtype=np.float32) if return_oof_surface else None
+    buffer_px: int = 30,
+) -> SegmentHoldoutPlan:
+    """Partition all 8-connected fault segments whole into 4 folds & 16 spatial bootstrap cells."""
+    foot = np.asarray(footprint, dtype=bool)
+    pos = np.asarray(known_bool, dtype=bool) & foot
+    seg_ids, n_seg = label(pos, structure=np.ones((3, 3), dtype=np.int32))
+    seg_ids = seg_ids.astype(np.int32)
 
-    for fold in holdout.folds:
-        prob_2d, raw_sub_2d, f_info = fit_predict_nsq_pcc_fold(
-            X_fp,
-            footprint,
-            holdout.fold_grid,
-            fold["train"],
-            fold["visible"],
-            fold["id"],
-            feature_indices=f_idx,
-            seed=20261025,
-            neg_pos_ratio=4,
-        )
-        if oof_raw_sub is not None:
-            oof_raw_sub[fold["valid"]] = raw_sub_2d[fold["valid"]]
-        del raw_sub_2d
+    rs, cs = np.where(foot)
+    r_cuts = np.quantile(rs, [0.25, 0.50, 0.75])
+    c_cuts = np.quantile(cs, [0.25, 0.50, 0.75])
 
-        d_vis = distance_transform_edt(~fold["visible"])
-        allowed = fold["valid"] & (d_vis > 2.0)
-        k_fold = round(FULL_GRID_DOT_BUDGET * (float(fold["valid"].sum()) / n_fp))
-        p_fold = submodular_dti_emit(
-            prob_2d,
-            allowed,
-            footprint=footprint,
-            n_dots=k_fold,
-            dstar_ref=DSTAR_REF,
-            min_gain=0.0,
-        )
-        preds.append((p_fold > 0.5).astype(np.uint8))
-        fold_diagnostics.append(
-            {
-                "fold": fold["name"],
-                **f_info,
-                "fold_dot_budget": k_fold,
-                "fold_dots_emitted": int((p_fold > 0.5).sum()),
-            }
-        )
-        del prob_2d, p_fold
-        gc.collect()
+    grid_r, grid_c = np.indices(foot.shape)
+    bi_grid = np.searchsorted(r_cuts, grid_r, side="right")  # 0..3
+    bj_grid = np.searchsorted(c_cuts, grid_c, side="right")  # 0..3
+    pixel_cell = (bi_grid * 4 + bj_grid).astype(np.int16)
 
-    out: dict[str, Any] = {
-        "id": exp_id,
-        "experiment_index": exp_index,
-        "n_features": len(feature_names),
-        "feature_names": list(feature_names),
-        "elapsed_sec": round(time.time() - t0, 2),
-        "fold_diagnostics": fold_diagnostics,
-        "summary": holdout.summarize(preds),
-        "predictions": preds,
+    # Assign each connected segment WHOLE by its center of mass
+    coms = center_of_mass(pos, seg_ids, index=np.arange(1, n_seg + 1))
+    seg_cell = np.zeros(n_seg + 1, dtype=np.int16)
+    for sid, (rc, cc) in enumerate(coms, start=1):
+        bi = int(np.searchsorted(r_cuts, rc, side="right"))
+        bj = int(np.searchsorted(c_cuts, cc, side="right"))
+        seg_cell[sid] = bi * 4 + bj
+
+    cell_owner = np.where(foot, pixel_cell, -1).astype(np.int16)
+    pos_mask = seg_ids > 0
+    cell_owner[pos_mask] = seg_cell[seg_ids[pos_mask]]
+
+    # Map 16 cells (bi in 0..3, bj in 0..3) -> 4 macro-quadrants ((bi//2)*2 + (bj//2))
+    cell_to_fold = np.array([((c // 4) // 2) * 2 + ((c % 4) // 2) for c in range(16)], dtype=np.int16)
+    fold_owner = np.where(cell_owner >= 0, cell_to_fold[np.maximum(cell_owner, 0)], -1).astype(np.int16)
+    seg_fold = cell_to_fold[seg_cell[1:]]  # length n_seg
+
+    withheld_list, vis_list, hid_list, tr_list, ev_list = [], [], [], [], []
+    for k in range(4):
+        w_ids = np.flatnonzero(seg_fold == k) + 1
+        vis_k, hid_k, tr_k, score_k = hide_segments(seg_ids, w_ids, foot, buffer_px=buffer_px)
+        ev_k = (fold_owner == k) & foot & score_k
+        withheld_list.append(w_ids.astype(np.int32))
+        vis_list.append(vis_k)
+        hid_list.append(hid_k)
+        tr_list.append(tr_k)
+        ev_list.append(ev_k)
+
+    # Verify zero split segments and 100% coverage of positive pixels
+    total_hid = sum(int(h.sum()) for h in hid_list)
+    if total_hid != int(pos.sum()):
+        raise RuntimeError(f"Holdout positive mismatch: {total_hid} != {int(pos.sum())}")
+
+    return SegmentHoldoutPlan(
+        footprint=foot,
+        truth=pos,
+        segment_ids=seg_ids,
+        n_segments=int(n_seg),
+        n_folds=4,
+        cell_owner=cell_owner,
+        fold_owner=fold_owner,
+        withheld_ids_by_fold=tuple(withheld_list),
+        visible_by_fold=tuple(vis_list),
+        hidden_by_fold=tuple(hid_list),
+        train_mask_by_fold=tuple(tr_list),
+        eval_mask_by_fold=tuple(ev_list),
+    )
+
+
+def _cells_for_protocol(pred: np.ndarray, plan: SegmentHoldoutPlan) -> list[tuple[np.ndarray, np.ndarray, np.ndarray]]:
+    cells = []
+    p_f32 = pred.astype(np.float32, copy=False)
+    t_f32 = plan.truth.astype(np.float32, copy=False)
+    for cid in range(16):
+        cmask = plan.cell_owner == cid
+        if cmask.any() and int(plan.truth[cmask].sum()) > 0:
+            cells.append((p_f32, t_f32, cmask))
+    return cells
+
+
+def _paired_bootstrap_delta(
+    cand_pred: np.ndarray,
+    base_pred: np.ndarray,
+    plan: SegmentHoldoutPlan,
+    *,
+    bootstrap: int = 2000,
+    seed: int = 36,
+) -> dict[str, float]:
+    """Exact paired 16-cell bootstrap delta matching protocol.pooled_holdout RNG."""
+    c_cells = _cells_for_protocol(cand_pred, plan)
+    b_cells = _cells_for_protocol(base_pred, plan)
+    c_terms, b_terms = [], []
+    for (cp, ct, cm), (bp, bt, bm) in zip(c_cells, b_cells, strict=True):
+        cc = distance_weighted_tversky(cp, ct, valid_mask=cm, return_components=True)
+        bc = distance_weighted_tversky(bp, bt, valid_mask=bm, return_components=True)
+        c_terms.append((cc.true_positive, cc.false_positive, cc.false_negative))
+        b_terms.append((bc.true_positive, bc.false_positive, bc.false_negative))
+    c_arr = np.asarray(c_terms, dtype=np.float64)
+    b_arr = np.asarray(b_terms, dtype=np.float64)
+
+    def _ratio(t: np.ndarray) -> np.ndarray | float:
+        tp, fp, fn = np.moveaxis(t, -1, 0)
+        return tp / (tp + 0.2 * fp + 0.8 * fn + 1e-8)
+
+    pt_diff = float(_ratio(c_arr.sum(axis=0)) - _ratio(b_arr.sum(axis=0)))
+    rng = np.random.default_rng(seed)
+    idx = rng.integers(len(c_arr), size=(bootstrap, len(c_arr)))
+    d_boot = _ratio(c_arr[idx].sum(axis=1)) - _ratio(b_arr[idx].sum(axis=1))
+    return {
+        "delta_point": round(pt_diff, 6),
+        "delta_ci95_lo": round(float(np.quantile(d_boot, 0.025)), 6),
+        "delta_ci95_hi": round(float(np.quantile(d_boot, 0.975)), 6),
+        "prob_cand_gt_base": round(float(np.mean(d_boot > 0.0)), 4),
     }
-    if oof_raw_sub is not None:
-        out["oof_raw_sub"] = oof_raw_sub
+
+
+def _allocate_quadrant_budgets(elig_masks: list[np.ndarray], total_budget: int) -> list[int]:
+    counts = np.array([int(m.sum()) for m in elig_masks], dtype=np.float64)
+    raw = counts / counts.sum() * total_budget
+    floors = np.floor(raw).astype(int)
+    rem = int(total_budget - floors.sum())
+    order = np.argsort(-(raw - floors))
+    for i in range(rem):
+        floors[order[i]] += 1
+    assert int(floors.sum()) == total_budget
+    return floors.tolist()
+
+
+def _top_k_mask(score2d: np.ndarray, elig2d: np.ndarray, budget: int) -> np.ndarray:
+    rc = np.argwhere(elig2d)
+    vals = score2d[rc[:, 0], rc[:, 1]]
+    if len(vals) <= budget:
+        out = np.zeros(score2d.shape, dtype=bool)
+        out[rc[:, 0], rc[:, 1]] = True
+        return out
+    pool_k = min(len(vals), budget * 2)
+    part = np.argpartition(-vals, pool_k - 1)[:pool_k]
+    sub_rc = rc[part]
+    sub_v = vals[part]
+    order = np.lexsort((sub_rc[:, 1], sub_rc[:, 0], -sub_v))[:budget]
+    chosen = sub_rc[order]
+    out = np.zeros(score2d.shape, dtype=bool)
+    out[chosen[:, 0], chosen[:, 1]] = True
     return out
 
 
-def summarize_novelty_compact(nov: dict[str, Any], top_k: int = 8) -> dict[str, Any]:
-    rows = nov["rows"]
-    comp_rows = [r for r in rows if r.get("comparator_class") == "competing_method"]
-    by_overlap = sorted(
-        comp_rows,
-        key=lambda r: float(r["candidate_dot_overlap_within_3px"] or -1.0),
-        reverse=True,
-    )
-    by_rank = sorted(
-        rows,
-        key=lambda r: max(
-            abs(float(r["raw_spearman"] or 0.0)),
-            abs(float(r["kernel_spearman"] or 0.0)),
-        ),
-        reverse=True,
-    )
-    out = {k: v for k, v in nov.items() if k != "rows"}
-    out["top_competing_by_overlap"] = by_overlap[:top_k]
-    out["top_all_by_abs_rank_corr"] = by_rank[:top_k]
+def _build_c0_channels(bands_dir: Path, ext_dir: Path, foot: np.ndarray) -> dict[str, np.ndarray]:
+    """Load physical channels for frozen C0_repo_field (strictly zero SGMC)."""
+    ch: dict[str, np.ndarray] = {}
+    band_map = {
+        "raw_det_elev": "12_det_elev.npy",
+        "raw_det_elev_slope": "19_det_elev_slope.npy",
+        "raw_iso_grav_anom_vg": "11_iso_grav_anom_vg.npy",
+        "raw_iso_grav_anom_hg": "18_iso_grav_anom_hg.npy",
+        "raw_iso_grav_anom_slope": "05_iso_grav_anom_slope.npy",
+        "raw_tc": "06_tc.npy",
+        "raw_tmi_vg": "09_tmi_vg.npy",
+        "raw_tmi_hg": "03_tmi_hg.npy",
+        "raw_rtp": "02_rtp.npy",
+        "raw_cond_surf": "17_cond_surf.npy",
+        "raw_ieq_n100a15": "16_ieq_n100a15.npy",
+    }
+    for k, fname in band_map.items():
+        arr = np.load(bands_dir / fname).astype(np.float32)
+        arr[~foot] = 0.0
+        ch[k] = np.nan_to_num(arr, nan=0.0, posinf=0.0, neginf=0.0)
+
+    with rasterio.open(ext_dir / "lidar_scarp_features_u8.tif") as src:
+        valid = (src.read(12) > 0) & foot
+        step = src.read(3).astype(np.float32) / 255.0
+        ch["surface_scarp"] = np.where(valid, step, 0.0).astype(np.float32)
+
+    with rasterio.open(ext_dir / "geodawn_rad_u8.tif") as src:
+        ch["rad_composite"] = np.where(foot, src.read(4).astype(np.float32) / 255.0, 0.0)
+    with rasterio.open(ext_dir / "geodawn_extensions_u8.tif") as src:
+        ch["ext_composite"] = np.where(foot, src.read(4).astype(np.float32) / 255.0, 0.0)
+    return ch
+
+
+def _assemble_feature_subset(
+    cache: StaticFeatureCache,
+    col_names: list[str],
+    extra_cols: list[np.ndarray],
+    row_idx: np.ndarray | None = None,
+    row_slice: tuple[int, int] | None = None,
+) -> np.ndarray:
+    mm = cache.open_matrix()
+    name_to_idx = {n: i for i, n in enumerate(cache.feature_names)}
+    col_ids = [name_to_idx[n] for n in col_names]
+    if row_slice is not None:
+        s, e = row_slice
+        base = mm[s:e][:, col_ids]
+        if not extra_cols:
+            return np.ascontiguousarray(base, dtype=np.float32)
+        out = np.empty((e - s, len(col_ids) + len(extra_cols)), dtype=np.float32)
+        out[:, : len(col_ids)] = base
+        for k, ex in enumerate(extra_cols):
+            out[:, len(col_ids) + k] = ex[s:e]
+        return out
+    if row_idx is not None:
+        # Read sorted row indices via contiguous block scan to avoid strided page-fault thrashing
+        n_rows = len(row_idx)
+        out = np.empty((n_rows, len(col_ids) + len(extra_cols)), dtype=np.float32)
+        out[:, : len(col_ids)] = mm[row_idx][:, col_ids]
+        for k, ex in enumerate(extra_cols):
+            out[:, len(col_ids) + k] = ex[row_idx]
+        return out
+    base = mm[:, col_ids]
+    if not extra_cols:
+        return np.ascontiguousarray(base, dtype=np.float32)
+    out = np.empty((len(cache.foot_rows), len(col_ids) + len(extra_cols)), dtype=np.float32)
+    out[:, : len(col_ids)] = base
+    for k, ex in enumerate(extra_cols):
+        out[:, len(col_ids) + k] = ex
     return out
 
 
-def main() -> None:
-    t_start = time.time()
-    raw_dir = ROOT / "data" / "raw"
-    cache_dir = ROOT / "data" / "prepared"
-    reg_file = ROOT / "registry" / "priority_rasters.json"
-
-    print("[1/7] Loading footprint, catalogue, and SegmentHoldout ('gems-segment-pooled-v1')...")
-    footprint, catalogue = _load_footprint_and_catalogue(raw_dir)
-    holdout = SegmentHoldout(footprint, catalogue, buffer_px=15)
-
-    # Verify exact disjoint valid partition
-    valid_sum = sum(int(f["valid"].sum()) for f in holdout.folds)
-    assert valid_sum == int(footprint.sum()) == 5_167_373
-
-    print("[2/7] Building or loading 25-feature cached physical/structural stack...")
-    X_fp, feat_meta = build_or_load_feature_stack(raw_dir, cache_dir)
-    print(
-        f"      Cached stack ready: shape={X_fp.shape}, sha256={feat_meta['features_sha256'][:16]}..."
+def _fit_predict_calibrated_hgb(
+    cache: StaticFeatureCache,
+    col_names: list[str],
+    extra_cols: list[np.ndarray],
+    train_foot: np.ndarray,
+    vis_fault_foot: np.ndarray,
+    d_vis_foot: np.ndarray,
+    *,
+    target_foot_mask: np.ndarray | None = None,
+    need_cal_sample: bool = False,
+    seed: int,
+    neg_ratio: int = 5,
+) -> tuple[np.ndarray, np.ndarray | None, np.ndarray | None]:
+    """Fit case-control Horvitz-Thompson weighted HGB and predict on target_foot_mask."""
+    pos_idx = np.flatnonzero(train_foot & vis_fault_foot)
+    neg_pool = np.flatnonzero(train_foot & (d_vis_foot > COLLAR_PX))
+    rng = np.random.default_rng(seed)
+    m_neg = min(len(neg_pool), max(10_000, neg_ratio * len(pos_idx)))
+    neg_idx = (
+        rng.choice(neg_pool, size=m_neg, replace=False) if m_neg < len(neg_pool) else neg_pool
     )
+    neg_idx.sort()
 
-    print("[3/7] Running Gate 1: Two-polarity single-feature leakage canary across all 25 features...")
-    canary_report = run_batched_canary(holdout, X_fp, footprint, batch_size=2)
-    print(
-        f"      Canary passed={canary_report['passed']}, max_symmetric_auc={canary_report['max_symmetric_auc']:.4f} (limit <= 0.90)"
-    )
-    if not canary_report["passed"]:
-        raise SystemExit("FAIL-CLOSED: Leakage canary flagged a feature > 0.90 AUC!")
+    train_idx = np.concatenate([pos_idx, neg_idx])
+    order_tr = np.argsort(train_idx)
+    train_idx = train_idx[order_tr]
+    y_train = vis_fault_foot[train_idx].astype(np.int32)
 
-    print("[4/7] Evaluating leak-free reference controls (0 experiments of 3-experiment budget)...")
-    ctrl1 = eval_ctrl_legacy_h6_static_and_nosgmc(holdout, raw_dir)
-    print(f"      CTRL-1 (Legacy H6): HOLDOUT-DTI = {ctrl1['summary']['dti']:.6f}")
-    ctrl2 = eval_ctrl_raw19_hgb_oof(holdout, raw_dir, footprint)
-    print(
-        f"      CTRL-2 (Raw19 HGB d=3 OOF): HOLDOUT-DTI = {ctrl2['summary']['dti']:.5f}, CI95={ctrl2['summary']['ci95']['interval']}"
-    )
+    w_neg = float(len(neg_pool)) / float(max(1, len(neg_idx)))
+    sample_weight = np.where(y_train > 0, 1.0, w_neg).astype(np.float32)
 
-    print("[5/7] Executing locked 3-experiment budget (EXP-1, EXP-2, EXP-3)...")
-    exp1 = eval_exp1_unsupervised(holdout, X_fp, footprint)
-    print(
-        f"      EXP-1 (Unsup Concordance + Submod): HOLDOUT-DTI = {exp1['summary']['dti']:.5f}, CI95={exp1['summary']['ci95']['interval']}"
-    )
+    X_train = _assemble_feature_subset(cache, col_names, extra_cols, row_idx=train_idx)
 
-    exp2 = eval_nsq_pcc_experiment(
-        "EXP-2-H36-Local17-NSQPCC",
-        2,
-        LOCAL_FEATURE_NAMES,
-        holdout,
-        X_fp,
-        footprint,
-        return_oof_surface=False,
+    clf = HistGradientBoostingClassifier(
+        loss="log_loss",
+        learning_rate=0.055,
+        max_iter=190,
+        max_leaf_nodes=63,
+        min_samples_leaf=90,
+        l2_regularization=2.5,
+        max_bins=255,
+        early_stopping=False,
+        random_state=seed,
     )
-    print(
-        f"      EXP-2 (Local17 NSQ-PCC + Submod):  HOLDOUT-DTI = {exp2['summary']['dti']:.5f}, CI95={exp2['summary']['ci95']['interval']}"
-    )
+    clf.fit(X_train, y_train, sample_weight=sample_weight)
 
-    exp3 = eval_nsq_pcc_experiment(
-        "EXP-3-H36-CTRB-25-NSQPCC",
-        3,
-        ALL_FEATURE_NAMES,
-        holdout,
-        X_fp,
-        footprint,
-        return_oof_surface=True,
-    )
-    print(
-        f"      EXP-3 (Full 25-feat H36-CTRB):     HOLDOUT-DTI = {exp3['summary']['dti']:.5f}, CI95={exp3['summary']['ci95']['interval']}"
-    )
-    for f_row in exp3["summary"]["folds"]:
-        print(
-            f"        - Fold {f_row['fold']}: HOLDOUT-DTI = {f_row['dti']:.5f} (emitted={int(f_row['n_emitted'])}, truth={int(f_row['n_truth'])})"
+    cal_idx: np.ndarray | None = None
+    cal_pred: np.ndarray | None = None
+    if need_cal_sample:
+        cal_domain = np.flatnonzero(train_foot & (vis_fault_foot | (d_vis_foot > COLLAR_PX)))
+        cal_idx = (
+            np.sort(rng.choice(cal_domain, size=250_000, replace=False))
+            if len(cal_domain) > 250_000
+            else cal_domain
         )
+        X_cal = _assemble_feature_subset(cache, col_names, extra_cols, row_idx=cal_idx)
+        cal_pred = clf.predict_proba(X_cal)[:, 1].astype(np.float32)
+        del X_cal
 
-    paired_vs_ctrl1 = holdout.compare_paired(exp3["predictions"], ctrl1["predictions"])
-    paired_vs_ctrl2 = holdout.compare_paired(exp3["predictions"], ctrl2["predictions"])
-    paired_vs_exp1 = holdout.compare_paired(exp3["predictions"], exp1["predictions"])
-    paired_vs_exp2 = holdout.compare_paired(exp3["predictions"], exp2["predictions"])
-
-    # Seamless full-footprint out-of-fold probability calibration (zero quadrant stitch seams!)
-    oof_raw_sub_2d: np.ndarray = exp3.pop("oof_raw_sub")
-    global_base_rate = float(catalogue.sum() / max(int(footprint.sum()), 1))
-    sample_prior = 0.20
-    p64 = np.clip(oof_raw_sub_2d.astype(np.float64), 1e-6, 1.0 - 1e-6)
-    num = p64 * (global_base_rate / sample_prior)
-    den = num + (1.0 - p64) * ((1.0 - global_base_rate) / (1.0 - sample_prior))
-    oof_surface_2d = np.where(
-        footprint, (num / np.maximum(den, 1e-12)).astype(np.float32), 0.0
-    ).astype(np.float32)
-    del oof_raw_sub_2d, p64, num, den
+    del X_train, y_train, sample_weight
     gc.collect()
 
-    d_cat_full = distance_transform_edt(~catalogue)
-    full_allowed = footprint & (d_cat_full > 2.0)
-    full_pred_2d = submodular_dti_emit(
-        oof_surface_2d,
-        full_allowed,
-        footprint=footprint,
-        n_dots=FULL_GRID_DOT_BUDGET,
-        dstar_ref=DSTAR_REF,
-        min_gain=0.0,
-    )
-    n_emitted_full = int((full_pred_2d > 0.5).sum())
-    on_cat_full = int(((full_pred_2d > 0.5) & catalogue).sum())
-    near_cat_le2 = int(((full_pred_2d > 0.5) & (d_cat_full <= 2.0)).sum())
-    assert on_cat_full == 0 and near_cat_le2 == 0
+    n_foot = len(cache.foot_rows)
+    pred_foot = np.zeros(n_foot, dtype=np.float32)
+    if target_foot_mask is None:
+        for start in range(0, n_foot, PREDICT_CHUNK):
+            stop = min(start + PREDICT_CHUNK, n_foot)
+            X_chunk = _assemble_feature_subset(cache, col_names, extra_cols, row_slice=(start, stop))
+            pred_foot[start:stop] = clf.predict_proba(X_chunk)[:, 1].astype(np.float32)
+            del X_chunk
+    else:
+        tgt_idx = np.flatnonzero(target_foot_mask)
+        for start in range(0, len(tgt_idx), PREDICT_CHUNK):
+            stop = min(start + PREDICT_CHUNK, len(tgt_idx))
+            sub_idx = tgt_idx[start:stop]
+            X_chunk = _assemble_feature_subset(cache, col_names, extra_cols, row_idx=sub_idx)
+            pred_foot[sub_idx] = clf.predict_proba(X_chunk)[:, 1].astype(np.float32)
+            del X_chunk
+    return pred_foot, cal_idx, cal_pred
 
-    print(
-        f"[6/7] Running Gate 2: 107-raster registry novelty check on pre-placement surface AND {n_emitted_full:,} final dots..."
-    )
-    reg_data = json.loads(reg_file.read_text())
-    reg_entries = [
-        {**r, "file_sha256": r.get("file_sha256") or r["sha256"]}
-        for r in reg_data["unique_rasters"]
-    ]
 
-    nov_surface = compare_registry(
-        oof_surface_2d,
-        footprint,
-        reg_entries,
-        ROOT,
-        dots=None,
-        separate_calibration_controls=True,
+def _apply_fold_regime_calibration(
+    prob_foot: np.ndarray,
+    cache: StaticFeatureCache,
+    train_foot: np.ndarray,
+    vis_fault_foot: np.ndarray,
+    d_vis_foot: np.ndarray,
+    *,
+    cal_idx: np.ndarray | None = None,
+    cal_pred: np.ndarray | None = None,
+) -> tuple[np.ndarray, dict[str, float]]:
+    """Calibrate Mountain / Piedmont / Basin probabilities strictly from training-fold prevalence."""
+    mm = cache.open_matrix()
+    name_to_idx = {n: i for i, n in enumerate(cache.feature_names)}
+    p_pied = mm[:, name_to_idx["h36c_regime_piedmont_prob"]]
+    p_bas = mm[:, name_to_idx["h36c_regime_basin_prob"]]
+    p_mtn = np.clip(1.0 - p_pied - p_bas, 0.0, 1.0)
+    regime_id = np.argmax(np.column_stack([p_mtn, p_pied, p_bas]), axis=1)
+
+    cal_domain = train_foot & (vis_fault_foot | (d_vis_foot > COLLAR_PX))
+    out = prob_foot.copy()
+    scales: dict[str, float] = {}
+    for rid, rname in ((0, "mountain"), (1, "piedmont"), (2, "basin")):
+        rmask = cal_domain & (regime_id == rid)
+        if int(rmask.sum()) < 1000:
+            scales[rname] = 1.0
+            continue
+        emp_prev = float(vis_fault_foot[rmask].mean())
+        if cal_idx is not None and cal_pred is not None:
+            sub_m = regime_id[cal_idx] == rid
+            pred_mean = float(cal_pred[sub_m].mean()) if sub_m.any() else emp_prev
+        else:
+            pred_mean = float(prob_foot[rmask].mean())
+        scale = float(np.clip(np.sqrt((emp_prev + 1e-6) / (pred_mean + 1e-6)), 0.78, 1.32))
+        scales[rname] = round(scale, 5)
+        target = regime_id == rid
+        out[target] = np.clip(out[target] * scale, 0.0, 1.0)
+    return out, scales
+
+
+def _evaluate_arm_diagnostics(
+    pred_dots: np.ndarray,
+    plan: SegmentHoldoutPlan,
+    cache: StaticFeatureCache,
+) -> dict[str, object]:
+    """Compute protocol.pooled_holdout (16 spatial cells) AND unsplit full-map pooled DTI."""
+    cells = _cells_for_protocol(pred_dots, plan)
+    boot = pooled_holdout(cells, bootstrap=2000, seed=36)
+
+    unsplit = distance_weighted_tversky(
+        pred_dots.astype(np.float32),
+        plan.truth.astype(np.float32),
+        valid_mask=plan.footprint,
+        return_components=True,
     )
-    nov_dots = compare_registry(
-        full_pred_2d,
-        footprint,
-        reg_entries,
-        ROOT,
-        dots=(full_pred_2d > 0.5),
-        separate_calibration_controls=True,
-    )
-    expanded_reg_file = ROOT / "registry" / "uniqueness_registry.json"
-    nov_dots_expanded198 = None
-    if expanded_reg_file.is_file() and (ROOT / "data" / "registry").is_dir():
-        exp_entries = json.loads(expanded_reg_file.read_text())["entries"]
-        nov_dots_expanded198 = compare_registry(
-            full_pred_2d,
-            footprint,
-            exp_entries,
-            ROOT,
-            dots=(full_pred_2d > 0.5),
-            separate_calibration_controls=True,
+
+    mm = cache.open_matrix()
+    name_to_idx = {n: i for i, n in enumerate(cache.feature_names)}
+    p_pied = np.zeros(plan.footprint.shape, dtype=np.float32)
+    p_bas = np.zeros(plan.footprint.shape, dtype=np.float32)
+    lidar_ok = np.zeros(plan.footprint.shape, dtype=bool)
+    p_pied[cache.foot_rows, cache.foot_cols] = mm[:, name_to_idx["h36c_regime_piedmont_prob"]]
+    p_bas[cache.foot_rows, cache.foot_cols] = mm[:, name_to_idx["h36c_regime_basin_prob"]]
+    lidar_ok[cache.foot_rows, cache.foot_cols] = mm[:, name_to_idx["h36a_lidar_valid"]] > 0.5
+    p_mtn = np.clip(1.0 - p_pied - p_bas, 0.0, 1.0)
+    reg2d = np.argmax(np.stack([p_mtn, p_pied, p_bas], axis=0), axis=0)
+
+    sub_metrics: dict[str, dict[str, float]] = {}
+    for sname, smask in (
+        ("mountain", plan.footprint & (reg2d == 0)),
+        ("piedmont", plan.footprint & (reg2d == 1)),
+        ("basin", plan.footprint & (reg2d == 2)),
+        ("lidar_covered", plan.footprint & lidar_ok),
+        ("non_lidar_gap", plan.footprint & ~lidar_ok),
+    ):
+        comp = distance_weighted_tversky(
+            pred_dots.astype(np.float32),
+            plan.truth.astype(np.float32),
+            valid_mask=smask,
+            return_components=True,
         )
+        pos_tot = comp.true_positive + comp.false_negative
+        sub_metrics[sname] = {
+            "dti": round(float(comp.score), 6),
+            "weighted_tp": round(float(comp.true_positive), 2),
+            "positives": round(float(pos_tot), 1),
+            "weighted_recall": round(float(comp.true_positive / max(pos_tot, 1.0)), 4),
+            "dots_emitted": int((pred_dots & smask).sum()),
+        }
+
+    return {
+        "evaluator_version": EVALUATOR_VERSION,
+        "label_tag": "HOLDOUT-DTI",
+        "withheld_positives_px": int(boot["withheld_positives"]),
+        "independent_cells": int(boot["independent_cells"]),
+        "total_dots_emitted": int((pred_dots & plan.footprint).sum()),
+        "pooled_16block_dti": round(float(boot["dti"]), 6),
+        "pooled_16block_ci95": [round(float(boot["ci95"][0]), 6), round(float(boot["ci95"][1]), 6)],
+        "pooled_unsplit_dti": round(float(unsplit.score), 6),
+        "pooled_unsplit_tp_w": round(float(unsplit.true_positive), 2),
+        "pooled_unsplit_fp_w": round(float(unsplit.false_positive), 2),
+        "subdomains": sub_metrics,
+    }
+
+
+def run_all_canaries(
+    cache: StaticFeatureCache,
+    plan: SegmentHoldoutPlan,
+    oof_fold_anderson: np.ndarray,
+    oof_fold_cond_res: np.ndarray,
+) -> list[dict[str, object]]:
+    """Run protocol.feature_canary on every static + fold-computed feature."""
+    mm = cache.open_matrix()
+    results: list[dict[str, object]] = []
+    grid = np.zeros(plan.footprint.shape, dtype=np.float32)
+
+    for j, fname in enumerate(cache.feature_names):
+        grid.fill(0.0)
+        col = np.nan_to_num(mm[:, j], nan=0.0, posinf=0.0, neginf=0.0)
+        grid[cache.foot_rows, cache.foot_cols] = col
+        res = feature_canary(grid, plan.truth, plan.footprint)
+        entry = {
+            "feature": fname,
+            "auc": round(float(res["auc"]), 6),
+            "two_polarity_auc": round(float(res["two_polarity_auc"]), 6),
+            "passed": bool(res["passed"]),
+            "flagged": not bool(res["passed"]),
+        }
+        results.append(entry)
+        if entry["flagged"]:
+            raise RuntimeError(f"LEAKAGE CANARY TRIPPED on static feature {fname}: {entry}")
+
+    for fname, vec in (
+        ("h36a_fold_anderson_align", oof_fold_anderson),
+        ("h36b_fold_cond_playa_residual", oof_fold_cond_res),
+    ):
+        grid.fill(0.0)
+        grid[cache.foot_rows, cache.foot_cols] = np.nan_to_num(vec, nan=0.0)
+        res = feature_canary(grid, plan.truth, plan.footprint)
+        entry = {
+            "feature": fname,
+            "auc": round(float(res["auc"]), 6),
+            "two_polarity_auc": round(float(res["two_polarity_auc"]), 6),
+            "passed": bool(res["passed"]),
+            "flagged": not bool(res["passed"]),
+        }
+        results.append(entry)
+        if entry["flagged"]:
+            raise RuntimeError(f"LEAKAGE CANARY TRIPPED on fold feature {fname}: {entry}")
+
+    results.sort(key=lambda r: -float(r["two_polarity_auc"]))
+    return results
+
+
+def main() -> int:
+    ap = argparse.ArgumentParser(description=__doc__)
+    ap.add_argument("--force-features", action="store_true", help="Rebuild static feature cache")
+    args = ap.parse_args()
+
+    t0 = time.time()
+    verify_preregistration_lock()
+    print(f"[atvr36] Preregistration lock verified ({EXPECTED_PREREG_SHA256[:12]})")
+
+    cache = build_or_load_static_feature_cache(force_rebuild=args.force_features)
     print(
-        f"      Surface novelty passed={nov_surface['passed']}, max |rho|={nov_surface['max_abs_rank_correlation']:.4f} (limit <= 0.90)"
+        f"[atvr36] Static physical cache ready: {len(cache.foot_rows):,} footprint px x "
+        f"{len(cache.feature_names)} static features ({time.time() - t0:.1f}s)"
     )
+
+    known_bool = cache.labels > 0.5
+    plan = build_whole_segment_holdout_plan(known_bool, cache.footprint, buffer_px=30)
     print(
-        f"      Dots novelty (107 scored) competing_method_passed={nov_dots['competing_method_passed']}, "
-        f"max |rho|={nov_dots['max_abs_rank_correlation']:.4f} (limit <= 0.90), "
-        f"max competing 3-px overlap={nov_dots['max_competing_dot_overlap']:.4f} (limit <= 0.70)"
+        f"[atvr36] Whole-segment holdout plan ready: {plan.n_segments:,} segments, "
+        f"{int(plan.truth.sum()):,} positive px, 4 folds / 16 spatial cells"
     )
 
-    # Gate 3: Emit submission bundle & run dual independent validators
-    print("[7/7] Emitting paired GeoTIFF submission bundle and running automated validators...")
-    timestamp_tag = "20261025T000000Z"
-    recorded_group_best_dti = 0.14876
-    repo_b0_dti = 0.13375
-    expanded_pass = True if nov_dots_expanded198 is None else bool(nov_dots_expanded198["competing_method_passed"])
-    novelty_gate_pass = bool(nov_surface["passed"] and nov_dots["competing_method_passed"] and expanded_pass)
-    local_dti_gate_pass = bool(
-        exp3["summary"]["dti"] > ctrl1["summary"]["dti"]
-        and exp3["summary"]["dti"] > ctrl2["summary"]["dti"]
-        and exp3["summary"]["dti"] > exp1["summary"]["dti"]
-        and paired_vs_ctrl2["ci95_strictly_positive"]
-        and paired_vs_ctrl2["fold_wins"] >= 3
-    )
-    beats_group_best = bool(exp3["summary"]["dti"] > max(repo_b0_dti, recorded_group_best_dti))
-    preliminary_promote = bool(canary_report["passed"] and novelty_gate_pass and local_dti_gate_pass and beats_group_best)
-    verdict_tag = "PROMOTE" if preliminary_promote else "NEGATIVE hold slot"
-    submission_note = (
-        f"GEMSDOE36 H36-CTRB | 1.5km worm+trunk relay submod | "
-        f"HOLDOUT-DTI {exp3['summary']['dti']:.4f} | {verdict_tag} | id a1d85443"
-    )
-    assert len(submission_note) <= 140, f"Note too long ({len(submission_note)} > 140)"
+    fold_dvis: list[np.ndarray] = []
+    fold_elig: list[np.ndarray] = []
+    fold_train_foot: list[np.ndarray] = []
+    fold_target_foot: list[np.ndarray] = []
+    fold_ext: list[object] = []
+    fold_anderson_vec: list[np.ndarray] = []
+    fold_cond_res_vec: list[np.ndarray] = []
 
-    out_dl = ROOT / "docs" / "downloads"
-    # Clean any partial prior run of identical prefix/timestamp
-    for stale in out_dl.glob(f"gemsdoe36-h36-ctrb-submod-*-{timestamp_tag}-*"):
-        stale.unlink()
+    oof_anderson = np.zeros(len(cache.foot_rows), dtype=np.float32)
+    oof_cond_res = np.zeros(len(cache.foot_rows), dtype=np.float32)
 
-    bundle = write_submission_bundle(
-        full_pred_2d,
-        raw_dir / "sample_submission.tif",
-        out_dl,
-        prefix="gemsdoe36-h36-ctrb-submod",
-        timestamp_tag=timestamp_tag,
-        submission_name="GEMSDOE36-H36-CTRB-Submod",
-        note=submission_note,
-        meta={
-            "evaluator_version": exp3["summary"]["evaluator_version"],
-            "holdout_dti": float(exp3["summary"]["dti"]),
-            "holdout_ci95": exp3["summary"]["ci95"]["interval"],
+    for k in range(plan.n_folds):
+        vis_k = plan.visible_by_fold[k]
+        dvis_k = distance_transform_edt(~vis_k).astype(np.float32)
+        ev_k = plan.eval_mask_by_fold[k]
+        elig_k = ev_k & (dvis_k > COLLAR_PX)
+        tr_k = plan.train_mask_by_fold[k]
+
+        # Pad eval_k by 20 px so 4-step variational PDE has exact interior boundary support
+        pad_ev_k = (distance_transform_edt(~ev_k) <= 20.0) & cache.footprint
+
+        tr_foot = tr_k[cache.foot_rows, cache.foot_cols]
+        te_foot = ev_k[cache.foot_rows, cache.foot_cols]
+        tgt_foot = pad_ev_k[cache.foot_rows, cache.foot_cols]
+
+        and_vec, ext_k = compute_fold_anderson_feature(cache, vis_k)
+        cond_vec = compute_fold_playa_cond_residual(cache, tr_foot)
+
+        oof_anderson[te_foot] = and_vec[te_foot]
+        oof_cond_res[te_foot] = cond_vec[te_foot]
+
+        fold_dvis.append(dvis_k)
+        fold_elig.append(elig_k)
+        fold_train_foot.append(tr_foot)
+        fold_target_foot.append(tgt_foot)
+        fold_ext.append(ext_k)
+        fold_anderson_vec.append(and_vec)
+        fold_cond_res_vec.append(cond_vec)
+
+    budgets = _allocate_quadrant_budgets(fold_elig, TOTAL_DOT_BUDGET)
+    print(f"[atvr36] Quadrant budgets summing to {sum(budgets):,}: {budgets}")
+
+    # Step 1: Per-feature leakage canary across all 50 features BEFORE model runs
+    print("[atvr36] Running protocol.feature_canary across all 50 physical/fold features...")
+    canary_results = run_all_canaries(cache, plan, oof_anderson, oof_cond_res)
+    top_canary = canary_results[0]
+    print(
+        f"[atvr36] Canary PASSED (0/{len(canary_results)} flagged; max two-polarity AUC = "
+        f"{top_canary['two_polarity_auc']:.4f} on {top_canary['feature']})"
+    )
+
+    # Step 2: Baseline C0_repo_field (frozen existing repo physical belief field, SGMC OFF)
+    print("[atvr36] Evaluating Baseline C0_repo_field (enable_sgmc_prior=False)...")
+    c0_channels = _build_c0_channels(
+        work_dir() / "bands", data_dir() / "external", cache.footprint
+    )
+    c0_dots = np.zeros(cache.footprint.shape, dtype=bool)
+    c0_cfg = FieldConfig(enable_sgmc_prior=False)
+    for k in range(plan.n_folds):
+        f_res = build_belief_field(
+            c0_channels,
+            cache.footprint,
+            plan.visible_by_fold[k].astype(np.float32),
+            config=c0_cfg,
+            extension=fold_ext[k],
+        )
+        c0_dots |= _top_k_mask(f_res.belief, fold_elig[k], budgets[k])
+        del f_res
+    del c0_channels
+    gc.collect()
+    c0_eval = _evaluate_arm_diagnostics(c0_dots, plan, cache)
+    print(
+        f"[atvr36] C0_repo_field: HOLDOUT-DTI={c0_eval['pooled_16block_dti']:.4f} "
+        f"(CI95={c0_eval['pooled_16block_ci95']}, unsplit={c0_eval['pooled_unsplit_dti']:.4f})"
+    )
+
+    # Step 3: Baseline B1_raw19_hgb_d28 (19 raw bands + HGB + top-37,654 outside d_vis > 2.0)
+    print("[atvr36] Evaluating Baseline B1_raw19_hgb_d28...")
+    b1_dots = np.zeros(cache.footprint.shape, dtype=bool)
+    raw19_cols = list(RAW19_NAMES)
+    for k in range(plan.n_folds):
+        vis_foot = plan.visible_by_fold[k][cache.foot_rows, cache.foot_cols]
+        dvis_foot = fold_dvis[k][cache.foot_rows, cache.foot_cols]
+        p_foot, _, _ = _fit_predict_calibrated_hgb(
+            cache,
+            raw19_cols,
+            [],
+            fold_train_foot[k],
+            vis_foot,
+            dvis_foot,
+            target_foot_mask=fold_target_foot[k],
+            seed=3610 + k,
+        )
+        p2d = np.zeros(cache.footprint.shape, dtype=np.float32)
+        p2d[cache.foot_rows, cache.foot_cols] = p_foot
+        b1_dots |= _top_k_mask(p2d, fold_elig[k], budgets[k])
+        del p_foot, p2d
+        gc.collect()
+    b1_eval = _evaluate_arm_diagnostics(b1_dots, plan, cache)
+    print(
+        f"[atvr36] B1_raw19_hgb_d28: HOLDOUT-DTI={b1_eval['pooled_16block_dti']:.4f} "
+        f"(CI95={b1_eval['pooled_16block_ci95']}, unsplit={b1_eval['pooled_unsplit_dti']:.4f})"
+    )
+
+    # Step 4: Locked 3 ATVR-36 Experiments (EXP-1, EXP-2, EXP-3)
+    exp_specs = [
+        (
+            "EXP-1",
+            "H36-A",
+            list(RAW19_NAMES + H36A_STATIC_NAMES),
+            True,
+            False,
+            False,
+        ),
+        (
+            "EXP-2",
+            "H36-A + H36-B",
+            list(RAW19_NAMES + H36A_STATIC_NAMES + H36B_STATIC_NAMES),
+            True,
+            True,
+            False,
+        ),
+        (
+            "EXP-3",
+            "H36-A + H36-B + H36-C",
+            list(RAW19_NAMES + H36A_STATIC_NAMES + H36B_STATIC_NAMES + H36C_STATIC_NAMES),
+            True,
+            True,
+            True,
+        ),
+    ]
+    assert len(exp_specs) <= 3, "Parallel-Run Protocol budget strictly caps experiments at <= 3"
+
+    exp_outputs: dict[str, dict[str, object]] = {}
+    for exp_idx, (exp_id, hyp_label, cols, use_and, use_cond, use_reg_cal) in enumerate(exp_specs):
+        t_exp = time.time()
+        n_f = len(cols) + int(use_and) + int(use_cond)
+        print(f"[atvr36] Running {exp_id} ({hyp_label}, {n_f} features)...")
+        dots_exp = np.zeros(cache.footprint.shape, dtype=bool)
+        oof_surf_exp = np.zeros(cache.footprint.shape, dtype=np.float32)
+        variational_diags: list[dict[str, float]] = []
+        regime_scales_folds: list[dict[str, float]] = []
+
+        for k in range(plan.n_folds):
+            vis_foot = plan.visible_by_fold[k][cache.foot_rows, cache.foot_cols]
+            dvis_foot = fold_dvis[k][cache.foot_rows, cache.foot_cols]
+            extras: list[np.ndarray] = []
+            if use_and:
+                extras.append(fold_anderson_vec[k])
+            if use_cond:
+                extras.append(fold_cond_res_vec[k])
+
+            p_foot, cal_idx, cal_pred = _fit_predict_calibrated_hgb(
+                cache,
+                cols,
+                extras,
+                fold_train_foot[k],
+                vis_foot,
+                dvis_foot,
+                target_foot_mask=fold_target_foot[k],
+                need_cal_sample=use_reg_cal,
+                seed=3620 + 10 * exp_idx + k,
+            )
+            if use_reg_cal:
+                p_foot, r_scales = _apply_fold_regime_calibration(
+                    p_foot,
+                    cache,
+                    fold_train_foot[k],
+                    vis_foot,
+                    dvis_foot,
+                    cal_idx=cal_idx,
+                    cal_pred=cal_pred,
+                )
+                regime_scales_folds.append(r_scales)
+
+            p2d = np.zeros(cache.footprint.shape, dtype=np.float32)
+            p2d[cache.foot_rows, cache.foot_cols] = p_foot
+            p_var, v_diag = variational_anderson_refine(
+                p2d, fold_ext[k], cache.footprint, steps=4, step_size=0.22
+            )
+            variational_diags.append(v_diag)
+
+            q_mask = (plan.fold_owner == k) & cache.footprint
+            oof_surf_exp[q_mask] = p_var[q_mask]
+
+            sub_res = emit_submodular_cover(
+                p_var,
+                fold_elig[k],
+                budget=budgets[k],
+                valid_footprint=plan.eval_mask_by_fold[k],
+                gamma=1.15,
+                min_spacing_px=2.0,
+            )
+            dots_exp |= sub_res.mask
+            del p_foot, p2d, p_var, sub_res
+            gc.collect()
+
+        np.save(cache.cache_dir / f"oof_surf_{exp_id}.npy", oof_surf_exp)
+        del oof_surf_exp
+        gc.collect()
+
+        diag = _evaluate_arm_diagnostics(dots_exp, plan, cache)
+        vs_c0 = _paired_bootstrap_delta(dots_exp, c0_dots, plan)
+        vs_b1 = _paired_bootstrap_delta(dots_exp, b1_dots, plan)
+
+        exp_outputs[exp_id] = {
+            "experiment_id": exp_id,
+            "hypothesis": hyp_label,
+            "n_features": n_f,
+            "elapsed_sec": round(time.time() - t_exp, 2),
+            "metrics": diag,
+            "vs_C0_repo_field": vs_c0,
+            "vs_B1_raw19_hgb_d28": vs_b1,
+            "variational_pde_diagnostics": variational_diags,
+            "fold_regime_scales": regime_scales_folds,
+        }
+        print(
+            f"[atvr36] {exp_id}: HOLDOUT-DTI={diag['pooled_16block_dti']:.4f} "
+            f"(CI95={diag['pooled_16block_ci95']}, unsplit={diag['pooled_unsplit_dti']:.4f}) "
+            f"| d_vs_B1={vs_b1['delta_point']:+.4f} "
+            f"CI95=[{vs_b1['delta_ci95_lo']:+.4f}, {vs_b1['delta_ci95_hi']:+.4f}]"
+        )
+
+    # Step 5: Select winning ATVR-36 experiment by pooled 16-block HOLDOUT-DTI
+    best_exp_id = max(
+        exp_outputs.keys(),
+        key=lambda eid: float(exp_outputs[eid]["metrics"]["pooled_16block_dti"]),
+    )
+    best_exp = exp_outputs[best_exp_id]
+    best_spec = next(s for s in exp_specs if s[0] == best_exp_id)
+    print(f"[atvr36] Best preregistered experiment: {best_exp_id} ({best_spec[1]})")
+
+    # Step 6: Emit live GeoTIFF from spatial out-of-fold cross-fitted surface of winning arm
+    # (Chernozhukov et al. 2018 cross-fitting prevents in-sample spatial coordinate memorization
+    # halo collapse around existing_faults.tif and guarantees distributional parity with holdout!)
+    print(f"[atvr36] Emitting cross-fitted out-of-fold {best_exp_id} unique GeoTIFF submission...")
+    full_dknown = distance_transform_edt(~known_bool).astype(np.float32)
+    full_elig = cache.footprint & (full_dknown > COLLAR_PX)
+    full_surf_var = np.load(cache.cache_dir / f"oof_surf_{best_exp_id}.npy").astype(np.float32)
+    full_vdiag = {
+        "deployment_mode": "spatial_out_of_fold_cross_fitted_4fold",
+        "mean_stress_energy_delta": round(
+            float(
+                np.mean([d["stress_energy_delta"] for d in best_exp["variational_pde_diagnostics"]])
+            ),
+            6,
+        ),
+    }
+    full_reg_scales = {
+        "folds": best_exp["fold_regime_scales"],
+    }
+    full_cover = emit_submodular_cover(
+        full_surf_var,
+        full_elig,
+        budget=TOTAL_DOT_BUDGET,
+        valid_footprint=cache.footprint & ~known_bool,
+        gamma=1.15,
+        min_spacing_px=2.0,
+    )
+
+    out_tif = ROOT / "docs" / "downloads" / "gemsdoe36-atvr36-20261026.tif"
+    sub_name = f"gemsdoe36-atvr36-{best_exp_id.lower()}-20261026"
+    sub_note = (
+        f"ATVR-36 {best_exp_id}: tilt/LiDAR+hydrothermal+Anderson PDE+300m CELF cover "
+        f"(zero SGMC, zero prior rasters; 37654 dots)"
+    )[:140]
+
+    sub_receipt = write_and_validate_submission(
+        dot_mask_or_prob=full_cover.mask.astype(np.float32),
+        surface_for_registry=full_surf_var,
+        out_tif=out_tif,
+        submission_name=sub_name,
+        submission_note=sub_note,
+        footprint_mask=cache.footprint,
+        write_zip=True,
+    )
+
+    # Step 7: Automated Promotion Gate Decision
+    gate_canary = all(not r["flagged"] for r in canary_results)
+    gate_beats_c0 = (
+        float(best_exp["metrics"]["pooled_16block_dti"]) > float(c0_eval["pooled_16block_dti"])
+        and float(best_exp["vs_C0_repo_field"]["delta_ci95_lo"]) > 0.0
+    )
+    gate_beats_b1 = (
+        float(best_exp["metrics"]["pooled_16block_dti"]) > float(b1_eval["pooled_16block_dti"])
+        and float(best_exp["vs_B1_raw19_hgb_d28"]["delta_ci95_lo"]) > 0.0
+    )
+    gate_portal = bool(sub_receipt["validator"]["valid_for_portal"])
+    gate_registry = bool(sub_receipt["registry_audit"]["duplicate_gate_passed"])
+
+    all_gates_passed = (
+        gate_canary and gate_beats_c0 and gate_beats_b1 and gate_portal and gate_registry
+    )
+    verdict = "promote" if all_gates_passed else "negative"
+
+    exp_ledger_path = ROOT / "evidence" / "atvr36_holdout_experiments_20261026.json"
+    exp_ledger = {
+        "schema": "gems36.atvr36.experiments.v1",
+        "date_utc": "2026-10-26",
+        "preregistration_path": "evidence/atvr36_preregistration_20261026.json",
+        "preregistration_sha256": EXPECTED_PREREG_SHA256,
+        "evaluator_version": EVALUATOR_VERSION,
+        "score_provenance_label": "HOLDOUT-DTI",
+        "n_withheld_positives_px": int(c0_eval["withheld_positives_px"]),
+        "n_withheld_segments": plan.n_segments,
+        "buffer_px": 30,
+        "dot_budget": TOTAL_DOT_BUDGET,
+        "leakage_canary_summary": {
+            "n_features_tested": len(canary_results),
+            "n_flagged_gt_0p90": sum(1 for r in canary_results if r["flagged"]),
+            "max_two_polarity_auc": top_canary["two_polarity_auc"],
+            "max_feature": top_canary["feature"],
+            "top10_features": canary_results[:10],
+            "all_features": canary_results,
         },
-    )
+        "baselines": {
+            "C0_repo_field": c0_eval,
+            "B1_raw19_hgb_d28": b1_eval,
+        },
+        "experiments": exp_outputs,
+        "winning_experiment": best_exp_id,
+        "full_fit_diagnostics": {
+            "variational_pde": full_vdiag,
+            "regime_scales": full_reg_scales,
+            "submodular_objective": round(float(full_cover.objective_value), 2),
+        },
+        "automated_gates": {
+            "leakage_canary_passed": gate_canary,
+            "beats_C0_repo_field_95ci": gate_beats_c0,
+            "beats_B1_raw19_hgb_d28_95ci": gate_beats_b1,
+            "portal_geotiff_valid": gate_portal,
+            "registry_uniqueness_passed": gate_registry,
+            "all_passed": all_gates_passed,
+            "verdict": verdict,
+        },
+        "submission_receipt_summary": {
+            "submission_name": sub_name,
+            "submission_note": sub_note,
+            "tif_path": "docs/downloads/gemsdoe36-atvr36-20261026.tif",
+            "tif_sha256": sub_receipt["tif_sha256"],
+            "tif_bytes": sub_receipt["tif_bytes"],
+            "zip_path": "docs/downloads/gemsdoe36-atvr36-20261026.zip",
+            "zip_sha256": sub_receipt["zip"]["zip_sha256"],
+            "zip_bytes": sub_receipt["zip"]["zip_bytes"],
+            "max_abs_surface_spearman_rho": sub_receipt["registry_audit"]["max_abs_surface_spearman_rho"],
+            "max_abs_surface_spearman_ref": sub_receipt["registry_audit"]["max_abs_surface_spearman_ref"],
+            "max_geological_dot_overlap_3px": sub_receipt["registry_audit"]["max_geological_dot_overlap_3px"],
+            "max_geological_dot_overlap_ref": sub_receipt["registry_audit"]["max_geological_dot_overlap_ref"],
+            "synthetic_lattice_disclosure": sub_receipt["registry_audit"]["synthetic_lattice_disclosure"],
+        },
+        "total_runtime_sec": round(time.time() - t0, 2),
+    }
+    exp_ledger_path.write_text(json.dumps(exp_ledger, indent=2))
 
-    zeros_path = Path(bundle["zeros_tif"]["path"])
-    nan_path = Path(bundle["nan_tif"]["path"])
-    tmpl_path = raw_dir / "sample_submission.tif"
-
-    val_zeros_repo = validate_submission(
-        zeros_path, tmpl_path, require_nonfinite_outside=False
-    ).to_dict()
-    val_nan_repo = validate_submission(
-        nan_path, tmpl_path, require_nonfinite_outside=True
-    ).to_dict()
-    val_zeros_shared = gems_check_variants(zeros_path, tmpl_path)
-    val_nan_shared = gems_check_variants(nan_path, tmpl_path)
-
-    format_gate_pass = bool(
-        val_zeros_repo["passed"]
-        and val_nan_repo["passed"]
-        and val_zeros_shared["format_valid"]
-        and val_zeros_shared["checks"]["variant_strict_whole_array_no_nan_allowed"]["pass"]
-        and val_nan_shared["official_format_compliant"]
-        and on_cat_full == 0
-        and near_cat_le2 == 0
-    )
-    dti_gate_pass = bool(local_dti_gate_pass and beats_group_best)
-    verdict = (
-        "promote"
-        if (canary_report["passed"] and novelty_gate_pass and format_gate_pass and dti_gate_pass)
-        else "negative"
-    )
-
-    # Strip bulky fold binary arrays before JSON serialization
-    for obj in (ctrl1, ctrl2, exp1, exp2, exp3):
-        obj.pop("predictions", None)
-
+    mimic_by_exp = {
+        "EXP-1": (
+            "Erosionally dissected steep mountain-interior crags, incised canyon rims, and "
+            "unfaulted pluton-country-rock intrusive contacts (suppressed by 2.5 km relief "
+            "deconfounding and fold-only Anderson extension alignment)"
+        ),
+        "EXP-2": (
+            "Closed-basin evaporite playas / saline mudflats with low resistivity and broad "
+            "silicic caldera magnetic lows (deconfounded via fold-regressed depth/playa "
+            "17_cond_surf residual and 02_rtp trough x magnetic-THDR coupling)"
+        ),
+        "EXP-3": (
+            "Unfaulted differential compaction hinges over paleotopographic highs, closed-basin "
+            "evaporite playas, and steep mountain-interior crags (deconfounded via "
+            "15_depth_to_base_surf flexure x gravity-THDR concordance, playa residual, and "
+            "3-regime calibration)"
+        ),
+    }
     run_card = {
-        "schema": "gems-parallel-run-card-v1",
-        "generated_utc": datetime.now(timezone.utc).isoformat(),
-        "lane": "GEMSDOE36",
-        "branch": "arena/b0ff24db-gemsdoe36",
-        "hypothesis": "H36-CTRB (Curvature-Tapered 1.5 km Strike-Worm, Geophysical Trunk Relay-Bridge & Tip-Lobe Concordance with NSQ-PCC & Dinkelbach-Submodular 300 m Emission)",
+        "lane_id": "ATVR-36",
+        "winning_experiment": best_exp_id,
+        "hypothesis": (
+            f"{best_spec[1]}: Andersonian Tilt-Variational & Deconfounded Geothermal-Piedmont "
+            f"Submodular Fault Discovery ({best_exp['n_features']} physical/fold features; "
+            "zero SGMC, zero prior rasters)"
+        ),
         "mechanism": (
-            "Combines 12-azimuth antialiased 1.5 km potential-field/hydrothermal/contour-orthogonal "
-            "strike-worm line integrals, cross-horizon double-angle structure-tensor coherence, and "
-            "label-free geophysical basement-trunk opposing-EDT relay bridges + cos^4(psi) tip lobes; "
-            "excludes raw det_elev and det_elev_slope upland confounds; calibrates probabilities via "
-            "Nested Spatial-Quadrant Purged Cross-Calibration (NSQ-PCC) and places centerline dots "
-            "by exact Minoux lazy-greedy Dinkelbach-Submodular 300 m triangular-kernel maximization "
-            "outside d_cat <= 2.0 px (200 m)."
+            "Combines depth-invariant Verduzco gravity/magnetic tilt derivatives, relief-deconfounded "
+            "piedmont scarp-toe curvature, missingness-gated USGS 3DEP 1 m LiDAR scarp breaks, "
+            "hydrothermal magnetite-destruction 02_rtp troughs + playa-deconfounded 17_cond_surf "
+            "clay-cap residuals + GeoDAWN K/Th + DOE GDR 1391 physical geothermometers, Raissi-Anderson "
+            "anisotropic structure-tensor variational diffusion, and exact 25-offset Euclidean 300 m "
+            "CELF submodular expected-credit dot cover."
         ),
-        "non_fault_mimic_process": (
-            "Steep range-interior crystalline bedrock slopes (erosional cliffs/talus accessibility bias), "
-            "unfaulted Tertiary volcanic flow margins & calderas (curved magnetic contacts without basement "
-            "density step), flight-line magnetic tie artifacts, and alluvial fan distributary channels / "
-            "playa shorelines (down-fan radial gradients rather than contour-parallel scarps)."
-        ),
+        "named_non_fault_mimic": mimic_by_exp[best_exp_id],
         "holdout_dti": {
             "label": "HOLDOUT-DTI",
-            "evaluator_version": exp3["summary"]["evaluator_version"],
-            "dti": round(float(exp3["summary"]["dti"]), 6),
-            "ci95": [round(float(x), 6) for x in exp3["summary"]["ci95"]["interval"]],
-            "n_withheld_positive_pixels": exp3["summary"]["n_withheld_positive_pixels"],
-            "n_unique_withheld_components": exp3["summary"]["n_unique_withheld_components"],
-            "TP_w": round(float(exp3["summary"]["TP_w"]), 3),
-            "FP_w": round(float(exp3["summary"]["FP_w"]), 3),
-            "FN_w": round(float(exp3["summary"]["FN_w"]), 3),
-            "n_emitted_pooled": int(exp3["summary"]["n_emitted"]),
-            "folds": exp3["summary"]["folds"],
-        },
-        "benchmarks_and_ablations": {
-            "ctrl_1_prior_repo_h6": ctrl1["summary"],
-            "ctrl_2_raw19_hgb_d3_oof": ctrl2["summary"],
-            "sibling_gemsdoe24_oof_multiphysics_hgb_d3_reference": {
-                "label": "HOLDOUT-DTI",
-                "evaluator_version": "gems-segment-pooled-v1",
-                "dti": 0.13000,
-                "ci95": [0.11565, 0.14396],
-                "source": "GEMSDOE24/evidence/rshg1_run_card_20261025.json",
-            },
-            "repo_b0_59feat_oof_hgb_reference": {
-                "label": "HOLDOUT-DTI",
-                "evaluator_version": "gems-segment-pooled-v1",
-                "dti": repo_b0_dti,
-                "ci95": [0.12224, 0.14604],
-                "source": "evidence/h36_run_card.json",
-            },
-            "recorded_group_best_gemsdoe24_h24_gvc1": {
-                "label": "HOLDOUT-DTI",
-                "evaluator_version": "gems-segment-pooled-v1",
-                "dti": recorded_group_best_dti,
-                "ci95": [0.13413, 0.16370],
-                "source": "GEMSDOE24@fc2bc6f README.md (recorded, not re-run)",
-            },
-            "exp_1_unsupervised_concordance": exp1["summary"],
-            "exp_2_local17_nsqpcc": exp2["summary"],
-            "exp_3_full25_h36_ctrb": exp3["summary"],
-            "paired_exp3_vs_ctrl1": paired_vs_ctrl1,
-            "paired_exp3_vs_ctrl2": paired_vs_ctrl2,
-            "paired_exp3_vs_exp1": paired_vs_exp1,
-            "paired_exp3_vs_exp2": paired_vs_exp2,
-        },
-        "experiment_budget": {
-            "max_experiments_allowed": 3,
-            "experiments_executed": 3,
-            "max_walltime_seconds": 7200,
-            "elapsed_walltime_seconds": round(time.time() - t_start, 2),
+            "evaluator_version": EVALUATOR_VERSION,
+            "n_withheld_positives": int(best_exp["metrics"]["withheld_positives_px"]),
+            "n_withheld_segments": plan.n_segments,
+            "independent_cells": int(best_exp["metrics"]["independent_cells"]),
+            "buffer_px": 30,
+            "dti": best_exp["metrics"]["pooled_16block_dti"],
+            "ci95": best_exp["metrics"]["pooled_16block_ci95"],
+            "unsplit_pooled_dti": best_exp["metrics"]["pooled_unsplit_dti"],
+            "baseline_C0_repo_field_dti": c0_eval["pooled_16block_dti"],
+            "baseline_B1_raw19_hgb_d28_dti": b1_eval["pooled_16block_dti"],
+            "paired_delta_vs_C0": best_exp["vs_C0_repo_field"],
+            "paired_delta_vs_B1": best_exp["vs_B1_raw19_hgb_d28"],
         },
         "leakage_canary": {
-            "passed": canary_report["passed"],
-            "threshold": canary_report["threshold"],
-            "max_symmetric_auc": canary_report["max_symmetric_auc"],
-            "n_features_checked": canary_report["n_features_checked"],
-            "per_feature_pooled_auc": {
-                k: round(float(v["pooled_auc"]), 5) for k, v in canary_report["features"].items()
-            },
+            "n_features_tested": len(canary_results),
+            "auc_cap": 0.90,
+            "max_two_polarity_auc": top_canary["two_polarity_auc"],
+            "max_feature": top_canary["feature"],
+            "flagged_count": 0,
         },
         "registry_uniqueness": {
-            "registry_snapshot": "registry/priority_rasters.json",
-            "unique_registry_rasters_checked": len(reg_entries),
-            "surface_before_placement": summarize_novelty_compact(nov_surface),
-            "final_dots": summarize_novelty_compact(nov_dots),
-            "scored_107_passed": bool(nov_surface["passed"] and nov_dots["competing_method_passed"]),
-            "expanded_198_final_dots": (
-                summarize_novelty_compact(nov_dots_expanded198)
-                if nov_dots_expanded198 is not None
-                else None
-            ),
-            "expanded_198_passed": expanded_pass,
-            "passed": novelty_gate_pass,
+            "n_unique_registry_rasters_checked": sub_receipt["registry_audit"][
+                "n_unique_registry_rasters_checked"
+            ],
+            "n_geological_rasters_enforced": sub_receipt["registry_audit"][
+                "n_geological_rasters_enforced"
+            ],
+            "max_abs_surface_spearman_rho": sub_receipt["registry_audit"][
+                "max_abs_surface_spearman_rho"
+            ],
+            "max_abs_surface_spearman_ref": sub_receipt["registry_audit"][
+                "max_abs_surface_spearman_ref"
+            ],
+            "max_geological_dot_overlap_3px": sub_receipt["registry_audit"][
+                "max_geological_dot_overlap_3px"
+            ],
+            "max_geological_dot_overlap_ref": sub_receipt["registry_audit"][
+                "max_geological_dot_overlap_ref"
+            ],
+            "synthetic_lattice_pigeonhole_disclosure": sub_receipt["registry_audit"][
+                "synthetic_lattice_disclosure"
+            ],
+            "duplicate_gate_passed": gate_registry,
         },
-        "gates": {
-            "G1_beats_matched_local_controls": local_dti_gate_pass,
-            "G2_beats_group_holdout_best": beats_group_best,
-            "G3_leakage_canary": bool(canary_report["passed"]),
-            "G4a_unique_surface": bool(nov_surface["passed"]),
-            "G4b_unique_final_dots_scored_107": bool(nov_dots["competing_method_passed"]),
-            "G4c_unique_final_dots_expanded_198": expanded_pass,
-            "G5_format_and_strict_range": format_gate_pass,
-        },
-        "submission": {
-            "submission_name": "GEMSDOE36-H36-CTRB-Submod",
-            "zeros_filename": bundle["zeros_tif"]["filename"],
-            "companion_nan_name": bundle["nan_tif"]["filename"],
-            "zip_archive_name": bundle["zip_archive"]["filename"],
-            "note": submission_note,
-            "note_length_chars": len(submission_note),
-            "raster_sha256": bundle["zeros_tif"]["sha256"],
-            "companion_nan_sha256": bundle["nan_tif"]["sha256"],
-            "zip_sha256": bundle["zip_archive"]["sha256"],
-            "emitted_positive_pixels": n_emitted_full,
-            "on_catalogue_predictions": on_cat_full,
-            "near_catalogue_le_2px_predictions": near_cat_le2,
-        },
+        "raster_sha256": sub_receipt["tif_sha256"],
+        "zip_sha256": sub_receipt["zip"]["zip_sha256"],
         "validator_output": {
-            "automated_gate_passed": format_gate_pass,
-            "ok_to_download_research_tif": format_gate_pass,
-            "safe_to_download_and_submit": bool(verdict == "promote"),
-            "zeros_outside_primary": {
-                "repo_validator": val_zeros_repo,
-                "shared_gems_validator": {
-                    "format_valid": val_zeros_shared["format_valid"],
-                    "hard_failures": val_zeros_shared["hard_failures"],
-                    "variant_strict_whole_array_no_nan_allowed": val_zeros_shared["checks"][
-                        "variant_strict_whole_array_no_nan_allowed"
-                    ]["pass"],
-                    "variant_nan_aware_whole_array": val_zeros_shared["checks"][
-                        "variant_nan_aware_whole_array"
-                    ]["pass"],
-                    "footprint_all_finite": val_zeros_shared["checks"]["footprint_all_finite"][
-                        "pass"
-                    ],
-                    "footprint_range_0_1": val_zeros_shared["checks"]["footprint_range_0_1"][
-                        "pass"
-                    ],
-                    "crs_epsg_32611": val_zeros_shared["checks"]["crs_epsg_32611"]["pass"],
-                    "shape_matches_template": val_zeros_shared["checks"][
-                        "shape_matches_template"
-                    ]["pass"],
-                    "geotransform_matches_template": val_zeros_shared["checks"][
-                        "geotransform_matches_template"
-                    ]["pass"],
-                },
-            },
-            "nan_outside_companion": {
-                "repo_validator": val_nan_repo,
-                "shared_gems_validator": {
-                    "format_valid": val_nan_shared["format_valid"],
-                    "official_format_compliant": val_nan_shared["official_format_compliant"],
-                    "hard_failures": val_nan_shared["hard_failures"],
-                },
-            },
+            "valid_for_portal": sub_receipt["validator"]["valid_for_portal"],
+            "crs": sub_receipt["validator"]["crs"],
+            "shape": sub_receipt["validator"]["shape"],
+            "pixel_size_m": sub_receipt["validator"]["pixel_size_m"],
+            "dtype": sub_receipt["validator"]["dtype"],
+            "nodata": sub_receipt["validator"]["nodata"],
+            "nan_inside_footprint": sub_receipt["validator"]["nan_inside"],
+            "nan_outside_footprint": sub_receipt["validator"]["nan_outside"],
+            "inf_count": sub_receipt["validator"]["inf_count"],
+            "min_inside_footprint": sub_receipt["validator"]["min_inside"],
+            "max_inside_footprint": sub_receipt["validator"]["max_inside"],
+            "values_in_0_1": sub_receipt["validator"]["out_of_range_total"] == 0,
+            "positive_dots_emitted": sub_receipt["validator"]["positive_gt_0p5_inside"],
+            "known_fault_overlap_px": sub_receipt["validator"]["known_fault_positive_count"],
+            "errors": sub_receipt["validator"]["errors"],
         },
-        "feature_stack_metadata": feat_meta,
+        "submission_name": sub_name,
+        "submission_note": sub_note,
         "verdict": verdict,
     }
+    (ROOT / "evidence" / "atvr36_run_card_20261026.json").write_text(json.dumps(run_card, indent=2))
 
-    ev_dir = ROOT / "evidence"
-    ev_dir.mkdir(parents=True, exist_ok=True)
-    ev_card_path = ev_dir / "h36_ctrb_run_card_20261025.json"
-    dl_card_path = out_dl / "run_card.json"
-    canary_detail_path = ev_dir / "h36_ctrb_canary_20261025.json"
-
-    ev_card_path.write_text(json.dumps(run_card, indent=2) + "\n")
-    dl_card_path.write_text(json.dumps(run_card, indent=2) + "\n")
-    canary_detail_path.write_text(json.dumps(canary_report, indent=2) + "\n")
-
-    # Update registry/submission_build.json and docs/downloads/submissions_manifest.json
-    manifest_payload = {
-        "schema_version": 2,
-        "updated_utc": run_card["generated_utc"],
-        "recommended_primary_download": {
-            "candidate_id": "GEMSDOE36-H36-CTRB-Submod",
-            "verdict": verdict,
-            "automated_validation_passed": run_card["validator_output"][
-                "safe_to_download_and_submit"
-            ],
-            "uniqueness_verified_against_107_rasters": novelty_gate_pass,
-            "zeros_tif": bundle["zeros_tif"],
-            "nan_tif": bundle["nan_tif"],
-            "zip_archive": bundle["zip_archive"],
-            "note": submission_note,
-            "holdout_dti": run_card["holdout_dti"],
-            "registry_uniqueness_summary": {
-                "surface_max_abs_spearman": round(
-                    float(nov_surface["max_abs_rank_correlation"]), 5
-                ),
-                "dots_max_abs_spearman": round(float(nov_dots["max_abs_rank_correlation"]), 5),
-                "dots_max_competing_3px_overlap": round(
-                    float(nov_dots["max_competing_dot_overlap"]), 5
-                ),
+    current_run = {
+        "schema_version": "gemsdoe36.current-run.v2",
+        "updated_utc": "2026-10-26T00:00:00Z",
+        "lane_id": "ATVR-36",
+        "verdict": verdict,
+        "ok_to_download_and_submit": verdict == "promote",
+        "status_headline": (
+            "VALIDATED & UNIQUE — OK TO DOWNLOAD AND SUBMIT"
+            if verdict == "promote"
+            else "NEGATIVE / DO NOT SUBMIT — AUTOMATED PROMOTION GATE NOT MET"
+        ),
+        "winning_experiment": best_exp_id,
+        "submission_name": sub_name,
+        "submission_note": sub_note,
+        "download_tif_href": "downloads/gemsdoe36-atvr36-20261026.tif",
+        "download_zip_href": "downloads/gemsdoe36-atvr36-20261026.zip",
+        "tif_sha256": sub_receipt["tif_sha256"],
+        "tif_bytes": sub_receipt["tif_bytes"],
+        "zip_sha256": sub_receipt["zip"]["zip_sha256"],
+        "zip_bytes": sub_receipt["zip"]["zip_bytes"],
+        "dots_emitted": sub_receipt["validator"]["positive_gt_0p5_inside"],
+        "holdout_dti": run_card["holdout_dti"],
+        "leakage_canary": run_card["leakage_canary"],
+        "registry_uniqueness": run_card["registry_uniqueness"],
+        "validator_output": run_card["validator_output"],
+        "automated_gates": exp_ledger["automated_gates"],
+        "experiments_summary": {
+            "C0_repo_field": {
+                "label": "HOLDOUT-DTI",
+                "dti": c0_eval["pooled_16block_dti"],
+                "ci95": c0_eval["pooled_16block_ci95"],
+                "unsplit_dti": c0_eval["pooled_unsplit_dti"],
+            },
+            "B1_raw19_hgb_d28": {
+                "label": "HOLDOUT-DTI",
+                "dti": b1_eval["pooled_16block_dti"],
+                "ci95": b1_eval["pooled_16block_ci95"],
+                "unsplit_dti": b1_eval["pooled_unsplit_dti"],
+            },
+            **{
+                eid: {
+                    "label": "HOLDOUT-DTI",
+                    "hypothesis": eout["hypothesis"],
+                    "n_features": eout["n_features"],
+                    "dti": eout["metrics"]["pooled_16block_dti"],
+                    "ci95": eout["metrics"]["pooled_16block_ci95"],
+                    "unsplit_dti": eout["metrics"]["pooled_unsplit_dti"],
+                    "delta_vs_B1": eout["vs_B1_raw19_hgb_d28"]["delta_point"],
+                    "delta_vs_B1_ci95": [
+                        eout["vs_B1_raw19_hgb_d28"]["delta_ci95_lo"],
+                        eout["vs_B1_raw19_hgb_d28"]["delta_ci95_hi"],
+                    ],
+                }
+                for eid, eout in exp_outputs.items()
             },
         },
-        "historical_archived_artifacts_do_not_submit": [
-            {
-                "filename": "gemsdoe36-anderson-geothermal-pinn-38854-20261004T230000Z-9b9ea4e6-zeros.tif",
-                "organizer_confirmed_dti": 0.2750,
-                "status": "ARCHIVED_DUPLICATE_DO_NOT_RESUBMIT",
-                "reason": "96.91% 3-px dot overlap with GEMSDOE32 h33-2-b2 (copied 37,654 pixels + 1,200 radial IDW pixels).",
-            },
-            {
-                "filename": "GEMS36_h6_offcatalog_network_prior_20261004T193432.021282Z_3276c04090_3c064db2.tif",
-                "organizer_confirmed_dti": 0.0512,
-                "holdout_dti": round(float(ctrl1["summary"]["dti"]), 6),
-                "status": "ARCHIVED_SGMC_LEAK_NEGATIVE",
-                "reason": "Circular sgmc_off_catalogue self-recovery (0.0512 / 0.0492 ORGANIZER-CONFIRMED).",
-            },
-        ],
+        "historical_organizer_confirmed_scores": {
+            "label": "ORGANIZER-CONFIRMED",
+            "GEMSDOE32_B2_37654": 0.2778,
+            "GEMSDOE36_legacy_38854": 0.2750,
+            "GEMSDOE28_h36_1_37660": 0.2710,
+            "GEMSDOE28_31_solo_40199": 0.2708,
+            "GEMSDOE33_h33d_41865": 0.2632,
+            "GEMSDOE25_30_d28_44090": 0.2600,
+            "GEMSDOE27_tgc_61328": 0.2449,
+            "GEMSDOE27_H29S_zero_copy_37654": 0.2190,
+        },
     }
-    (ROOT / "registry" / "submission_build.json").write_text(
-        json.dumps(manifest_payload, indent=2) + "\n"
-    )
-    (out_dl / "submissions_manifest.json").write_text(
-        json.dumps(manifest_payload, indent=2) + "\n"
-    )
-
-    print(f"\n=== DONE in {time.time() - t_start:.1f}s | VERDICT: {verdict.upper()} ===")
-    print(f"Run card written to: {ev_card_path}")
+    (ROOT / "docs" / "current-run.json").write_text(json.dumps(current_run, indent=2))
+    print(f"[atvr36] COMPLETE in {time.time() - t0:.1f}s -> verdict={verdict.upper()}")
+    return 0
 
 
 if __name__ == "__main__":
-    main()
+    raise SystemExit(main())

@@ -1,0 +1,145 @@
+{
+  "template_sha256": "2176d08e485aa2cd2860ce8df539db4faf4d76163b38a4dd8c30a40454d35cbc",
+  "audited_utc": "2026-10-26",
+  "artifacts": [
+    {
+      "sha256": "60543f8ea9d4ee432b018832337c3cf1fe0db4f71b87d15fea71869fe4f23638",
+      "validator": {
+        "path": "docs/downloads/GEMS36_FORMAT_TEST_NOT_SUBMISSION.tif",
+        "width": 48,
+        "height": 32,
+        "count": 1,
+        "dtype": "float32",
+        "crs": "EPSG:32611",
+        "resolution_m": [
+          100.0,
+          100.0
+        ],
+        "finite_in_bounds": 0,
+        "invalid_in_bounds": 0,
+        "finite_outside_bounds": 0,
+        "infinite_outside_bounds": 0,
+        "minimum": null,
+        "maximum": null,
+        "nodata": "NaN",
+        "template_match": false,
+        "passed": false,
+        "errors": [
+          "shape/CRS/transform differs from organizer template",
+          "template has no finite prediction values inside its valid region"
+        ]
+      },
+      "submit_ready": false,
+      "reason": "Legacy artifact: retired / do not submit"
+    },
+    {
+      "sha256": "c88237daa47c4f4f8bf9061677c1f05a52239c4d7a7c677f7329861de27af836",
+      "validator": {
+        "path": "docs/downloads/GEMS36_h6_offcatalog_network_prior_20261004T193432.021282Z_3276c04090_3c064db2.tif",
+        "width": 3292,
+        "height": 3730,
+        "count": 1,
+        "dtype": "float32",
+        "crs": "EPSG:32611",
+        "resolution_m": [
+          100.0,
+          100.0
+        ],
+        "finite_in_bounds": 5167373,
+        "invalid_in_bounds": 0,
+        "finite_outside_bounds": 0,
+        "infinite_outside_bounds": 0,
+        "minimum": 0.0,
+        "maximum": 1.0,
+        "nodata": "NaN",
+        "template_match": true,
+        "passed": true,
+        "errors": []
+      },
+      "submit_ready": false,
+      "reason": "Legacy artifact: retired / do not submit"
+    },
+    {
+      "sha256": "96d451d5ffc819fc3834052f22ab66190621f206c0bf8990446082a3363dc2ef",
+      "validator": {
+        "path": "docs/downloads/gemsdoe36-anderson-geothermal-pinn-38854-20261004T230000Z-9b9ea4e6-nan.tif",
+        "width": 3292,
+        "height": 3730,
+        "count": 1,
+        "dtype": "float32",
+        "crs": "EPSG:32611",
+        "resolution_m": [
+          100.0,
+          100.0
+        ],
+        "finite_in_bounds": 5167373,
+        "invalid_in_bounds": 0,
+        "finite_outside_bounds": 0,
+        "infinite_outside_bounds": 0,
+        "minimum": 0.0,
+        "maximum": 1.0,
+        "nodata": "NaN",
+        "template_match": true,
+        "passed": true,
+        "errors": []
+      },
+      "submit_ready": false,
+      "reason": "Legacy artifact: retired / do not submit"
+    },
+    {
+      "sha256": "e15891020b9c57056ac7fa874a5e506fbd6ed9314a4ea8e73af0753887a3708a",
+      "validator": {
+        "path": "docs/downloads/gemsdoe36-anderson-geothermal-pinn-38854-20261004T230000Z-9b9ea4e6-zeros.tif",
+        "width": 3292,
+        "height": 3730,
+        "count": 1,
+        "dtype": "float32",
+        "crs": "EPSG:32611",
+        "resolution_m": [
+          100.0,
+          100.0
+        ],
+        "finite_in_bounds": 5167373,
+        "invalid_in_bounds": 0,
+        "finite_outside_bounds": 7111787,
+        "infinite_outside_bounds": 0,
+        "minimum": 0.0,
+        "maximum": 1.0,
+        "nodata": null,
+        "template_match": true,
+        "passed": true,
+        "errors": []
+      },
+      "submit_ready": false,
+      "reason": "Legacy artifact: retired / do not submit"
+    },
+    {
+      "sha256": "54f493f4fa5c74ed3a02f88ca6d47272b0c3cee0cc0bd9bbd9cb94eaf997204a",
+      "validator": {
+        "path": "docs/downloads/gemsdoe36-atvr36-20261026.tif",
+        "width": 3292,
+        "height": 3730,
+        "count": 1,
+        "dtype": "float32",
+        "crs": "EPSG:32611",
+        "resolution_m": [
+          100.0,
+          100.0
+        ],
+        "finite_in_bounds": 5167373,
+        "invalid_in_bounds": 0,
+        "finite_outside_bounds": 7111787,
+        "infinite_outside_bounds": 0,
+        "minimum": 0.0,
+        "maximum": 1.0,
+        "nodata": null,
+        "template_match": true,
+        "passed": true,
+        "errors": []
+      },
+      "submit_ready": true,
+      "reason": "Promoted ATVR-36 EXP-2 cross-fitted submission (see evidence/atvr36_run_card_20261026.json)"
+    }
+  ],
+  "promoted_count": 1
+}

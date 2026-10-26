@@ -1,9 +1,24 @@
 {
   "schema_version": 2,
   "generated_from": [
+    "evidence/atvr36_run_card_20261026.json",
     "evidence/h36_ctrb_run_card_20261025.json",
-    "evidence/h36_run_card.json"
+    "evidence/h36_run_card.json",
+    "docs/downloads/lane36_run_card.json"
   ],
+  "current_atvr36": {
+    "file": "gemsdoe36-atvr36-20261026.tif",
+    "sha256": "54f493f4fa5c74ed3a02f88ca6d47272b0c3cee0cc0bd9bbd9cb94eaf997204a",
+    "zip": "gemsdoe36-atvr36-20261026.zip",
+    "zip_sha256": "ceac8754bd8779c7f0a849c81f63e665e49f2767a4753cb5156832120dac8311",
+    "submission_name": "gemsdoe36-atvr36-exp-2-20261026",
+    "note": "GEMSDOE36 ATVR-36 EXP-2 | tilt/LiDAR+hydrothermal+Anderson PDE+CELF | HOLDOUT-DTI 0.1145/0.1179 | NEGATIVE hold slot",
+    "verdict": "negative",
+    "status": "DO_NOT_SUBMIT",
+    "ok_to_download": true,
+    "ok_to_submit": false,
+    "organizer_score": null
+  },
   "current_h36_ctrb": {
     "file": "gemsdoe36-h36-ctrb-submod-36800-20261025T000000Z-a1d85443-zeros.tif",
     "sha256": "2bb4513d6307e2394d5de7e7e7649e28eff067b602b805a0215e82aa5ff89907",
@@ -35,6 +50,10 @@
     "organizer_score": null
   },
   "historical_do_not_submit": [
+    {
+      "file": "gemsdoe36-lane36-supgbm-68302-20261026T002651Z-f35cb3e4-zeros.tif",
+      "status": "DO NOT SUBMIT: own custom 5-strip card says promote, shared-template 198-raster cross-check FAIL (max overlap 0.9317)"
+    },
     {
       "file": "gemsdoe36-anderson-geothermal-pinn-38854-20261004T230000Z-9b9ea4e6-zeros.tif",
       "status": "already scored: ORGANIZER-CONFIRMED 0.2750 (< 0.2778; 96.91% overlap with GEMSDOE32); do not resubmit"
