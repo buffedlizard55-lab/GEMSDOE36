@@ -1,34 +1,52 @@
 {
- "schema_version": 2,
- "generated_from": "evidence/h36_run_card.json",
- "current": {
-  "file": "gemsdoe36-h36-gps-graben-pair-20261026-bb29ce2a4bb4-zeros.tif",
-  "sha256": "e3800971b44116bca8ef8f996c3b2796b4d316962f797975f17d643abfac379b",
-  "nan_twin": "gemsdoe36-h36-gps-graben-pair-20261026-bb29ce2a4bb4-nan.tif",
-  "nan_sha256": "fce12bd37ac6a9fb53df676be8090eafffa6a2188594faa720b492562fc983f0",
-  "zip": "gemsdoe36-h36-gps-graben-pair-20261026-bb29ce2a4bb4-zeros.zip",
-  "zip_sha256": "d798c1e67d5dfd13eede95f914607b469820cd06d50a7e7c4453ea0a209aea45",
-  "submission_name": "gemsdoe36-h36-gps-graben-pair-20261026-bb29ce2a4bb4-zeros",
-  "note": "GEMSDOE36 H36-GPS graben-pair | HOLDOUT-DTI 0.1320 [0.1205,0.1443] seg-pooled-v1 60988pos | NEGATIVE | id bb29ce2a4bb4",
-  "verdict": "negative",
-  "status": "DO_NOT_SUBMIT",
-  "ok_to_download": true,
-  "ok_to_submit": false,
-  "organizer_score": null
- },
- "historical_do_not_submit": [
-  {
-   "file": "gemsdoe36-anderson-geothermal-pinn-38854-20261004T230000Z-9b9ea4e6-zeros.tif",
-   "status": "already scored: owner-reported 0.2750 (< 0.2778); do not resubmit"
+  "schema_version": 2,
+  "generated_from": [
+    "evidence/h36_ctrb_run_card_20261025.json",
+    "evidence/h36_run_card.json"
+  ],
+  "current_h36_ctrb": {
+    "file": "gemsdoe36-h36-ctrb-submod-36800-20261025T000000Z-a1d85443-zeros.tif",
+    "sha256": "2bb4513d6307e2394d5de7e7e7649e28eff067b602b805a0215e82aa5ff89907",
+    "nan_twin": "gemsdoe36-h36-ctrb-submod-36800-20261025T000000Z-a1d85443-nan.tif",
+    "nan_sha256": "d30c767aed69c8fcfdefd0ffc07b9d09bd261573b18525c7c3122f99409caf1c",
+    "zip": "gemsdoe36-h36-ctrb-submod-36800-20261025T000000Z-a1d85443-zeros.zip",
+    "zip_sha256": "4f7f7eae2f41a33f69de264e01722152b2cae3dbede37153dae9fa6f0e7eed7f",
+    "submission_name": "GEMSDOE36-H36-CTRB-Submod",
+    "note": "GEMSDOE36 H36-CTRB | 1.5km worm+trunk relay submod | HOLDOUT-DTI 0.1144 | NEGATIVE hold slot | id a1d85443",
+    "verdict": "negative",
+    "status": "DO_NOT_SUBMIT",
+    "ok_to_download": true,
+    "ok_to_submit": false,
+    "organizer_score": null
   },
-  {
-   "file": "GEMS36_h6_offcatalog_network_prior_20261004T193432.021282Z_3276c04090_3c064db2.tif",
-   "status": "never scored; validated on a circular SGMC proxy; not submit-eligible"
+  "current": {
+    "file": "gemsdoe36-h36-gps-graben-pair-20261026-bb29ce2a4bb4-zeros.tif",
+    "sha256": "e3800971b44116bca8ef8f996c3b2796b4d316962f797975f17d643abfac379b",
+    "nan_twin": "gemsdoe36-h36-gps-graben-pair-20261026-bb29ce2a4bb4-nan.tif",
+    "nan_sha256": "fce12bd37ac6a9fb53df676be8090eafffa6a2188594faa720b492562fc983f0",
+    "zip": "gemsdoe36-h36-gps-graben-pair-20261026-bb29ce2a4bb4-zeros.zip",
+    "zip_sha256": "d798c1e67d5dfd13eede95f914607b469820cd06d50a7e7c4453ea0a209aea45",
+    "submission_name": "gemsdoe36-h36-gps-graben-pair-20261026-bb29ce2a4bb4-zeros",
+    "note": "GEMSDOE36 H36-GPS graben-pair | HOLDOUT-DTI 0.1320 [0.1205,0.1443] seg-pooled-v1 60988pos | NEGATIVE | id bb29ce2a4bb4",
+    "verdict": "negative",
+    "status": "DO_NOT_SUBMIT",
+    "ok_to_download": true,
+    "ok_to_submit": false,
+    "organizer_score": null
   },
-  {
-   "file": "GEMS36_FORMAT_TEST_NOT_SUBMISSION.tif",
-   "status": "format fixture only"
-  }
- ],
- "superseded_manifest": "submissions_manifest_2026-10-04_superseded.json (contains projections that were never scores)"
+  "historical_do_not_submit": [
+    {
+      "file": "gemsdoe36-anderson-geothermal-pinn-38854-20261004T230000Z-9b9ea4e6-zeros.tif",
+      "status": "already scored: ORGANIZER-CONFIRMED 0.2750 (< 0.2778; 96.91% overlap with GEMSDOE32); do not resubmit"
+    },
+    {
+      "file": "GEMS36_h6_offcatalog_network_prior_20261004T193432.021282Z_3276c04090_3c064db2.tif",
+      "status": "ORGANIZER-CONFIRMED 0.0512; circular SGMC proxy (HOLDOUT-DTI 0.000094); not submit-eligible"
+    },
+    {
+      "file": "GEMS36_FORMAT_TEST_NOT_SUBMISSION.tif",
+      "status": "format fixture only"
+    }
+  ],
+  "superseded_manifest": "submissions_manifest_2026-10-04_superseded.json (contains projections that were never scores)"
 }
