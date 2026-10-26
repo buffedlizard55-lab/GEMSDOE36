@@ -422,6 +422,123 @@
     "errors": [],
     "all_passed": true
   },
+  "latest_experiment": {
+    "lane_id": "DW36",
+    "verdict": "negative",
+    "slot_approved": false,
+    "ok_to_download_and_submit": false,
+    "research_tif": null,
+    "raster_sha256": null,
+    "duplicate_stop_stage": "final",
+    "holdout_dti": {
+      "label": "HOLDOUT-DTI",
+      "evaluator_version": "gems-segment-pooled-v1",
+      "withheld_positives": 60988,
+      "whole_components": 3199,
+      "buffer_m": 1500,
+      "pooled_candidate": 0.06605205634872657,
+      "ci95_candidate": [
+        0.059382595043455375,
+        0.07268155968091702
+      ],
+      "pooled_control": 0.07232591166189588,
+      "ci95_control": [
+        0.06451049679642601,
+        0.08040412482698973
+      ],
+      "paired_delta": -0.006273855313169305,
+      "paired_ci95": [
+        -0.0120757233043913,
+        -0.0005144145844728646
+      ],
+      "fold_wins": 1,
+      "folds": [
+        {
+          "fold": "NW",
+          "TP_w": 669.2297741062141,
+          "FP_w": 8107.696273417114,
+          "FN_w": 9495.770225893786,
+          "n_truth": 10165,
+          "n_emitted": 8414,
+          "dti": 0.0676852130183135,
+          "coverage": 0.06583667231738456
+        },
+        {
+          "fold": "NE_LidarGapHeavy",
+          "TP_w": 627.3791239786824,
+          "FP_w": 10120.023037440249,
+          "FN_w": 11883.620876021318,
+          "n_truth": 12511,
+          "n_emitted": 10404,
+          "dti": 0.05160097494606617,
+          "coverage": 0.05014620126118475
+        },
+        {
+          "fold": "SW",
+          "TP_w": 1353.8477951053012,
+          "FP_w": 9826.619851198902,
+          "FN_w": 19180.152204894697,
+          "n_truth": 20534,
+          "n_emitted": 10410,
+          "dti": 0.07254066882543782,
+          "coverage": 0.06593200521599792
+        },
+        {
+          "fold": "SE",
+          "TP_w": 1097.4439877213533,
+          "FP_w": 7953.860107594956,
+          "FN_w": 16680.55601227865,
+          "n_truth": 17778,
+          "n_emitted": 8426,
+          "dti": 0.06845052110187586,
+          "coverage": 0.06173045267866764
+        }
+      ],
+      "not_an_organizer_score_or_projection": true
+    },
+    "registry": {
+      "pinned_count": 198,
+      "verified_count": 198,
+      "missing": [],
+      "preplacement": {
+        "registry_count": 198,
+        "max_abs_rank": 0.17182624358949897,
+        "max_3px_overlap": null,
+        "worst_file": null,
+        "focus9_max_3px_overlap": null,
+        "focus9_worst_file": null,
+        "duplicates": [],
+        "passed_present_comparators": true
+      },
+      "final": {
+        "registry_count": 198,
+        "max_abs_rank": 0.13818135302743845,
+        "max_3px_overlap": 1.0,
+        "worst_file": "13GEMSDOE/docs/downloads/13gems_20261001_r13-lattice-s5_v2_nan-outside.tif",
+        "focus9_max_3px_overlap": 0.4345886227226855,
+        "focus9_worst_file": "GEMSDOE30/docs/downloads/gemsdoe30-sgmc-hedge-d10-85k-20261003-ac08b41e-zeros.tif",
+        "duplicates": [
+          {
+            "file": "GEMSDOE3/docs/downloads/pindrop-v4-nodes-20260925T152420Z-f347b70daa.tif",
+            "rho": -0.0019613820957825275,
+            "overlap": 0.7247835555319488
+          },
+          {
+            "file": "13GEMSDOE/docs/downloads/13gems_20261001_r13-lattice-s5_v2_nan-outside.tif",
+            "rho": -7.570680593647708e-05,
+            "overlap": 1.0
+          },
+          {
+            "file": "GEMSDOE3/docs/downloads/pindrop-v4-discovery-20260925T152423Z-37f9d5b855.tif",
+            "rho": -0.002517998128093742,
+            "overlap": 0.7275189886864609
+          }
+        ],
+        "passed_present_comparators": false
+      }
+    },
+    "run_card": "downloads/dw36-run-card.json"
+  },
   "latest_hvg36_lane": {
     "lane_id": "HVG-36",
     "experiment_id": "HVG-36-EXP-1",
