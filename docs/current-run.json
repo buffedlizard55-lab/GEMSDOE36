@@ -1,6 +1,6 @@
 {
   "schema_version": "gemsdoe36-current-run-v3",
-  "updated_utc": "2026-10-26T04:42:09+00:00",
+  "updated_utc": "2026-10-26T17:54:28.037689+00:00",
   "lane_id": "MTO-36",
   "source_run_card": "evidence/mto36_run_card_20261026.json",
   "verdict": "negative",
@@ -26,5 +26,36 @@
   "registry": {
     "literal_unique": false,
     "max_overlap": 1.0
+  },
+  "latest_hvg36_lane": {
+    "lane_id": "HVG-36",
+    "experiment_id": "HVG-36-EXP-1",
+    "source_run_card": "evidence/hvg36_run_card_20261026.json",
+    "verdict": "negative",
+    "ok_to_download_research_tif": true,
+    "ok_to_download_and_submit": false,
+    "download_tif_href": "downloads/gemsdoe36-hvg36-vent-dipole-20261026-b3ee97873192-zeros.tif",
+    "download_zip_href": "downloads/gemsdoe36-hvg36-vent-dipole-20261026-b3ee97873192-zeros.zip",
+    "tif_sha256": "85d56b03aff18f72d85de9c1e1ca02a2274263fffcd95aa0a6edac7bc9a08596",
+    "zip_sha256": "2809617a47d4985311447ffa6c5b76dd7885fd6be887c197de8183d09a53ca61",
+    "submission_name": "gemsdoe36-hvg36-vent-dipole-20261026-b3ee97873192",
+    "submission_note": "HVG-36 EXP-1 vent-conduit + dipole OOF ensemble | HOLDOUT-DTI 0.1358 vs B0 0.1332 | NEGATIVE do not submit",
+    "holdout_dti": {
+      "label": "HOLDOUT-DTI",
+      "evaluator_version": "gems-segment-pooled-v1",
+      "withheld_positives": 60988,
+      "value": 0.1357593607032416,
+      "ci95": [
+        0.1232708389479757,
+        0.14846116726251246
+      ]
+    },
+    "registry": {
+      "unique_vs_all_9_focus_site_champions": true,
+      "max_overlap_focus9_top_champions": 0.4448133000478037,
+      "overlap_vs_B2_champion": 0.3535348170181123,
+      "literal_all_203_unique": false,
+      "max_overlap_all_203": 1.0
+    }
   }
 }

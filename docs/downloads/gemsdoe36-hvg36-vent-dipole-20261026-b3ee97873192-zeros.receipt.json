@@ -1,0 +1,103 @@
+{
+  "schema": "gems36.hvg36.submission_receipt.v1",
+  "submission_name": "gemsdoe36-hvg36-vent-dipole-20261026-b3ee97873192",
+  "submission_note": "HVG-36 EXP-1 vent-conduit + dipole OOF ensemble | HOLDOUT-DTI 0.1358 vs B0 0.1332 | NEGATIVE do not submit",
+  "submission_note_length": 106,
+  "scored_content_id": "b3ee97873192",
+  "tif_path": "docs/downloads/gemsdoe36-hvg36-vent-dipole-20261026-b3ee97873192-zeros.tif",
+  "zip_path": "docs/downloads/gemsdoe36-hvg36-vent-dipole-20261026-b3ee97873192-zeros.zip",
+  "tif_sha256": "85d56b03aff18f72d85de9c1e1ca02a2274263fffcd95aa0a6edac7bc9a08596",
+  "zip_sha256": "2809617a47d4985311447ffa6c5b76dd7885fd6be887c197de8183d09a53ca61",
+  "tif_bytes": 826000,
+  "zip_bytes": 176181,
+  "dot_count": 37654,
+  "known_fault_positives": 0,
+  "whole_array_finite_0_1": true,
+  "validator": {
+    "file": "gemsdoe36-hvg36-vent-dipole-20261026-b3ee97873192-zeros.tif",
+    "bytes": 826000,
+    "sha256": "85d56b03aff18f72d85de9c1e1ca02a2274263fffcd95aa0a6edac7bc9a08596",
+    "format_valid": true,
+    "ok_to_upload": false,
+    "upload_authorization": "not evaluated by a format validator; separate scientific selector required",
+    "format_acceptable": true,
+    "submission_authorized": false,
+    "scope": "Format only; this does not certify bias audit, holdout promotion or weekly-slot eligibility",
+    "hard_failures": [],
+    "official_format_compliant": false,
+    "in_footprint_positive_pixels": 37654,
+    "in_footprint_mass": 37654.0,
+    "checks": {
+      "official_template_grid_and_footprint": {
+        "pass": true,
+        "detail": "Template must be the pinned organizer grid, not just a self-consistent arbitrary raster",
+        "hard_requirement": true
+      },
+      "single_band": {
+        "pass": true,
+        "detail": "count=1",
+        "hard_requirement": true
+      },
+      "dtype_float32": {
+        "pass": true,
+        "detail": "dtypes=('float32',)",
+        "hard_requirement": true
+      },
+      "crs_epsg_32611": {
+        "pass": true,
+        "detail": "EPSG:32611",
+        "hard_requirement": true
+      },
+      "shape_matches_template": {
+        "pass": true,
+        "detail": "(3730, 3292) vs (3730, 3292)",
+        "hard_requirement": true
+      },
+      "geotransform_matches_template": {
+        "pass": true,
+        "detail": "(100.0, 0.0, 243350.0, 0.0, -100.0, 4508550.0)",
+        "hard_requirement": true
+      },
+      "footprint_all_finite": {
+        "pass": true,
+        "detail": "0 NaN/Inf inside the 5,167,373-pixel footprint",
+        "hard_requirement": true
+      },
+      "footprint_range_0_1": {
+        "pass": true,
+        "detail": "finite=5167373/5167373; range=0.0 to 1.0",
+        "hard_requirement": true
+      },
+      "outside_is_nan_official_text": {
+        "pass": false,
+        "detail": "0 of 7,111,787 outside pixels are NaN",
+        "hard_requirement": false
+      },
+      "nodata_tag_is_nan": {
+        "pass": false,
+        "detail": "nodata=None",
+        "hard_requirement": false
+      },
+      "variant_nan_aware_whole_array": {
+        "pass": true,
+        "detail": "np.nanmin/np.nanmax over the whole array",
+        "hard_requirement": true
+      },
+      "variant_masked_read": {
+        "pass": true,
+        "detail": "rasterio read(masked=True).compressed()",
+        "hard_requirement": true
+      },
+      "variant_strict_whole_array_no_nan_allowed": {
+        "pass": true,
+        "detail": "((a>=0)&(a<=1)).all() over the whole array - fails for ANY NaN, including the official sample's NaN outside",
+        "hard_requirement": false
+      },
+      "profile_matches_official_sample": {
+        "pass": false,
+        "detail": "driver/dtype/nodata/size/crs/transform equal to template; compress=lzw (template lzw)",
+        "hard_requirement": false
+      }
+    }
+  }
+}
