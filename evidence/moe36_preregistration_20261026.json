@@ -1,0 +1,24 @@
+{
+  "schema": "gemsdoe36-moe36-preregistration-v1",
+  "locked_utc": "2026-10-26T00:00:00Z",
+  "lane": "MOE36 - Cross-fitted regime-gated mixture of complementary fault experts",
+  "hypothesis": "Disjoint physical experts (raw GeoDAWN 19-band field, CTRB local potential-field/hydrothermal/LiDAR features, CTRB 1.5 km strike-worm/relay structural features) make partly independent errors; a cross-fitted rank fusion gated by which expert wins in other spatial folds (and by LiDAR coverage) recovers withheld whole fault segments better than any single expert or the repo B0 baseline.",
+  "mechanism": "Per SegmentHoldout fold (gems-segment-pooled-v1, 15 px/1.5 km buffer, whole 8-connected segments hidden): train 3 HistGradientBoosting experts on visible faults only (negatives >=3 px from visible), rank-normalise each expert surface inside the held fold, fuse ranks. Emission: ctrb.submodular_dti_emit (300 m triangular kernel, dstar 0.22) outside d_visible>2 px, total budget 37654 dots across folds proportional to fold valid area.",
+  "named_non_fault_mimic": "Unfaulted volcanic flow margins/caldera contacts (magnetic worm + tilt signal without fault), playa shorelines and alluvial-fan distributary channels (LiDAR/DEM breaks), flight-line tie artifacts. Gating can amplify a mimic if an expert wins a fold for the wrong reason; fold-level DTI of each expert is reported so this is visible.",
+  "experiments_max": 3,
+  "experiments": [
+    {"id": "EXP-1", "name": "equal rank fusion of 3 experts"},
+    {"id": "EXP-2", "name": "cross-fitted fold-gated rank fusion (weights from other folds' per-expert top-k DTI, softmax temperature 0.02, plus LiDAR-coverage regime split)"},
+    {"id": "EXP-3", "name": "EXP-2 plus cross-expert agreement bonus 0.25*min(expert ranks)"}
+  ],
+  "controls": [
+    {"id": "EACH-EXPERT", "name": "each expert alone, same emission, reported per fold"},
+    {"id": "B0-ref", "name": "repo B0 HOLDOUT-DTI 0.13375 on gems-segment-pooled-v1 (recorded in docs/current-run.json / ATVR run card); promotion requires beating it"}
+  ],
+  "promotion_gate": "promote only if best experiment HOLDOUT-DTI (gems-segment-pooled-v1) > 0.13375 AND final-dot registry check passes (|rho|<=0.90 and <=0.70 3px overlap vs competing rasters) AND validator passes whole-array [0,1]; otherwise verdict negative, DO NOT SUBMIT",
+  "leakage_canary": "SegmentHoldout.canary on all 44 input features (19 raw + 25 CTRB), two-polarity AUC must be <=0.90",
+  "uniqueness": "pre-placement surface Spearman and final-dot 3px overlap vs registry/uniqueness_registry.json via scripts/crosscheck_candidate.py",
+  "budget_dots": 37654,
+  "collar_px": 2.0,
+  "seed": 20261026
+}
