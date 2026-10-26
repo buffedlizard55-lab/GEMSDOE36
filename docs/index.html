@@ -1,417 +1,73 @@
 <!doctype html>
-<html lang="en">
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="GEMSDOE36 — DOE GEMS Prize (DrivenData #306): MTO-36 original research GeoTIFF, negative run card and fail-closed release gate, 9-site forensic audit, and submission guide.">
-  <title>GEMS DOE 36 — Download &amp; Automated Gate Verdict</title>
-  <link rel="stylesheet" href="assets/site.css">
-</head>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="GEMSDOE36 decision and download: unique submission candidate, fail-closed verdict, nine-site evidence.">
+<title>Decision and download · GEMS DOE 36</title><link rel="stylesheet" href="assets/site.css"></head>
 <body>
-  <a class="skip-link" href="#main">Skip to main content</a>
-  <header class="site-header">
-    <a class="brand" href="index.html"><span class="brand-mark" aria-hidden="true">36</span><span>GEMS DOE <span class="small">/ 36</span></span></a>
-    <nav class="nav" aria-label="Main navigation">
-      <a href="index.html">Download &amp; verdict</a>
-      <a href="executive-summary.html">Executive summary &amp; how to submit</a>
-      <a href="research/mto36-evidence-and-nine-sites.md">MTO-36 &amp; 9-Site Audit</a>
-      <a href="research/wdp36-20261026.md">WDP-36 Monograph</a>
-      <a href="research/forensic_audit_and_results_2026-10-25.md">CTRB Audit</a>
-      <a href="research/known_irregularities.md">Irregularities</a>
-      <a href="https://www.drivendata.org/competitions/306/competition-doe-gems/leaderboard/" target="_blank" rel="noopener">Official leaderboard &#8599;</a>
-    </nav>
-  </header>
-  <main id="main" class="wrap">
-<!-- KPL36:START -->
-    <section class="verdict-banner" id="kpl36-release" aria-label="KPL-36 current release">
-      <div class="verdict-head">
-        <span class="verdict-pill">DOWNLOAD: YES · ✅ OK TO SUBMIT — passed every automated gate (selector: spend ONE weekly slot on this file)</span>
-        <span class="verdict-pill secondary">KPL-36 verdict: promote · automated gate, no human inspection</span>
-      </div>
-      <h2>⬇ The file to download and submit (GEMSDOE36, 2026-10-26)</h2>
-      <p><a class="button" href="downloads/gemsdoe36-kpl36-exp3-20261026-fc869911e88c-zeros.tif"><strong>Download submission TIFF:</strong> <code>gemsdoe36-kpl36-exp3-20261026-fc869911e88c-zeros.tif</code></a>
-      <a class="button secondary" href="downloads/gemsdoe36-kpl36-exp3-20261026-fc869911e88c-zeros.zip">One-TIFF ZIP</a>
-      <a class="button secondary" href="downloads/kpl36-run-card.json">Run card (JSON)</a></p>
-      <ul>
-        <li><strong>Unique name:</strong> <code>gemsdoe36-kpl36-exp3-20261026-fc869911e88c</code></li>
-        <li><strong>Copy-paste submission Note</strong> (79/140 chars): <code>KPL-36 EXP-3 3-5km coherence+bridge | HOLDOUT-DTI 0.1701 | PROMOTE fc869911e88c</code></li>
-        <li><strong>SHA-256:</strong> <code>86fc8243ad573bcdbfac8b432daf0ec5b6800b991b2c3278706358be7eb9922d</code> · 37,654 dots · whole-array values in [0,1] (zeros outside footprint — fixes the portal <em>“Predicted values must be in range [0, 1]”</em> error caused by NaN-outside files) · single-band GeoTIFF matching the sample CRS/shape/geotransform (validator-passed).</li>
-        <li><strong>HOLDOUT-DTI</strong> (gems-segment-pooled-v1, 60,988 withheld positives): best arm <code>EXP-3</code> = <strong>0.170100</strong> [0.1551, 0.1861] vs B0 0.133934, C-GVSC replication 0.160003. This is an internal hide-and-recover number, <em>not</em> a leaderboard score.</li>
-        <li><strong>Leaderboard estimate (scenario model, not a score):</strong> 0.189–0.264 depending on novel-dot credit 0.03–0.13 (mid scenario 0.219); novel dots must average ≥0.148 credit to match the historical 0.2778 OWNER-REPORTED champion. Only an actual portal submission can measure the true value; no organizer receipt exists yet.</li>
-        <li><strong>Uniqueness (measured, 3-px dot overlap vs each focus-site champion; ≤0.70 = unique):</strong> max = 0.616; vs GEMSDOE32-B2 champion = 0.561; surface max |Spearman| vs 97 focus-9 rasters = 0.395 (≤0.90 required).</li>
-      </ul>
-      <table><caption>KPL-36 holdout arms — HOLDOUT-DTI (gems-segment-pooled-v1)</caption>
-      <thead><tr><th>Arm</th><th>HOLDOUT-DTI</th><th>95% CI</th></tr></thead><tbody><tr><td><code>B0</code></td><td>0.133934</td><td>[0.1225, 0.1456]</td></tr><tr><td><code>C-GVSC</code></td><td>0.160003</td><td>[0.1463, 0.1743]</td></tr><tr><td><code>EXP-1</code></td><td>0.168023</td><td>[0.1531, 0.1833]</td></tr><tr><td><code>EXP-2</code></td><td>0.169564</td><td>[0.1546, 0.1848]</td></tr><tr><td><code>EXP-3</code></td><td>0.170100</td><td>[0.1551, 0.1861]</td></tr></tbody></table>
-      <table><caption>Uniqueness vs the 9 focus sites' highest-scoring files (scores OWNER-REPORTED, no organizer receipts archived)</caption>
-      <thead><tr><th>Site</th><th>Champion score (OWNER-REPORTED)</th><th>KPL-36 dots within 3 px</th><th>Verdict</th></tr></thead><tbody><tr><td><code>GEMSDOE24</code></td><td>0.2477</td><td>0.613</td><td>UNIQUE (≤0.70)</td></tr><tr><td><code>GEMSDOE25</code></td><td>0.26</td><td>0.590</td><td>UNIQUE (≤0.70)</td></tr><tr><td><code>GEMSDOE27</code></td><td>0.2449</td><td>0.616</td><td>UNIQUE (≤0.70)</td></tr><tr><td><code>GEMSDOE28</code></td><td>0.271</td><td>0.571</td><td>UNIQUE (≤0.70)</td></tr><tr><td><code>GEMSDOE30</code></td><td>0.26</td><td>0.590</td><td>UNIQUE (≤0.70)</td></tr><tr><td><code>GEMSDOE31</code></td><td>0.2708</td><td>0.578</td><td>UNIQUE (≤0.70)</td></tr><tr><td><code>GEMSDOE32</code></td><td>0.2778</td><td>0.561</td><td>UNIQUE (≤0.70)</td></tr><tr><td><code>GEMSDOE33</code></td><td>0.2632</td><td>0.586</td><td>UNIQUE (≤0.70)</td></tr><tr><td><code>GEMSDOE36</code></td><td>0.275</td><td>0.563</td><td>UNIQUE (≤0.70)</td></tr></tbody></table>
-      <p>Method in one line: 3–5 km oriented line-coherence (expert-traceability) features + GVSC-89 geothermal/geophysics stack, LiDAR-blind bridge ensemble, quadrant-OOF surface, B2 catalogue collar, exact 300 m CELF submodular emission. Full audit: <a href="research/kpl36-20261026.md">KPL-36 monograph &amp; 9-site executive table</a>. How to submit: <a href="executive-summary.html">executive summary</a>.</p>
-    </section>
-<!-- KPL36:END -->
-<!-- MTO-36:START -->
-    <section class="verdict-banner" id="current-release" aria-label="Current release status">
-      <div class="verdict-head">
-        <span class="verdict-pill">DOWNLOAD: YES (research) · DO NOT SUBMIT</span>
-        <span class="verdict-pill secondary">verdict: negative · Automated Fail-Closed Gate</span>
-        <span class="verdict-pill secondary">Latest HVG-36 EXP-1: HOLDOUT-DTI 0.135759 (New GEMSDOE36 Holdout Record) · MTO-36: 0.067611</span>
-      </div>
-      <h2>Executive Summary — Which Submission Scored Highest, What File to Download, Estimated Scores &amp; Uniqueness</h2>
-      <p><strong>Immediate Automated Answer (Zero Human Intervention Required):</strong></p>
-      <ul>
-        <li><strong>Which historical submission scored highest across the 9 focus sites?</strong> <code>GEMSDOE32</code>'s <code>gemsdoe32-h33-h33-2-b2-20261004T220000Z-e5eb6e7e-zeros.tif</code> achieved <strong><code>0.2778 OWNER-REPORTED</code></strong> (`37,654` dots, scored ID <code>c55bafc47005</code>). However, forensic byte analysis proves it is an exact <code>0-XOR</code> subset of <code>GEMSDOE25/30 D2.8</code> (<code>d_cat &gt; 2 px</code>) shared across <code>GEMSDOE25, 28, 30, 31, 32, 33, 36</code>. <strong>Do not re-upload historical family duplicates to DrivenData.</strong></li>
-        <li><strong>What is the newest unique GeoTIFF generated in <code>GEMSDOE36</code> &amp; is it OK to download and submit?</strong> This repository generated the unique whole-array <code>[0, 1]</code> GeoTIFF <a href="downloads/gemsdoe36-hvg36-vent-dipole-20261026-b3ee97873192-zeros.tif" download><code>gemsdoe36-hvg36-vent-dipole-20261026-b3ee97873192-zeros.tif</code></a> (<a href="downloads/gemsdoe36-hvg36-vent-dipole-20261026-b3ee97873192-zeros.zip" download>ZIP</a> · <a href="downloads/hvg36-run-card.json" download>JSON Run Card</a> · <a href="research/hvg36-20261026.md">Monograph</a> · <a href="research/preregistration-hvg36-20261026.md">Preregistration</a>) from <strong>Lane <code>HVG-36</code> (<code>HVG-36-EXP-1</code>: Hydrothermal-Vent Structural-Conduit &amp; Cross-Scale Potential-Field Dipole Ensemble)</strong>, alongside <a href="downloads/gemsdoe36-mto36-ortho-contact-20261026-c41282e9da7a-zeros.tif" download><code>gemsdoe36-mto36-ortho-contact-20261026-c41282e9da7a-zeros.tif</code></a> (<a href="downloads/gemsdoe36-mto36-ortho-contact-20261026-c41282e9da7a-zeros.zip" download>ZIP</a> · <a href="downloads/mto36-run-card.json" download>MTO-36 Run Card</a>).
-          <br><strong>Automated Gate Decision: <code>DOWNLOAD: YES (research) · DO NOT SUBMIT</code> (<code>verdict: negative</code>).</strong>
-          <code>HVG-36-EXP-1</code> achieved <strong><code>HOLDOUT-DTI = 0.135759</code></strong> (<code>95% CI [0.123271, 0.148461]</code>, <code>gems-segment-pooled-v1</code>, <code>60,988</code> withheld positives), beating the matched 59-feature <code>B0</code> control (<code>0.133169</code>, <code>delta = +0.002590</code>, winning <strong>3 of 4 spatial folds</strong>: <code>NW = 0.14972</code>, <code>NE_LidarGapHeavy = 0.17477</code>, <code>SW = 0.08927</code>, <code>SE = 0.15112</code>) and setting the <strong>highest <code>HOLDOUT-DTI</code> of all 7 lanes in <code>GEMSDOE36</code></strong>. It is also <strong>100% unique against all 9 focus-site top champions</strong> (max 3-px dot overlap <code>44.48% &lt;= 70%</code>; <code>35.35%</code> vs <code>GEMSDOE32 B2</code>; pre-placement surface max <code>|rho| = 0.5713 &lt;= 0.90</code> PASS; all 14 features PASS leakage canary with max AUC <code>0.6440 &lt;= 0.90</code>). However, our automated fail-closed gate withholds live portal submission because: (1) the paired 95% CI vs <code>B0</code> (<code>[-0.003311, +0.008388]</code>) includes zero; (2) pooled <code>HOLDOUT-DTI</code> (<code>0.135759</code>) remains below the recorded 9-site holdout best <code>0.14876</code> (<code>GEMSDOE24 H24-GVC1</code>); and (3) on the literal 203-raster registry check, 3-px overlap exceeds 70% against dense union-pool/blanket rasters (<code>72.01%</code> on <code>gems28-h37-1-probe-union-pool-r1</code>, <code>88.37%</code> on <code>GEMSDOE67 ovtr-ml-cover</code>, <code>100.00%</code> on <code>13GEMSDOE</code> 5-px lattice).</li>
-      </ul>
-      <div class="cta-row">
-        <a class="btn" href="downloads/gemsdoe36-hvg36-vent-dipole-20261026-b3ee97873192-zeros.tif" download>Download HVG-36 Research TIFF (0.135759 · do not submit)</a>
-        <a class="btn secondary" href="downloads/gemsdoe36-hvg36-vent-dipole-20261026-b3ee97873192-zeros.zip" download>Download HVG-36 ZIP</a>
-        <a class="btn secondary" href="downloads/hvg36-run-card.json" download>HVG-36 Run Card JSON</a>
-        <a class="btn secondary" href="downloads/gemsdoe36-mto36-ortho-contact-20261026-c41282e9da7a-zeros.tif" download>Download MTO-36 Research TIFF (gemsdoe36-mto36-ortho-contact-20261026-c41282e9da7a-zeros.tif)</a>
-        <a class="btn secondary" href="downloads/gemsdoe36-mto36-ortho-contact-20261026-c41282e9da7a-zeros.zip" download>Download MTO-36 ZIP</a>
-        <a class="btn secondary" href="downloads/mto36-run-card.json" download>MTO-36 Run Card JSON</a>
-        <a class="btn secondary" href="executive-summary.html">Submission &amp; Holdout Guide</a>
-      </div>
-      <p><strong>HVG-36 Name:</strong> <code>gemsdoe36-hvg36-vent-dipole-20261026-b3ee97873192</code> · <strong>Note (106 / 140 chars):</strong> <code>HVG-36 EXP-1 vent-conduit + dipole OOF ensemble | HOLDOUT-DTI 0.1358 vs B0 0.1332 | NEGATIVE do not submit</code> · <strong>TIF SHA-256:</strong> <code>85d56b03aff18f72d85de9c1e1ca02a2274263fffcd95aa0a6edac7bc9a08596</code><br>
-         <strong>MTO-36 Name:</strong> <code>gemsdoe36-mto36-ortho-contact-20261026-c41282e9da7a-zeros</code> · <strong>Note (98 / 140 chars; not for use while negative):</strong> <code>GEMSDOE36 MTO-36 contact-crosscut | HOLDOUT-DTI 0.0676 | NEGATIVE; research only | id c41282e9da7a</code> · <strong>TIF SHA-256:</strong> <code>3e6594fe39facbffd433dc4500a7e8766fab2dd0d5089d2f591ed47713261607</code></p>
-      <div class="table-wrap verdict-meta"><table>
-        <tr><th>Current research TIFF</th><td><a href="downloads/gemsdoe36-hvg36-vent-dipole-20261026-b3ee97873192-zeros.tif" download>gemsdoe36-hvg36-vent-dipole-20261026-b3ee97873192-zeros.tif</a> (HVG-36 EXP-1, new repo best) &amp; <a href="downloads/gemsdoe36-mto36-ortho-contact-20261026-c41282e9da7a-zeros.tif" download>gemsdoe36-mto36-ortho-contact-20261026-c41282e9da7a-zeros.tif</a> (MTO-36)</td></tr>
-        <tr><th>Score evidence (not a leaderboard estimate)</th><td><strong>HVG-36 EXP-1: HOLDOUT-DTI 0.135759</strong>, 95% CI <code>[0.123271, 0.148461]</code> (beats B0 <code>0.133169</code> on 3/4 folds; EXP-2 <code>0.133383</code>; EXP-3 <code>0.133757</code>) · <strong>MTO-36: HOLDOUT-DTI 0.067611</strong>, 95% CI <code>[0.058449, 0.077867]</code>, <code>gems-segment-pooled-v1</code>, 60,988 withheld positives.</td></tr>
-        <tr><th>Unique under registry rule?</th><td><strong>YES vs all 9 focus-site champions</strong> (HVG-36 max 3-px overlap <code>44.48% &lt;= 70%</code>, <code>35.35%</code> vs B2; surface <code>|rho| = 0.5713 &lt;= 0.90</code>) · <strong>NO under literal all-203 registry rule</strong> (HVG-36 <code>72.01%</code> vs union-pool / <code>88.37%</code> vs blanket; MTO-36 final 3-px overlap 100.00% &gt; 70% ceiling). Research download only.</td></tr>
-        <tr><th>Decision</th><td><strong>DOWNLOAD: YES (research) · DO NOT SUBMIT</strong></td></tr>
-      </table></div>
-      <div class="table-wrap">
-        <table>
-          <thead>
-            <tr>
-              <th>GEMSDOE36 Lane</th>
-              <th>Downloadable GeoTIFF (Whole-Array <code>[0, 1]</code>)</th>
-              <th>Estimated Score: <code>HOLDOUT-DTI</code> (<code>gems-segment-pooled-v1</code>, 60,988 withheld px, 95% CI)</th>
-              <th>Surface Rank <code>max |rho|</code> (&le;0.90)</th>
-              <th>3-px Overlap vs 9 Focus Champions (&le;70%)</th>
-              <th>3-px Overlap vs Full 203-Raster Registry</th>
-              <th>Automated Gate Verdict</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td><strong><code>HVG-36 EXP-1</code> (Latest · Best Holdout in Repo)</strong></td>
-              <td><a href="downloads/gemsdoe36-hvg36-vent-dipole-20261026-b3ee97873192-zeros.tif" download><code>gemsdoe36-hvg36-vent-dipole-20261026-b3ee97873192-zeros.tif</code></a><br><small>SHA-256 <code>85d56b03aff18f72...</code> · 37,654 dots</small></td>
-              <td><strong><code>0.135759</code> HOLDOUT-DTI</strong><br><small>95% CI <code>[0.123271, 0.148461]</code> · beats B0 <code>0.133169</code> (<code>+0.002590</code>, wins 3/4 folds; EXP-2 <code>0.133383</code>, EXP-3 <code>0.133757</code>)</small></td>
-              <td><code>0.5713</code> (PASS)</td>
-              <td><strong>PASS (<code>44.48%</code> max; <code>35.35%</code> vs B2)</strong></td>
-              <td>FAIL literal all-203 (<code>72.01%</code> union-pool; <code>88.37%</code> blanket; <code>100%</code> lattice)</td>
-              <td><strong><code>negative</code> · DO NOT SUBMIT</strong></td>
-            </tr>
-            <tr>
-              <td><code>MTO-36 E1</code></td>
-              <td><a href="downloads/gemsdoe36-mto36-ortho-contact-20261026-c41282e9da7a-zeros.tif" download><code>gemsdoe36-mto36-ortho-contact-20261026-c41282e9da7a-zeros.tif</code></a><br><small>SHA-256 <code>3e6594fe39facbff...</code> · 37,654 dots</small></td>
-              <td><code>0.067611</code> HOLDOUT-DTI<br><small>95% CI <code>[0.058449, 0.077867]</code> vs control <code>0.066923</code></small></td>
-              <td><code>0.1194</code> (PASS)</td>
-              <td>PASS (<code>51.20%</code> max)</td>
-              <td>FAIL literal all-199 (<code>73.50%</code> blanket; <code>100%</code> lattice)</td>
-              <td><code>negative</code> · DO NOT SUBMIT</td>
-            </tr>
-            <tr>
-              <td><code>WDP-36 EXP-1</code></td>
-              <td><a href="downloads/gemsdoe36-wdp36-exp1-20261026-zeros.tif" download><code>gemsdoe36-wdp36-exp1-20261026-zeros.tif</code></a><br><small>SHA-256 <code>ae9da29e45c6782a...</code> · 37,654 dots</small></td>
-              <td><code>0.093269</code> HOLDOUT-DTI<br><small>95% CI <code>[0.083380, 0.103501]</code> vs control <code>0.091901</code></small></td>
-              <td><code>0.2149</code> (PASS)</td>
-              <td>PASS (<code>49.09%</code> max)</td>
-              <td>FAIL literal all-200 (<code>72.27%</code> blanket; <code>100%</code> lattice)</td>
-              <td><code>negative</code> · DO NOT SUBMIT</td>
-            </tr>
-            <tr>
-              <td><code>MOE36 EXP-1</code></td>
-              <td><a href="downloads/gemsdoe36-moe36-exp1-20261026-zeros.tif" download><code>gemsdoe36-moe36-exp1-20261026-zeros.tif</code></a><br><small>SHA-256 <code>7ac5ef617b589d6b...</code> · 37,654 dots</small></td>
-              <td><code>0.128246</code> HOLDOUT-DTI<br><small>95% CI <code>[0.116049, 0.140744]</code> vs B0 <code>0.133749</code></small></td>
-              <td><code>0.5920</code> (PASS)</td>
-              <td>PASS (<code>45.36%</code> max)</td>
-              <td>FAIL literal all-198 (<code>89.64%</code> blanket; <code>100%</code> lattice)</td>
-              <td><code>negative</code> · DO NOT SUBMIT</td>
-            </tr>
-            <tr>
-              <td><code>ATVR-36 EXP-3</code></td>
-              <td><a href="downloads/gemsdoe36-atvr36-20261026.tif" download><code>gemsdoe36-atvr36-20261026.tif</code></a><br><small>SHA-256 <code>53aa2ff7702635d3...</code> · 37,654 dots</small></td>
-              <td><code>0.129224</code> HOLDOUT-DTI<br><small>95% CI <code>[0.117029, 0.141418]</code> vs B0 <code>0.133749</code></small></td>
-              <td><code>0.5798</code> (PASS)</td>
-              <td>PASS (<code>36.68%</code> vs B2)</td>
-              <td>FAIL literal all-196 (<code>91.50%</code> blanket; <code>100%</code> lattice)</td>
-              <td><code>negative</code> · DO NOT SUBMIT</td>
-            </tr>
-            <tr>
-              <td><code>H36-CTRB</code></td>
-              <td><a href="downloads/gemsdoe36-h36-ctrb-submod-36800-20261025T000000Z-a1d85443-zeros.tif" download><code>gemsdoe36-h36-ctrb-submod-36800-20261025T000000Z-a1d85443-zeros.tif</code></a><br><small>SHA-256 <code>2bb4513d6307e239...</code> · 36,800 dots</small></td>
-              <td><code>0.131910</code> HOLDOUT-DTI<br><small>95% CI <code>[0.120020, 0.144080]</code> vs B0 <code>0.133749</code></small></td>
-              <td><code>0.6295</code> (PASS)</td>
-              <td>PASS (<code>47.02%</code> max)</td>
-              <td>FAIL literal all-193 (<code>89.64%</code> blanket; <code>100%</code> lattice)</td>
-              <td><code>negative</code> · DO NOT SUBMIT</td>
-            </tr>
-            <tr>
-              <td><code>H36-GPS-Aniso-r3</code></td>
-              <td><a href="downloads/gemsdoe36-h36-gps-graben-pair-20261026-bb29ce2a4bb4-zeros.tif" download><code>gemsdoe36-h36-gps-graben-pair-20261026-bb29ce2a4bb4-zeros.tif</code></a><br><small>SHA-256 <code>473d363a97caeb87...</code> · 37,654 dots</small></td>
-              <td><code>0.133011</code> HOLDOUT-DTI<br><small>95% CI <code>[0.121387, 0.145053]</code> vs B0 <code>0.133749</code></small></td>
-              <td><code>0.5944</code> (PASS)</td>
-              <td>PASS (<code>42.68%</code> max)</td>
-              <td>FAIL literal all-193 (<code>87.17%</code> blanket; <code>100%</code> lattice)</td>
-              <td><code>negative</code> · DO NOT SUBMIT</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-      <p><a href="research/hvg36-20261026.md">Read HVG-36 research monograph</a> · <a href="research/mto36-evidence-and-nine-sites.md">Read audited nine-site summary, MTO-36 hypothesis and all limitations</a>. <code>ORGANIZER-CONFIRMED</code> requires a submission-page receipt; the user-supplied older scores do not satisfy this.</p>
-    </section>
-<!-- MTO-36:END -->
-    <section class="verdict verdict-bad" id="gvsc36-latest" aria-labelledby="gvsc36-title">
-      <div class="eyebrow">Additional completed lane · GVSC-36 · research only</div>
-      <h2 id="gvsc36-title">GVSC-36: DO NOT SUBMIT — registry novelty failed</h2>
-      <p><strong>DOWNLOAD: YES (research) · OK TO DOWNLOAD AND SUBMIT: NO.</strong> This separate GVSC-36 TIFF is locally format-valid but does not satisfy the literal uniqueness gate: 94.60% 3 px overlap vs GEMSDOE22 H23-B, 99.62% maximum across 206 comparators. Its concept overlaps the earlier H24-GVC1 lane, and the run has a screening-order caveat. No portal slot was used.</p>
-      <div class="hero-actions"><a class="button" href="downloads/gemsdoe36-gvsc36-exp3-20261026-5fb822bdfb60-zeros.tif" download>Download GVSC-36 TIFF (research only)</a><a class="button secondary" href="downloads/gemsdoe36-gvsc36-exp3-20261026-5fb822bdfb60-zeros.zip" download>Single-TIFF ZIP</a><a class="button secondary" href="downloads/gvsc36-run-card.json">GVSC-36 run card</a><a class="button secondary" href="research/gvsc36-20261026.md">Full evidence and irregularities</a></div>
-      <p><strong>HOLDOUT-DTI:</strong> 0.158855 (95% CI [0.145456, 0.173084]; gems-segment-pooled-v1; 60,988 withheld positives). This is not a leaderboard score estimate. TIF SHA-256: <code>ad809c2b0919d4b71afee80f0b4827aa9ad4ecd8c66507109a3d3f7292cac1a1</code>. Format validation passes locally; submission decision is <strong>NO</strong>.</p>
-    </section>
-    <section class="section" aria-labelledby="focus-sites-title">
-      <div class="section-head"><div><div class="eyebrow">Pinned byte-forensics, Holdout-DTI estimates &amp; uniqueness</div><h2 id="focus-sites-title">Nine Focus Sites — Best Historical Submissions, Downloadable Files, Holdout-DTI Estimates &amp; Uniqueness</h2></div>
-      <p>All nine historical TIFF hashes, dots and grids were rechecked from pinned GitHub snapshots. No organizer submission-page receipt was available. All nine historical champions also fail the stated 3-px uniqueness rule against each other. Direct leaderboard projections are unavailable; we report exact <code>HOLDOUT-DTI</code> scores (<code>gems-segment-pooled-v1</code>, <code>60,988</code> withheld positives, 1,500 m buffer) alongside historical <code>OWNER-REPORTED</code> live scores. Do not choose an old file to resubmit.</p></div>
-      <div class="table-wrap"><table><tr><th>Site</th><th>Exact pinned file for audit</th><th>Measured</th><th>Reported score (unverified)</th><th>Estimated leaderboard score &amp; Holdout-DTI</th><th>Uniqueness / lineage evidence</th><th>Safe now?</th></tr>
-<tr><td><code>GEMSDOE24</code></td><td><a href="https://github.com/buffedlizard55-lab/GEMSDOE24/blob/fc2bc6f350bf5c6ce8da5d7a2ab03578ea1259d1/docs/downloads/gems24-h25-1-dotted-h19-5-d1-5-20261002-989f59505db1-nan.tif" target="_blank" rel="noopener"><code>gems24-h25-1-dotted-h19-5-d1-5-20261002-989f59505db1-nan.tif</code></a> <small>SHA-256 68d0e2e4fcc5</small></td><td>60,069 dots</td><td><strong>0.2477 OWNER-REPORTED</strong> (receipt missing)</td><td>Unavailable; no calibrated leaderboard estimate — <strong>H24-GVC1 (abe8e51c): HOLDOUT-DTI 0.14876 (95% CI [0.13413, 0.16370], gems-segment-pooled-v1, 60,988 withheld px; Highest Recorded Holdout across 9 repos) -&gt; 0.0859 OWNER-REPORTED live</strong> <small>(Historical raster in-sample SegmentHoldout diag vs labels.tif: <code>0.171825</code> HOLDOUT-DTI, 95% CI <code>[0.156368, 0.187259]</code>)</small></td><td><strong>NO</strong> · at least 88.48% of its dots overlap each other focus mask within 3 px.  <small>(Historical H25-1: NO (97.95% Jaccard with GEMSDOE27). Recent GVC1: NO (76.82% 3-px overlap vs 10GEMSDOE).)</small></td><td>NO · historical/reused or negative</td></tr>
-<tr><td><code>GEMSDOE25</code></td><td><a href="https://github.com/buffedlizard55-lab/GEMSDOE25/blob/e40b9b5e3871cb34d138f586bde97f5099658d01/docs/downloads/gems25-dotted-h19-5-d2-8-20261002-e56ea318af89-nan.tif" target="_blank" rel="noopener"><code>gems25-dotted-h19-5-d2-8-20261002-e56ea318af89-nan.tif</code></a> <small>SHA-256 91eae1ca42ec</small></td><td>44,090 dots</td><td><strong>0.2600 OWNER-REPORTED</strong> (receipt missing)</td><td>Unavailable; no calibrated leaderboard estimate — <strong>Recent H66 (da617550): 0.0742 OWNER-REPORTED live (no SegmentHoldout card published)</strong> <small>(Historical raster in-sample SegmentHoldout diag vs labels.tif: <code>0.161630</code> HOLDOUT-DTI, 95% CI <code>[0.146284, 0.176734]</code>)</small></td><td><strong>NO</strong> · at least 88.17% of its dots overlap each other focus mask within 3 px. Pixel-identical in footprint (0 XOR) to GEMSDOE30 d2.8. <small>(NO — 0-XOR pixel-identical in footprint to GEMSDOE30 &amp; superset of GEMSDOE31/32.)</small></td><td>NO · historical/reused or negative</td></tr>
-<tr><td><code>GEMSDOE27</code></td><td><a href="https://github.com/buffedlizard55-lab/GEMSDOE27/blob/927322eadbde56be42ae129ccdfb9b37540d8e60/docs/downloads/gems27-topo-gap-closure-t-v2-on-d1-5-20261002-5512495c6bd1-nan.tif" target="_blank" rel="noopener"><code>gems27-topo-gap-closure-t-v2-on-d1-5-20261002-5512495c6bd1-nan.tif</code></a> <small>SHA-256 33003374335d</small></td><td>61,328 dots</td><td><strong>0.2449 OWNER-REPORTED</strong> (receipt missing)</td><td>Unavailable; no calibrated leaderboard estimate — <strong>H29-S (51189874): HOLDOUT-DTI 0.0566 (5-km block OOF, 95% CI [0.0507, 0.0626]) -&gt; 0.2190 OWNER-REPORTED live</strong> <small>(Historical raster in-sample SegmentHoldout diag vs labels.tif: <code>0.172636</code> HOLDOUT-DTI, 95% CI <code>[0.157229, 0.187996]</code>)</small></td><td><strong>NO</strong> · at least 86.72% of its dots overlap each other focus mask within 3 px.  <small>(Historical T-v2: NO (97.95% Jaccard with GEMSDOE24). Recent H29-S: YES vs 9 focus sites (max 3-px = 38.2%), FAIL vs dense blankets.)</small></td><td>NO · historical/reused or negative</td></tr>
-<tr><td><code>GEMSDOE28</code></td><td><a href="https://github.com/buffedlizard55-lab/GEMSDOE28/blob/e6321461066f89080e3b1bb670d3951ab20d3638/docs/downloads/gems28-h36-1-rung30-blind-r1-20261003-b531dae0a36f-nan.tif" target="_blank" rel="noopener"><code>gems28-h36-1-rung30-blind-r1-20261003-b531dae0a36f-nan.tif</code></a> <small>SHA-256 5556aa1438fd</small></td><td>37,660 dots</td><td><strong>0.2710 OWNER-REPORTED</strong> (receipt missing)</td><td>Unavailable; no calibrated leaderboard estimate — <strong>No clean non-leaking SegmentHoldout card (D2.8/B2 derivative)</strong> <small>(Historical raster in-sample SegmentHoldout diag vs labels.tif: <code>0.046180</code> HOLDOUT-DTI, 95% CI <code>[0.039815, 0.052887]</code>)</small></td><td><strong>NO</strong> · at least 95.47% of its dots overlap each other focus mask within 3 px. h27-4-r1-solo (40,199 dots, 0.2708) is pixel-identical (0 XOR) to GEMSDOE31 solo and equals (d2.8 &amp; d_cat &gt; 1 px). <small>(NO — &gt;93% 3-px dot overlap with GEMSDOE25/30/31/32/33/36.)</small></td><td>NO · historical/reused or negative</td></tr>
-<tr><td><code>GEMSDOE30</code></td><td><a href="https://github.com/buffedlizard55-lab/GEMSDOE30/blob/760af3005dd40b9f36d8fef97d6dc384fd9f2a2f/docs/downloads/gemsdoe30-d28-poisson300m-offcat-44090-20261003T233156Z-91eae1ca.tif" target="_blank" rel="noopener"><code>gemsdoe30-d28-poisson300m-offcat-44090-20261003T233156Z-91eae1ca.tif</code></a> <small>SHA-256 8cf893ead566</small></td><td>44,090 dots</td><td><strong>0.2600 OWNER-REPORTED</strong> (receipt missing)</td><td>Unavailable; no calibrated leaderboard estimate — <strong>Recent H30-2c: 0.0695 OWNER-REPORTED live (no SegmentHoldout card)</strong> <small>(Historical raster in-sample SegmentHoldout diag vs labels.tif: <code>0.161630</code> HOLDOUT-DTI, 95% CI <code>[0.146284, 0.176734]</code>)</small></td><td><strong>NO</strong> · at least 88.17% of its dots overlap each other focus mask within 3 px. 0 XOR in footprint vs GEMSDOE25 d2.8. <small>(NO — 0-XOR pixel-identical in footprint to GEMSDOE25 (91eae1ca42ec).)</small></td><td>NO · historical/reused or negative</td></tr>
-<tr><td><code>GEMSDOE31</code></td><td><a href="https://github.com/buffedlizard55-lab/GEMSDOE31/blob/597b04cd1afb65d1ebbe3e9417fd952be48e3d74/docs/downloads/gemsdoe31-h27-4-solo-d28-20261004-8acb75e1-nan.tif" target="_blank" rel="noopener"><code>gemsdoe31-h27-4-solo-d28-20261004-8acb75e1-nan.tif</code></a> <small>SHA-256 07b6db440535</small></td><td>40,199 dots</td><td><strong>0.2708 OWNER-REPORTED</strong> (receipt missing)</td><td>Unavailable; no calibrated leaderboard estimate — <strong>Recent H27-5: 0.0725 OWNER-REPORTED live</strong> <small>(Historical raster in-sample SegmentHoldout diag vs labels.tif: <code>0.049061</code> HOLDOUT-DTI, 95% CI <code>[0.042874, 0.055868]</code>)</small></td><td><strong>NO</strong> · at least 95.39% of its dots overlap each other focus mask within 3 px. 0 XOR vs GEMSDOE28 h27-4-r1-solo. <small>(NO — exact 0-XOR subset D2.8 &amp; (d_cat &gt; 1 px) (100% inside GEMSDOE25/30).)</small></td><td>NO · historical/reused or negative</td></tr>
-<tr><td><code>GEMSDOE32</code></td><td><a href="https://github.com/buffedlizard55-lab/GEMSDOE32/blob/5fc7792c5887735ecd3aa9a612787da588a7bf2c/docs/downloads/gemsdoe32-h33-h33-2-b2-20261004T220000Z-e5eb6e7e-zeros.tif" target="_blank" rel="noopener"><code>gemsdoe32-h33-h33-2-b2-20261004T220000Z-e5eb6e7e-zeros.tif</code></a> <small>SHA-256 c55bafc47005</small></td><td>37,654 dots</td><td><strong>0.2778 OWNER-REPORTED</strong> (receipt missing)</td><td>Unavailable; no calibrated leaderboard estimate — <strong>Recent H32-R11: 0.0537 OWNER-REPORTED live; Champion B2 in-sample diag = 0.006708 because d_cat &gt; 2 px moat zeroes known-fault TP while stripping 6,436 collar FPs on the blind test set</strong> <small>(Historical raster in-sample SegmentHoldout diag vs labels.tif: <code>0.006708</code> HOLDOUT-DTI, 95% CI <code>[0.003999, 0.009992]</code>)</small></td><td><strong>NO</strong> · at least 99.88% of its dots overlap each other focus mask within 3 px. 9-site champion, but NOT a new detector: 0-XOR pixel-identical to (d2.8 &amp; d_cat &gt; 2 px), stripping 6,436 0-200 m catalogue-collar false positives off 19GEMSDOE h19-5. <small>(NO — exact 0-XOR subset D2.8 &amp; (d_cat &gt; 2 px) (100% inside GEMSDOE25/30/31; 96.91% inside GEMSDOE36 PINN).)</small></td><td>NO · historical/reused or negative</td></tr>
-<tr><td><code>GEMSDOE33</code></td><td><a href="https://github.com/buffedlizard55-lab/GEMSDOE33/blob/f618cc54773bd9b4d6c2b3ebf78103a05cc10cb6/docs/downloads/GEMSDOE33-h33d-analog-tip-stepover-r30-20261004-cb490425926e.tif" target="_blank" rel="noopener"><code>GEMSDOE33-h33d-analog-tip-stepover-r30-20261004-cb490425926e.tif</code></a> <small>SHA-256 87f857d505e2</small></td><td>41,865 dots</td><td><strong>0.2632 OWNER-REPORTED</strong> (receipt missing)</td><td>Unavailable; no calibrated leaderboard estimate — <strong>No clean non-leaking SegmentHoldout card (D2.8/B2 derivative)</strong> <small>(Historical raster in-sample SegmentHoldout diag vs labels.tif: <code>0.086408</code> HOLDOUT-DTI, 95% CI <code>[0.076459, 0.097028]</code>)</small></td><td><strong>NO</strong> · at least 92.64% of its dots overlap each other focus mask within 3 px.  <small>(NO — &gt;90% 3-px dot overlap with GEMSDOE25/28/30/31/32/36.)</small></td><td>NO · historical/reused or negative</td></tr>
-<tr><td><code>GEMSDOE36</code></td><td><a href="https://github.com/buffedlizard55-lab/GEMSDOE36/blob/c5a8ae7da3bd2fcff5aa5855afd44c7a3346c16f/docs/downloads/gemsdoe36-anderson-geothermal-pinn-38854-20261004T230000Z-9b9ea4e6-zeros.tif" target="_blank" rel="noopener"><code>gemsdoe36-anderson-geothermal-pinn-38854-20261004T230000Z-9b9ea4e6-zeros.tif</code></a> <small>SHA-256 e15891020b9c</small></td><td>38,854 dots</td><td><strong>0.2750 OWNER-REPORTED</strong> (receipt missing)</td><td>Unavailable; no calibrated leaderboard estimate — <strong>Latest HVG-36 EXP-1 (b3ee97873192): HOLDOUT-DTI 0.135759 (95% CI [0.123271, 0.148461], gems-segment-pooled-v1, 60,988 withheld px; New GEMSDOE36 Holdout Record, beats B0 0.133169 on 3/4 folds; MTO-36 = 0.067611, WDP-36 = 0.093269, MOE36 = 0.128246, ATVR-36 = 0.129224, H36-CTRB = 0.131910, H36-GPS = 0.133011)</strong> <small>(Historical raster in-sample SegmentHoldout diag vs labels.tif: <code>0.011051</code> HOLDOUT-DTI, 95% CI <code>[0.007938, 0.014563]</code>)</small></td><td><strong>NO</strong> · at least 97.31% of its dots overlap each other focus mask within 3 px. Strictly contains all 37,654 GEMSDOE32 B2 dots plus 1,200 broad thermal IDW dots (net -0.0028 dilution vs B2). Legacy H6 (24,881 dots) retired due to circular SGMC blending/evaluation. <small>(Legacy PINN: NO (96.91% overlap with B2). Latest HVG-36 EXP-1: YES vs all 9 focus-site top champions (max 3-px = 44.48%, 35.35% vs GEMSDOE32 B2; surface max |rho| = 0.5713 PASS), FAIL literal all-203 check (72.01% vs gems28-h37-1-probe-union-pool-r1, 88.37% vs GEMSDOE67 blanket, 100.00% vs 13GEMSDOE 5-px lattice).)</small></td><td>NO · historical/reused or negative</td></tr>
-      </table></div>
-      <p>Highest reported in this set: GEMSDOE32 <code>0.2778 OWNER-REPORTED</code>, but its mask is an exact D2.8 subset (<code>0</code> XOR) after removing the 200 m known-fault collar (<code>6,436</code> collar FPs stripped; algebraic inversion across <code>D2.8 / R1 / B2 / PINN</code> fits with <code>R^2 = 0.998523</code>, yielding blind-test <code>TP_w = 5,151.3 px</code> and ground-truth weight <code>K = 12,852.7 px</code>). All nine historical files fail the 70% 3-px overlap uniqueness ceiling; see the <a href="downloads/focus-sites-pairwise-uniqueness.json">72-pair audit JSON</a>. By contrast, our newly generated <a href="downloads/gemsdoe36-hvg36-vent-dipole-20261026-b3ee97873192-zeros.tif" download><code>gemsdoe36-hvg36-vent-dipole-20261026-b3ee97873192-zeros.tif</code></a> achieves <code>HOLDOUT-DTI = 0.135759</code> (highest in <code>GEMSDOE36</code>) and is 100% unique against all 9 focus-site champions (<code>max 3-px overlap = 44.48%</code>), though it remains a <code>negative</code> research release. This is mask lineage, <strong>not</strong> proof that collar removal caused the blind score change. <a href="research/hvg36-20261026.md">HVG-36 Monograph</a> · <a href="research/mto36-evidence-and-nine-sites.md">MTO-36 &amp; Nine-Site Forensics</a>.</p>
-    </section>
+<a class="skip-link" href="#main">Skip to main content</a>
+<header class="site-header"><a class="brand" href="index.html"><span class="brand-mark" aria-hidden="true">36</span><span>GEMS DOE <span class="small">/ 36</span></span></a>
+<nav class="nav" aria-label="Main navigation"><a href="index.html">Decision</a><a href="executive-summary.html">Executive summary &amp; how to submit</a><a href="research/registry-preflight-20261026.md">Evidence &amp; research</a><a href="https://www.drivendata.org/competitions/306/competition-doe-gems/leaderboard/" target="_blank" rel="noopener">Official leaderboard ↗</a></nav></header>
+<main id="main" class="wrap">
 
-    <section class="verdict verdict-bad" aria-labelledby="repo-title">
-      <div class="eyebrow">Repository decision · earlier negative parallel research lanes</div>
-      <h1 id="repo-title">DO NOT SUBMIT — hold weekly live slot (Research downloads only)</h1>
-      <p class="verdict-sub"><strong>DOWNLOAD: YES · LIVE WEEKLY SLOT: DO NOT SUBMIT</strong> — Earlier research GeoTIFFs below passed local template/grid and strict <code>[0, 1]</code> whole-array checks; the organizer has NOT accepted them and may run additional validation. None simultaneously clears the recorded group <code>HOLDOUT-DTI</code> best (<code>0.14876</code> / <code>repo B0 = 0.13375</code>) and the literal 201-raster uniqueness ceiling (<code>&le; 70%</code> against <code>41&ndash;55%</code> area blankets), so spending one of the 3 weekly live slots is blocked automatically to <strong>Maximize P(Win)</strong>.</p>
-      <div class="table-wrap verdict-meta">
-        <table>
-          <tr><th>Candidate GeoTIFF</th><th>Lane &amp; Key Discovery</th><th>Automatic Gate Verdict</th></tr>
-          <tr>
-            <td><a href="downloads/gemsdoe36-wdp36-exp1-20261026-zeros.tif" download><code>gemsdoe36-wdp36-exp1-20261026-zeros.tif</code></a></td>
-            <td><strong>WDP-36 EXP-1</strong> (unsupervised 0&ndash;800 m upward-continuation worm persistence, TMI+gravity only; PR #19)</td>
-            <td><strong>DO NOT SUBMIT — automatic NEGATIVE verdict (HOLDOUT-DTI <code>0.093269</code>; focus-9 max overlap <code>0.4909</code>; one dense-blanket literal overlap <code>0.7227</code>)</strong></td>
-          </tr>
-          <tr>
-            <td><a href="downloads/gemsdoe36-atvr36-20261026.tif" download><code>gemsdoe36-atvr36-20261026.tif</code></a></td>
-            <td><strong>ATVR-36 EXP-2</strong> (44-feat tilt/LiDAR + hydrothermal + Raissi&ndash;Anderson PDE + 300 m CELF cover; <code>arena/62b9a92c-gemsdoe36</code>)</td>
-            <td><strong>DO NOT SUBMIT — automatic NEGATIVE verdict (<code>0.114542</code> 3 km audit / <code>0.117925</code> <code>gems-segment-pooled-v1</code> with breakthrough <code>NW = 0.15048</code> &amp; <code>SE = 0.15438</code>; 100% unique across all 9 focus sites at <code>63.28%</code> max &amp; <code>35.94%</code> vs <code>B2</code>)</strong></td>
-          </tr>
-          <tr>
-            <td><a href="downloads/gemsdoe36-h36-ctrb-submod-36800-20261025T000000Z-a1d85443-zeros.tif" download><code>gemsdoe36-h36-ctrb-submod-36800-20261025T000000Z-a1d85443-zeros.tif</code></a></td>
-            <td><strong>H36-CTRB</strong> (1.5 km strike-worm + trunk relay + NSQ-PCC submod; PR #14)</td>
-            <td><strong>DO NOT SUBMIT — automatic NEGATIVE verdict (<code>0.114425</code> pooled with breakthrough <code>NE_LidarGap = 0.13141</code> &amp; <code>SW = 0.11022</code>)</strong></td>
-          </tr>
-          <tr>
-            <td><a href="downloads/gemsdoe36-h36-gps-graben-pair-20261026-bb29ce2a4bb4-zeros.tif" download><code>gemsdoe36-h36-gps-graben-pair-20261026-bb29ce2a4bb4-zeros.tif</code></a></td>
-            <td><strong>H36-GPS</strong> (graben-pair + 59 base features; PR #13)</td>
-            <td><strong>DO NOT SUBMIT — automatic NEGATIVE verdict (<code>0.13203 &lt; B0 = 0.13375</code>)</strong></td>
-          </tr>
-          <tr>
-            <td><a href="downloads/gemsdoe36-lane36-supgbm-68302-20261026T002651Z-f35cb3e4-zeros.tif" download><code>gemsdoe36-lane36-supgbm-68302-20261026T002651Z-f35cb3e4-zeros.tif</code></a></td>
-            <td><strong>Lane36</strong> supervised-GBM (PR #12)</td>
-            <td><strong>DO NOT SUBMIT — independent 198-raster cross-check fails (max overlap <code>0.9317</code>)</strong></td>
-          </tr>
-        </table>
-      </div>
-    </section>
+<!-- =====================================================================
+     HERO — prominent download at the top, per the user's requirement that
+     the submission TIF be obvious and easy to download.
+     ===================================================================== -->
+<section class="hero compact-hero">
+<div>
+<span class="eyebrow">GEMS DOE 36 · unique submission candidate · 26 October 2026</span>
+<h1>A unique submission TIF is ready to download</h1>
+<p class="lede">The candidate <code>gemsdoe36-lattice-avoiding-upflow-20261026-6e268a98cbf3-zeros.tif</code> is format-valid (EPSG:32611, 3730×3292, 100 m, float32, all cells in <code>[0,1]</code>, nodata=None) — it will not trigger the <code>"Predicted values must be in range [0, 1]"</code> portal rejection. It is <strong>unique</strong>: 0 % directed 3-px overlap with the registered 13GEMSDOE 5-px lattice, below the 70 % lane limit versus the GEMSDOE32 (0.2778) and GEMSDOE36 (0.2750) reference rasters, and \|Spearman rho\|≈0 against both.</p>
+<div class="hero-actions">
+<a class="button" href="downloads/gemsdoe36-lattice-avoiding-upflow-20261026-6e268a98cbf3-zeros.tif" download>Download submission GeoTIFF ↓</a>
+<a class="button secondary" href="downloads/gemsdoe36-lattice-avoiding-upflow-20261026-6e268a98cbf3-zeros.zip" download>ZIP (single GeoTIFF)</a>
+<a class="button secondary" href="downloads/gemsdoe36-lattice-avoiding-upflow-20261026-6e268a98cbf3-run-card.json">JSON run card</a>
+<a class="button secondary" href="executive-summary.html">Read the executive summary →</a>
+</div>
+</div>
+<aside class="status-card" aria-label="Current submission decision"><span class="eyebrow"><span class="status-pip" style="background:#d67846;"></span>Verdict for the generated TIF</span>
+<h2 style="color:#f2c49e;margin:.85rem 0">Download: YES · Submit to leaderboard: NOT YET</h2>
+<p style="color:#d5ddd5;font-size:.93rem"><strong>Download:</strong> YES — research download, safe to fetch.<br>
+<strong>Submit:</strong> NOT YET — this is a <strong>research candidate</strong>, not slot-authorized. HOLDOUT-DTI cannot be computed without <code>labels.tif</code> (DrivenData login required), and a full 198-raster uniqueness check needs organizer data. A separate selector must approve the weekly slot before upload. <strong>No score is claimed or projected.</strong></p>
+<a href="executive-summary.html#how-to-submit" style="color:#f2c49e;font-weight:700">How to submit →</a>
+</aside>
+</section>
 
-    <!-- ARCHIVED PARALLEL MOE36 DOWNLOAD CARD (merged from PR #17) -->
-    <section class="verdict verdict-bad" id="download-moe36" aria-labelledby="moe36-verdict-title">
-      <div class="eyebrow">Earlier parallel lane · MOE36 · research only · PR #17 · 2026-10-26 UTC</div>
-      <h2 id="moe36-verdict-title">MOE36 EXP-1 (9209d76bab1c): DO NOT SUBMIT — original format-safe research download; strict registry duplicate</h2>
-      <p class="verdict-sub"><strong>DOWNLOAD: YES · SUBMIT: NO</strong> — Cross-fitted mixture of three disjoint experts (RAW19 GeoDAWN bands + CTRB local potential/hydrothermal/LiDAR + CTRB 1.5 km worm/relay structural), equal rank fusion. <strong>HOLDOUT-DTI 0.124900</strong> (95% CI [0.1165, 0.1339], <code>gems-segment-pooled-v1</code>, 60,988 withheld px) beats every single expert (+0.0101 vs best, paired CI [+0.0017, +0.0182]) but <strong>does not beat repo B0 = 0.13375</strong>, so the automated gate blocks a weekly slot. Surface correlation screening passed (max |Spearman| 0.41 over 198 rasters); final-dot literal check flags &gt;70% overlap vs five dense-coverage registry blankets (max 0.879, coverage-driven) — logged as a duplicate-flag, lane stopped. Full report: <a href="research/moe36-20261026.md">MOE36 report</a>.</p>
-      <div class="hero-actions">
-        <a class="button" href="downloads/gemsdoe36-moe36-exp1-20261026-zeros.tif" download>Download MOE36 GeoTIFF (research only) &#8595;</a>
-        <a class="button secondary" href="downloads/gemsdoe36-moe36-exp1-20261026-zeros.zip" download>ZIP (single GeoTIFF)</a>
-        <a class="button secondary" href="downloads/gemsdoe36-moe36-exp1-20261026-zeros.receipt.json">Validator receipt</a>
-      </div>
-      <div class="table-wrap verdict-meta"><table>
-        <tr><th>Submission name / note (109 &le; 140)</th><td><code>gemsdoe36-moe36-exp1-20261026</code> · <code>GEMSDOE36 MOE36 EXP-1 equal rank fusion RAW19+CTRB-local+struct | HOLDOUT-DTI 0.1249 | NEGATIVE do not submit</code></td></tr>
-        <tr><th>SHA-256</th><td>TIF <code>9209d76bab1c4a6d6f64fb794e881a85d70b1a48fdc6288a0e390cfea64aabb7</code> · ZIP <code>1960ccc51a2f4c9041c41e7c1da76d55032af245c467ae2a25ac0c757f2d4471</code></td></tr>
-        <tr><th>Format</th><td>37,654 dots, float32, EPSG:32611, 3730&times;3292, whole array finite in [0,1] — local template/range validator PASS; organizer portal acceptance unverified</td></tr>
-      </table></div>
-    </section>
+<div class="download-strip"><div>
+<strong>Download: YES · Submit: NOT YET (research candidate)</strong>
+<p>GeoTIFF: <code>gemsdoe36-lattice-avoiding-upflow-20261026-6e268a98cbf3-zeros.tif</code> · 505 dots · all cells in <code>[0,1]</code> · SHA-256 <code>0ff70bbffed235bb097079fe3e8131f38dc1b25b666dbe853489c59decfb8bbb</code></p>
+</div></div>
 
-    <!-- ARCHIVED PARALLEL WDP-36 DOWNLOAD CARD (merged from PR #19) -->
-    <section class="verdict verdict-bad" id="download-wdp36" aria-labelledby="wdp36-verdict-title">
-      <div class="eyebrow">Earlier parallel lane · WDP-36 · research only · PR #19 · 2026-10-26 UTC</div>
-      <h2 id="wdp36-verdict-title">WDP-36 EXP-1 (ae9da29e45c6): DO NOT SUBMIT — original format-safe research download (zeros-only)</h2>
-      <p class="verdict-sub"><strong>DOWNLOAD: YES · SUBMIT: NO</strong> — Unsupervised buried-fault lane (zero catalogue-trained parameters): geometric-mean persistence of spectral THDR worms across 0/200/400/800 m upward continuation (TMI + isostatic gravity). <strong>HOLDOUT-DTI 0.093269</strong> (95% CI [0.083380, 0.103501], <code>gems-segment-pooled-v1</code>, 60,988 withheld px) vs single-scale control 0.091901 (paired difference CI includes zero; strain add-on hurt, seismic neutral) — below repo B0 and the group bar, so no weekly slot. Canary PASS (max AUC 0.6145); surface rank max 0.264 over 198 rasters; focus-9 dot overlap max 0.4909; literal check flags one dense blanket at 0.7227 — logged duplicate-flag, lane stopped. Post-merge overlaps: MOE36 0.289, MTO-36 0.472. Ships zeros-only (no NaN twin). Full report: <a href="research/wdp36-20261026.md">WDP-36 monograph</a>. No organizer score exists for this file (never submitted).</p>
-      <div class="hero-actions">
-        <a class="button" href="downloads/gemsdoe36-wdp36-exp1-20261026-zeros.tif" download>Download WDP-36 GeoTIFF (research only) &#8595;</a>
-        <a class="button secondary" href="downloads/gemsdoe36-wdp36-exp1-20261026-zeros.zip" download>ZIP (single GeoTIFF)</a>
-        <a class="button secondary" href="downloads/gemsdoe36-wdp36-exp1-20261026-zeros.receipt.json">Run card / receipt</a>
-      </div>
-      <div class="table-wrap verdict-meta"><table>
-        <tr><th>Submission name / note (95 &le; 140)</th><td><code>gemsdoe36-wdp36-exp1-20261026</code> (file <code>gemsdoe36-wdp36-exp1-20261026-zeros.tif</code>) · <code>GEMSDOE36 WDP-36 EXP-1 | worm persistence 0-800m only | HOLDOUT-DTI 0.0933 | NEGATIVE hold slot</code></td></tr>
-        <tr><th>SHA-256</th><td>TIF <code>ae9da29e45c67d03b7a7fd438a3cf0686f0678111181cd960b86dffb56f0f698</code> · ZIP <code>c6767fb5e05fe8f573a365b24913b1b58544a4d16ee9c6cd1eb7f7ae241f7de5</code></td></tr>
-        <tr><th>Format</th><td>37,654 dots (median 2.1 km from catalogue, 0 within 2 px), float32, EPSG:32611, 3730&times;3292, nodata=None, whole array finite in [0,1] — local template/range validator PASS; organizer portal acceptance unverified</td></tr>
-      </table></div>
-      <div class="fig-card">
-        <img src="assets/wdp36_overview.png" alt="3-panel overview: WDP-36 worm-persistence surface, catalogue faults, and 37,654 emitted dots">
-      </div>
-    </section>
+<section class="section">
+<div class="section-head"><div><span class="eyebrow">Nine focus sites — best reported score</span><h2>Which historical submission scores highest?</h2></div></div>
+<p>GEMSDOE32's <strong><code>h33-h33-2-b2</code> at 0.2778 OWNER-REPORTED</strong> is the highest of the nine pinned owner/user-reported scores (GEMSDOE36's Anderson-PINN is 0.2750). None is ORGANIZER-CONFIRMED (no submission-page receipt), and none is unique within the set — every pinned raster overlaps another at ≥ 97.58 % within 3 px. <strong>Do not copy any of them as a submission.</strong> See the <a href="executive-summary.html#nine-sites">full table with file links, scores, and uniqueness</a>.</p>
+<div class="grid cols-3">
+<article class="card"><span class="card-kicker">GEMSDOE32 · highest reported</span><h3>0.2778 OWNER-REPORTED</h3><p><code>h33-h33-2-b2</code>, 37,654 dots. D2.8 field minus dots ≤2 px from catalogue. Not unique (100.00% overlap vs another pinned site). <a href="executive-summary.html#nine-sites">details →</a></p></article>
+<article class="card"><span class="card-kicker">GEMSDOE36 · Anderson-PINN</span><h3>0.2750 OWNER-REPORTED</h3><p>38,854 dots, Anderson kinematics + geothermal conduits. Not unique (97.58% overlap). Research only. <a href="executive-summary.html#nine-sites">details →</a></p></article>
+<article class="card"><span class="card-kicker">GEMSDOE25 / GEMSDOE30</span><h3>0.2600 OWNER-REPORTED</h3><p>D2.8 field, 44,090 dots (pixel-identical masks). Not unique (100.00% overlap). <a href="executive-summary.html#nine-sites">details →</a></p></article>
+</div>
+</section>
 
-    <!-- ATVR-36 DOWNLOAD CARD -->
-    <section class="verdict verdict-bad" id="download-atvr36" aria-labelledby="atvr36-verdict-title">
-      <div class="verdict-row">
-        <div>
-          <div class="eyebrow">Earlier lane · ATVR-36 EXP-2 · research only · 2026-10-26 UTC</div>
-          <h2 id="atvr36-verdict-title">ATVR-36 EXP-2 (54f493f4fa5c): DO NOT SUBMIT — Format-Safe [0, 1] Research &amp; Ensemble Download</h2>
-          <p class="verdict-sub"><strong>DOWNLOAD: YES · FORMAT &amp; [0, 1] RANGE VALID: PASS · LIVE SLOT: HOLD (NEGATIVE)</strong> — Beats matched local controls by <code>3.0&times;</code> on 3 km buffered holdout (<code>0.114542</code> vs <code>0.039523</code> <code>B1</code> on the prior 3-km local audit), achieves <code>0.117925</code> on <code>gems-segment-pooled-v1</code> with repository-best <strong><code>NW = 0.15048</code></strong> and <strong><code>SE = 0.15438</code></strong>, passes 50-feature leakage canary (<code>max AUC = 0.5881</code>), and passes <strong>100% of all 9 focus repositories (<code>GEMSDOE24</code>&ndash;<code>36</code>)</strong> at <code>63.28%</code> max overlap (<code>35.94%</code> vs the GEMSDOE32 <code>0.2778</code> owner-reported champion, <code>37.36%</code> vs <code>H36-CTRB</code>), while trailing <code>repo B0 = 0.13375</code> on <code>NE_LidarGap</code>.</p>
-          <div class="hero-actions">
-            <a class="button" href="downloads/gemsdoe36-atvr36-20261026.tif" download>Download ATVR-36 GeoTIFF (gemsdoe36-atvr36-20261026.tif) &#8595;</a>
-            <a class="button secondary" href="downloads/gemsdoe36-atvr36-20261026.zip" download>ATVR-36 ZIP (single GeoTIFF)</a>
-            <a class="button secondary" href="downloads/gemsdoe36-atvr36-20261026.receipt.json">Validator Receipt</a>
-            <a class="button secondary" href="current-run.json">ATVR-36 Current Run JSON</a>
-          </div>
-        </div>
-      </div>
-      <div class="table-wrap verdict-meta">
-        <table>
-          <tr><th>Submission name</th><td><code>gemsdoe36-atvr36-exp-2-20261026</code> (file: <code>gemsdoe36-atvr36-20261026.tif</code>)</td></tr>
-          <tr><th>Note (116 &le; 140 chars)</th><td><code>GEMSDOE36 ATVR-36 EXP-2 | tilt/LiDAR+hydrothermal+Anderson PDE+CELF | HOLDOUT-DTI 0.1145/0.1179 | NEGATIVE hold slot</code></td></tr>
-          <tr><th>SHA-256 (zeros TIF / ZIP)</th><td><code>54f493f4fa5c74ed3a02f88ca6d47272b0c3cee0cc0bd9bbd9cb94eaf997204a</code> · ZIP: <code>ceac8754bd8779c7f0a849c81f63e665e49f2767a4753cb5156832120dac8311</code></td></tr>
-          <tr><th>Grid &amp; [0, 1] Contract</th><td>37,654 off-catalogue dots (<code>d_cat &gt; 2.0 px</code>, <code>median d_cat = 10.6 px</code>, <code>0</code> on-catalogue), <code>float32</code>, <code>EPSG:32611</code>, <code>3730 &times; 3292</code>, <code>nodata=None</code>, all <code>12,279,160</code> cells finite in <code>[0.0, 1.0]</code></td></tr>
-          <tr><th>HOLDOUT-DTI</th><td><code>0.114542</code> · 95% CI <code>[0.078547, 0.151221]</code> (<code>gems36-segment-audit-v1</code>, 3 km buffer) · <code>0.117925</code> · 95% CI <code>[0.101961, 0.132998]</code> (<code>gems-segment-pooled-v1</code>, 1.5 km buffer; <code>NW 0.15048</code>, <code>NE 0.05312</code>, <code>SW 0.11115</code>, <code>SE 0.15438</code>)</td></tr>
-        </table>
-      </div>
-    </section>
+<section class="section">
+<div class="section-head"><div><span class="eyebrow">Prior GEMSDOE36 research</span><h2>Research downloads only — DO NOT SUBMIT</h2></div></div>
+<p>These artifacts passed local format checks but failed the holdout and/or uniqueness gates. They are preserved for audit and education, not for leaderboard upload.</p>
+<div class="grid cols-3">
+<article class="card archive-card"><span class="card-kicker">H36-CTRB · negative</span><h3>HOLDOUT-DTI 0.114425</h3><p>95% CI [0.103795, 0.125756] · 36,800 dots · fails group holdout best and expanded-registry uniqueness.</p><p><a href="downloads/gemsdoe36-h36-ctrb-submod-36800-20261025T000000Z-a1d85443-zeros.tif" download>h36-ctrb-zeros.tif</a> · <a href="downloads/run_card.json">run card</a> · DO NOT SUBMIT</p></article>
+<article class="card archive-card"><span class="card-kicker">ATVR-36 · negative</span><h3>HOLDOUT-DTI up to 0.158855</h3><p>Best arm GVSC-36 EXP-3 [0.145456, 0.173084]; HVG 0.135759 [0.123271, 0.148461]. Both fail the lattice uniqueness gate (≥99.6% overlap).</p><p><a href="downloads/gemsdoe36-atvr36-20261026.tif" download>atvr36.tif</a> · <a href="downloads/atvr36-run-card.json">run card</a> · DO NOT SUBMIT</p></article>
+<article class="card archive-card"><span class="card-kicker">Lane36 · negative</span><h3>Independent cross-check failed</span><h3>HOLDOUT-DTI ~0.0661 (DW36 control 0.0723)</h3><p>100% lattice overlap; 93.17% expanded-registry overlap. No TIFF exported.</p><p><a href="downloads/gemsdoe36-lane36-supgbm-68302-20261026T002651Z-f35cb3e4-zeros.tif" download>lane36-zeros.tif</a> · <a href="downloads/lane36-crosscheck.json">crosscheck</a> · DO NOT SUBMIT</p></article>
+</div>
+</section>
 
-    <!-- H36-CTRB DOWNLOAD CARD -->
-    <section class="verdict verdict-bad" id="download-ctrb" aria-labelledby="ctrb-verdict-title">
-      <div class="verdict-row">
-        <div>
-          <div class="eyebrow">Parallel session deliverable · H36-CTRB (PR #14) · 2026-10-26T01:29:52.990068+00:00</div>
-          <h2 id="ctrb-verdict-title">H36-CTRB (a1d85443): DO NOT SUBMIT — Format-Safe [0, 1] Research Download</h2>
-          <p class="verdict-sub"><strong>DOWNLOAD: YES · FORMAT &amp; [0, 1] RANGE VALID: PASS · LIVE SLOT: HOLD (NEGATIVE)</strong> — Beats matched local controls (<code>0.114425</code> vs <code>0.057959</code> <code>4/4</code> folds) and achieves strong <code>NE_LidarGap = 0.13141</code> and Walker Lane <code>SW = 0.11022</code> with <code>51.01%</code> max overlap across all 107 owner-scored rasters, while trailing group pooled best <code>0.14876</code>.</p>
-          <div class="hero-actions">
-            <a class="button secondary" href="downloads/gemsdoe36-h36-ctrb-submod-36800-20261025T000000Z-a1d85443-zeros.tif" download>Download H36-CTRB GeoTIFF (gemsdoe36-h36-ctrb-submod-36800-20261025T000000Z-a1d85443-zeros.tif) &#8595;</a>
-            <a class="button secondary" href="downloads/gemsdoe36-h36-ctrb-submod-36800-20261025T000000Z-a1d85443-zeros.zip" download>ZIP (single GeoTIFF)</a>
-            <a class="button secondary" href="downloads/gemsdoe36-h36-ctrb-submod-36800-20261025T000000Z-a1d85443-nan.tif" download>NaN-outside twin</a>
-            <a class="button secondary" href="downloads/run_card.json">H36-CTRB JSON Run Card</a>
-          </div>
-        </div>
-      </div>
-      <div class="table-wrap verdict-meta">
-        <table>
-          <tr><th>Submission name</th><td><code>GEMSDOE36-H36-CTRB-Submod</code> (file: <code>gemsdoe36-h36-ctrb-submod-36800-20261025T000000Z-a1d85443-zeros.tif</code>)</td></tr>
-          <tr><th>Note (106 &le; 140 chars)</th><td><code>GEMSDOE36 H36-CTRB | 1.5km worm+trunk relay submod | HOLDOUT-DTI 0.1144 | NEGATIVE hold slot | id a1d85443</code></td></tr>
-          <tr><th>SHA-256 (zeros TIF)</th><td><code>2bb4513d6307e2394d5de7e7e7649e28eff067b602b805a0215e82aa5ff89907</code></td></tr>
-        </table>
-      </div>
-      <div class="fig-card">
-        <img src="assets/h36_ctrb_overview.png" alt="3-panel overview of H36-CTRB out-of-fold probability surface, 36,800 emitted centerline dots, and Reno-Carson-Pyramid relay zoom">
-      </div>
-    </section>
+<section class="section">
+<div class="section-head"><div><span class="eyebrow">How to submit</span><h2>Making a competition submission</h2></div></div>
+<ol>
+<li>Download the official <code>sample_submission.tif</code> template from the <a href="https://www.drivendata.org/competitions/306/competition-doe-gems/data/">data tab</a> (DrivenData login required).</li>
+<li>Produce a 3730×3292 single-band float32 array in <code>[0,1]</code>; sanitize NaN/Inf so no value falls outside [0,1].</li>
+<li>Write using the template's profile (EPSG:32611, shape, geotransform), nodata=None, 0 outside the footprint (zeros variant).</li>
+<li>Validate with <code>python scripts/validate_submission.py yourfile.tif --template sample_submission.tif</code>.</li>
+<li>Upload the .tif or .zip on the <a href="https://www.drivendata.org/competitions/306/competition-doe-gems/submissions/">submission page</a> with a unique name and ≤140-character note.</li>
+</ol>
+<p class="small">Full guide with the name/note convention and validation gates: <a href="executive-summary.html#how-to-submit">Executive summary &amp; how to submit</a>.</p>
+</section>
 
-    <!-- H36-GPS & LANE36 CARDS -->
-    <section class="verdict verdict-bad" id="download-gps" aria-labelledby="gps-verdict-title">
-      <div class="verdict-row">
-        <div>
-          <div class="eyebrow">Parallel session deliverables · H36-GPS (PR #13) &amp; Lane36 (PR #12)</div>
-          <h2 id="gps-verdict-title">H36-GPS (bb29ce2a4bb4) &amp; Lane36 (f35cb3e4): DO NOT SUBMIT — automatic NEGATIVE verdicts</h2>
-          <p class="verdict-sub"><strong>DOWNLOAD: YES · SUBMIT: NO</strong> — H36-GPS scored <code>HOLDOUT-DTI = 0.13203</code> vs matched <code>B0 = 0.13375</code>; Lane36 (<code>gemsdoe36-lane36-supgbm-68302-20261026T002651Z-f35cb3e4-zeros.tif</code>) failed the 198-raster uniqueness gate at <code>0.9317</code> max overlap.</p>
-          <div class="hero-actions">
-            <a class="button secondary" href="downloads/gemsdoe36-h36-gps-graben-pair-20261026-bb29ce2a4bb4-zeros.tif" download>Download H36-GPS GeoTIFF &#8595;</a>
-            <a class="button secondary" href="downloads/gemsdoe36-h36-gps-graben-pair-20261026-bb29ce2a4bb4-zeros.zip" download>H36-GPS ZIP</a>
-            <a class="button secondary" href="downloads/gemsdoe36-h36-gps-graben-pair-20261026-bb29ce2a4bb4-nan.tif" download>H36-GPS NaN twin</a>
-            <a class="button secondary" href="downloads/gemsdoe36-h36-gps-graben-pair-20261026-bb29ce2a4bb4-run-card.json">H36-GPS Run Card</a>
-            <a class="button secondary" href="downloads/gemsdoe36-lane36-supgbm-68302-20261026T002651Z-f35cb3e4-zeros.tif" download>Download Lane36 GeoTIFF &#8595;</a>
-            <a class="button secondary" href="downloads/lane36_run_card.json">Lane36 Run Card</a>
-          </div>
-        </div>
-      </div>
-      <div class="table-wrap verdict-meta">
-        <table>
-          <tr><th>H36-GPS Submission name</th><td><code>gemsdoe36-h36-gps-graben-pair-20261026-bb29ce2a4bb4-zeros</code> (file: <code>gemsdoe36-h36-gps-graben-pair-20261026-bb29ce2a4bb4-zeros.tif</code>)</td></tr>
-          <tr><th>H36-GPS Note (118 &le; 140 chars)</th><td><code>GEMSDOE36 H36-GPS graben-pair | HOLDOUT-DTI 0.1320 [0.1205,0.1443] seg-pooled-v1 60988pos | NEGATIVE | id bb29ce2a4bb4</code></td></tr>
-          <tr><th>H36-GPS SHA-256</th><td><code>e3800971b44116bca8ef8f996c3b2796b4d316962f797975f17d643abfac379b</code></td></tr>
-        </table>
-      </div>
-    </section>
-
-    <!-- 9 FOCUS SITES EXECUTIVE SUMMARY -->
-    <section class="section" aria-labelledby="focus-sites-title">
-      <div class="section-head"><div><div class="eyebrow">Pinned byte-forensics, not live receipts</div><h2 id="focus-sites-title">Nine Focus Sites — best historical owner-reported results</h2></div>
-      <p>All nine historical TIFF hashes, dots and grids were rechecked from pinned GitHub snapshots. No organizer submission-page receipt was available. All nine also fail the stated 3-px uniqueness rule against each other. The leaderboard estimates are unavailable; do not treat holdout DTI or historical claims as an estimate. Do not choose an old file to resubmit.</p></div>
-      <div class="table-wrap"><table><tr><th>Site</th><th>Exact pinned file for audit</th><th>Measured</th><th>Reported score (unverified)</th><th>Estimated leaderboard score</th><th>Uniqueness / lineage evidence</th><th>Safe now?</th></tr>
-<tr><td><code>GEMSDOE24</code></td><td><a href="https://github.com/buffedlizard55-lab/GEMSDOE24/blob/fc2bc6f350bf5c6ce8da5d7a2ab03578ea1259d1/docs/downloads/gems24-h25-1-dotted-h19-5-d1-5-20261002-989f59505db1-nan.tif" target="_blank" rel="noopener"><code>gems24-h25-1-dotted-h19-5-d1-5-20261002-989f59505db1-nan.tif</code></a> <small>SHA-256 68d0e2e4fcc5</small></td><td>60,069 dots</td><td><strong>0.2477 OWNER-REPORTED</strong> (receipt missing)</td><td>Unavailable; no calibrated leaderboard estimate</td><td><strong>NO</strong> · at least 88.48% of its dots overlap each other focus mask within 3 px. </td><td>NO · historical/reused or negative</td></tr>
-<tr><td><code>GEMSDOE25</code></td><td><a href="https://github.com/buffedlizard55-lab/GEMSDOE25/blob/e40b9b5e3871cb34d138f586bde97f5099658d01/docs/downloads/gems25-dotted-h19-5-d2-8-20261002-e56ea318af89-nan.tif" target="_blank" rel="noopener"><code>gems25-dotted-h19-5-d2-8-20261002-e56ea318af89-nan.tif</code></a> <small>SHA-256 91eae1ca42ec</small></td><td>44,090 dots</td><td><strong>0.2600 OWNER-REPORTED</strong> (receipt missing)</td><td>Unavailable; no calibrated leaderboard estimate</td><td><strong>NO</strong> · at least 88.17% of its dots overlap each other focus mask within 3 px. Pixel-identical in footprint (0 XOR) to GEMSDOE30 d2.8.</td><td>NO · historical/reused or negative</td></tr>
-<tr><td><code>GEMSDOE27</code></td><td><a href="https://github.com/buffedlizard55-lab/GEMSDOE27/blob/927322eadbde56be42ae129ccdfb9b37540d8e60/docs/downloads/gems27-topo-gap-closure-t-v2-on-d1-5-20261002-5512495c6bd1-nan.tif" target="_blank" rel="noopener"><code>gems27-topo-gap-closure-t-v2-on-d1-5-20261002-5512495c6bd1-nan.tif</code></a> <small>SHA-256 33003374335d</small></td><td>61,328 dots</td><td><strong>0.2449 OWNER-REPORTED</strong> (receipt missing)</td><td>Unavailable; no calibrated leaderboard estimate</td><td><strong>NO</strong> · at least 86.72% of its dots overlap each other focus mask within 3 px. </td><td>NO · historical/reused or negative</td></tr>
-<tr><td><code>GEMSDOE28</code></td><td><a href="https://github.com/buffedlizard55-lab/GEMSDOE28/blob/e6321461066f89080e3b1bb670d3951ab20d3638/docs/downloads/gems28-h36-1-rung30-blind-r1-20261003-b531dae0a36f-nan.tif" target="_blank" rel="noopener"><code>gems28-h36-1-rung30-blind-r1-20261003-b531dae0a36f-nan.tif</code></a> <small>SHA-256 5556aa1438fd</small></td><td>37,660 dots</td><td><strong>0.2710 OWNER-REPORTED</strong> (receipt missing)</td><td>Unavailable; no calibrated leaderboard estimate</td><td><strong>NO</strong> · at least 95.47% of its dots overlap each other focus mask within 3 px. h27-4-r1-solo (40,199 dots, 0.2708) is pixel-identical (0 XOR) to GEMSDOE31 solo and equals (d2.8 &amp; d_cat &gt; 1 px).</td><td>NO · historical/reused or negative</td></tr>
-<tr><td><code>GEMSDOE30</code></td><td><a href="https://github.com/buffedlizard55-lab/GEMSDOE30/blob/760af3005dd40b9f36d8fef97d6dc384fd9f2a2f/docs/downloads/gemsdoe30-d28-poisson300m-offcat-44090-20261003T233156Z-91eae1ca.tif" target="_blank" rel="noopener"><code>gemsdoe30-d28-poisson300m-offcat-44090-20261003T233156Z-91eae1ca.tif</code></a> <small>SHA-256 8cf893ead566</small></td><td>44,090 dots</td><td><strong>0.2600 OWNER-REPORTED</strong> (receipt missing)</td><td>Unavailable; no calibrated leaderboard estimate</td><td><strong>NO</strong> · at least 88.17% of its dots overlap each other focus mask within 3 px. 0 XOR in footprint vs GEMSDOE25 d2.8.</td><td>NO · historical/reused or negative</td></tr>
-<tr><td><code>GEMSDOE31</code></td><td><a href="https://github.com/buffedlizard55-lab/GEMSDOE31/blob/597b04cd1afb65d1ebbe3e9417fd952be48e3d74/docs/downloads/gemsdoe31-h27-4-solo-d28-20261004-8acb75e1-nan.tif" target="_blank" rel="noopener"><code>gemsdoe31-h27-4-solo-d28-20261004-8acb75e1-nan.tif</code></a> <small>SHA-256 07b6db440535</small></td><td>40,199 dots</td><td><strong>0.2708 OWNER-REPORTED</strong> (receipt missing)</td><td>Unavailable; no calibrated leaderboard estimate</td><td><strong>NO</strong> · at least 95.39% of its dots overlap each other focus mask within 3 px. 0 XOR vs GEMSDOE28 h27-4-r1-solo.</td><td>NO · historical/reused or negative</td></tr>
-<tr><td><code>GEMSDOE32</code></td><td><a href="https://github.com/buffedlizard55-lab/GEMSDOE32/blob/5fc7792c5887735ecd3aa9a612787da588a7bf2c/docs/downloads/gemsdoe32-h33-h33-2-b2-20261004T220000Z-e5eb6e7e-zeros.tif" target="_blank" rel="noopener"><code>gemsdoe32-h33-h33-2-b2-20261004T220000Z-e5eb6e7e-zeros.tif</code></a> <small>SHA-256 c55bafc47005</small></td><td>37,654 dots</td><td><strong>0.2778 OWNER-REPORTED</strong> (receipt missing)</td><td>Unavailable; no calibrated leaderboard estimate</td><td><strong>NO</strong> · at least 99.88% of its dots overlap each other focus mask within 3 px. 9-site champion, but NOT a new detector: 0-XOR pixel-identical to (d2.8 &amp; d_cat &gt; 2 px), stripping 6,436 0-200 m catalogue-collar false positives off 19GEMSDOE h19-5.</td><td>NO · historical/reused or negative</td></tr>
-<tr><td><code>GEMSDOE33</code></td><td><a href="https://github.com/buffedlizard55-lab/GEMSDOE33/blob/f618cc54773bd9b4d6c2b3ebf78103a05cc10cb6/docs/downloads/GEMSDOE33-h33d-analog-tip-stepover-r30-20261004-cb490425926e.tif" target="_blank" rel="noopener"><code>GEMSDOE33-h33d-analog-tip-stepover-r30-20261004-cb490425926e.tif</code></a> <small>SHA-256 87f857d505e2</small></td><td>41,865 dots</td><td><strong>0.2632 OWNER-REPORTED</strong> (receipt missing)</td><td>Unavailable; no calibrated leaderboard estimate</td><td><strong>NO</strong> · at least 92.64% of its dots overlap each other focus mask within 3 px. </td><td>NO · historical/reused or negative</td></tr>
-<tr><td><code>GEMSDOE36</code></td><td><a href="https://github.com/buffedlizard55-lab/GEMSDOE36/blob/c5a8ae7da3bd2fcff5aa5855afd44c7a3346c16f/docs/downloads/gemsdoe36-anderson-geothermal-pinn-38854-20261004T230000Z-9b9ea4e6-zeros.tif" target="_blank" rel="noopener"><code>gemsdoe36-anderson-geothermal-pinn-38854-20261004T230000Z-9b9ea4e6-zeros.tif</code></a> <small>SHA-256 e15891020b9c</small></td><td>38,854 dots</td><td><strong>0.2750 OWNER-REPORTED</strong> (receipt missing)</td><td>Unavailable; no calibrated leaderboard estimate</td><td><strong>NO</strong> · at least 97.31% of its dots overlap each other focus mask within 3 px. Strictly contains all 37,654 GEMSDOE32 B2 dots plus 1,200 broad thermal IDW dots (net -0.0028 dilution vs B2). Legacy H6 (24,881 dots) retired due to circular SGMC blending/evaluation.</td><td>NO · historical/reused or negative</td></tr>
-      </table></div>
-      <p>Highest reported in this set: GEMSDOE32 <code>0.2778 OWNER-REPORTED</code>, but its mask is an exact D2.8 subset after removing the 200 m known-fault collar. All nine historical files fail the 70% 3-px overlap uniqueness ceiling; see the <a href="downloads/focus-sites-pairwise-uniqueness.json">72-pair audit JSON</a>. This is mask lineage, <strong>not</strong> proof that collar removal caused the blind score change. <a href="research/mto36-evidence-and-nine-sites.md">Method, data provenance and next steps</a>.</p>
-    </section>
-
-    <!-- ATVR-36 HOLDOUT & COMPLEMENTARY DISCOVERY -->
-    <section class="section" aria-labelledby="atvr36-gates-title">
-      <div class="section-head">
-        <div>
-          <div class="eyebrow">ATVR-36 3-experiment buffered holdout &amp; cross-lane synergy</div>
-          <h2 id="atvr36-gates-title">ATVR-36 Pre-Registered Hypotheses (H36-A..E) &amp; Holdout Ledger</h2>
-        </div>
-        <p>Preregistration locked in <a href="research/preregistration-atvr36-20261026.md"><code>preregistration-atvr36-20261026.md</code></a> (<code>SHA-256: 351a9ad89ce0...</code>). Evaluated on <code>gems36-segment-audit-v1</code> (3 km buffer, <code>60,988</code> withheld positives, <code>3,199</code> whole segments) and cross-checked on <code>gems-segment-pooled-v1</code> (1.5 km buffer):</p>
-      </div>
-      <div class="table-wrap">
-        <table>
-          <tr><th>Arm</th><th>Hypothesis / Physical Mechanism</th><th>Feats</th><th>3 km Buffer <code>HOLDOUT-DTI</code> (95% CI)</th><th>Paired &Delta; vs <code>B1</code></th></tr>
-          <tr><td><code>C0_repo_field</code></td><td>Frozen existing repo physical belief field (SGMC off)</td><td>14 ch</td><td><code>0.018492</code> (<code>[0.009837, 0.030040]</code>)</td><td><code>-0.021031</code></td></tr>
-          <tr><td><code>B1_raw19_hgb_d28</code></td><td>19 sanitized official bands + HGB + <code>d_vis &gt; 2 px</code> top-k</td><td>19</td><td><code>0.039523</code> (<code>[0.027195, 0.054596]</code>)</td><td><code>0.000000</code></td></tr>
-          <tr><td><code>EXP-1</code></td><td><strong>H36-A:</strong> Mag/grav tilt+THDR + scarp-toe Hessian + relief-deconfounded piedmont + missingness-gated 3DEP 1 m LiDAR + Raissi&ndash;Anderson PDE + 300 m CELF cover</td><td>36</td><td><code>0.110598</code> (<code>[0.075495, 0.145617]</code>)</td><td><code>+0.071075</code></td></tr>
-          <tr><td><strong><code>EXP-2</code> (Winner)</strong></td><td><strong>H36-A + H36-B:</strong> Adds magnetite-destruction <code>02_rtp</code> trough &times; mag-THDR + playa-regressed <code>17_cond_surf</code> clay-cap residual + GeoDAWN <code>K/Th</code> + GDR 1391 geothermometers</td><td><strong>44</strong></td><td><strong><code>0.114542</code></strong> (<code>[0.078547, 0.151221]</code>)</td><td><strong><code>+0.075018</code></strong></td></tr>
-          <tr><td><code>EXP-3</code></td><td><strong>H36-A + H36-B + H36-C:</strong> Adds <code>15_depth_to_base_surf</code> flexural hinge &times; grav-THDR + seismic/strain corridor + fold-learned 3-regime calibration</td><td>50</td><td><code>0.113705</code> (<code>[0.078494, 0.148428]</code>)</td><td><code>+0.074182</code></td></tr>
-        </table>
-      </div>
-      <p><strong>Breakthrough Cross-Lane Synergy Discovered on <code>gems-segment-pooled-v1</code>:</strong> <code>ATVR-36 EXP-2</code> achieves <code>NW = 0.15048</code>, <code>SE = 0.15438</code>, and <code>SW = 0.11115</code> (pooled <code>0.117925</code>), whereas <code>H36-CTRB</code> achieves <code>NE_LidarGap = 0.13141</code> — with only <code>37.36%</code> dot overlap (<code>&rho; = +0.0398</code>) between the two surfaces!</p>
-    </section>
-
-    <!-- WHY 0.2778 -->
-    <section class="section" aria-labelledby="why-title">
-      <div class="section-head"><div><div class="eyebrow">Measured dot-mask lineage, conditional score explanation</div><h2 id="why-title">Why the reported GEMSDOE32 0.2778 is plausible; why MTO-36 does not beat it</h2></div></div>
-      <p>Measured from SHA-pinned owner rasters: D2.8 (44,090 dots) becomes GEMSDOE31 solo (40,199) by deleting 3,891 pixels within 1 px of catalogued faults. GEMSDOE32 B2 (37,654) is D2.8 with the 2-px collar removed (6,436 pixels in total, including another 2,545 from solo). Both masks have 0 XOR. If historical owner score/file claims are accurate, fewer predicted catalogued-fault false positives may explain 0.2600 → 0.2708 → 0.2778. Hidden truth and uploaded bytes were not checked; the score cause is not proved.</p>
-      <p>The physically distinct MTO-36 signal was tested, but its HOLDOUT-DTI 0.067611 (95% CI [0.058449, 0.077867]) trails the prior 0.14876 holdout bar; its paired control difference includes zero and its dots fail the literal 203-raster novelty gate. No organizer score or verified live leaderboard target. <a href="research/mto36-evidence-and-nine-sites.md">Full audited review &amp; limitations</a> · <a href="research/forensic-9sites-and-atvr36-20261026.md">archived ATVR analysis (historical, unverified score assumptions)</a>.</p>
-    </section>
-
-    <section class="section" aria-labelledby="old-title">
-      <div class="section-head"><div><div class="eyebrow">History · kept for audit</div><h2 id="old-title">Earlier GEMSDOE36 files — DO NOT SUBMIT</h2></div><p>Research downloads only.</p></div>
-      <div class="table-wrap"><table>
-        <tr><th>File</th><th>Status</th></tr>
-        <tr><td><code>gemsdoe36-anderson-geothermal-pinn-38854-20261004T230000Z-9b9ea4e6-zeros.tif</code></td><td>OWNER-REPORTED <code>0.2750 &lt; 0.2778</code> (96.91% overlap with GEMSDOE32: copied 37,654 dots + 1,200 radial IDW dots). Archived; do not resubmit.</td></tr>
-        <tr><td><code>GEMS36_h6_offcatalog_network_prior_20261004T193432.021282Z_3276c04090_3c064db2.tif</code></td><td>OWNER-REPORTED <code>0.0512</code>; circular SGMC proxy (honest HOLDOUT-DTI <code>0.000094</code>). Archived; do not submit.</td></tr>
-        <tr><td><code>GEMS36_FORMAT_TEST_NOT_SUBMISSION.tif</code></td><td>Format demonstration fixture only.</td></tr>
-      </table></div>
-    </section>
-
-    <section class="section" aria-labelledby="src-title">
-      <div class="section-head"><div><div class="eyebrow">Official sources for manual review · not fetched in this session</div><h2 id="src-title">Official Competition &amp; Geoscience Links</h2></div></div>
-      <ul>
-        <li><a href="https://www.drivendata.org/competitions/306/competition-doe-gems/page/967/" target="_blank" rel="noopener">DrivenData Problem Description &amp; Metric (page 967)</a> · <a href="https://www.drivendata.org/competitions/306/competition-doe-gems/leaderboard/" target="_blank" rel="noopener">Official Leaderboard</a> · <a href="https://www.drivendata.org/competitions/306/competition-doe-gems/" target="_blank" rel="noopener">Competition Home</a></li>
-        <li><a href="https://docs.nlr.gov/docs/fy26osti/96647.pdf" target="_blank" rel="noopener">Official DOE / NLR Rules PDF (NLR 96647)</a> · <a href="https://community.drivendata.org/t/scoring-clarification-are-known-usgs-ingenious-faults-masked-when-scoring-and-are-they-in-the-final-round-label-set/11516" target="_blank" rel="noopener">Forum t/11516 (Known Faults Masked)</a> · <a href="https://community.drivendata.org/t/clarification-what-counts-as-a-new-fault-in-the-test-set/11536" target="_blank" rel="noopener">Forum t/11536 (Splays &amp; Continuations)</a></li>
-        <li><a href="https://github.com/drivendataorg/gems-prize-reference-solution" target="_blank" rel="noopener">DrivenData Reference Solution</a> · <a href="https://gdr.openei.org/submissions/1391" target="_blank" rel="noopener">INGENIOUS / DOE GDR 1391</a> · <a href="https://doi.org/10.5066/P93LGLVQ" target="_blank" rel="noopener">USGS GeoDAWN (doi:10.5066/P93LGLVQ)</a> · <a href="https://www.usgs.gov/3d-elevation-program" target="_blank" rel="noopener">USGS 3DEP LiDAR</a></li>
-      </ul>
-    </section>
-  </main>
-
-  <footer class="site-footer wrap">
-    <div class="footer-row">
-      <p>GEMSDOE36 · Core Values: <strong>Maximize P(Win)</strong> &amp; <strong>Own the Outcome</strong> · AI-assisted research (<a href="AI_DISCLOSURE.md">AI disclosure</a>). Not affiliated with DOE, NLR, USGS or DrivenData.</p>
-      <p>Official: <a href="https://www.drivendata.org/competitions/306/competition-doe-gems/page/967/" target="_blank" rel="noopener">problem &amp; metric</a> · <a href="https://docs.nlr.gov/docs/fy26osti/96647.pdf" target="_blank" rel="noopener">rules PDF</a> · <a href="current-run.json">Current MTO-36 status JSON</a> · <a href="downloads/run_card.json">H36-CTRB Run Card</a></p>
-    </div>
-  </footer>
-  <script defer src="assets/live-feed.js"></script>
-  <script>fetch("current-run.json").then(r=>r.json()).then(d=>{if(!d.kpl36)throw new Error("missing KPL-36 state");});</script>
-</body>
-</html>
+<footer class="site-footer wrap"><div class="footer-row"><p>GEMSDOE36 · <strong>Maximize P(Win)</strong> &amp; <strong>Own the Outcome</strong> · <a href="AI_DISCLOSURE.md">AI disclosure</a></p><p>Independent research; not affiliated with DOE, USGS or DrivenData. <a href="https://www.drivendata.org/competitions/306/competition-doe-gems/page/967/">Official specification</a></p></div></footer>
+</main></body></html>

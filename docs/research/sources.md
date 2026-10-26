@@ -1,5 +1,7 @@
 # Official and trusted source register
 
+> **2026-10-26 update:** Core and scored inputs were restored as SHA-verified owner mirrors, not organizer-authenticated downloads. The competition/USGS public pages were read for this audit. The 6,264-event rectangle below is not verified as the competition footprint. Historical 2026-10-04 and 2026-10-25 statements remain snapshots. See [current preflight](registry-preflight-20261026.md).
+
 **Review date:** 2026-10-04 UTC. Links below are for manual review. “Listed/downloadable” means the publisher exposes the product or catalog record; it does **not** mean this workspace acquired the binary, verified AOI coverage, or measured incremental DTI value. No external binary or competition data were downloaded for this continuation.
 
 ## Competition rules, target, metric, and data
@@ -49,7 +51,7 @@
 | Public leaderboard (read 2026-10-25) | #1 0.4413 (xiaofanhu), #2 0.3916, #3 0.3904, #4 0.3724, #5 0.3539, #10 0.3379, #20 0.3273, #30 0.3051, #50 0.2818 | https://www.drivendata.org/competitions/306/competition-doe-gems/leaderboard/ |
 | Official rules PDF (NLR 96647, Sept 2026) | labels = USGS Quaternary fault database + new faults labeled by NLR and USGS experts; features = GeoDAWN lidar/magnetic/radiometric + USGS 1 m DEM; three scored submissions per week; one final submission per entity for both rounds; Phase 1 $50k (top 5 equal), Phase 2 $250k on the expert-revised set; generative-AI use must be disclosed | https://docs.nlr.gov/docs/fy26osti/96647.pdf |
 | DrivenData rules page | defers to the HeroX-hosted official rules | https://www.drivendata.org/competitions/306/competition-doe-gems/rules/ |
-| USGS ComCat FDSN event service | HTTP 200 from GitHub Actions; 6,264 M ≥ 2.5 events 2000–2026 in the footprint bbox | https://earthquake.usgs.gov/fdsnws/event/1/ |
+| USGS ComCat FDSN event service | HTTP 200 from GitHub Actions; 6,264 M ≥ 2.5 events 2000–2026 in a queried rectangle (not verified as the actual footprint) | https://earthquake.usgs.gov/fdsnws/event/1/ |
 | USGS TNM API (3DEP) | HTTP 200 from GitHub Actions; 1,985 1 m DEM and 106 1/3 arc-second products intersect the bbox | https://tnmaccess.nationalmap.gov/api/v1/products |
 | GDR submission 1391 (INGENIOUS) | HTTP 200 from GitHub Actions | https://gdr.openei.org/submissions/1391 |
 | GeoDAWN data release DOI | HTTP 200 from GitHub Actions | https://doi.org/10.5066/P93LGLVQ |

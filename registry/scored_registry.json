@@ -1286,6 +1286,7 @@
    "score": 0.0005,
    "repo": "GEMSDOE79",
    "path": "docs/downloads/gems79-tilt-ring-100000dots-20261022T212135Z-50a5d7498c71-zeros.tif",
+   "ref": "63ebec2c57734767dd2940c8a98586f467effe1d",
    "bytes": 49139380,
    "sha256": "aa0685b0bcbead416b41d22b8c327393d55e32e18e360fa460eb0af020d018ec",
    "local": "data/registry/scored/GEMSDOE79__gems79-tilt-ring-100000dots-20261022T212135Z-50a5d7498c71-zeros.tif",

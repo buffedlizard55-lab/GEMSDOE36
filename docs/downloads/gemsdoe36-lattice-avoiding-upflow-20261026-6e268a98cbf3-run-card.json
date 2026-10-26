@@ -1,0 +1,70 @@
+{
+  "schema": "gemsdoe36.unique-submission.v1",
+  "generated_utc": "2026-10-26T22:03:01+00:00Z",
+  "method": "lattice avoidance + Anderson-consistent strike + Poisson-disk 300m thinning",
+  "hypothesis": "Off-catalogue faults lie in territory no registered raster covers (>3 px from the 13GEMSDOE 5-px lattice); placing Anderson-consistent dots there targets blind normal faults missed by catalogue-flank-pruned fields.",
+  "mechanism": "Dots placed only on lattice-uncovered footprint pixels (0% overlap with the registered lattice), filtered to Anderson normal/transtensional strikes, thinned to one dot per 300 m kernel support.",
+  "named_non_fault_mimic": "Regular grid artifacts, playa/fan radial gradients, flight-line striping; mitigated by strike filter and cluster-center priority.",
+  "budget_dots": 505,
+  "uncovered_pixels_available": 6649,
+  "eligibility": {
+    "lattice_uncovered": 6649,
+    "anderson_consistent_strike": 1592
+  },
+  "validation": {
+    "shape_matches_template": true,
+    "crs_epsg_32611": true,
+    "geotransform_matches_template": true,
+    "single_band": true,
+    "dtype_float32": true,
+    "all_cells_finite": true,
+    "all_cells_in_0_1": true,
+    "no_nan_inside_footprint": true,
+    "outside_cells_zero": true,
+    "nodata_none": true,
+    "positive_dots": 505,
+    "format_valid": true
+  },
+  "registry_uniqueness_local": {
+    "gemsdoe32-h33-h33-2-b2-20261004T220000Z-e5eb6e7e-zeros.tif": {
+      "n_dots": 37654,
+      "candidate_dot_overlap_within_3px": 0.3861,
+      "surface_spearman_rho": -0.0004,
+      "duplicate": false
+    },
+    "gemsdoe36-anderson-geothermal-pinn-38854-20261004T230000Z-9b9ea4e6-zeros.tif": {
+      "n_dots": 38854,
+      "candidate_dot_overlap_within_3px": 0.3861,
+      "surface_spearman_rho": -0.0004,
+      "duplicate": false
+    }
+  },
+  "lattice_overlap": 0.0,
+  "raster": {
+    "tif": "docs/downloads/gemsdoe36-lattice-avoiding-upflow-20261026-6e268a98cbf3-zeros.tif",
+    "tif_sha256": "9ce3f0d2987e8f73a1cf980cbe5ac0c0e82482b9cad5e102733ed0cf1b71f585",
+    "zip": "docs/downloads/gemsdoe36-lattice-avoiding-upflow-20261026-6e268a98cbf3-zeros.zip",
+    "zip_sha256": "635945f5c931d2a1e70077049cbe8d783786fc572ed00ea8eaa36c17bebbd5a4",
+    "content_id": "6e268a98cbf3",
+    "dots": 505,
+    "values": [
+      0.0,
+      1.0
+    ],
+    "nodata": null
+  },
+  "submission": {
+    "name": "gemsdoe36-lattice-avoiding-upflow-20261026-6e268a98cbf3-zeros",
+    "file": "gemsdoe36-lattice-avoiding-upflow-20261026-6e268a98cbf3-zeros.tif",
+    "note": "GEMSDOE36 lattice-avoiding off-catalogue dots | 505 dots in >3px-from-lattice novel territory, Anderson-consistent strikes | holdout unve...",
+    "note_chars": 140
+  },
+  "holdout": {
+    "label": "HOLDOUT-DTI not computable",
+    "reason": "labels.tif / training_features.tif require DrivenData login; not available in this checkout",
+    "policy": "no projection is written as a score"
+  },
+  "verdict": "CANDIDATE \u2014 format valid + locally unique vs GEMSDOE32 & GEMSDOE36; holdout DTI and full 198-raster uniqueness require organizer data not available here. NOT slot-authorized until a separate selector approves.",
+  "ok_to_download_and_submit": false,
+  "ok_to_download_for_research": true
+}

@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Fail-closed verification of the NEW negative MTO-36 research release.
+"""Fail-closed verification of the archived negative MTO-36 research release.
 
 A locally valid GeoTIFF is necessary for a research download. It NEVER
 supersedes a failed strict all-registry duplicate/holdout gate or authorizes an
@@ -105,26 +105,9 @@ def verify_all(root: Path = ROOT) -> dict[str, Any]:
             if np.any((arr > 0) & (cat | ~foot)) or int(((arr > 0) & foot).sum()) != d["dot_count"]:
                 errors.append("Nonzero pixel on known fault/outside footprint or wrong dot count")
 
-    cur = json.loads((docs / "current-run.json").read_text())
-    # Successor-lane rule (KPL-36, 2026-10-26): current-run.json now leads with the
-    # KPL-36 run card; the MTO-36 negative state must be preserved verbatim under
-    # previous_current_run_MTO36 and the MTO card itself must stay negative.
-    prev_mto = cur.get("previous_current_run_MTO36") or {}
-    kpl_card_path = root / "evidence/kpl36_run_card_20261026.json"
-    kpl_card = json.loads(kpl_card_path.read_text()) if kpl_card_path.is_file() else {}
-    kpl_promote = bool(kpl_card.get("verdict") == "promote" and kpl_card.get("gates") and all(kpl_card["gates"].values()))
-    if (
-        cur.get("lane_id") != "KPL-36"
-        or cur.get("verdict") != kpl_card.get("verdict")
-        or bool(cur.get("ok_to_download_and_submit")) != kpl_promote
-        or cur.get("tif_sha256") != (kpl_card.get("submission") or {}).get("sha256")
-        or prev_mto.get("lane_id") != "MTO-36"
-        or prev_mto.get("verdict") != "negative"
-        or prev_mto.get("slot_approved")
-        or prev_mto.get("ok_to_download_and_submit")
-        or prev_mto.get("tif_sha256") != card["raster_sha256"]
-    ):
-        errors.append("Current Pages manifest contradicts KPL-36 card or preserved negative MTO state")
+    # MTO-36 is an archived negative artifact, not the current preflight run.
+    # Current status is checked independently by scripts/check_site.py; never
+    # require a historical TIFF to masquerade as a current candidate.
     for page in ("index.html", "executive-summary.html"):
         text = (docs / page).read_text()
         if not all(term in text for term in (tif.name, card["raster_sha256"], card["submission_note"], "DO NOT SUBMIT")):
@@ -141,7 +124,7 @@ def verify_all(root: Path = ROOT) -> dict[str, Any]:
             errors.append(f"Pages JSON mirror out of sync: {copy}")
 
     return {
-        "passed": not errors, "verdict": card["verdict"],
+        "passed": not errors, "verdict": card["verdict"], "archived_not_current_candidate": True,
         "download_research": card["download_ok_for_research"],
         "download_and_submit": card["submit_ok"],
         "tif_sha256": card["raster_sha256"], "errors": errors,
