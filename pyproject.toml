@@ -29,3 +29,14 @@ addopts = "-ra"
 [tool.ruff]
 line-length = 100
 target-version = "py310"
+extend-exclude = ["src/gems", "scripts/submission_writer.py"]  # vendored shared template: byte-identical, never reformatted
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "B"]
+ignore = ["E501"]
+
+[tool.ruff.lint.per-file-ignores]
+"scripts/*" = ["E402"]  # scripts insert src/ on sys.path before importing project modules
+"tests/test_orientation.py" = ["E402"]
+"scripts/run_holdout.py" = ["B905", "B023"]  # legacy 2026-10-04 driver (superseded); closure is used within its loop iteration
+"src/gemsdoe36/hypotheses.py" = ["B905"]  # legacy module

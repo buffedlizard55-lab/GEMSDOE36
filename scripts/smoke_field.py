@@ -1,14 +1,15 @@
 #!/usr/bin/env python3
 """Smoke test: load stack, build Anderson field + belief field, emit a few dots."""
 import sys
+
 sys.path.insert(0, "src")
 import numpy as np
 import rasterio
 from scipy.ndimage import binary_dilation
 
 from gemsdoe36.anderson import local_extension_field
-from gemsdoe36.field import build_belief_field, FieldConfig
 from gemsdoe36.emitter import emit_dots
+from gemsdoe36.field import FieldConfig, build_belief_field
 
 H, W = 3730, 3292
 data = np.load("data/processed/core_stack.npz")

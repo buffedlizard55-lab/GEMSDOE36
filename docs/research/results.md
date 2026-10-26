@@ -1,3 +1,5 @@
+> **Superseded on 2026-10-25. Earlier numbers in this file used different, partly circular protocols (live-mirror projection; SGMC proxy) and are NOT comparable to HOLDOUT-DTI. Current results: `evidence/h36_holdout_experiments.json`, `knowledge/h36_findings_2026-10-25.md`. The Anderson file's owner-reported live score is 0.2750 (not the projected 0.2798).**
+
 # GEMSDOE36 Experimental Results & Validation Ledger
 
 **Ledger Updated:** 2026-10-04 UTC  

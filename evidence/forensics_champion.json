@@ -1,0 +1,168 @@
+{
+ "label": "FORENSICS - owner-reported scores, measured bytes; learning only, no pixels reused",
+ "family_profile": {
+  "H19-5 solid (0.1922)": {
+   "file": "data/raw/scored/gems19-h19-5-powerlaw-budget-multiline-corroborated-20260930-e27054cf-nan.tif",
+   "positive_pixels": 121131,
+   "values": [
+    0.0,
+    1.0
+   ],
+   "dcat_px_le1": 9651,
+   "dcat_px_1to2": 7675,
+   "dcat_px_2to3": 6841,
+   "dcat_px_3to10": 25579,
+   "dcat_px_gt10": 71385,
+   "dcat_median_px": 14.560219778561036,
+   "lidar_valid_fraction": 0.7640075620609093,
+   "nn_spacing_median_px": 1.0
+  },
+  "d1.5 (0.2477)": {
+   "file": "data/raw/scored/gems24-h25-1-dotted-h19-5-d1-5-20261002-989f59505db1-nan.tif",
+   "positive_pixels": 60069,
+   "values": [
+    0.0,
+    1.0
+   ],
+   "dcat_px_le1": 5355,
+   "dcat_px_1to2": 3414,
+   "dcat_px_2to3": 3169,
+   "dcat_px_3to10": 12503,
+   "dcat_px_gt10": 35628,
+   "dcat_median_px": 14.866068747318506,
+   "lidar_valid_fraction": 0.7691155171552715,
+   "nn_spacing_median_px": 2.23606797749979
+  },
+  "d2.8 (0.2600)": {
+   "file": "data/registry/g25_d28_nan.tif",
+   "positive_pixels": 44090,
+   "values": [
+    0.0,
+    1.0
+   ],
+   "dcat_px_le1": 3891,
+   "dcat_px_1to2": 2545,
+   "dcat_px_2to3": 2171,
+   "dcat_px_3to10": 9189,
+   "dcat_px_gt10": 26294,
+   "dcat_median_px": 15.0,
+   "lidar_valid_fraction": 0.7719664322975731,
+   "nn_spacing_median_px": 3.0
+  },
+  "poisson300m (0.2600)": {
+   "file": "data/registry/g30_d28_poisson300m.tif",
+   "positive_pixels": 44090,
+   "values": [
+    0.0,
+    1.0
+   ],
+   "dcat_px_le1": 3891,
+   "dcat_px_1to2": 2545,
+   "dcat_px_2to3": 2171,
+   "dcat_px_3to10": 9189,
+   "dcat_px_gt10": 26294,
+   "dcat_median_px": 15.0,
+   "lidar_valid_fraction": 0.7719664322975731,
+   "nn_spacing_median_px": 3.0
+  },
+  "solo B=1 (0.2708)": {
+   "file": "data/registry/g31_solo_d28_nan.tif",
+   "positive_pixels": 40199,
+   "values": [
+    0.0,
+    1.0
+   ],
+   "dcat_px_le1": 0,
+   "dcat_px_1to2": 2545,
+   "dcat_px_2to3": 2171,
+   "dcat_px_3to10": 9189,
+   "dcat_px_gt10": 26294,
+   "dcat_median_px": 17.69180601295413,
+   "lidar_valid_fraction": 0.7666857384512052,
+   "nn_spacing_median_px": 3.0
+  },
+  "h33-2-b2 B=2 (0.2778)": {
+   "file": "data/registry/g32_h33-2-b2_zeros.tif",
+   "positive_pixels": 37654,
+   "values": [
+    0.0,
+    1.0
+   ],
+   "dcat_px_le1": 0,
+   "dcat_px_1to2": 0,
+   "dcat_px_2to3": 2171,
+   "dcat_px_3to10": 9189,
+   "dcat_px_gt10": 26294,
+   "dcat_median_px": 19.6468827043885,
+   "lidar_valid_fraction": 0.764195039039677,
+   "nn_spacing_median_px": 3.0
+  },
+  "GEMSDOE36 anderson (0.2750)": {
+   "file": "docs/downloads/gemsdoe36-anderson-geothermal-pinn-38854-20261004T230000Z-9b9ea4e6-zeros.tif",
+   "positive_pixels": 38854,
+   "values": [
+    0.0,
+    1.0
+   ],
+   "dcat_px_le1": 0,
+   "dcat_px_1to2": 0,
+   "dcat_px_2to3": 2281,
+   "dcat_px_3to10": 9502,
+   "dcat_px_gt10": 27071,
+   "dcat_median_px": 19.235384061671343,
+   "lidar_valid_fraction": 0.7703968703351006,
+   "nn_spacing_median_px": 3.0
+  }
+ },
+ "subset_relations": {
+  "d2.8_subset_of_H19-5": true,
+  "poisson300m_identical_to_d2.8": true,
+  "solo_equals_d2.8_minus_dcat_le1": true,
+  "h33-2-b2_equals_solo_minus_dcat_le2": true,
+  "dots_removed_B0_to_B1": 3891,
+  "dots_removed_B1_to_B2": 2545,
+  "anderson_minus_h33-2-b2": 1200,
+  "h33-2-b2_minus_anderson": 0
+ },
+ "b_ladder_inversion": {
+  "identity": "DTI = T / (0.2 (T + S - M) + 0.8 N); thin dots T ~= M (a 2x ratio changes T by ~3%)",
+  "by_assumed_N": {
+   "8000": {
+    "T_B2": 3870.0,
+    "credit_per_dot_B2": 0.1028,
+    "credit_per_dot_removed_B0_to_B1": 0.0119,
+    "credit_per_dot_removed_B1_to_B2": 0.0158,
+    "credit_per_dot_added_anderson": 0.0225,
+    "break_even_credit_0.2xDTI": 0.0556,
+    "coverage_T_over_N": 0.484
+   },
+   "12000": {
+    "T_B2": 4758.9,
+    "credit_per_dot_B2": 0.1264,
+    "credit_per_dot_removed_B0_to_B1": 0.003,
+    "credit_per_dot_removed_B1_to_B2": 0.007,
+    "credit_per_dot_added_anderson": 0.015,
+    "break_even_credit_0.2xDTI": 0.0556,
+    "coverage_T_over_N": 0.397
+   },
+   "12541": {
+    "T_B2": 4879.2,
+    "credit_per_dot_B2": 0.1296,
+    "credit_per_dot_removed_B0_to_B1": 0.0018,
+    "credit_per_dot_removed_B1_to_B2": 0.0059,
+    "credit_per_dot_added_anderson": 0.014,
+    "break_even_credit_0.2xDTI": 0.0556,
+    "coverage_T_over_N": 0.389
+   }
+  }
+ },
+ "blind_lattice_estimate": {
+  "file": "data/raw/scored/13gems_20261001_r13-lattice-s5_v2_nan-outside.tif",
+  "owner_reported_score": 0.0904,
+  "dots": 206895,
+  "mean_kernel_credit_uniform_truth": 0.3752,
+  "assumed_M_fraction_of_N": 0.12,
+  "effective_truth_pixels_N_prime": 12541,
+  "caveat": "N' = N_public / f_public if the public score is computed on public chunks only; assumes truth positions are uniform relative to the lattice."
+ }
+}
