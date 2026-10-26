@@ -1,41 +1,30 @@
 {
-  "schema_version": "gemsdoe36-current-run-v2",
-  "updated_utc": "2026-10-26T03:35:00Z",
-  "lane_id": "ATVR-36",
-  "winning_experiment": "EXP-2",
+  "schema_version": "gemsdoe36-current-run-v3",
+  "updated_utc": "2026-10-26T04:42:09+00:00",
+  "lane_id": "MTO-36",
+  "source_run_card": "evidence/mto36_run_card_20261026.json",
   "verdict": "negative",
   "slot_approved": false,
   "ok_to_download_research_tif": true,
   "ok_to_download_and_submit": false,
-  "status_banner": "DOWNLOAD: YES · LIVE SLOT: DO NOT SUBMIT (HOLD WEEKLY SLOT)",
-  "download_tif_href": "downloads/gemsdoe36-atvr36-20261026.tif",
-  "download_zip_href": "downloads/gemsdoe36-atvr36-20261026.zip",
-  "tif_sha256": "54f493f4fa5c74ed3a02f88ca6d47272b0c3cee0cc0bd9bbd9cb94eaf997204a",
-  "zip_sha256": "ceac8754bd8779c7f0a849c81f63e665e49f2767a4753cb5156832120dac8311",
-  "submission_name": "gemsdoe36-atvr36-exp-2-20261026",
-  "submission_note": "GEMSDOE36 ATVR-36 EXP-2 | tilt/LiDAR+hydrothermal+Anderson PDE+CELF | HOLDOUT-DTI 0.1145/0.1179 | NEGATIVE hold slot",
+  "status_banner": "DOWNLOAD: YES (research) \u00b7 DO NOT SUBMIT",
+  "download_tif_href": "downloads/gemsdoe36-mto36-ortho-contact-20261026-c41282e9da7a-zeros.tif",
+  "download_zip_href": "downloads/gemsdoe36-mto36-ortho-contact-20261026-c41282e9da7a-zeros.zip",
+  "tif_sha256": "3e6594fe39facbffd433dc4500a7e8766fab2dd0d5089d2f591ed47713261607",
+  "submission_name": "gemsdoe36-mto36-ortho-contact-20261026-c41282e9da7a-zeros",
+  "submission_note": "GEMSDOE36 MTO-36 contact-crosscut | HOLDOUT-DTI 0.0676 | NEGATIVE; research only | id c41282e9da7a",
   "holdout_dti": {
     "label": "HOLDOUT-DTI",
-    "audit_v1_3000m_dti": 0.114542,
-    "audit_v1_3000m_ci95": [0.078547, 0.151221],
-    "shared_segment_pooled_v1_1500m_dti": 0.117925,
-    "shared_segment_pooled_v1_1500m_ci95": [0.101961, 0.132998],
-    "folds_segment_pooled_v1": {
-      "NW": 0.15048,
-      "NE_LidarGapHeavy": 0.05312,
-      "SW": 0.11115,
-      "SE": 0.15438
-    },
-    "repo_B0_reference": 0.133749,
-    "recorded_group_best_reference": 0.14876
+    "evaluator_version": "gems-segment-pooled-v1",
+    "withheld_positives": 60988,
+    "value": 0.06761079522606864,
+    "ci95": [
+      0.05844894638981122,
+      0.0778668337260451
+    ]
   },
-  "automated_gates": {
-    "leakage_canary_passed": true,
-    "beats_matched_local_controls": true,
-    "beats_group_holdout_best": false,
-    "portal_geotiff_valid": true,
-    "focus_9_sites_unique": true,
-    "expanded_201_blanket_literal_unique": false,
-    "all_passed": false
+  "registry": {
+    "literal_unique": false,
+    "max_overlap": 1.0
   }
 }

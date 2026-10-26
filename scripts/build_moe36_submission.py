@@ -18,7 +18,6 @@ import time
 from pathlib import Path
 
 import numpy as np
-import rasterio
 from scipy.ndimage import distance_transform_edt
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -26,6 +25,8 @@ sys.path.insert(0, str(ROOT / "src"))
 sys.path.insert(0, str(ROOT / "scripts"))
 
 from atvr36_submission_gate import write_and_validate_submission  # noqa: E402
+from run_moe36_experiment import CACHE, RAW_DIR, fit_predict, load_grid, rank_norm, raw19_matrix  # noqa: E402
+
 from gemsdoe36.ctrb import (  # noqa: E402
     ALL_FEATURE_NAMES,
     LOCAL_FEATURE_NAMES,
@@ -33,7 +34,6 @@ from gemsdoe36.ctrb import (  # noqa: E402
     build_or_load_feature_stack,
     submodular_dti_emit,
 )
-from run_moe36_experiment import CACHE, RAW_DIR, fit_predict, load_grid, rank_norm, raw19_matrix  # noqa: E402
 
 NAME = "gemsdoe36-moe36-exp1-20261026"
 NOTE = "GEMSDOE36 MOE36 EXP-1 equal rank fusion RAW19+CTRB-local+struct | HOLDOUT-DTI 0.1249 | NEGATIVE do not submit"

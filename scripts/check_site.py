@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
-"""Fail-closed check of the GitHub Pages site against the machine-written JSON run cards
-across all four GEMSDOE36 parallel lanes (ATVR-36, H36-CTRB, H36-GPS, and Lane36).
+"""Fail-closed Pages link/status checks for MTO-36 and five archived lanes.
+
+Does not claim organizer portal acceptance or authenticate historical score claims.
 """
 
 from __future__ import annotations
@@ -19,6 +20,8 @@ CTRB_CARD = REPO_ROOT / "evidence/h36_ctrb_run_card_20261025.json"
 GPS_CARD = REPO_ROOT / "evidence/h36_run_card.json"
 LANE36_CARD = DOCS_ROOT / "downloads/lane36_run_card.json"
 LANE36_CC = REPO_ROOT / "evidence/lane36_crosscheck.json"
+MTO_CARD = REPO_ROOT / "evidence/mto36_run_card_20261026.json"
+MOE_CARD = REPO_ROOT / "evidence/moe36_run_card_20261026.json"
 CURRENT_RUN = DOCS_ROOT / "current-run.json"
 BOTH_PAGES = ("DO NOT SUBMIT", "Research downloads only", "HOLDOUT-DTI", "ORGANIZER-CONFIRMED")
 REQUIRED_PAGES = ("index.html", "executive-summary.html")
@@ -49,8 +52,8 @@ class LinkParser(HTMLParser):
 
     def handle_starttag(self, tag, attrs):
         a = dict(attrs)
-        href = a.get("href") or (a.get("src") if tag == "img" else None)
-        if tag in {"a", "link", "img"} and href:
+        href = a.get("href") or (a.get("src") if tag in {"img", "script"} else None)
+        if tag in {"a", "link", "img", "script"} and href:
             self.links.append(href)
             if tag == "a" and a.get("target") == "_blank":
                 self.blank_targets.append((href, a.get("rel", "") or ""))
@@ -104,6 +107,8 @@ def main() -> int:
             if "noopener" not in rel.split():
                 errors.append(f"docs/{page}: target=_blank without rel=noopener: {href}")
 
+    mto = json.loads(MTO_CARD.read_text(encoding="utf-8"))
+    moe = json.loads(MOE_CARD.read_text(encoding="utf-8"))
     atvr = json.loads(ATVR_CARD.read_text(encoding="utf-8"))
     ctrb = json.loads(CTRB_CARD.read_text(encoding="utf-8"))
     gps = json.loads(GPS_CARD.read_text(encoding="utf-8"))
@@ -159,6 +164,11 @@ def main() -> int:
         or (gps["verdict"] == "promote")
     )
     must = [
+        Path(mto["download"]["tif"]).name,
+        mto["raster_sha256"],
+        mto["submission_note"],
+        moe["submission_note"],
+        moe["raster_sha256"],
         atvr_tif.name,
         atvr["raster_sha256"],
         atvr["submission_note"],
@@ -175,22 +185,19 @@ def main() -> int:
         if phrase not in landing:
             errors.append(f"landing page missing: {phrase[:80]}")
 
-    first_screen = landing[: max(1, len(landing) // 3)]
-    for top_fname in (atvr_tif.name, ctrb_zeros.name, gps_zeros.name):
-        if top_fname not in first_screen:
-            errors.append(f"{top_fname} is not on the first screen of the landing page")
+    first_screen = landing[: max(1, len(landing) // 4)]
+    current_tif = Path(mto["download"]["tif"]).name
+    if current_tif not in first_screen or "DO NOT SUBMIT" not in first_screen:
+        errors.append(f"current research-only {current_tif} + negative verdict must lead the landing page")
 
     for phrase in FORBIDDEN_COPY:
         if phrase.lower() in (landing + execp).lower():
             errors.append(f"stale/incorrect claim present: {phrase}")
 
     for phrase in EXECUTIVE_COPY + (
-        atvr["submission_note"],
-        atvr_tif.name,
-        ctrb_sub["note"],
-        ctrb_zeros.name,
-        gps["submission"]["note"],
-        gps_zeros.name,
+        mto["submission_note"],
+        Path(mto["download"]["tif"]).name,
+        mto["raster_sha256"],
     ):
         if phrase.lower() not in execp.lower():
             errors.append(f"executive summary missing: {phrase[:80]}")
@@ -202,8 +209,39 @@ def main() -> int:
 
     if CURRENT_RUN.exists():
         cur = json.loads(CURRENT_RUN.read_text(encoding="utf-8"))
-        if cur.get("slot_approved") or cur.get("verdict") != "negative":
-            errors.append("docs/current-run.json must reflect negative fail-closed verdict")
+        if (
+            cur.get("slot_approved") or cur.get("ok_to_download_and_submit")
+            or cur.get("verdict") != "negative" or cur.get("lane_id") != "MTO-36"
+            or cur.get("tif_sha256") != mto["raster_sha256"]
+        ):
+            errors.append("docs/current-run.json must reflect the MTO-36 negative verdict/hash")
+    else:
+        errors.append("missing docs/current-run.json")
+
+    new_tif = REPO_ROOT / mto["download"]["tif"]
+    new_zip = REPO_ROOT / mto["download"]["zip"]
+    if mto["verdict"] != "negative" or mto["submit_ok"] or mto["registry"]["final_dots"]["all_entries_passed_literal"]:
+        errors.append("MTO-36 run card must remain a research-only strict duplicate stop")
+    for file, expected in ((new_tif, mto["raster_sha256"]), (new_zip, mto["download"]["zip_sha256"])):
+        if not file.is_file() or _sha(file) != expected:
+            errors.append(f"MTO-36 artifact missing / SHA-256 mismatch: {file.name}")
+    if len(mto["submission_note"]) > 140:
+        errors.append("MTO-36 submission note exceeds 140 characters")
+    if (DOCS_ROOT / "downloads/mto36-run-card.json").read_bytes() != MTO_CARD.read_bytes():
+        errors.append("public MTO-36 run-card mirror differs from evidence")
+    for file, expected in (
+        (DOCS_ROOT / "downloads/gemsdoe36-moe36-exp1-20261026-zeros.tif", moe["raster_sha256"]),
+        (DOCS_ROOT / "downloads/gemsdoe36-moe36-exp1-20261026-zeros.zip", moe["zip_sha256"]),
+    ):
+        if not file.is_file() or _sha(file) != expected:
+            errors.append(f"MOE36 artifact missing / SHA-256 mismatch: {file.name}")
+    if moe["verdict"] != "negative" or moe["ok_to_download_and_submit"] or moe["registry_uniqueness"]["full_198_raster_crosscheck"]["passed"]:
+        errors.append("Archived MOE36 must remain a negative duplicate-flag release")
+    if len(moe["submission_note"]) > 140:
+        errors.append("MOE36 submission note exceeds 140 characters")
+    for page, text in (("index.html", landing), ("executive-summary.html", execp)):
+        if re.search(r"(?:0\.\d{3,4}).{0,25}ORGANIZER-CONFIRMED", text, re.I):
+            errors.append(f"docs/{page}: numeric historical score incorrectly called organizer-confirmed")
 
     if LANE36_CARD.exists():
         lc = json.loads(LANE36_CARD.read_text(encoding="utf-8"))
@@ -229,7 +267,7 @@ def main() -> int:
         for err in errors:
             print(f"- {err}")
         return 1
-    print("SITE CHECK PASS — all 4 lanes (ATVR-36, H36-CTRB, H36-GPS, Lane36) verified")
+    print("SITE CHECK PASS — MTO-36 negative research release and 5 archived lanes verified")
     return 0
 
 

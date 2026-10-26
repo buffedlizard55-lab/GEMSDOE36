@@ -1,10 +1,10 @@
-> **Superseded on 2026-10-25.** This 2026-10-04 document contains projections (e.g. a projected 0.2798) that were never scores; the Anderson file's owner-reported live score is 0.2750. The verified 2026-10-25 leaderboard top is 0.4413 (0.3195 is stale). Current status: `README.md`, `evidence/h36_run_card.json`, `knowledge/h36_findings_2026-10-25.md`.
+> **ARCHIVED 2026-10-04 analysis — not current standings.** Its projected values are NOT competition scores. Owner-supplied `0.3195` and `0.4413` conflict and were NOT independently checked against a live DrivenData board or organizer receipt. Never cite the “Current Public Leaderboard Maximum” below as verified. See [current nine-site review, evidence and negative MTO-36 decision](mto36-evidence-and-nine-sites.md) and the [official leaderboard](https://www.drivendata.org/competitions/306/competition-doe-gems/leaderboard/).
 
 # Leaderboard Analysis & Forensic Autopsy: 0.2778 to 0.3195
 
 **Audit Date:** 2026-10-04 UTC  
 **Primary Evaluated Baseline:** `gemsdoe32-h33-h33-2-b2-20261004T220000Z-e5eb6e7e-zeros.tif` (Live Leaderboard Score: **0.2778**)  
-**Current Public Leaderboard Maximum:** **0.3195**  
+**Historical owner-supplied target (unverified, NOT current):** **0.3195**
 **GEMSDOE36 Lead Candidate:** `gemsdoe36-anderson-geothermal-pinn-38854-20261004T230000Z-9b9ea4e6-zeros.tif` (Projected Live Score: **0.2798**)
 
 ---

@@ -553,7 +553,11 @@ def write_manifest(ctrb: dict, gps: dict) -> None:
     )
 
 
-def main() -> int:
+def legacy_main() -> int:
+    """Historical generator: kept to reproduce the earlier CTRB/GPS snapshot only.
+
+    Do not call this on current Pages; it overwrites newer ATVR/MTO sections.
+    """
     ctrb = json.loads(CTRB_CARD.read_text())
     gps = json.loads(GPS_CARD.read_text())
     write_manifest(ctrb, gps)
@@ -566,6 +570,13 @@ def main() -> int:
         gps["verdict"],
     )
     return 0
+
+
+def main() -> int:
+    """Refresh current Pages without overwriting archived research lanes."""
+    from build_mto_site import main as refresh_current
+
+    return refresh_current()
 
 
 if __name__ == "__main__":

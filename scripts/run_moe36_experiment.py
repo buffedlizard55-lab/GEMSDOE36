@@ -214,7 +214,7 @@ def main():
             surf2d = np.zeros(footprint.shape, dtype=np.float32)
             surf2d.ravel()[fp_ids] = rank_fp
             expert_fold_dti[ename].append(topk_dti(surf2d, fold, holdout, k_fold))
-            for regime, rmask, store in (
+            for _regime, rmask, store in (
                 ("lidar", lidar_valid, expert_fold_dti_lidar),
                 ("gap", ~lidar_valid, expert_fold_dti_gap),
             ):
@@ -222,7 +222,8 @@ def main():
                 kk = max(50, round(k_fold * float(allowed.sum()) / max(1.0, float((fold["valid"] & (dvis > 2.0)).sum()))))
                 cand = np.where(allowed, surf2d, -1.0)
                 flat = np.argpartition(cand.ravel(), -kk)[-kk:]
-                pred_bin = np.zeros(cand.size, dtype=np.uint8); pred_bin[flat] = 1
+                pred_bin = np.zeros(cand.size, dtype=np.uint8)
+                pred_bin[flat] = 1
                 store[ename].append(float(dti_score_fast(
                     pred_bin.reshape(cand.shape), fold["truth"],
                     valid_mask=fold["valid"] & rmask)["dti"]))

@@ -1,84 +1,902 @@
-# GEMSDOE36 — DOE GEMS Prize: Subsurface Fault Discovery (`ATVR-36`, `H36-CTRB`, `H36-GPS`, `Lane36`)
+# GEMSDOE36 — current decision & reproducible research
 
-**Live GitHub Pages Site & One-Click Download Portal:** [`docs/index.html`](docs/index.html) · [`docs/executive-summary.html`](docs/executive-summary.html)  
-**Working Branch:** `arena/62b9a92c-gemsdoe36`
+**Working branch:** `arena/cee70ea1-gemsdoe36`. **Read this first** before starting work: the decision below is the current branch decision, alongside archived ATVR/CTRB/GPS/Lane36/MOE36 research lanes. Core values: **Maximize P(Win)** and **Own the Outcome**. The [full standing owner brief](#full-standing-owner-brief-historical-wording) is preserved verbatim below; its historical leaderboard claims are not verified observations.
 
 <!-- STATUS:START -->
-> ## Automated Repository Release Gate: `DO NOT SUBMIT — HOLD WEEKLY LIVE SLOT` (`DOWNLOAD: YES` for format-safe `[0, 1]` research & cross-lane ensemble inspection)
+> ## CURRENT DECISION · `DOWNLOAD: YES (research)` · `DO NOT SUBMIT` · `verdict: negative`
 >
-> * **Current Branch Deliverable (`ATVR-36 EXP-2`, `arena/62b9a92c-gemsdoe36`):** [`gemsdoe36-atvr36-20261026.tif`](docs/downloads/gemsdoe36-atvr36-20261026.tif) · [ZIP](docs/downloads/gemsdoe36-atvr36-20261026.zip) · [Receipt](docs/downloads/gemsdoe36-atvr36-20261026.receipt.json) · [Run Card](evidence/atvr36_run_card_20261026.json)
->   * Name: `gemsdoe36-atvr36-exp-2-20261026` · SHA-256: `54f493f4fa5c74ed3a02f88ca6d47272b0c3cee0cc0bd9bbd9cb94eaf997204a`
->   * Note (`116 <= 140` chars): `GEMSDOE36 ATVR-36 EXP-2 | tilt/LiDAR+hydrothermal+Anderson PDE+CELF | HOLDOUT-DTI 0.1145/0.1179 | NEGATIVE hold slot`
->   * **HOLDOUT-DTI:** **`0.114542`** (`95% CI [0.078547, 0.151221]`, `gems36-segment-audit-v1`, 3 km buffer, `+0.075018` vs `B1` `0.039523`, `p = 1.0000`) and **`0.117925`** (`95% CI [0.101961, 0.132998]`, `gems-segment-pooled-v1`, 1.5 km buffer; **repository-best `NW = 0.15048` & `SE = 0.15438`**; `SW = 0.11115`, `NE = 0.05312`).
->   * **Uniqueness & Canary:** `50/50` features pass leakage canary (`max AUC = 0.5881 <= 0.90`); **100% unique across all 9 focus repositories (`GEMSDOE24`–`36`)** (`max overlap = 0.6328 <= 0.70`, `35.94%` vs `GEMSDOE32` `0.2778` champion `B2`, `37.36%` vs `H36-CTRB`); `201`-raster all-repo registry literal check `FAIL` (`0.8936` on `8` non-focus `80k–517k`-dot `41–55%` area blankets; [`evidence/atvr36_crosscheck_20261026.json`](evidence/atvr36_crosscheck_20261026.json)).
->   * **Gates:** G1 PASS · G2 FAIL (`0.117925 < repo B0 0.13375 / group best 0.14876`) · G3 PASS · G4a PASS · G4b PASS (`9` focus sites) · G4c FAIL (`201` blankets) · G5 PASS -> **`verdict: "negative"`** (`12,279,160 / 12,279,160` cells finite in `[0.0, 1.0]`).
-> * **Parallel `H36-CTRB` (`gemsdoe36-h36-ctrb-submod-36800-20261025T000000Z-a1d85443-zeros.tif`):** **DO NOT SUBMIT** (`HOLDOUT-DTI = 0.114425` on `gems-segment-pooled-v1`, **repository-best `NE_LidarGap = 0.13141`**; [`evidence/h36_ctrb_run_card_20261025.json`](evidence/h36_ctrb_run_card_20261025.json), SHA-256 `2bb4513d6307e2394d5de7e7e7649e28eff067b602b805a0215e82aa5ff89907`).
-> * **Parallel `H36-GPS` (`gemsdoe36-h36-gps-graben-pair-20261026-bb29ce2a4bb4-zeros.tif`):** **DO NOT SUBMIT** (`HOLDOUT-DTI = 0.13203 < B0 = 0.13375`; [`evidence/h36_run_card.json`](evidence/h36_run_card.json), SHA-256 `e3800971b44116bca8ef8f996c3b2796b4d316962f797975f17d643abfac379b`).
-> * **Parallel `Lane36` (`gemsdoe36-lane36-supgbm-68302-20261026T002651Z-f35cb3e4-zeros.tif`):** **DO NOT SUBMIT** (198-raster shared-template cross-check `FAIL` at `0.9317` max overlap; [`evidence/lane36_crosscheck.json`](evidence/lane36_crosscheck.json)).
-> * **New `MOE36` (this session, `arena/be830a51-gemsdoe36`):** [`gemsdoe36-moe36-exp1-20261026-zeros.tif`](docs/downloads/gemsdoe36-moe36-exp1-20261026-zeros.tif) · [ZIP](docs/downloads/gemsdoe36-moe36-exp1-20261026-zeros.zip) · [Run Card](evidence/moe36_run_card_20261026.json) · [Report](docs/research/moe36-20261026.md) — **DO NOT SUBMIT**: cross-fitted 3-expert rank fusion HOLDOUT-DTI `0.124900` [0.1165, 0.1339] (`gems-segment-pooled-v1`, 60,988 withheld px; beats best single expert +0.0101, paired CI [+0.0017, +0.0182]) but `< B0 0.13375`; full 198-raster dot check flags 0.879 max overlap vs dense-coverage blankets (duplicate-flag, lane stopped). SHA-256 `9209d76bab1c4a6d6f64fb794e881a85d70b1a48fdc6288a0e390cfea64aabb7`, note (109 chars): `GEMSDOE36 MOE36 EXP-1 equal rank fusion RAW19+CTRB-local+struct | HOLDOUT-DTI 0.1249 | NEGATIVE do not submit`.
+> **New original MTO-36 file:** [`gemsdoe36-mto36-ortho-contact-20261026-c41282e9da7a-zeros.tif`](docs/downloads/gemsdoe36-mto36-ortho-contact-20261026-c41282e9da7a-zeros.tif) · [one-TIFF ZIP](docs/downloads/gemsdoe36-mto36-ortho-contact-20261026-c41282e9da7a-zeros.zip) · [validator/run card](evidence/mto36_run_card_20261026.json). **Not competition-authorized.**
+> - Name: `gemsdoe36-mto36-ortho-contact-20261026-c41282e9da7a-zeros`. Note (98 / 140 characters): `GEMSDOE36 MTO-36 contact-crosscut | HOLDOUT-DTI 0.0676 | NEGATIVE; research only | id c41282e9da7a`.
+> - SHA-256: `3e6594fe39facbffd433dc4500a7e8766fab2dd0d5089d2f591ed47713261607`. Template, single band, CRS/shape/transform, all-grid finite `[0,1]` **PASS locally**; acceptance by DrivenData has **NOT** been tested.
+> - **HOLDOUT-DTI:** `0.067611` (95% CI `[0.058449, 0.077867]`; `gems-segment-pooled-v1`, `60,988` withheld positives; 1.5 km buffer). Matched control `0.066923`; paired CI `[-0.003002, +0.004433]` crosses zero; recorded group best `0.14876` **HOLDOUT-DTI** (same evaluator, not recomputed here).
+> - **Uniqueness:** surface max |rho| `0.4366` PASS; B2 champion overlap `23.76%`, nine focus max `65.73%`; **all 203 references max `100.00%` FAIL** (synthetic calibration lattice and four dense non-focus rasters &gt;70%). **Not unique under the literal protocol. Stop; no weekly slot spent.**
+> - Prior/parallel lanes: [ATVR-36](evidence/atvr36_run_card_20261026.json), [H36-CTRB](evidence/h36_ctrb_run_card_20261025.json), [H36-GPS](evidence/h36_run_card.json), [Lane36](evidence/lane36_crosscheck.json), [MOE36](evidence/moe36_run_card_20261026.json) (HOLDOUT-DTI 0.124900, strict 198-raster duplicate-flag; [report](docs/research/moe36-20261026.md)); **all negative**. [Nine-site SHA/dot crosscheck](evidence/mto36_ninesite_forensics.json) · [manual-review sources and next steps](docs/research/mto36-evidence-and-nine-sites.md).
+> - Historical competition results are **OWNER-REPORTED**, not `ORGANIZER-CONFIRMED`: no submission-page receipts are archived. User-supplied public maxima `0.3195` and `0.4413` are inconsistent in date and not refreshed here. Live board: [DrivenData leaderboard](https://www.drivendata.org/competitions/306/competition-doe-gems/leaderboard/).
 <!-- STATUS:END -->
 
----
+## Nine-site executive summary (pinned bytes, unverified scores)
 
-## Arena Core Values — Guiding Every Engineering & Gate Decision
+Exactly nine owner-specified repositories were reviewed. Each linked TIFF below was retrieved from a pinned GitHub snapshot; its **full SHA-256, exact filename, shape and on-footprint dot count** were checked against cached bytes by [`scripts/audit_focus_sources.py`](scripts/audit_focus_sources.py), with the [machine-readable receipt](evidence/mto36_ninesite_forensics.json) and [historical ledger](evidence/focus_sites_9repo_summary_20261026.json). The reported scores are **OWNER-REPORTED, not `ORGANIZER-CONFIRMED`**: no original submission-page receipts are archived. A pinned raster link cannot prove what was actually uploaded. None of these old files is a new approved candidate.
 
-1. **Maximize `P(Win)`:** Every design choice protects the 3 weekly live submission slots for candidates that demonstrably advance genuine off-catalogue geological recall — never spending a slot on circular SGMC proxies, copied sibling rasters, or models that have not beaten the shared buffered holdout best.
-2. **Own the Outcome:** Every gate executes automatically in code (`scripts/evaluate_holdout.py`, `scripts/verify_release_gate.py`, `scripts/check_site.py`) with zero manual human-inspector placeholders, zero unverified score projections, and line-by-line cryptographic SHA-256 verification.
+<!-- FOCUS9_TABLE:START -->
+| Site | Best historical TIFF (pinned source, SHA-256 prefix) | Verified dots | Historical reported score (unverified) |
+|---|---|---:|---:|
+| [GEMSDOE24](https://github.com/buffedlizard55-lab/GEMSDOE24/blob/fc2bc6f350bf5c6ce8da5d7a2ab03578ea1259d1/docs/downloads/gems24-h25-1-dotted-h19-5-d1-5-20261002-989f59505db1-nan.tif) | `gems24-h25-1-dotted-h19-5-d1-5-20261002-989f59505db1-nan.tif` · `68d0e2e4fcc5` | 60,069 | **0.2477 OWNER-REPORTED** |
+| [GEMSDOE25](https://github.com/buffedlizard55-lab/GEMSDOE25/blob/e40b9b5e3871cb34d138f586bde97f5099658d01/docs/downloads/gems25-dotted-h19-5-d2-8-20261002-e56ea318af89-nan.tif) | `gems25-dotted-h19-5-d2-8-20261002-e56ea318af89-nan.tif` · `91eae1ca42ec` | 44,090 | **0.2600 OWNER-REPORTED** |
+| [GEMSDOE27](https://github.com/buffedlizard55-lab/GEMSDOE27/blob/927322eadbde56be42ae129ccdfb9b37540d8e60/docs/downloads/gems27-topo-gap-closure-t-v2-on-d1-5-20261002-5512495c6bd1-nan.tif) | `gems27-topo-gap-closure-t-v2-on-d1-5-20261002-5512495c6bd1-nan.tif` · `33003374335d` | 61,328 | **0.2449 OWNER-REPORTED** |
+| [GEMSDOE28](https://github.com/buffedlizard55-lab/GEMSDOE28/blob/e6321461066f89080e3b1bb670d3951ab20d3638/docs/downloads/gems28-h36-1-rung30-blind-r1-20261003-b531dae0a36f-nan.tif) | `gems28-h36-1-rung30-blind-r1-20261003-b531dae0a36f-nan.tif` · `5556aa1438fd` | 37,660 | **0.2710 OWNER-REPORTED** |
+| [GEMSDOE30](https://github.com/buffedlizard55-lab/GEMSDOE30/blob/760af3005dd40b9f36d8fef97d6dc384fd9f2a2f/docs/downloads/gemsdoe30-d28-poisson300m-offcat-44090-20261003T233156Z-91eae1ca.tif) | `gemsdoe30-d28-poisson300m-offcat-44090-20261003T233156Z-91eae1ca.tif` · `8cf893ead566` | 44,090 | **0.2600 OWNER-REPORTED** |
+| [GEMSDOE31](https://github.com/buffedlizard55-lab/GEMSDOE31/blob/597b04cd1afb65d1ebbe3e9417fd952be48e3d74/docs/downloads/gemsdoe31-h27-4-solo-d28-20261004-8acb75e1-nan.tif) | `gemsdoe31-h27-4-solo-d28-20261004-8acb75e1-nan.tif` · `07b6db440535` | 40,199 | **0.2708 OWNER-REPORTED** |
+| [GEMSDOE32](https://github.com/buffedlizard55-lab/GEMSDOE32/blob/5fc7792c5887735ecd3aa9a612787da588a7bf2c/docs/downloads/gemsdoe32-h33-h33-2-b2-20261004T220000Z-e5eb6e7e-zeros.tif) | `gemsdoe32-h33-h33-2-b2-20261004T220000Z-e5eb6e7e-zeros.tif` · `c55bafc47005` | 37,654 | **0.2778 OWNER-REPORTED** |
+| [GEMSDOE33](https://github.com/buffedlizard55-lab/GEMSDOE33/blob/f618cc54773bd9b4d6c2b3ebf78103a05cc10cb6/docs/downloads/GEMSDOE33-h33d-analog-tip-stepover-r30-20261004-cb490425926e.tif) | `GEMSDOE33-h33d-analog-tip-stepover-r30-20261004-cb490425926e.tif` · `87f857d505e2` | 41,865 | **0.2632 OWNER-REPORTED** |
+| [GEMSDOE36](https://github.com/buffedlizard55-lab/GEMSDOE36/blob/c5a8ae7da3bd2fcff5aa5855afd44c7a3346c16f/docs/downloads/gemsdoe36-anderson-geothermal-pinn-38854-20261004T230000Z-9b9ea4e6-zeros.tif) | `gemsdoe36-anderson-geothermal-pinn-38854-20261004T230000Z-9b9ea4e6-zeros.tif` · `e15891020b9c` | 38,854 | **0.2750 OWNER-REPORTED** |
+<!-- FOCUS9_TABLE:END -->
 
-## Standing User Prompt & Parallel-Run Directive (Reread Every Session)
+**What GEMSDOE32's reported 0.2778 means—and does not mean.** Measured in the archived masks: GEMSDOE25 D2.8 and GEMSDOE30 D2.8 have zero in-footprint XOR; GEMSDOE31 solo equals D2.8 after deleting **3,891** predictions within 1 px of existing faults, and GEMSDOE32 B2 equals D2.8 after deleting **6,436** within 2 px. Both identities have **zero XOR**. The B2 README's **2,545** is the *additional* solo→B2 pruning (3,891+2,545=6,436), not a rival D2.8→B2 count. If the owner-reported progression 0.2600→0.2708→0.2778 accurately reflects those uploaded bytes, suppressing predicted old-fault halos plausibly lowers false-positive penalty while preserving off-catalogue recall. **The hidden test labels and organizer score receipts are unavailable; this is a conditional explanation, not a causal proof.** The legacy GEMSDOE36 raster is B2 +1,200 extra dots (reported 0.2750), so it is not a new winner. A genuinely independent geology signal might beat B2, but MTO-36 did **not** establish that. [Detailed review, four preregistered hypotheses, experiment, irregularities and source links](docs/research/mto36-evidence-and-nine-sites.md).
 
-> Review `GEMSDOE24`, `GEMSDOE25`, `GEMSDOE27`, `GEMSDOE28`, `GEMSDOE30`, `GEMSDOE31`, `GEMSDOE32` (`h33-h33-2-b2`: `0.2778`), `GEMSDOE33`, and `GEMSDOE36` (`0.2750`). Deliver an executive summary across all 9 focus sites, a PhD-level forensic explanation of why `GEMSDOE32` achieved `0.2778` and how to surpass `0.2778` / `0.3195` / `0.4413`, 3–5 ranked novel candidate geological hypotheses before implementation, and an original zero-copy GeoTIFF submission audited under the Parallel-Run Protocol (`<= 3` experiments or `2` hours; buffered whole-fault-segment hide-and-recover holdout; visible-only catalogue features; pixel-exact masking of visible faults; pooled DTI with $\alpha = 0.2, \beta = 0.8$, 300 m triangular kernel; two-polarity single-feature leakage canary `AUC <= 0.90`; pre-placement surface & post-placement final-dot registry checks `|rho| <= 0.90` and `<= 70%` 3-px overlap; strict `HOLDOUT-DTI` vs `ORGANIZER-CONFIRMED` score provenance; `[0, 1]` portal format validation; `<= 140`-char submission note; unmistakable site download/verdict UI; 3 review passes; single JSON Run Card; PR & merge onto `main`).
+The owner's suggested public high-water marks **0.3195 and 0.4413** conflict and are undated; neither is a verified current leaderboard value. [Consult the DrivenData leaderboard directly](https://www.drivendata.org/competitions/306/competition-doe-gems/leaderboard/). No holdout DTI is a leaderboard projection.
 
----
+## This session's method & automatic decision
 
-## 1. Executive Summary Across All 9 Focus Sites (`GEMSDOE24`–`GEMSDOE36`)
+Four geological hypotheses were ranked **before any experiment** in [`knowledge/mtop36_preregistration_2026-10-26.md`](knowledge/mtop36_preregistration_2026-10-26.md): (1) magnetic-contact termination × orthogonal gravity crossing (**MTO-36; tested once, negative; intrusive contact junction as mimic**); (2) RTP/TMI upward-continuation phase persistence (pluton/flight-line mimic, not tested); (3) paired signed basement-offset shoulders (sediment compaction mimic, not tested); and (4) slope-deconfounded directional K/Th/U anomaly (soil/playa mimic, not tested). No unrelated lane was tuned to the registry after seeing a failure.
 
-Full machine-readable ledger: [`evidence/focus_sites_9repo_summary_20261026.json`](evidence/focus_sites_9repo_summary_20261026.json) & [`docs/research/forensic-9sites-and-atvr36-20261026.md`](docs/research/forensic-9sites-and-atvr36-20261026.md).
+E1 reused the prepared owner-mirror band cache, `gems.holdout.SegmentHoldout`, `gems.submission.write_submission` and `gems.novelty.compare_registry` rather than private evaluator or writer forks. Whole fault components were hidden with a 1,500 m buffer, catalogue-derived features were visible-only (MTO uses none), visible faults were masked pixel-exactly, and pooled DTI used α=0.2, β=0.8, 300 m triangular kernel. **Nine single-feature AUC canaries passed** (maximum two-polarity AUC 0.5878). One E1 candidate/control experiment ran in 249.3 s (limit 3 experiments / 2 h); no more in this lane. The candidate's **HOLDOUT-DTI** 0.067611 [0.058449, 0.077867] (`gems-segment-pooled-v1`, 60,988 withheld positives) failed to significantly beat its paired control 0.066923 (paired 95% CI −0.003002 to +0.004433) or prior recorded group-best **HOLDOUT-DTI** 0.14876. Surface rank screening passed; after placing dots, 3-px directed overlap reached 100% against a five-pixel calibration lattice and >70% against four more registry rasters. Comparisons restricted to the nine focus repositories would miss this. **Literal duplicate-stop: negative; file is research-only.** A download does not authorize spending a weekly slot.
 
-| Focus Site | Highest Historical Submission & Provenance | Key Forensic Finding | Latest Zero-Copy Status | Safe Live Slot? |
-|---|---|---|---|---|
-| [`GEMSDOE24`](https://github.com/buffedlizard55-lab/GEMSDOE24) | `d1.5` (`60,069` dots): `0.2477` (`USER-REPORTED`) | Subset (`Jaccard 0.9795`) of `GEMSDOE27` `tgc` | `GVC1` = `0.0859` (`ORGANIZER-CONFIRMED` halo collapse); `RSHG1` = `72.69%` dup | **No** |
-| [`GEMSDOE25`](https://github.com/buffedlizard55-lab/GEMSDOE25) | `d2.8` (`44,090` dots): `0.2600` (`ORGANIZER-CONFIRMED`) | `0` XOR vs `GEMSDOE30` `d2.8` | `H66` (`44,832` dots) = `0.0742` (`ORGANIZER-CONFIRMED`) | **No** |
-| [`GEMSDOE27`](https://github.com/buffedlizard55-lab/GEMSDOE27) | `topo-gap-t-v2` (`61,328` dots): `0.2449` (`ORGANIZER-CONFIRMED`) | `d1.5` + `1,259` gap-closure dots | `H29-S` (`37,654` dots) = `0.2190` (`ORGANIZER-CONFIRMED`, already submitted) | **No** |
-| [`GEMSDOE28`](https://github.com/buffedlizard55-lab/GEMSDOE28) | `h36-1` (`37,660` dots): `0.2710`; `solo` (`40,199`): `0.2708` (`ORGANIZER-CONFIRMED`) | `solo` = `(d2.8 & d_cat > 1 px)` (`0` XOR vs `GEMSDOE31`) | `S18` (`11,082` dots) = `0.0217` (`ORGANIZER-CONFIRMED`) | **No** |
-| [`GEMSDOE30`](https://github.com/buffedlizard55-lab/GEMSDOE30) | `d2.8` (`44,090` dots): `0.2600` (`ORGANIZER-CONFIRMED`) | `0` XOR vs `GEMSDOE25` `d2.8` | `MSDB-1v2` = `0.1462` (`ORGANIZER-CONFIRMED`, marked `NOT APPROVED`) | **No** |
-| [`GEMSDOE31`](https://github.com/buffedlizard55-lab/GEMSDOE31) | `h27-4-solo` (`40,199` dots): `0.2708` (`ORGANIZER-CONFIRMED`) | `0` XOR vs `GEMSDOE28` `solo` | `H31-M` (`37,654` dots) = `DO NOT SUBMIT` | **No** |
-| [`GEMSDOE32`](https://github.com/buffedlizard55-lab/GEMSDOE32) | `h33-h33-2-b2` (`37,654` dots): **`0.2778`** (`ORGANIZER-CONFIRMED`) | **9-site champion**, `0` XOR vs `(d2.8 & d_cat > 2 px)` | `H-GEO-CONDUIT` (`37,654` dots) = `DO NOT SUBMIT` | **No** |
-| [`GEMSDOE33`](https://github.com/buffedlizard55-lab/GEMSDOE33) | `h33d` (`41,865` dots): `0.2632` (`ORGANIZER-CONFIRMED`) | Partial `(0, 2] px` flank retention | `A33-L1` (`37,654` dots) = `NOT OK TO SUBMIT` | **No** |
-| [`GEMSDOE36`](https://github.com/buffedlizard55-lab/GEMSDOE36) | Legacy `pinn-38854`: `0.2750` (`ORGANIZER-CONFIRMED`) | Copied `B2 + 1,200` thermal dots | `ATVR-36` (`0.1179`), `H36-CTRB` (`0.1144`), `H36-GPS` (`0.1320`) — all fail-closed `negative` | **No (Hold Slot)** |
-
----
-
-## 2. Why `GEMSDOE32` Scored `0.2778` & Algebraic Path Above `0.2778` / `0.3195` / `0.4413`
-
-1. **Zero-XOR Collar-Pruning Proof:** `GEMSDOE32` `h33-h33-2-b2` (`37,654` dots, `0.2778` `ORGANIZER-CONFIRMED`) is pixel-identical (`0` XOR across `12,279,160` cells) to masking `GEMSDOE25/30` `d2.8` (`44,090` dots, `0.2600`) by $d_{\text{cat}} > 2.0\text{ px}$ (`200 m`), eliminating `6,436` near-catalogue collar false positives (`1,287` Tversky FP penalty units).
-2. **Reciprocal Tversky Inversion ($r^2 = 0.998523$):** Regressing $1/\text{DTI}$ vs $N$ across `[44090, 40199, 38854, 37654]` recovers family recall $\text{TP}_w \approx 5,151.3\text{ px}$ and hidden off-catalogue truth count **$K_{\text{from\_b2}} = 12,852.7\text{ px}$**, agreeing within **`1.72%`** with the independent 5-px calibration lattice inversion (`0.0904` `ORGANIZER-CONFIRMED` $\Rightarrow$ **$K_{\text{lattice}} = 12,631.8\text{ px}$**).
-3. **Recall Expansion & Halo-Collapse Remedy (`IR-36-INSAMPLE-HALO-COLLAPSE`):** At $N = 37,654$, `0.3195` requires `TP_w = 5,906.5 px` (`46.8%` recall) and `0.4413` requires `TP_w = 8,279.4 px` (`65.5%` recall). Refitting multi-feature trees in-sample on 100% of `existing_faults.tif` memorizes smooth covariates and dumps `70%+` of dots into `220–500 m` known-fault halos (`GVC1 = 0.0859`, `MSDB1 = 0.1462`); **Chernozhukov Spatial Out-of-Fold Cross-Fitting** eliminates this collapse (`median d_cat = 10.6 px`).
-
----
-
-## 3. `ATVR-36` Ranked Geological Hypotheses & 3-Experiment Buffered Holdout Results
-
-Locked prior to execution in [`evidence/atvr36_preregistration_20261026.json`](evidence/atvr36_preregistration_20261026.json) (`SHA-256: 351a9ad89ce0...`) and evaluated on `gems36-segment-audit-v1` (`3,000 m` buffer, `60,988` withheld px, `3,199` whole segments) + cross-checked on `gems-segment-pooled-v1` (`1,500 m` buffer):
-
-| Arm | Hypothesis / Physical Mechanism | Feats | 3 km `HOLDOUT-DTI` (`95% CI`) | Unsplit `HOLDOUT-DTI` | Paired $\Delta$ vs `B1` (`95% CI`) |
-|---|---|---:|---|---|---|
-| `C0_repo_field` | Frozen existing repo physical belief field (SGMC off) | 14 ch | `0.018492` (`[0.009837, 0.030040]`) | `0.018489` | `-0.021031` |
-| `B1_raw19_hgb_d28` | 19 sanitized official bands + HGB + `d_vis > 2 px` top-k | 19 | `0.039523` (`[0.027195, 0.054596]`) | `0.040417` | `0.000000` (ref) |
-| `EXP-1` | **`H36-A`:** Mag/grav tilt+THDR + scarp-toe Hessian + relief-deconfounded piedmont + missingness-aware 3DEP 1 m LiDAR + Raissi–Anderson PDE + 300 m CELF cover | 36 | `0.110598` (`[0.075495, 0.145617]`) | `0.112064` | `+0.071075` (`[+0.0464, +0.0931]`) |
-| **`EXP-2` (Winner)** | **`H36-A + H36-B`:** Adds magnetite-destruction `02_rtp` trough × mag-THDR + playa-regressed `17_cond_surf` clay-cap residual + GeoDAWN `K/Th` + GDR `1391` geothermometers | **44** | **`0.114542`** (`[0.078547, 0.151221]`) | **`0.115835`** | **`+0.075018`** (`[+0.0492, +0.0996]`) |
-| `EXP-3` | **`H36-A + H36-B + H36-C`:** Adds `15_depth_to_base_surf` flexural hinge × grav-THDR + seismic/strain corridor + fold-learned 3-regime calibration | 50 | `0.113705` (`[0.078494, 0.148428]`) | `0.115229` | `+0.074182` (`[+0.0498, +0.0970]`) |
-
-- **Cross-Lane Breakthrough (`ATVR-36` + `H36-CTRB`):** On `gems-segment-pooled-v1`, `ATVR-36 EXP-2` (`0.117925` pooled) achieves **`NW = 0.15048`**, **`SE = 0.15438`**, and **`SW = 0.11115`**, whereas `H36-CTRB` (`0.114425` pooled) achieves **`NE_LidarGap = 0.13141`** — with only **`37.36%`** dot overlap (`Spearman = +0.0398`). Future external-data routes: **`H36-D`** ([USGS GeoDAWN `doi:10.5066/P93LGLVQ`](https://doi.org/10.5066/P93LGLVQ) raw 1D flight-line profiles) and **`H36-E`** (NASA/ASF Sentinel-1 `OPERA_L3_DISP-S1_V1` InSAR velocity steps).
-
----
-
-## 4. Verification & Official Sources
+## Checks and links for reviewers
 
 ```bash
-.venv/bin/pytest -q
-.venv/bin/python scripts/verify_release_gate.py
-.venv/bin/python scripts/check_site.py
+python scripts/restore_data.py --group core    # if pinned owner-mirror data are absent
+python scripts/fetch_registry_rasters.py        # if registry refs are absent
+python scripts/audit_focus_sources.py           # rehash nine TIFFs; recheck mask algebra
+python scripts/build_site.py                    # safe updater: MTO card + focused Pages
+python scripts/check_site.py                    # landing/links & fail-closed status
+python scripts/verify_mto_release.py            # verify current negative research artifact
+python scripts/verify_release_gate.py           # legacy CTRB negative gate
+pytest -q
+ruff check src scripts tests
 ```
 
-- **Official Competition & Rules:** [DrivenData #306](https://www.drivendata.org/competitions/306/competition-doe-gems/) · [Problem & Metric (`page/967`)](https://www.drivendata.org/competitions/306/competition-doe-gems/page/967/) · [Leaderboard](https://www.drivendata.org/competitions/306/competition-doe-gems/leaderboard/) · [DOE/NLR Rules PDF (`96647.pdf`)](https://docs.nlr.gov/docs/fy26osti/96647.pdf) · [Forum `t/11516`](https://community.drivendata.org/t/scoring-clarification-are-known-usgs-ingenious-faults-masked-when-scoring-and-are-they-in-the-final-round-label-set/11516) · [Forum `t/11536`](https://community.drivendata.org/t/clarification-what-counts-as-a-new-fault-in-the-test-set/11536) · [DOE GDR `1391`](https://gdr.openei.org/submissions/1391) · [USGS GeoDAWN (`doi:10.5066/P93LGLVQ`)](https://doi.org/10.5066/P93LGLVQ) · [USGS 3DEP](https://www.usgs.gov/3d-elevation-program) · [AI Disclosure](docs/AI_DISCLOSURE.md) · [Irregularities Ledger](docs/research/known_irregularities.md)
+Run the *checks* only; **do not rerun `scripts/run_mto_contact.py` or submit the negative file**. The original TIFF and ZIP are in [`docs/downloads/`](docs/downloads/); [latest site](docs/index.html), [executive submission guide](docs/executive-summary.html), [machine-readable status](docs/current-run.json), [run card](evidence/mto36_run_card_20261026.json), [irregularities](docs/research/mto36-evidence-and-nine-sites.md#irregularities-and-inference-boundaries), [three review passes](evidence/mto36_review_passes_20261026.md), [AI disclosure](docs/AI_DISCLOSURE.md). Format validation is local; the organizer may apply other checks. Historical competition/USGS inputs are SHA-pinned **owner mirrors**, not independently authenticated downloads from the authority.
+
+**Official/manual-review source leads:** [DrivenData competition](https://www.drivendata.org/competitions/306/competition-doe-gems/), [problem and metric](https://www.drivendata.org/competitions/306/competition-doe-gems/page/967/), [data/format](https://www.drivendata.org/competitions/306/competition-doe-gems/data/), [leaderboard](https://www.drivendata.org/competitions/306/competition-doe-gems/leaderboard/), [DOE/NLR rules](https://docs.nlr.gov/docs/fy26osti/96647.pdf), [official reference solution (GitHub)](https://github.com/drivendataorg/gems-prize-reference-solution), [USGS GeoDAWN DOI](https://doi.org/10.5066/P93LGLVQ). Only GitHub and owner mirrors were accessed here; external competition and USGS pages are *not* represented as fetched/verified in this session.
+
+**Next decision:** Archive the negative result; leave the weekly live slot unused. A *different*, preregistered, independently sourced signal would need its own whole-segment test, paired improvement, strict **all-registry** uniqueness and format gate, *then* an independent slot selector. Never adjust this candidate to fill holes in the comparator lattice. To verify any historical score, archive an organizer submission-page receipt pairing that score with the uploaded file. The public source-activity feed is for repository commit freshness, **not score monitoring**.
+
+---
+
+## Full standing owner brief (historical wording)
+
+<details>
+<summary>Show full user brief saved 2026-10-25; historical score claims are unverified</summary>
+
+The text below is preserved as supplied context (link markup normalized; Arena branch wrapper omitted). It is **not** an independent validation of the listed scores, live standings or source authenticity. Current negative verdict and stricter gate above take precedence when this historical text is ambiguous.
+
+# Owner brief — 2026-10-25
+
+The following preserves the current user brief (link markup normalized; the Arena branch-status wrapper is omitted). Read this and the latest README decision at the beginning of every session. Historical claims inside are requirements/context, not independently verified scores. This current brief supersedes historical requests to submit copied/thinned reference rasters or to seek a human inspection exception.
+
+---
+
+Review the repo.
+
+I want to focus on the highest scoring submissions from the following sites, GEMSDOE24, GEMSDOE25, GEMSDOE27, GEMSDOE28, GEMSDOE30, GEMSDOE31, GEMSDOE32, GEMSDOE33, GEMSDOE36.
+
+THE FOLLOWING IS THE HIGHEST URGENCY AND MUST BE FOLLOWED!
+
+MUST GENERATE A UNIQUE TIF SUBMISSION FOR THE COMPETITION. DO NOT COPY A PREVIOUS SUBMISSION UNLESS IT'S FOR LEARNING AND EDUCATION. BUT WE MUST GENERATE A UNIQUE TIF SUBMISSION. IT MUST BE OBVIOUS WHETHER IT IS OK TO DOWNLOAD AND SUBMIT THE GENERATED TIF SUBMISSION.
+
+There should be an easy to download submission tif file as described by the prompt. Read the entire prompt. A lot of sites mention inspection only and a human inspector, but the inspection needs to be done through the project and needs to be validated for submission without human intervention.
+
+PARALLEL-RUN PROTOCOL — read first. This session is one of several running from this same prompt.
+
+1. LANE. Your lane is the single method paragraph below. Stay inside it. If your raster's rank-correlation with any registry raster exceeds [0.90], or more than [70%] of your dots fall within 3 px of one registry raster's dots, you have drifted into another lane: log it as a duplicate and stop. Check this on the surface before placement AND on the final dots.
+
+2. REUSE, DON'T REBUILD. Use the template's cached feature stack, evaluate_holdout.py and submission_writer.py. Holdout = hide-and-recover: withhold whole fault segments with a buffer, derive every catalogue-based feature only from the visible faults, mask visible faults pixel-exactly, score pooled DTI (alpha 0.2, beta 0.8, 300 m triangular kernel). If a shared tool is wrong, fix it once in the template and report it; never keep a private fork.
+
+3. LABEL EVERY NUMBER as HOLDOUT-DTI (evaluator version, number of withheld positives, 95% CI) or ORGANIZER-CONFIRMED (copied from a submission-page receipt). A projection is never written as a score.
+
+4. LEAKAGE CANARY. Test each feature alone on the holdout before trusting any result. AUC above [0.90] means leakage until proven otherwise.
+
+5. RUN CARD. End with one JSON card: hypothesis; mechanism; the named non-fault process that could mimic it; holdout DTI + CI; correlation/overlap vs registry; raster sha256; validator output (no NaN inside the footprint, values in [0,1], CRS/shape/transform match); submission name + note of at most 140 characters; verdict promote / negative. Negative results are deliverables.
+
+6. BUDGET. Stop after [3] experiments or [2] hours. Do not pick submissions: promotion to a real slot is a separate selector step, within the weekly cap shown on the submission page.
+
+The following sites should serve as a starting point for understanding how to generate TIF submissions. These websites are researched, and tested and have generated TIF submissions. But we need to generate high scoring submissions.
+
+Here are the results from submissions into the competition, separated by ....:
+
+WE NEED TO STUDY, ANALYZE, AND UNDERSTAND THE HIGHEST SCORE FROM THE GEMDOE SITE WHERE THE SUBMISSION TIF IS DOWNLOADED FROM WHICH IS THE FOLLOWING:
+
+https://buffedlizard55-lab.github.io/GEMSDOE32/docs/index.html
+
+h33-h33-2-b2-20261004T220000Z-e5eb6e7e-zeros: 0.2778
+
+Why and how did this get the highest score and are we able to generate a submission that scores higher than 0.2778?
+
+Answer the question using Phd level experience, knowledge, and judgement. Then use the answer to generate a unique TIF submission into the competition. Must be unique submission unlike any within the GEMSDOE sites above. Verify working line by line no hallucinations.
+
+Current competition leaderboard GEMSDOE high score:
+
+0.4413
+
+WE NEED TO STUDY, ANALYZE, AND UNDERSTAND THE HIGHEST SCORE FROM THE GEMDOE SITE WHERE THE SUBMISSION TIF IS DOWNLOADED FROM WHICH IS THE FOLLOWING:
+
+https://buffedlizard55-lab.github.io/GEMSDOE32/docs/index.html
+
+h33-h33-2-b2-20261004T220000Z-e5eb6e7e-zeros: 0.2778
+
+Why and how did this get the highest score and are we able to generate a submission that scores higher than 0.2778?
+
+Answer the question using Phd level experience, knowledge, and judgement. Then use the answer to generate a unique TIF submission into the competition. Must be unique submission unlike any within the GEMSDOE sites above. Verify working line by line no hallucinations.
+
+Current competition leaderboard GEMSDOE high score:
+
+0.4413
+
+https://buffedlizard55-lab.github.io/GEMSDOE/docs/index.html
+
+gems-submission-20260925T001403Z-7f00890a: 0.1563
+
+....
+
+https://buffedlizard55-lab.github.io/6GEMSDOE/
+
+gems6_hgb88-topk03_33cec71ff0: 0.0286
+
+....
+
+https://buffedlizard55-lab.github.io/GEMSDOE3/docs/index.html
+
+pindrop-v4-nodes-20260925T152420Z-f347b70daa: 0.1193
+
+pindrop-v4-discovery-20260925T152423Z-37f9d5b855: 0.0830
+
+pindrop-v4-ridge-20260925T152422Z-4e03fc9705: 0.1152
+
+....
+
+https://buffedlizard55-lab.github.io/GEMSDOE2/docs/index.html
+
+gemsdoe2-dual-family-union-20260925T160406Z-f68e590f: 0.1560
+
+....
+
+https://buffedlizard55-lab.github.io/GEMSDOE4/
+
+gems-submission-20260926T163915Z-237f0063: 0.0343
+
+....
+
+https://buffedlizard55-lab.github.io/5GEMSDOE/docs/index.html
+
+gems-submission-20260926T175114Z-7f00890a: 0.1563
+
+....
+
+https://buffedlizard55-lab.github.io/7GEMSDOE/
+
+lidarscarp-ridge-top2pct-36c3a3f341c8: 0.1461
+
+....
+
+https://buffedlizard55-lab.github.io/8GEMSDOE/
+
+Hedge-v2_submission: 0.1563
+
+....
+
+https://buffedlizard55-lab.github.io/GEMSDOE9/docs/index.html
+
+2314b599: 0.0107
+
+....
+
+https://buffedlizard55-lab.github.io/11GEMSDOE/docs/index.html
+
+gems-structural-area06-v1: 0.0202
+
+....
+
+https://buffedlizard55-lab.github.io/12GEMSDOE/docs/index.html
+
+r7-nms3-dem10-scarp_0c9199f14e62:0.1294
+
+r7-nms3-dem10-scarp_0c9199f14e62_allfinite:0.1294
+
+....
+
+https://buffedlizard55-lab.github.io/15GEMSDOE/docs/index.html
+
+gems-tso1-20260929T005627Z-conj_alteration_mag: 0.0782
+
+....
+
+https://buffedlizard55-lab.github.io/14GEMSDOE/docs/index.html
+
+GEMS_r5-geom-horse-ensemble_20260929T154852Z_ccbe1de0_site_e96e942f: 0.0020
+
+....
+
+https://buffedlizard55-lab.github.io/17GEMSDOE/
+
+17GEMSDOE_F-ensemble-2pct_20260930T050626Z:0.0187
+
+....
+
+https://buffedlizard55-lab.github.io/18GEMSDOE/
+
+H19-C_20260930T212401Z_c11e495e: 0.0297
+
+....
+
+https://buffedlizard55-lab.github.io/19GEMSDOE/docs/index.html
+
+h19-4-multiline-corroborated-openness-thermal-pop-20260930-691e4dfa-nan: 0.1894
+
+h19-5-powerlaw-budget-multiline-corroborated-20260930-e27054cf-nan: 0.1922
+
+....
+
+https://buffedlizard55-lab.github.io/GEMSDOE10/
+
+h16-continuation-20260927T065521077735Z-3431b83c7c: 0.0461
+
+h20-dem10-scarp-thin-20260927T155223039488Z-ffc91a1686: 0.0921
+
+H25-ctx-ridge-20260927T232947704150Z-6452ae1d00: 0.1280
+
+h28-dotted-ridge-20260928T020256236880Z-6452ae1d00: 0.1839
+
+....
+
+https://buffedlizard55-lab.github.io/13GEMSDOE/
+
+20261001_r13-lattice-s5_v2_nan-outside:0.0904
+
+....
+
+https://buffedlizard55-lab.github.io/16GEMSDOE/docs/index.html
+
+h16-1-topo-geophys-baseline-ridges-20260930-df20f65e-nan: 0.1855
+
+h18-3a-topo-geophys-x-complexity-prior-20260930-c502dfab-nan: 0.0976
+
+h18-4-usgs-geologic-map-faults-gap-20260930-aef8f42c-nan: 0.0360
+
+....
+
+https://buffedlizard55-lab.github.io/GEMSDOE21/
+
+h19-4-reference-20260930-691e4dfa: 0.1894
+
+....
+
+https://buffedlizard55-lab.github.io/20GEMSDOE/docs/index.html
+
+h20-1-sarnnpu-powerlaw-pi0363-tilt-wingcrack-20260930-be0e8f6b-nan: 0.1890
+
+h20-5-continuous-pu-proxy-unverified-20260930-824ce73a-nan: 0.1859
+
+....
+
+https://buffedlizard55-lab.github.io/GEMSDOE22/docs/index.html
+
+h23-a-dti-optimal-emission-6pct-20261002-e2ec4b49-nan: 0.1002
+
+h23-b-dti-optimal-emission-10pct-20261002-86176698-nan: 0.0748
+
+....
+
+https://buffedlizard55-lab.github.io/GEMSDOE23/
+
+h30-arrangement-matched-habitat-20261002-0d4e02e8-nan: 0.1352
+
+....
+
+https://buffedlizard55-lab.github.io/GEMSDOE24/
+
+h25-1-dotted-h19-5-d1-5-20261002-989f59505db1-nan: 0.2477
+
+....
+
+https://buffedlizard55-lab.github.io/GEMSDOE25/
+
+dotted-h19-5-d2-8-20261002-e56ea318af89-nan: 0.2600
+
+....
+
+https://buffedlizard55-lab.github.io/GEMSDOE26/
+
+dilcond-oof-v1-20261003-47629f496133-nan: 0.1223
+
+....
+
+https://buffedlizard55-lab.github.io/GEMSDOE27/
+
+topo-gap-closure-t-v2-on-d1-5-20261002-5512495c6bd1-nan: 0.2449
+
+....
+
+https://buffedlizard55-lab.github.io/GEMSDOE30/
+
+d28-poisson300m-offcat-44090-20261003T233156Z-91eae1ca: 0.2600
+
+....
+
+https://buffedlizard55-lab.github.io/GEMSDOE31/docs/
+
+h27-4-solo-d28-20261004-8acb75e1-nan:0.2708
+
+....
+
+https://buffedlizard55-lab.github.io/GEMSDOE33/
+
+h33d-analog-tip-stepover-r30-20261004-cb490425926e: 0.2632
+
+....
+
+https://buffedlizard55-lab.github.io/GEMSDOE34/docs/index.html
+
+h34-scatter-q50-arr-matched-20261004T223317Z: 0.0778
+
+....
+
+https://buffedlizard55-lab.github.io/GEMSDOE35/docs/index.html
+
+h35-06-aaa86efb25-20261004T225420098147Z-candidate: 0.0418
+
+....
+
+https://buffedlizard55-lab.github.io/GEMSDOE36/docs/
+
+anderson-geothermal-pinn-38854-20261004T230000Z-9b9ea4e6-zeros: 0.2750
+
+....
+
+https://buffedlizard55-lab.github.io/GEMSDOE37/
+
+h6-physics-dotted-80k-20261005T055000Z-0bef9211631c: 0.1193
+
+....
+
+https://buffedlizard55-lab.github.io/GEMSDOE38/docs/index.html
+
+D-step-3p0-07pct-tipProt-20261005-ecfbf59e2b48-zero: 0.0763
+
+....
+
+https://buffedlizard55-lab.github.io/GEMSDOE42/docs/index.html
+
+xscale-worm-persistence-20261006T000541Z-nan: 0.0581
+
+....
+
+https://buffedlizard55-lab.github.io/GEMSDOE43/docs/index.html
+
+sup01-hgb21-sep40-n40000-20261006-bc2e4e9a8d6f-nan: 0.0424
+
+....
+
+https://buffedlizard55-lab.github.io/GEMSDOE45/
+
+h51-km-faultzone-20261006-zeros: 0.0106
+
+....
+
+https://buffedlizard55-lab.github.io/GEMSDOE49/
+
+gate_ortho_w0.25-40k-20261006T213721Z-nan: 0.2376
+
+....
+
+https://buffedlizard55-lab.github.io/GEMSDOE32/docs/index.html
+
+h33-h33-2-b2-20261004T220000Z-e5eb6e7e-zeros: 0.2778
+
+....
+
+https://buffedlizard55-lab.github.io/GEMSDOE28/
+
+h27-4-r1-solo-d2-8-20261003-8acb75e1f2cc-nan: 0.2708
+
+h32-1-prethin-tip-euler-d2-8-20261003-31e35eee884e-nan: 0.2649
+
+h36-1-rung30-blind-r1-20261003-b531dae0a36f-nan: 0.2710
+
+h38-1-hf-euler-r30-r1-20261003-56a9f473edc7-nan: 0.2707
+
+....
+
+https://buffedlizard55-lab.github.io/GEMSDOE29/docs/index.html
+
+efd28-repro-20261003-1cc7dc534d51-nan: 0.2600
+
+repo-c0-habitat-emission-20261003-a4d439b07426-nan: 0.0041
+
+sgmc-off-catalogue-44k-20261003-c8dcd780e3fd-nan: 0.0512
+
+wormrank-d28-20261003-59dcaf6fdd11d-zeros:0.2560
+
+wormsurv-filter-20261003-921f10960d6e-zeros: 0.0532
+
+xfit-c0-habitat-20261003-ca879db0089a-zeros:0.0439
+
+xfit-h41-union-qfaults-20261003-9edb34b99e3a-zeros: 0.0356
+
+....
+
+https://buffedlizard55-lab.github.io/GEMSDOE46/
+
+r11f-scarp-radiometric-fusion-00e049b51218-zeros:0.1589
+
+r12-scarp-rad-concordance-23e807e2de9f-zeros: 0.0843
+
+....
+
+https://buffedlizard55-lab.github.io/GEMSDOE39/
+
+h40-e-disc-h40e-30k-zeros: 0.0339
+
+....
+
+https://buffedlizard55-lab.github.io/GEMSDOE40/docs/index.html
+
+h8-euler-lineament-depthcluster-20261006-785c4f5d5ce1: 0.0355
+
+h8-euler-lineament-depthcluster-20261006-785c4f5d5ce1-hard: 0.0397
+
+h45-eulerdepthreadcluster-20261006-f28e5cff6826-zeros: 0.0984
+
+....
+
+https://buffedlizard55-lab.github.io/GEMSDOE41/docs/index.html
+
+h42-submission-primary: 0.0245
+
+....
+
+https://buffedlizard55-lab.github.io/GEMSDOE44/docs/
+
+h46-twostageAB_20261006T160000Z_b0cfe956-zeros: 0.0715
+
+....
+
+https://buffedlizard55-lab.github.io/GEMSDOE47/
+
+h60-lidarscarp-s2p0-20261007-nanoutside: 0.0430
+
+....
+
+https://buffedlizard55-lab.github.io/GEMSDOE48/docs/index.html
+
+h59-cover-ds-belief-b2xh33d-20261008T184547Z-b79c4c61d8d8: 0.2296
+
+....
+
+https://buffedlizard55-lab.github.io/GEMSDOE50/
+
+h59-sharpened-scarp-scatter-90k-20261007T171954Z-allfinite: 0.0764
+
+....
+
+https://buffedlizard55-lab.github.io/GEMSDOE51/
+
+h53-twostage-20261008T040951Z-9a0b32c871: 0.1047
+
+....
+
+https://buffedlizard55-lab.github.io/GEMSDOE52/
+
+h97b-candidate: 0.0856
+
+....
+
+https://buffedlizard55-lab.github.io/GEMSDOE53/docs/index.html
+
+h8-tiprelay-ridgeconcord-pr2-n80000-20261009-49bec522-zeros: 0.0159
+
+....
+
+https://buffedlizard55-lab.github.io/GEMSDOE54/docs/
+
+h54c-manifest-edge-20261009T025732Z-73454bc5:0.0449
+
+....
+
+https://buffedlizard55-lab.github.io/55GEMSDOE/docs/index.html
+
+tensor_full-n16000-sep3-20261009T211747Z-nan: 0.0290
+
+....
+
+https://buffedlizard55-lab.github.io/56GEMSDOE/docs/index.html
+
+h56-final-dotted-ridge-d2p8-20261009T190421Z:0.0658
+
+....
+
+https://buffedlizard55-lab.github.io/57GEMSDOE/docs/index.html
+
+h57r-joint-strata-38000dots-20261010T214547Z-00cf5b2066f1-zeros: 0.0254
+
+....
+
+https://buffedlizard55-lab.github.io/58GEMSDOE/docs/index.html
+
+ml-binary-ridge-20261012T000000Z: 0.0180
+
+....
+
+https://buffedlizard55-lab.github.io/59GEMSDOE/docs/index.html
+
+h59j-coherence-consensus-dotted-20261011T043000Z: 0.0499
+
+....
+
+https://buffedlizard55-lab.github.io/60GEMSDOE/docs/index.html
+
+h73-chi-coherent-corridor-12000-20261011T195818Z-zeros: 0.0351
+
+....
+
+https://buffedlizard55-lab.github.io/61GEMSDOE/docs/index.html
+
+h61a-basement-step-20000dots-20261011T012029Z-eb2ae4bb024b-zeros: 0.0009
+
+h61o-vardepth-none-40000dots-20261011T160711Z-28d4fac611ea-zeros-zeros:0.0751
+
+....
+
+https://buffedlizard55-lab.github.io/62GEMSDOE/
+
+datum-lahontan-strain-gauge-defensible-440dots-zeros: 0.0000
+
+....
+
+https://buffedlizard55-lab.github.io/GEMSDOE63/
+
+cvarlw-thin-s3p17-54864-20261011T220606Z-c58f60c4-zeros: 0.2303
+
+....
+
+https://buffedlizard55-lab.github.io/GEMSDOE64/
+
+h64-lidar-scarp-cv-20261011T220000Z:0.0383
+
+....
+
+https://buffedlizard55-lab.github.io/GEMSDOE65/docs/index.html
+
+sar-em-propensity-half-20261011T223500Z-5e4660cd-zeros:0.0431
+
+....
+
+https://buffedlizard55-lab.github.io/GEMSDOE66/docs/index.html
+
+gems66-lidar03-cvretrain-reliefdecile-37654dots-20261020T190152Z-zeros:0.1152
+
+....
+
+https://buffedlizard55-lab.github.io/GEMSDOE67/
+
+h67a-orientip-lane-29447dots-20261012T021226Z-allfinite:0.0356
+
+ovtr-ml-cover-tau3p0-20261012-nan:0.1426
+
+....
+
+https://buffedlizard55-lab.github.io/GEMSDOE68/
+
+gems68-autoctx-s3-strands-35000dots-20261020T210000Z-849a0f04-nan:0.0437
+
+gems68-autoctx-s3-strands-35000dots-20261020T210000Z-849a0f04-zeros: 0.0437
+
+....
+
+https://buffedlizard55-lab.github.io/GEMSDOE69/
+
+gems69-joint-relayramp-pullapart-38669-20261020T201504Z-f29b6df5:0.0053
+
+....
+
+https://buffedlizard55-lab.github.io/GEMSDOE70/
+
+gems70-p5-dual-submod300-oof38k-20261020:0.2478
+
+....
+
+https://buffedlizard55-lab.github.io/GEMSDOE71/
+
+gems71-hydro-conduit-38800-20261020T120000Z-zeros: 0.0558
+
+....
+
+https://buffedlizard55-lab.github.io/GEMSDOE72/
+
+gemsdoe72-h72-1-sgmc-offcatalogue-20261020T195456Z-6e6525e5-zeros: 0.0492
+
+....
+
+https://buffedlizard55-lab.github.io/GEMSDOE73/
+
+gems73-h73-mcsc-seamfree-blakely-37654dots-20261021T073716Z-b27ac445-zeros: 0.1917
+
+....
+
+https://buffedlizard55-lab.github.io/GEMSDOE74/
+
+gemsdoe74-triregime-radon-piedmont-37654-20261021T051000Z-zeros:0.0669
+
+....
+
+https://buffedlizard55-lab.github.io/GEMSDOE75/
+
+gems75-trlt-radon-loco-ridge-20261021-zeros:0.1627
+
+....
+
+https://buffedlizard55-lab.github.io/GEMSDOE76/
+
+gems76_h76_3_geotherm_tilt_axial_submod_20261021_zeros:0.1555
+
+gems76-ptcf-tiltworm-submod39k-20261021T034000Z-6316481d-zeros:0.2343
+
+....
+
+https://buffedlizard55-lab.github.io/GEMSDOE77/
+
+gems85-h85-edti-collar35-skel-r33-20261021-d97b248e-zeros:0.0964
+
+....
+
+https://buffedlizard55-lab.github.io/GEMSDOE78/
+
+gems78-h78sigx-fuse-b5-44090dots-20261022T021932Z-zeros:0.1564
+
+....
+
+https://buffedlizard55-lab.github.io/GEMSDOE79/
+
+gems79-tilt-ring-100000dots-20261022T212135Z-50a5d7498c71-zeros:0.0005
+
+....
+
+https://buffedlizard55-lab.github.io/GEMSDOE80/
+
+gemsdoe80-h80g-choquet-tworegime-20261022T000000Z-zeros:0.0943
+
+....
+
+https://buffedlizard55-lab.github.io/GEMSDOE81/
+
+gems81-cont-poisson44090-buf2-20261021T233115Z-42223e10-zeros:0.0041
+
+....
+
+https://buffedlizard55-lab.github.io/GEMSDOE82/
+
+gemsdoe82-h82-submodular-punoisyor-20261021T235456Z-fe137199-zeros:0.1886
+
+....
+
+https://buffedlizard55-lab.github.io/GEMSDOE83/
+
+gems83-h83-gvcd-dink300-37654dots-20261021-1a373694-zeros:0.0573
+
+....
+
+https://buffedlizard55-lab.github.io/GEMSDOE84/
+
+gems84-h84-kthm-tworegime-58000px-20261022T235900Z-zeros:0.0132
+
+....
+
+https://buffedlizard55-lab.github.io/GEMSDOE85/
+
+gemsdoe85-hjcd-ventbridge-submod-zeros: 0.1110
+
+....
+
+https://buffedlizard55-lab.github.io/GEMSDOE86/
+
+:
+
+....
+
+https://buffedlizard55-lab.github.io/GEMSDOE87/
+
+h87-h87-cmgep-20261022T060000Z-8f394f43:0.0500
+
+....
+
+https://buffedlizard55-lab.github.io/GEMSDOE88/
+
+:
+
+....
+
+https://buffedlizard55-lab.github.io/GEMSDOE89/
+
+gemsdoe89-bh-rtp-habc-20261024-d7e1507c-zeros:0.0301
+
+....
+
+https://buffedlizard55-lab.github.io/GEMSDOE90/
+
+gems90-cnc-35000dots-20261024T084324Z:0.0749
+
+....
+
+https://buffedlizard55-lab.github.io/GEMSDOE91/
+
+gems91-s17-cwpc-e3-37654dots-20261025T150000Z-4d124f1d-zeros:0.1367
+
+gems91-s17-lftg-20261025T160014Z-7b6bf90844-zeros:0.1823
+
+gems91-S18-UNIQUE-curvtilt-20000dots-20261025T182858Z-29db2405:
+
+....
+
+https://buffedlizard55-lab.github.io/GEMSDOE92/
+
+gemsdoe92-listricdip-updip50-37654-20261025T190000Z-zeros:0.0255
+
+....
+
+I think it makes sense that in order for a submission to be validated that it needs to pass certain high scoring validation gates before confirming whether a file is unique and can be submitted for scoring.
+
+The following is the leaderboard for the competition:
+
+https://www.drivendata.org/competitions/306/competition-doe-gems/leaderboard/
+
+See below for more links and information related to the competition:
+
+https://github.com/drivendataorg/gems-prize-reference-solution
+
+https://www.usgs.gov/data/geodawn-airborne-magnetic-and-radiometric-surveys-northwestern-great-basin-nevada-and
+
+https://gbcge.org/current-projects/ingenious/
+
+https://epsg.io/32611
+
+https://en.wikipedia.org/wiki/Tversky_index
+
+We need to quickly look at the results and results from the GEMSDOE websites above.
+
+Before implementing, generate 3–5 candidate geological hypotheses we haven't tried yet, each naming: the specific layer(s) involved, the physical signature being targeted (e.g., an edge-detection or curvature transform), why it should catch a fault missing from the USGS/INGENIOUS catalogue rather than one already in it, and how it differs from anything already implemented in this repo. Rank them by expected DTI improvement and implementation cost. Validate the top candidate on our spatially-blocked holdout set before touching a weekly submission slot — do not spend a submission slot on an idea that hasn't beaten the current holdout best. If a candidate can't be validated without new external data, name the specific free, official source needed and check it's obtainable before proposing the idea as viable.
+
+Work line by line verifying from official verified trusted sources, provide links for manual review. There should be no manual input, work on your own to complete tasks. Flag any irregularities for review. No hallucinations.
+
+Verify no hallucinations.
+
+The goal of this project is to get a full list that follow our requirements. No hallucinations. Verify line by line.
+
+We have a good understanding of how our hypothesis, methodology, calculations, analysis are done so we should be able to figure out a way to score higher on the leaderboard using previous results and scoring that we have across the sites listed above. We need to come up with distinct and unique strategies to score higher in this competition leaderboard. We need to start doing heavy and deep research into the part of the project that matters the most, which is the scientific discovery of geothermal vents. We should store all of our information and knowledge that we can gather from official verified sources. This will serve as a starting point for other projects as well. We need to think outside the box but still be grounded in proper scientific research, we are ultimately aiming for a top prize that many others are competing for. So it's important to be contrarian but be smart about it. We need to find sources of data that others are over looking or areas of the project when it comes to geothermal vents. We need to do deep research and critical thinking and come up with new hypothesis to test.
+
+0.3195 is the highest score right now so we need to design a new strategy, research, testing, analyzing, and generating submission system than the current website. It should be unique, take unique approaches to generating a submission that can score higher than 0.3195.
+
+Put this prompt into the repo readme and read it everytime we work on the project as a starting point to make sure we are building what we are aiming for and have a strong base to continue building and improving on making something useful for everyday use. It should solve the problem of having to manually check everything ourselves and having an up to date current feed.
+
+Review the repo.
+
+The following is taken from the Arena AI team and I think it makes a good point on building a successful project, so let's keep the Core Values and Own the Outcome as a focal point when building, developing, researching, suggesting upgrades, and implementing the work.
+
+Our Core Values
+
+Maximize P(Win)
+
+“Maximize the Probability of Winning”: our decision making framework. In every decision, we weigh tradeoffs, assess risk, and choose the path that maximizes the probability that Arena succeeds. We set aside our emotions and make tough decisions in order to maximize P(Win). “Maximize P(Win)” frees us from constraints and clarifies that we must put Arena first.
+
+Own the Outcome
+
+We own results end to end — not just our individual slice of the work. When problems arise and we have the means to act, we do so without waiting for permission or assignment. We treat failure and success as signals and use them to improve. At Arena, we stay accountable to the final outcome.
+
+Work line by line verifying from official verified trusted sources, provide links for manual review. There should be no manual input, work on your own to complete tasks. Flag any irregularities for review. No hallucinations.
+
+Verify no hallucinations.
+
+The goal of this project is to get a full list that follow our requirements. No hallucinations. Verify line by line.
+
+We need to focus on being able to generate a submission into the competition.
+
+The site should be able to generate a TIF file that is required for submission. It should be as easy as download to click a File to submit into the competition. This needs to be in the executive summary or the very beginning of the site. it should be obvious when you visit the site.
+
+I tried to submit the document that i downloaded from the site but it returned this error on the submission form:
+
+"Predicted values must be in range [0, 1]"
+
+Also we need to give it a unique name and A short comment to help you or your team tell submissions apart later e.g. clustering with k=25
+
+Here is the submission page when i click submit file
+
+New submission
+
+File to submitNo file chosen
+
+You can submit a single-band GeoTIFF (.tif) file, or a .zip file containing a single GeoTIFF, with your predictions. It must match the submission format's CRS, shape, and geotransform. You may wish to review the competition rules first.
+
+Note (optional)
+
+A short comment to help you or your team tell submissions apart later e.g. clustering with k=25
+
+Create a executive summary subpage that explains exactly how to make a submission into the contest.
+
+Work on the next steps from the previous sessions first.
+
+The goal of this project is to place top of the leaderboard in this competition. The following is the competition:
+
+https://www.drivendata.org/competitions/306/competition-doe-gems/page/967/
+
+We need to create a project that can compete and place top of the leaderboard. We need to understand the problem, collect all the data and organize it into a clean easily auditable table with official verified links for manual verification.
+
+This is the guidelines we need to follow. https://www.drivendata.org/competitions/306/competition-doe-gems/
+
+Get familiar with the problem through the overview and problem description, https://www.drivendata.org/competitions/306/competition-doe-gems/page/967/. You might also want to reference additional resources available on the about page, https://www.drivendata.org/competitions/306/competition-doe-gems/page/968/.
+
+Download the data from the data, https://www.drivendata.org/competitions/306/competition-doe-gems/data/, tab.
+
+Create and train your own model. This reference solution, https://github.com/drivendataorg/gems-prize-reference-solution implements a simple approach.
+
+Use your model to generate predictions that match the submission format.
+
+Tell me what are you limitations and what you need access to during this project. We will need to find free publicly available sources and data from official and verified sources if we are to use 3rd party or external data.
+
+this pdf outlines how submissions must be entered into the competition.
+
+https://docs.nlr.gov/docs/fy26osti/96647.pdf
+
+You must be able to do your own research, deep research, scientific literature research and organize the knowledge so that we can critically think through the problem and generate a solution through scientific and free publicly available information. this must be done autonomously and must be constantly reviewed and improved upon. Provide suggestions and improvements and implement them.
+
+❌ No DrivenData auth → cannot auto-download training_features.tif, labels.tif, sample_submission.tif, 1m_DEM_links.csv from https://www.drivendata.org/competitions/306/competition-doe-gems/data/ (verified redirect to login)
+
+See below for links from the above site. See attached files for links from the above site.
+
+https://gdr.openei.org/submissions/1391
+
+Download competition data from https://www.drivendata.org/competitions/306/competition-doe-gems/data/ (requires login) to data/
+
+See links below for competition data:
+
+https://www.dropbox.com/scl/fi/aemhtutjgcp6tr3tint94/GEMS_96647.pdf?rlkey=rek210cj2smnmzb8n0sla1vmd&st=wz4kofki&dl=0
+
+https://www.dropbox.com/scl/fi/6rgvnuady818ol8yqgis4/example_submission.tif?rlkey=kbykilvau066xuogoosbf4cq8&st=8junzdyw&dl=0
+
+https://www.dropbox.com/scl/fi/t7fyt03qdh9egyme0itwo/existing_faults.tif?rlkey=yiao96uluqdkipf0h5vju71jf&st=rnino7ya&dl=0
+
+https://www.dropbox.com/scl/fi/3vz9o0wwavi26xaeoxlwr/gems-geodawn-numerical-features.tif?rlkey=je8d8fepqfbst9lnwsq9rkplu&st=zj1lag1r&dl=0
+
+https://www.dropbox.com/scl/fi/ig0mban712ns1atphgphe/Digital-elevation-model-links-JSON.pdf?rlkey=zm77f1vbtt2if8hlruymptnu3&st=srhhir10&dl=0
+
+Work line by line verifying from official verified trusted sources, provide links for manual review. There should be no manual input, work on your own to complete tasks. Flag any irregularities for review. No hallucinations.
+
+Verify no hallucinations.
+
+The goal of this project is to get a full list that follow our requirements. No hallucinations. Verify line by line.
+
+Site creation
+
+Create a github page for this repo that has clean ui, user friendly, simple and easy to use. It should be organized and clean.
+
+It should include all relevant information in an easy to read format with official verified links as sources for review. Work line by line verify everything no hallucinations.
+
+**The single remaining blocker to training is data placement**: run `bash scripts/download_competition_data.sh` on any unrestricted machine into `data/`, then `python scripts/prepare_data.py` — after that the full train→inference→validate pipeline is ready to run (GPU needed for training; metric/losses/validation all verified working here on CPU).
+
+you need to complete the above task by yourself. Work line by line verifying from official verified trusted sources, provide links for manual review. There should be no manual input, work on your own to complete tasks. Flag any irregularities for review. No hallucinations.
+
+Verify no hallucinations.
+
+The goal of this project is to get a full list that follow our requirements. No hallucinations. Verify line by line.
+
+Run this task through multiple passes.
+
+Pass 1: Implement the task completely and verify the result.
+
+Pass 2: Review your work for bugs, missing requirements, incorrect assumptions, and edge cases. Fix everything you find.
+
+Pass 3: Re-check the entire implementation against the original request. Improve accuracy, reliability, completeness, and code quality. Fix any remaining issues.
+
+Do not stop after the first pass. Each pass must build on the previous one. Before finishing, verify that the final result fully satisfies the original request. Work line by line verify everything no hallucinations.
+
+Go ahead and create a pull request and then merge the pull request onto the main. Make suggestions for what work still needs to be done and any limitations that is in the way of a successful project. It should be worked on in this next session or the next session. Work line by line verify everything no hallucinations.
+
+</details>
