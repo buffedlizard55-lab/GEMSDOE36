@@ -1,119 +1,77 @@
 {
-  "schema_version": 3,
-  "generated_from": [
-    "evidence/atvr36_run_card_20261026.json",
-    "evidence/h36_ctrb_run_card_20261025.json",
-    "evidence/h36_run_card.json",
-    "docs/downloads/lane36_run_card.json",
-    "evidence/wdp36_run_card_20261026.json",
-    "evidence/gvsc36_run_card_20261026.json",
-    "evidence/gvsc36_crosscheck_20261026.json"
-  ],
-  "current_atvr36": {
-    "file": "gemsdoe36-atvr36-20261026.tif",
-    "sha256": "54f493f4fa5c74ed3a02f88ca6d47272b0c3cee0cc0bd9bbd9cb94eaf997204a",
-    "zip": "gemsdoe36-atvr36-20261026.zip",
-    "zip_sha256": "ceac8754bd8779c7f0a849c81f63e665e49f2767a4753cb5156832120dac8311",
-    "submission_name": "gemsdoe36-atvr36-exp-2-20261026",
-    "note": "GEMSDOE36 ATVR-36 EXP-2 | tilt/LiDAR+hydrothermal+Anderson PDE+CELF | HOLDOUT-DTI 0.1145/0.1179 | NEGATIVE hold slot",
-    "verdict": "negative",
-    "status": "DO_NOT_SUBMIT",
-    "ok_to_download": true,
-    "ok_to_submit": false,
-    "organizer_score": null
-  },
-  "current_h36_ctrb": {
-    "file": "gemsdoe36-h36-ctrb-submod-36800-20261025T000000Z-a1d85443-zeros.tif",
-    "sha256": "2bb4513d6307e2394d5de7e7e7649e28eff067b602b805a0215e82aa5ff89907",
-    "nan_twin": "gemsdoe36-h36-ctrb-submod-36800-20261025T000000Z-a1d85443-nan.tif",
-    "nan_sha256": "d30c767aed69c8fcfdefd0ffc07b9d09bd261573b18525c7c3122f99409caf1c",
-    "zip": "gemsdoe36-h36-ctrb-submod-36800-20261025T000000Z-a1d85443-zeros.zip",
-    "zip_sha256": "4f7f7eae2f41a33f69de264e01722152b2cae3dbede37153dae9fa6f0e7eed7f",
-    "submission_name": "GEMSDOE36-H36-CTRB-Submod",
-    "note": "GEMSDOE36 H36-CTRB | 1.5km worm+trunk relay submod | HOLDOUT-DTI 0.1144 | NEGATIVE hold slot | id a1d85443",
-    "verdict": "negative",
-    "status": "DO_NOT_SUBMIT",
-    "ok_to_download": true,
-    "ok_to_submit": false,
-    "organizer_score": null
-  },
-  "current": {
-    "file": "gemsdoe36-h36-gps-graben-pair-20261026-bb29ce2a4bb4-zeros.tif",
-    "sha256": "e3800971b44116bca8ef8f996c3b2796b4d316962f797975f17d643abfac379b",
-    "nan_twin": "gemsdoe36-h36-gps-graben-pair-20261026-bb29ce2a4bb4-nan.tif",
-    "nan_sha256": "fce12bd37ac6a9fb53df676be8090eafffa6a2188594faa720b492562fc983f0",
-    "zip": "gemsdoe36-h36-gps-graben-pair-20261026-bb29ce2a4bb4-zeros.zip",
-    "zip_sha256": "d798c1e67d5dfd13eede95f914607b469820cd06d50a7e7c4453ea0a209aea45",
-    "submission_name": "gemsdoe36-h36-gps-graben-pair-20261026-bb29ce2a4bb4-zeros",
-    "note": "GEMSDOE36 H36-GPS graben-pair | HOLDOUT-DTI 0.1320 [0.1205,0.1443] seg-pooled-v1 60988pos | NEGATIVE | id bb29ce2a4bb4",
-    "verdict": "negative",
-    "status": "DO_NOT_SUBMIT",
-    "ok_to_download": true,
-    "ok_to_submit": false,
-    "organizer_score": null
-  },
-  "historical_do_not_submit": [
+  "schema": "gemsdoe36.research-downloads.v3",
+  "slot_approved": false,
+  "current_candidate": null,
+  "run_card": "registry-preflight-run-card.json",
+  "archived_research_only": [
     {
+      "file": "gemsdoe36-gvsc36-exp3-20261026-5fb822bdfb60-zeros.tif",
+      "sha256": "ad809c2b0919d4b71afee80f0b4827aa9ad4ecd8c66507109a3d3f7292cac1a1",
+      "submit_ok": false
+    },
+    {
+      "file": "gemsdoe36-hvg36-vent-dipole-20261026-b3ee97873192-zeros.tif",
+      "sha256": "85d56b03aff18f72d85de9c1e1ca02a2274263fffcd95aa0a6edac7bc9a08596",
+      "submit_ok": false
+    },
+    {
+      "file": "gemsdoe36-mto36-ortho-contact-20261026-c41282e9da7a-zeros.tif",
+      "sha256": "3e6594fe39facbffd433dc4500a7e8766fab2dd0d5089d2f591ed47713261607",
+      "submit_ok": false
+    },
+    {
+      "lane": "WDP-36",
+      "file": "gemsdoe36-wdp36-exp1-20261026-zeros.tif",
+      "sha256": "ae9da29e45c67d03b7a7fd438a3cf0686f0678111181cd960b86dffb56f0f698",
+      "zip": "gemsdoe36-wdp36-exp1-20261026-zeros.zip",
+      "zip_sha256": "c6767fb5e05fe8f573a365b24913b1b58544a4d16ee9c6cd1eb7f7ae241f7de5",
+      "card": "gemsdoe36-wdp36-exp1-20261026-zeros.receipt.json",
+      "submit_ok": false
+    },
+    {
+      "lane": "MOE36",
+      "file": "gemsdoe36-moe36-exp1-20261026-zeros.tif",
+      "sha256": "9209d76bab1c4a6d6f64fb794e881a85d70b1a48fdc6288a0e390cfea64aabb7",
+      "zip": "gemsdoe36-moe36-exp1-20261026-zeros.zip",
+      "zip_sha256": "1960ccc51a2f4c9041c41e7c1da76d55032af245c467ae2a25ac0c757f2d4471",
+      "card": "moe36-run-card.json",
+      "submit_ok": false
+    },
+    {
+      "lane": "ATVR-36",
+      "file": "gemsdoe36-atvr36-20261026.tif",
+      "sha256": "54f493f4fa5c74ed3a02f88ca6d47272b0c3cee0cc0bd9bbd9cb94eaf997204a",
+      "zip": "gemsdoe36-atvr36-20261026.zip",
+      "zip_sha256": "ceac8754bd8779c7f0a849c81f63e665e49f2767a4753cb5156832120dac8311",
+      "card": "atvr36-run-card.json",
+      "submit_ok": false
+    },
+    {
+      "lane": "H36-CTRB",
+      "file": "gemsdoe36-h36-ctrb-submod-36800-20261025T000000Z-a1d85443-zeros.tif",
+      "sha256": "2bb4513d6307e2394d5de7e7e7649e28eff067b602b805a0215e82aa5ff89907",
+      "zip": "gemsdoe36-h36-ctrb-submod-36800-20261025T000000Z-a1d85443-zeros.zip",
+      "zip_sha256": "4f7f7eae2f41a33f69de264e01722152b2cae3dbede37153dae9fa6f0e7eed7f",
+      "card": "run_card.json",
+      "submit_ok": false
+    },
+    {
+      "lane": "H36-GPS",
+      "file": "gemsdoe36-h36-gps-graben-pair-20261026-bb29ce2a4bb4-zeros.tif",
+      "sha256": "e3800971b44116bca8ef8f996c3b2796b4d316962f797975f17d643abfac379b",
+      "zip": "gemsdoe36-h36-gps-graben-pair-20261026-bb29ce2a4bb4-zeros.zip",
+      "zip_sha256": "d798c1e67d5dfd13eede95f914607b469820cd06d50a7e7c4453ea0a209aea45",
+      "card": "gemsdoe36-h36-gps-graben-pair-20261026-bb29ce2a4bb4-run-card.json",
+      "submit_ok": false
+    },
+    {
+      "lane": "Lane36",
       "file": "gemsdoe36-lane36-supgbm-68302-20261026T002651Z-f35cb3e4-zeros.tif",
-      "status": "DO NOT SUBMIT: own custom 5-strip card says promote, shared-template 198-raster cross-check FAIL (max overlap 0.9317)"
-    },
-    {
-      "file": "gemsdoe36-anderson-geothermal-pinn-38854-20261004T230000Z-9b9ea4e6-zeros.tif",
-      "status": "already scored: OWNER-REPORTED 0.2750 (no receipt archived) (< 0.2778; 96.91% overlap with GEMSDOE32); do not resubmit"
-    },
-    {
-      "file": "GEMS36_h6_offcatalog_network_prior_20261004T193432.021282Z_3276c04090_3c064db2.tif",
-      "status": "OWNER-REPORTED 0.0512 (no receipt archived); circular SGMC proxy (HOLDOUT-DTI 0.000094); not submit-eligible"
-    },
-    {
-      "file": "GEMS36_FORMAT_TEST_NOT_SUBMISSION.tif",
-      "status": "format fixture only"
+      "sha256": "45e626c01f9dc6e8aed59875d2758467c39f008c87543f566b3ae9d26a2234e7",
+      "zip": null,
+      "zip_sha256": null,
+      "card": "lane36_run_card.json",
+      "submit_ok": false
     }
-  ],
-  "superseded_manifest": "submissions_manifest_2026-10-04_superseded.json (contains projections that were never scores)",
-  "current_wdp36": {
-    "file": "gemsdoe36-wdp36-exp1-20261026-zeros.tif",
-    "sha256": "ae9da29e45c67d03b7a7fd438a3cf0686f0678111181cd960b86dffb56f0f698",
-    "zip": "gemsdoe36-wdp36-exp1-20261026-zeros.zip",
-    "zip_sha256": "c6767fb5e05fe8f573a365b24913b1b58544a4d16ee9c6cd1eb7f7ae241f7de5",
-    "receipt": "gemsdoe36-wdp36-exp1-20261026-zeros.receipt.json",
-    "submission_name": "gemsdoe36-wdp36-exp1-20261026",
-    "note": "GEMSDOE36 WDP-36 EXP-1 | worm persistence 0-800m only | HOLDOUT-DTI 0.0933 | NEGATIVE hold slot",
-    "holdout_dti": 0.093269,
-    "verdict": "negative",
-    "status": "DO_NOT_SUBMIT",
-    "ok_to_download": true,
-    "ok_to_submit": false,
-    "organizer_score": null,
-    "nan_twin": null,
-    "nan_twin_note": "Intentionally zeros-only: no NaN twin, eliminating the portal [0,1] upload error path."
-  },
-  "latest_gvsc36_research_only": {
-    "file": "gemsdoe36-gvsc36-exp3-20261026-5fb822bdfb60-zeros.tif",
-    "sha256": "ad809c2b0919d4b71afee80f0b4827aa9ad4ecd8c66507109a3d3f7292cac1a1",
-    "zip": "gemsdoe36-gvsc36-exp3-20261026-5fb822bdfb60-zeros.zip",
-    "zip_sha256": "94932fbced69cfb1c5f4197d2022413e9b574cddca8edb8a9733253332e7861a",
-    "submission_name": "gemsdoe36-gvsc36-exp3-20261026-5fb822bdfb60-zeros",
-    "note": "GEMSDOE36 GVSC-36 EXP-3 | vent+F2mDAB backproj+submod | HOLDOUT-DTI 0.1589 | NEGATIVE research only | 5fb822bdfb60",
-    "holdout_dti_label": "HOLDOUT-DTI",
-    "holdout_dti": 0.158855,
-    "evaluator_version": "gems-segment-pooled-v1",
-    "withheld_positives": 60988,
-    "ci95": [
-      0.14545552598247008,
-      0.17308352228043178
-    ],
-    "verdict": "negative",
-    "status": "DO_NOT_SUBMIT",
-    "ok_to_download_for_research": true,
-    "ok_to_submit": false,
-    "leaderboard_score_estimate": null,
-    "leaderboard_estimate_note": "Unavailable; HOLDOUT-DTI is not a leaderboard score and no calibrated mapping or organizer receipt exists.",
-    "organizer_score": null,
-    "strict_novelty_failure": {
-      "max_competing_overlap_3px": 0.9460349498061295,
-      "max_literal_overlap_3px": 0.9961757051043714,
-      "registry_entries": 206
-    }
-  }
+  ]
 }

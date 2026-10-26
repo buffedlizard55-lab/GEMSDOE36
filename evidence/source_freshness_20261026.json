@@ -1,0 +1,69 @@
+{
+  "observed_at_utc": "2026-10-26T21:33:32+00:00",
+  "scope": "Public main commits only; a changed ref is not an inventory diff or score receipt.",
+  "sources": [
+    {
+      "repo": "buffedlizard55-lab/GEMSDOE24",
+      "snapshot_ref": "fc2bc6f350bf5c6ce8da5d7a2ab03578ea1259d1",
+      "observed_main_ref": "7ab1c8f77f0b4b8644e3929403a0dab65838b008",
+      "changed": true,
+      "error": null
+    },
+    {
+      "repo": "buffedlizard55-lab/GEMSDOE25",
+      "snapshot_ref": "e40b9b5e3871cb34d138f586bde97f5099658d01",
+      "observed_main_ref": "af2b6f2543e5422a7e917638b70e038e6fd91cad",
+      "changed": true,
+      "error": null
+    },
+    {
+      "repo": "buffedlizard55-lab/GEMSDOE27",
+      "snapshot_ref": "927322eadbde56be42ae129ccdfb9b37540d8e60",
+      "observed_main_ref": "bef7ae8e8f63b69d299c9214c75988c8f5055f9c",
+      "changed": true,
+      "error": null
+    },
+    {
+      "repo": "buffedlizard55-lab/GEMSDOE28",
+      "snapshot_ref": "e6321461066f89080e3b1bb670d3951ab20d3638",
+      "observed_main_ref": "2c839d10f57ec9b074829e93c84bc39935f52896",
+      "changed": true,
+      "error": null
+    },
+    {
+      "repo": "buffedlizard55-lab/GEMSDOE30",
+      "snapshot_ref": "760af3005dd40b9f36d8fef97d6dc384fd9f2a2f",
+      "observed_main_ref": "9c0d637c0171407196b61b780444bc772ce75438",
+      "changed": true,
+      "error": null
+    },
+    {
+      "repo": "buffedlizard55-lab/GEMSDOE31",
+      "snapshot_ref": "597b04cd1afb65d1ebbe3e9417fd952be48e3d74",
+      "observed_main_ref": "2a7cd0c8f1c30341a3a655a01a1ff5bff67b23d2",
+      "changed": true,
+      "error": null
+    },
+    {
+      "repo": "buffedlizard55-lab/GEMSDOE32",
+      "snapshot_ref": "5fc7792c5887735ecd3aa9a612787da588a7bf2c",
+      "observed_main_ref": "73295a80bb4021ca972b8a07eeabd1163b9e6629",
+      "changed": true,
+      "error": null
+    },
+    {
+      "repo": "buffedlizard55-lab/GEMSDOE33",
+      "snapshot_ref": "f618cc54773bd9b4d6c2b3ebf78103a05cc10cb6",
+      "observed_main_ref": "7c37df17dee1e7470cd54d0bbbc6f168810145dd",
+      "changed": true,
+      "error": null
+    },
+    {
+      "repo": "buffedlizard55-lab/GEMSDOE36",
+      "snapshot_ref": "c5a8ae7da3bd2fcff5aa5855afd44c7a3346c16f",
+      "observed_main_ref": "b90418f852615aa0974cf9a53b92fa569ed133fc",
+      "changed": true,
+      "error": null
+    }
+  ]
+}

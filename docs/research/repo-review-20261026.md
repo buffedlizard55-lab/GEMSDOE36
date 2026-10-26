@@ -1,5 +1,7 @@
 # Repository review and decision record — 2026-10-26 UTC
 
+> **Historical snapshot:** See the [later registry preflight](registry-preflight-20261026.md) for the mathematical stop, changed source refs and newer holdout-review caveats.
+
 **Scope:** GEMSDOE24/25/27/28/30/31/32/33/36 forensic review; MTO-36 / ATVR-36 evidence; format gate; reproducibility and restore-data behavior. This is a review of artifacts already present in the repository plus a restore-receipt bug fix. **No new experiment, candidate TIFF, portal upload, submission slot, or organizer score was created.** The existing research TIFFs remain downloadable for research only; the current verdict is **DO NOT SUBMIT**.
 
 ## Executive decision

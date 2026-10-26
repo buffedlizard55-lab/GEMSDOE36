@@ -1,0 +1,173 @@
+{
+ "file": "docs/downloads/gemsdoe36-lane36-supgbm-68302-20261026T002651Z-f35cb3e4-zeros.tif",
+ "sha256": "45e626c01f9dc6e8aed59875d2758467c39f008c87543f566b3ae9d26a2234e7",
+ "template_format_valid": true,
+ "template_hard_failures": [],
+ "strict_whole_array_0_1": true,
+ "dots": 68302,
+ "unique_values_in_footprint": [
+  0.0,
+  1.0
+ ],
+ "dot_spacing_px": {
+  "min": 2.0,
+  "median": 2.0
+ },
+ "distance_to_catalogue_px": {
+  "min": 2.23606797749979,
+  "share_le_2px": 0.0,
+  "share_le_3px": 0.3400925302333753
+ },
+ "registry_rasters_compared": 198,
+ "max_abs_rank_correlation": 0.6643663036634757,
+ "max_competing_dot_overlap": 0.9316564668677345,
+ "final_dot_uniqueness_passed": false,
+ "competing_rasters_over_0.70": [
+  {
+   "file": "GEMSDOE37/docs/downloads/gemsdoe37-h6-physics-dotted-80k-20261005T055000Z-0bef9211631c.tif",
+   "overlap": 0.9316564668677345,
+   "footprint_3px_coverage": 0.2659895076279572
+  },
+  {
+   "file": "GEMSDOE67/docs/downloads/gemsdoe67-ovtr-ml-cover-tau3p0-20261012-nan.tif",
+   "overlap": 0.9118620245380809,
+   "footprint_3px_coverage": 0.5481466114406682
+  },
+  {
+   "file": "12GEMSDOE/docs/downloads/12GEMSDOE_r7-nms3-dem10-scarp_0c9199f14e62.tif",
+   "overlap": 0.907821147257767,
+   "footprint_3px_coverage": 0.32244430583973716
+  },
+  {
+   "file": "GEMSDOE30/docs/downloads/gemsdoe30-g30s20-disc-60000dots-20261025T224159Z-24de17a6fa-zeros.tif",
+   "overlap": 0.8823167696407133,
+   "footprint_3px_coverage": 0.15805361834727238
+  },
+  {
+   "file": "GEMSDOE43/docs/downloads/gems43-sup01-hgb21-sep40-n40000-20261006-bc2e4e9a8d6f-nan.tif",
+   "overlap": 0.8651430411993792,
+   "footprint_3px_coverage": 0.1866588690230026
+  },
+  {
+   "file": "GEMSDOE30/docs/downloads/gemsdoe30-g30s19-habitat-edge-60000dots-20261025T210221Z-b527922d7f-zeros.tif",
+   "overlap": 0.8543966501712981,
+   "footprint_3px_coverage": 0.1545661596327573
+  },
+  {
+   "file": "GEMSDOE22/docs/downloads/gems22-h23-b-dti-optimal-emission-10pct-20261002-86176698-nan.tif",
+   "overlap": 0.842464349506603,
+   "footprint_3px_coverage": 0.5343281779736048
+  },
+  {
+   "file": "GEMSDOE10/docs/downloads/gems10-h25-ctx-ridge-20260927T232947704150Z-6452ae1d00.tif",
+   "overlap": 0.8222746039647448,
+   "footprint_3px_coverage": 0.263110481863802
+  },
+  {
+   "file": "11GEMSDOE/docs/downloads/gems-structural-area06-v1.tif",
+   "overlap": 0.8115574946560862,
+   "footprint_3px_coverage": 0.18256413848971229
+  },
+  {
+   "file": "GEMSDOE22/docs/downloads/gems22-h23-a-dti-optimal-emission-6pct-20261002-e2ec4b49-nan.tif",
+   "overlap": 0.7758337969605575,
+   "footprint_3px_coverage": 0.41313429473738394
+  },
+  {
+   "file": "GEMSDOE10/docs/downloads/gems10-h28-dotted-ridge-20260928T020256236880Z-6452ae1d00.tif",
+   "overlap": 0.7728763432988786,
+   "footprint_3px_coverage": 0.27203532626733157
+  },
+  {
+   "file": "GEMSDOE51/docs/downloads/gemsdoe51-h53-twostage-20261008T040951Z-9a0b32c871.tif",
+   "overlap": 0.7664490058856256,
+   "footprint_3px_coverage": 0.14280273554860468
+  },
+  {
+   "file": "GEMSDOE25/docs/downloads/gems25-h38-greedy-credit-k3p5-20261025-18de99d38bb0-zeros.tif",
+   "overlap": 0.7633012210476999,
+   "footprint_3px_coverage": 0.18859970046675553
+  },
+  {
+   "file": "GEMSDOE28/docs/downloads/gems28-h37-1-probe-union-pool-r1-20261003-52a13184267e-allfinite.tif",
+   "overlap": 0.7611050920910076,
+   "footprint_3px_coverage": 0.19005459834232985
+  },
+  {
+   "file": "GEMSDOE27/docs/downloads/gems27-h28-1-edge-coherence-plus-t-v2-h27-4-20261002-1113fba5f6cb-allfinite.tif",
+   "overlap": 0.7450587098474423,
+   "footprint_3px_coverage": 0.18018672157012858
+  },
+  {
+   "file": "GEMSDOE27/docs/downloads/research/gems27-h28-3-strain-conductivity-negative-research-20261025-27d6875f3b22-allfinite.tif",
+   "overlap": 0.7447512517935053,
+   "footprint_3px_coverage": 0.1802430364519844
+  },
+  {
+   "file": "GEMSDOE25/docs/downloads/gems25-xg1-crossgrad-sapd2-4-k3p5-20261025-52e65fb521f9-zeros.tif",
+   "overlap": 0.7395976691751339,
+   "footprint_3px_coverage": 0.18564404001801302
+  },
+  {
+   "file": "GEMSDOE25/docs/downloads/gems25-h35-resmag-tip-sapd2-4-k3p5-20261025-d5d4cde1e719-zeros.tif",
+   "overlap": 0.739495183157155,
+   "footprint_3px_coverage": 0.1863430412319761
+  },
+  {
+   "file": "GEMSDOE25/docs/downloads/gems25-h36-tiltzero-coincide-sapd2-4-k3p5-20261025-92562b7b7fea-zeros.tif",
+   "overlap": 0.7379578928874704,
+   "footprint_3px_coverage": 0.1854689026706607
+  },
+  {
+   "file": "GEMSDOE10/docs/downloads/gems10-h16-continuation-20260927T065521077735Z-3431b83c7c.tif",
+   "overlap": 0.7369330327076806,
+   "footprint_3px_coverage": 0.17362013541503585
+  },
+  {
+   "file": "GEMSDOE25/docs/downloads/gems25-h31-1-flank-subscarp-sapd24-20261025-40bfe1d5b1c5-zeros.tif",
+   "overlap": 0.7365816520746098,
+   "footprint_3px_coverage": 0.18772227203261696
+  },
+  {
+   "file": "GEMSDOE25/docs/downloads/gems25-h37-doc-dipoffset-sapd2-4-k3p5-20261025-558c08ce13bf-zeros.tif",
+   "overlap": 0.7364206026177857,
+   "footprint_3px_coverage": 0.18566900434708314
+  },
+  {
+   "file": "GEMSDOE25/docs/downloads/gems25-cf1-transverse-negative-20261025-22e2f9eddad9-zeros.tif",
+   "overlap": 0.7312230974202805,
+   "footprint_3px_coverage": 0.1854770305917533
+  },
+  {
+   "file": "GEMSDOE25/docs/downloads/gems25-mscr-multiscale-crest-sapd2-4-k3p5-20261025-dd2bb4b09cd2-zeros.tif",
+   "overlap": 0.7301543146613569,
+   "footprint_3px_coverage": 0.18476274114525892
+  },
+  {
+   "file": "GEMSDOE53/docs/downloads/gems53-h8-tiprelay-ridgeconcord-pr2-n80000-20261009-49bec522-zeros.tif",
+   "overlap": 0.7292905039383912,
+   "footprint_3px_coverage": 0.20840628303782213
+  },
+  {
+   "file": "GEMSDOE77/docs/downloads/gems85-h85-edti-collar35-skel-r33-20261021-d97b248e-zeros.tif",
+   "overlap": 0.7269626072442974,
+   "footprint_3px_coverage": 0.5536799840073476
+  },
+  {
+   "file": "GEMSDOE25/docs/downloads/gems25-h31-control-sapd2-4-k3p5-bde7-20261025-9edd6bed8268-zeros.tif",
+   "overlap": 0.7243858159351118,
+   "footprint_3px_coverage": 0.1855943048818036
+  },
+  {
+   "file": "GEMSDOE24/docs/downloads/gems24-gvc1-negative-geothermal-lineament-submod-20261025-abe8e51c719d-zeros.tif",
+   "overlap": 0.7131562765365582,
+   "footprint_3px_coverage": 0.13588452004529186
+  },
+  {
+   "file": "GEMSDOE25/docs/downloads/gems25-h31-aniso-scarp-b2-d2-8-20261025-c213681203f6-zeros.tif",
+   "overlap": 0.7084858422886592,
+   "footprint_3px_coverage": 0.16668237419671467
+  }
+ ],
+ "scope": "Format + final-dot uniqueness only; holdout claims of the candidate's own lane are not re-run (a final full-catalogue model cannot be scored on a hide-and-recover holdout without leakage)."
+}

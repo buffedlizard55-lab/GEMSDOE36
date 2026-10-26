@@ -1,6 +1,6 @@
 # MTO-36 · Nine-site executive review, evidence, and submission decision
 
-**26 October 2026 UTC · current decision: DOWNLOAD: YES (research); DO NOT SUBMIT.**
+**Archived MTO-36 decision: DOWNLOAD: YES (research); DO NOT SUBMIT.** The [current preflight](registry-preflight-20261026.md) is a later negative run with no new candidate; the nine-site source inventory below is pinned and all nine main refs have since changed.
 An original magnetic-contact / orthogonal-gravity field produced a locally format-valid GeoTIFF, but its **HOLDOUT-DTI was not significantly better than a matched raw-edge control and the final dots violated the literal all-registry novelty rule**. No weekly competition submission was made. No organizer score or submission-page receipt exists for MTO-36.
 
 **Download:** [one-band float32 TIFF, zeros outside footprint](../downloads/gemsdoe36-mto36-ortho-contact-20261026-c41282e9da7a-zeros.tif) · [ZIP, containing only that TIFF](../downloads/gemsdoe36-mto36-ortho-contact-20261026-c41282e9da7a-zeros.zip) · [run card and validator](../downloads/mto36-run-card.json) · [nine-site SHA/dot verification](../downloads/focus9-source-integrity.json) · [full historical site ledger](../downloads/focus9-verified-source-ledger.json).

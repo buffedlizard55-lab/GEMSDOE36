@@ -1,0 +1,97 @@
+{
+  "schema": "gemsdoe36.registry-preflight-run-card.v1",
+  "lane_id": "REGISTRY-PREFLIGHT-36",
+  "created_utc": "2026-10-26T21:33:55+00:00",
+  "verdict": "negative",
+  "submit_ok": false,
+  "slot_selected": false,
+  "slot_spent": false,
+  "hypothesis": "Cross-flight-line coherence of raw GeoDAWN magnetic profiles as a prospective buried-fault signal.",
+  "mechanism": "A genuine buried structural signal may recur in intersecting or adjacent flight profiles, while some acquisition stripes follow survey direction; this is a hypothesis, not a tested improvement.",
+  "named_non_fault_mimic": "Magnetic contacts and dike swarms; flight-line striping and processing artifacts.",
+  "official_source": "https://www.sciencebase.gov/catalog/item/657e1d85d34e23d3533209f7",
+  "source_limitation": "Raw line archives were not downloaded; AOI overlap, preprocessing and license applicability not independently checked. Survey metadata says levelling and micro-levelling already applied.",
+  "experiment_budget": {
+    "experiments_run": 0,
+    "max_experiments": 3,
+    "max_wall_seconds": 7200,
+    "reason": "The mandatory literal registry bound proves the 37,654-dot lane would fail before placement; no model, canary or blocked-holdout experiment was run.",
+    "elapsed_wall_seconds": null,
+    "time_accounting": "Exact session start was not recorded; no model or holdout experiment was executed. The preflight timestamp is recorded above."
+  },
+  "holdout": {
+    "label": "NOT RUN",
+    "evaluator_version": "gems-segment-pooled-v1",
+    "withheld_positives": null,
+    "dti": null,
+    "ci95": null,
+    "reason": "No candidate surface or raster was produced; previous lanes are not this lane."
+  },
+  "registry": {
+    "surface_rank_correlation": null,
+    "surface_rank_status": "NOT RUN: no candidate surface was generated",
+    "dot_overlap": null,
+    "dot_overlap_status": "NOT RUN: no candidate dots were placed; exact lower bound shown instead",
+    "literal_preflight": {
+      "schema_version": "gemsdoe36.literal-registry-feasibility.v1",
+      "reference_id": "reg-052",
+      "reference_registry_path": "13GEMSDOE/docs/downloads/13gems_20261001_r13-lattice-s5_v2_nan-outside.tif",
+      "reference_sha256": "b4570b406efec198eb2f4d142ad8d0d6184b14b66f2f52b5c4d697f0647dc9b2",
+      "reference_footprint_sha256": "15bc7e7d4e21d284c42e4183bb7c63d087f67635818bd7b963d58f6beed44817",
+      "reference_dots": 206895,
+      "template_sha256": "2176d08e485aa2cd2860ce8df539db4faf4d76163b38a4dd8c30a40454d35cbc",
+      "provenance": "SHA-pinned owner mirrors, not independently authenticated organizer data",
+      "radius_pixels": 3,
+      "bound": {
+        "footprint_pixels": 5167373,
+        "covered_pixels": 5160724,
+        "uncovered_pixels": 6649,
+        "candidate_distinct_dots": 37654,
+        "minimum_overlapping_dots": 31005,
+        "minimum_overlap_fraction": 0.8234184947150369,
+        "threshold_fraction": 0.7,
+        "guaranteed_duplicate": true,
+        "first_dot_count_forced_over_threshold": 22164
+      },
+      "conclusion": "STOP: guaranteed to exceed the literal 70% overlap gate"
+    },
+    "scope_warning": "A non-failing bound for fewer dots is not a pass; the full literal registry and current source inventory must still be checked."
+  },
+  "candidate": {
+    "raster_path": null,
+    "raster_sha256": null,
+    "validator": {
+      "status": "NOT RUN: no new TIFF",
+      "single_band": null,
+      "full_array_finite_0_1": null,
+      "crs_shape_transform": null,
+      "official_outside_nodata": null
+    },
+    "planned_name": "gemsdoe36-raw-flightline-preflight-20261026-NOT-CREATED",
+    "planned_note": "Planned raw-profile feasibility stop; no raster created; negative, do not submit.",
+    "planned_note_length": 81,
+    "name_note_are_not_submission_authorization": true
+  },
+  "prior_lattice_measurements": [
+    {
+      "lane": "GVSC-36 EXP-3",
+      "path": "docs/downloads/gemsdoe36-gvsc36-exp3-20261026-5fb822bdfb60-zeros.tif",
+      "sha256": "ad809c2b0919d4b71afee80f0b4827aa9ad4ecd8c66507109a3d3f7292cac1a1",
+      "dot_count": 37654,
+      "dots_within_3px": 37510,
+      "directional_overlap_fraction": 0.9961757051043714,
+      "verdict": "negative; research only"
+    },
+    {
+      "lane": "HVG-36 EXP-1",
+      "path": "docs/downloads/gemsdoe36-hvg36-vent-dipole-20261026-b3ee97873192-zeros.tif",
+      "sha256": "85d56b03aff18f72d85de9c1e1ca02a2274263fffcd95aa0a6edac7bc9a08596",
+      "dot_count": 37654,
+      "dots_within_3px": 37654,
+      "directional_overlap_fraction": 1.0,
+      "verdict": "negative; research only"
+    }
+  ],
+  "organizer_receipt": null,
+  "next_step": "Do not adjust placement to evade this proof. Investigate a scientifically defensible lower budget only under the unchanged full gate, or seek explicit owner clarification of the registry rule before a separately preregistered lane. A changed threshold/control exemption requires authorization."
+}

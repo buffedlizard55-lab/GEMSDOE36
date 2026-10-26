@@ -1,17 +1,16 @@
 #!/usr/bin/env python3
-"""Update public pages and README from the verified HVG-36 & MTO-36 run cards and 9-site ledger.
+"""Build Pages from the negative preflight and archived, integrity-checked cards.
 
-Never generates rasters or touches model weights. Fails closed if any negative
-status flag is missing or if historical owner-reported scores are mislabeled as
-organizer-confirmed.
+No raster generation, score projection, live slot selection, or leaderboard
+scraping. The historical MTO name is retained for callers of this entrypoint.
 """
-
 from __future__ import annotations
 
+import hashlib
 import html
 import json
-import re
 import subprocess
+from fractions import Fraction
 from pathlib import Path
 from shutil import copyfile
 
@@ -19,480 +18,382 @@ ROOT = Path(__file__).resolve().parents[1]
 DOCS = ROOT / "docs"
 CARD = ROOT / "evidence/mto36_run_card_20261026.json"
 HVG_CARD = ROOT / "evidence/hvg36_run_card_20261026.json"
+GVSC_CARD = ROOT / "evidence/gvsc36_run_card_20261026.json"
+STOP_CARD = ROOT / "evidence/registry_preflight_run_card_20261026.json"
 LEDGER = ROOT / "evidence/focus_sites_9repo_summary_20261026.json"
 UNIQUENESS = ROOT / "evidence/focus_sites_pairwise_uniqueness_20261026.json"
 README = ROOT / "README.md"
-INDEX = DOCS / "index.html"
-SUMMARY = DOCS / "executive-summary.html"
-
-START = "<!-- MTO-36:START -->"
-END = "<!-- MTO-36:END -->"
-FOCUS9_README_START = "<!-- FOCUS9_TABLE:START -->"
-FOCUS9_README_END = "<!-- FOCUS9_TABLE:END -->"
-
-FOCUS9_META = {
-    "GEMSDOE24": {
-        "in_sample_dti": 0.171825,
-        "in_sample_ci": "[0.156368, 0.187259]",
-        "recent_holdout_str": "H24-GVC1 (abe8e51c): HOLDOUT-DTI 0.14876 (95% CI [0.13413, 0.16370], gems-segment-pooled-v1, 60,988 withheld px; Highest Recorded Holdout across 9 repos) -> 0.0859 OWNER-REPORTED live",
-        "unique_focus9": "Historical H25-1: NO (97.95% Jaccard with GEMSDOE27). Recent GVC1: NO (76.82% 3-px overlap vs 10GEMSDOE).",
-    },
-    "GEMSDOE25": {
-        "in_sample_dti": 0.161630,
-        "in_sample_ci": "[0.146284, 0.176734]",
-        "recent_holdout_str": "Recent H66 (da617550): 0.0742 OWNER-REPORTED live (no SegmentHoldout card published)",
-        "unique_focus9": "NO — 0-XOR pixel-identical in footprint to GEMSDOE30 & superset of GEMSDOE31/32.",
-    },
-    "GEMSDOE27": {
-        "in_sample_dti": 0.172636,
-        "in_sample_ci": "[0.157229, 0.187996]",
-        "recent_holdout_str": "H29-S (51189874): HOLDOUT-DTI 0.0566 (5-km block OOF, 95% CI [0.0507, 0.0626]) -> 0.2190 OWNER-REPORTED live",
-        "unique_focus9": "Historical T-v2: NO (97.95% Jaccard with GEMSDOE24). Recent H29-S: YES vs 9 focus sites (max 3-px = 38.2%), FAIL vs dense blankets.",
-    },
-    "GEMSDOE28": {
-        "in_sample_dti": 0.046180,
-        "in_sample_ci": "[0.039815, 0.052887]",
-        "recent_holdout_str": "No clean non-leaking SegmentHoldout card (D2.8/B2 derivative)",
-        "unique_focus9": "NO — >93% 3-px dot overlap with GEMSDOE25/30/31/32/33/36.",
-    },
-    "GEMSDOE30": {
-        "in_sample_dti": 0.161630,
-        "in_sample_ci": "[0.146284, 0.176734]",
-        "recent_holdout_str": "Recent H30-2c: 0.0695 OWNER-REPORTED live (no SegmentHoldout card)",
-        "unique_focus9": "NO — 0-XOR pixel-identical in footprint to GEMSDOE25 (91eae1ca42ec).",
-    },
-    "GEMSDOE31": {
-        "in_sample_dti": 0.049061,
-        "in_sample_ci": "[0.042874, 0.055868]",
-        "recent_holdout_str": "Recent H27-5: 0.0725 OWNER-REPORTED live",
-        "unique_focus9": "NO — exact 0-XOR subset D2.8 & (d_cat > 1 px) (100% inside GEMSDOE25/30).",
-    },
-    "GEMSDOE32": {
-        "in_sample_dti": 0.006708,
-        "in_sample_ci": "[0.003999, 0.009992]",
-        "recent_holdout_str": "Recent H32-R11: 0.0537 OWNER-REPORTED live; Champion B2 in-sample diag = 0.006708 because d_cat > 2 px moat zeroes known-fault TP while stripping 6,436 collar FPs on the blind test set",
-        "unique_focus9": "NO — exact 0-XOR subset D2.8 & (d_cat > 2 px) (100% inside GEMSDOE25/30/31; 96.91% inside GEMSDOE36 PINN).",
-    },
-    "GEMSDOE33": {
-        "in_sample_dti": 0.086408,
-        "in_sample_ci": "[0.076459, 0.097028]",
-        "recent_holdout_str": "No clean non-leaking SegmentHoldout card (D2.8/B2 derivative)",
-        "unique_focus9": "NO — >90% 3-px dot overlap with GEMSDOE25/28/30/31/32/36.",
-    },
-    "GEMSDOE36": {
-        "in_sample_dti": 0.011051,
-        "in_sample_ci": "[0.007938, 0.014563]",
-        "recent_holdout_str": "Latest HVG-36 EXP-1 (b3ee97873192): HOLDOUT-DTI 0.135759 (95% CI [0.123271, 0.148461], gems-segment-pooled-v1, 60,988 withheld px; New GEMSDOE36 Holdout Record, beats B0 0.133169 on 3/4 folds; MTO-36 = 0.067611, WDP-36 = 0.093269, MOE36 = 0.128246, ATVR-36 = 0.129224, H36-CTRB = 0.131910, H36-GPS = 0.133011)",
-        "unique_focus9": "Legacy PINN: NO (96.91% overlap with B2). Latest HVG-36 EXP-1: YES vs all 9 focus-site top champions (max 3-px = 44.48%, 35.35% vs GEMSDOE32 B2; surface max |rho| = 0.5713 PASS), FAIL literal all-203 check (72.01% vs gems28-h37-1-probe-union-pool-r1, 88.37% vs GEMSDOE67 blanket, 100.00% vs 13GEMSDOE 5-px lattice).",
-    },
-}
+LEADER = "https://www.drivendata.org/competitions/306/competition-doe-gems/leaderboard/"
+PROBLEM = "https://www.drivendata.org/competitions/306/competition-doe-gems/page/967/"
+STAFF = "https://community.drivendata.org/t/scoring-clarification-are-known-usgs-ingenious-faults-masked-when-scoring-and-are-they-in-the-final-round-label-set/11516/4"
+G24_REVIEW = "https://github.com/buffedlizard55-lab/GEMSDOE24/blob/7ab1c8f77f0b4b8644e3929403a0dab65838b008/docs/data/current_best_review.json"
+BRIEF_MARKER = "## Full standing owner brief (historical wording)"
 
 
-def e(val: object) -> str:
-    return html.escape(str(val), quote=True)
+def e(value: object) -> str:
+    return html.escape(str(value), quote=True)
 
 
 def current_branch() -> str:
-    """Report the checked-out branch, not the historical lane's run-card branch."""
     try:
         result = subprocess.run(
-            ["git", "branch", "--show-current"],
-            cwd=ROOT,
-            check=True,
-            capture_output=True,
-            text=True,
+            ["git", "branch", "--show-current"], cwd=ROOT, check=True, capture_output=True, text=True
         )
     except (OSError, subprocess.CalledProcessError):
         return "unknown (detached checkout)"
     return result.stdout.strip() or "unknown (detached checkout)"
 
 
+def _digest(path: Path) -> str:
+    return hashlib.sha256(path.read_bytes()).hexdigest()
+
+
 def ensure_status(card: dict, ledger: dict, hvg: dict | None = None) -> None:
+    """Fail closed on archived artifact state, provenance, or changed bytes."""
     if card["verdict"] != "negative" or card["submit_ok"] or not card["download_ok_for_research"]:
         raise RuntimeError("MTO-36 release is a negative research download, not a submission authorization")
     if card["budget"]["experiments_run"] > 3 or card["elapsed_wall_seconds"] > 7200:
         raise RuntimeError("MTO-36 experiment/time cap breached")
     if not card["validator_output"]["all_passed"] or not card["leakage_canary"]["passed"]:
-        raise RuntimeError("Invalid MTO-36 research file or leakage canary")
+        raise RuntimeError("Invalid MTO-36 local research checks")
     if len(card["submission_note"]) > 140:
         raise RuntimeError("MTO-36 submission note too long")
-
+    pairs = [(card["download"]["tif"], card["raster_sha256"]),
+             (card["download"]["zip"], card["download"]["zip_sha256"])]
     if hvg is not None:
         if hvg["verdict"] != "negative" or hvg["submission"]["ok_to_submit_to_live_portal"]:
-            raise RuntimeError("HVG-36 release must remain a negative research download")
+            raise RuntimeError("HVG-36 must remain a negative research download")
         if not hvg["leakage_canary"]["passed"] or not hvg["gates"]["G5_format_and_strict_0_1_valid"]:
-            raise RuntimeError("Invalid HVG-36 research file or leakage canary")
+            raise RuntimeError("Invalid HVG-36 local research checks")
         if len(hvg["submission"]["note"]) > 140:
             raise RuntimeError("HVG-36 submission note too long")
-
+        pairs.extend([(hvg["artifact"]["tif_path"], hvg["artifact"]["tif_sha256"]),
+                      (hvg["artifact"]["zip_path"], hvg["artifact"]["zip_sha256"])])
+    if len(ledger["focus_sites"]) != 9:
+        raise RuntimeError("Expected nine pinned historical entries")
     for row in ledger["focus_sites"]:
-        if "ORGANIZER-CONFIRMED" in row["highest_historical_submission"]["score_label"]:
-            raise RuntimeError("Do not call owner-reported scores organizer-confirmed")
-    from hashlib import sha256
+        label = row["highest_historical_submission"]["score_label"]
+        if "ORGANIZER-CONFIRMED" in label or not any(x in label for x in ("OWNER-REPORTED", "USER-REPORTED")):
+            raise RuntimeError("Historical scores must remain owner-reported or user-reported")
+    for rel, expected in pairs:
+        path = ROOT / rel
+        if not path.is_file() or _digest(path) != expected:
+            raise RuntimeError(f"Artifact SHA mismatch for {rel}")
 
-    pairs = [
-        (card["download"]["tif"], card["raster_sha256"]),
-        (card["download"]["zip"], card["download"]["zip_sha256"]),
+
+def ensure_stop_card(stop: dict, gvsc: dict) -> None:
+    """Check that a mathematical stop cannot be rendered as a promotion."""
+    if (stop.get("lane_id") != "REGISTRY-PREFLIGHT-36" or stop.get("verdict") != "negative"
+            or stop.get("submit_ok") is not False or stop.get("slot_selected") is not False
+            or stop.get("slot_spent") is not False):
+        raise RuntimeError("Current preflight must remain negative; no slot")
+    c, h = stop["candidate"], stop["holdout"]
+    if (c["raster_path"] is not None or c["raster_sha256"] is not None
+            or h["dti"] is not None or h["ci95"] is not None or h["label"] != "NOT RUN"
+            or stop["experiment_budget"]["experiments_run"] != 0):
+        raise RuntimeError("Do not invent a preflight candidate or holdout")
+    if len(c["planned_note"]) > 140 or len(c["planned_note"]) != c["planned_note_length"]:
+        raise RuntimeError("Invalid planned note length")
+    proof = stop["registry"]["literal_preflight"]
+    b = proof["bound"]
+    n, m, k = b["footprint_pixels"], b["covered_pixels"], b["candidate_distinct_dots"]
+    u = n - m
+    forced = max(0, k - u)
+    if (proof["reference_id"] != "reg-052" or proof["radius_pixels"] != 3 or not 0 <= m <= n
+            or not 0 < k <= n or b["uncovered_pixels"] != u or b["minimum_overlapping_dots"] != forced
+            or b["threshold_fraction"] != 0.7 or b["guaranteed_duplicate"] is not True
+            or Fraction(forced, k) <= Fraction(7, 10)
+            or abs(b["minimum_overlap_fraction"] - forced / k) > 1e-12
+            or b["first_dot_count_forced_over_threshold"] != (u * 10 // 3 + 1)):
+        raise RuntimeError("Invalid literal-registry bound or stop")
+    registry = json.loads((ROOT / "registry/uniqueness_registry.json").read_text())
+    reference = next(x for x in registry["entries"] if x["id"] == proof["reference_id"])
+    manifest = json.loads((ROOT / "registry/data_manifest.json").read_text())
+    template = next(x for x in manifest["files"] if x["id"] == "sample_submission")
+    if (proof["reference_sha256"] != reference["file_sha256"]
+            or proof["reference_footprint_sha256"] != reference["footprint_sha256"]
+            or proof["template_sha256"] != template["sha256"]):
+        raise RuntimeError("Preflight reference/template hashes do not match pinned inputs")
+    if (stop["registry"]["surface_rank_correlation"] is not None
+            or stop["registry"]["dot_overlap"] is not None
+            or not c["validator"]["status"].startswith("NOT RUN")):
+        raise RuntimeError("Preflight cannot claim candidate comparisons or validation")
+    if gvsc["verdict"] != "negative" or gvsc["safe_to_submit_live_slot"]:
+        raise RuntimeError("GVSC-36 must remain research-only")
+    sub = gvsc["submission"]
+    for name, expected in ((sub["zeros_filename"], sub["raster_sha256"]),
+                           (sub["zip_archive_name"], sub["zip_sha256"])):
+        if _digest(DOCS / "downloads" / name) != expected:
+            raise RuntimeError(f"GVSC-36 artifact mismatch: {name}")
+
+
+def additional_archives() -> list[dict]:
+    """Preserve older downloads without treating a self-promotion as approval."""
+    def read(rel: str) -> dict:
+        return json.loads((ROOT / rel).read_text())
+
+    wdp = read("evidence/wdp36_run_card_20261026.json")
+    moe = read("evidence/moe36_run_card_20261026.json")
+    atvr = read("evidence/atvr36_run_card_20261026.json")
+    ctrb = read("evidence/h36_ctrb_run_card_20261025.json")
+    gps = read("evidence/h36_run_card.json")
+    lane = read("docs/downloads/lane36_run_card.json")
+    lane_crosscheck = read("evidence/lane36_crosscheck.json")
+    if any(x["verdict"] != "negative" for x in (wdp, moe, atvr, ctrb, gps)):
+        raise RuntimeError("Archived research lane unexpectedly promoted")
+    if (lane["verdict"] != "promote" or lane["ok_to_submit"] is not True
+            or lane_crosscheck["final_dot_uniqueness_passed"] is not False
+            or lane_crosscheck["max_competing_dot_overlap"] <= 0.70
+            or lane["raster"]["sha256"] != lane_crosscheck["sha256"]):
+        raise RuntimeError("Lane36 self-promotion / independent duplicate conflict changed")
+    cs, gr = ctrb["submission"], gps["raster"]
+    records = [
+        {"lane": "WDP-36", "file": wdp["submission_file"], "sha256": wdp["raster_sha256"], "zip": wdp["submission_zip"], "zip_sha256": wdp["zip_sha256"], "card": "gemsdoe36-wdp36-exp1-20261026-zeros.receipt.json"},
+        {"lane": "MOE36", "file": "gemsdoe36-moe36-exp1-20261026-zeros.tif", "sha256": moe["raster_sha256"], "zip": "gemsdoe36-moe36-exp1-20261026-zeros.zip", "zip_sha256": moe["zip_sha256"], "card": "moe36-run-card.json"},
+        {"lane": "ATVR-36", "file": "gemsdoe36-atvr36-20261026.tif", "sha256": atvr["raster_sha256"], "zip": "gemsdoe36-atvr36-20261026.zip", "zip_sha256": atvr["zip_sha256"], "card": "atvr36-run-card.json"},
+        {"lane": "H36-CTRB", "file": cs["zeros_filename"], "sha256": cs["raster_sha256"], "zip": cs["zip_archive_name"], "zip_sha256": cs["zip_sha256"], "card": "run_card.json"},
+        {"lane": "H36-GPS", "file": Path(gr["zeros_tif"]).name, "sha256": gr["zeros_sha256"], "zip": Path(gr["zip"]).name, "zip_sha256": gr["zip_sha256"], "card": "gemsdoe36-h36-gps-graben-pair-20261026-bb29ce2a4bb4-run-card.json"},
+        {"lane": "Lane36", "file": lane["raster"]["file"], "sha256": lane["raster"]["sha256"], "zip": None, "zip_sha256": None, "card": "lane36_run_card.json"},
     ]
-    if hvg is not None:
-        pairs.extend([
-            (hvg["artifact"]["tif_path"], hvg["artifact"]["tif_sha256"]),
-            (hvg["artifact"]["zip_path"], hvg["artifact"]["zip_sha256"]),
-        ])
-    for p_rel, exp_sha in pairs:
-        p = ROOT / p_rel
-        if sha256(p.read_bytes()).hexdigest() != exp_sha:
-            raise RuntimeError(f"Artifact SHA mismatch for {p_rel}")
+    for item in records:
+        for name, expected in ((item["file"], item["sha256"]), (item["zip"], item["zip_sha256"])):
+            if name is not None and (not (DOCS / "downloads" / name).is_file() or _digest(DOCS / "downloads" / name) != expected):
+                raise RuntimeError(f"Archived artifact SHA mismatch: {name}")
+        if not (DOCS / "downloads" / item["card"]).is_file():
+            raise RuntimeError(f"Missing archived card: {item['card']}")
+        item["submit_ok"] = False
+    for source, mirror in (
+        ("evidence/wdp36_run_card_20261026.json", "gemsdoe36-wdp36-exp1-20261026-zeros.receipt.json"),
+        ("evidence/moe36_run_card_20261026.json", "moe36-run-card.json"),
+        ("evidence/atvr36_run_card_20261026.json", "atvr36-run-card.json"),
+        ("evidence/h36_ctrb_run_card_20261025.json", "run_card.json"),
+        ("evidence/h36_run_card.json", "gemsdoe36-h36-gps-graben-pair-20261026-bb29ce2a4bb4-run-card.json"),
+    ):
+        if (ROOT / source).read_bytes() != (DOCS / "downloads" / mirror).read_bytes():
+            raise RuntimeError(f"Archived run-card mirror mismatch: {mirror}")
+    # Preserve the NaN variants' old integrity checks, without promoting them.
+    for name, expected in ((cs["companion_nan_name"], cs["companion_nan_sha256"]),
+                           (Path(gr["nan_tif"]).name, gr["nan_sha256"])):
+        if _digest(DOCS / "downloads" / name) != expected:
+            raise RuntimeError(f"Archived NaN variant SHA mismatch: {name}")
+    return records
 
 
-def _hvg_summary(hvg: dict) -> dict:
-    ho = hvg["holdout"]
-    folds = {f["fold"]: f["dti"] for f in ho["folds"]}
-    all3 = ho["all_3_experiments_summary"]
-    pc = ho["paired_comparison_vs_B0"]
-    return {
-        "e1_dti": ho["pooled_dti"],
-        "e1_ci": ho["ci95"],
-        "folds": folds,
-        "b0_dti": ho["matched_baseline_B0"]["pooled_dti"],
-        "e2_dti": all3["EXP-2_HVG_DualExpert_ProbFuse"]["pooled_dti"],
-        "e3_dti": all3["EXP-3_HVG_TriExpert_B2_Collar"]["pooled_dti"],
-        "delta_mean": pc["paired_delta_dti"],
-        "delta_ci": pc["paired_delta_ci95"],
-    }
-
-
-def executive_card(card: dict, hvg: dict | None = None) -> str:
-    if hvg is None:
-        hvg = json.loads(HVG_CARD.read_text(encoding="utf-8"))
-    tif = Path(card["download"]["tif"]).name
-    zipn = Path(card["download"]["zip"]).name
-    hvg_tif = Path(hvg["artifact"]["tif_path"]).name
-    hvg_zip = Path(hvg["artifact"]["zip_path"]).name
-    hs = _hvg_summary(hvg)
-    return f"""{START}
-    <section class="verdict-banner" id="current-release" aria-label="Current release status">
-      <div class="verdict-head">
-        <span class="verdict-pill">DOWNLOAD: YES (research) · DO NOT SUBMIT</span>
-        <span class="verdict-pill secondary">verdict: negative · Automated Fail-Closed Gate</span>
-        <span class="verdict-pill secondary">Latest HVG-36 EXP-1: HOLDOUT-DTI {hs['e1_dti']:.6f} (New GEMSDOE36 Holdout Record) · MTO-36: {card['holdout_dti']['pooled_candidate']:.6f}</span>
-      </div>
-      <h2>Executive Summary — Which Submission Scored Highest, What File to Download, Estimated Scores &amp; Uniqueness</h2>
-      <p><strong>Immediate Automated Answer (Zero Human Intervention Required):</strong></p>
-      <ul>
-        <li><strong>Which historical submission scored highest across the 9 focus sites?</strong> <code>GEMSDOE32</code>'s <code>gemsdoe32-h33-h33-2-b2-20261004T220000Z-e5eb6e7e-zeros.tif</code> achieved <strong><code>0.2778 OWNER-REPORTED</code></strong> (`37,654` dots, scored ID <code>c55bafc47005</code>). However, forensic byte analysis proves it is an exact <code>0-XOR</code> subset of <code>GEMSDOE25/30 D2.8</code> (<code>d_cat &gt; 2 px</code>) shared across <code>GEMSDOE25, 28, 30, 31, 32, 33, 36</code>. <strong>Do not re-upload historical family duplicates to DrivenData.</strong></li>
-        <li><strong>What is the newest unique GeoTIFF generated in <code>GEMSDOE36</code> &amp; is it OK to download and submit?</strong> This repository generated the unique whole-array <code>[0, 1]</code> GeoTIFF <a href="downloads/{e(hvg_tif)}" download><code>{e(hvg_tif)}</code></a> (<a href="downloads/{e(hvg_zip)}" download>ZIP</a> · <a href="downloads/hvg36-run-card.json" download>JSON Run Card</a> · <a href="research/hvg36-20261026.md">Monograph</a> · <a href="research/preregistration-hvg36-20261026.md">Preregistration</a>) from <strong>Lane <code>HVG-36</code> (<code>HVG-36-EXP-1</code>: Hydrothermal-Vent Structural-Conduit &amp; Cross-Scale Potential-Field Dipole Ensemble)</strong>, alongside <a href="downloads/{e(tif)}" download><code>{e(tif)}</code></a> (<a href="downloads/{e(zipn)}" download>ZIP</a> · <a href="downloads/mto36-run-card.json" download>MTO-36 Run Card</a>).
-          <br><strong>Automated Gate Decision: <code>DOWNLOAD: YES (research) · DO NOT SUBMIT</code> (<code>verdict: negative</code>).</strong>
-          <code>HVG-36-EXP-1</code> achieved <strong><code>HOLDOUT-DTI = {hs['e1_dti']:.6f}</code></strong> (<code>95% CI [{hs['e1_ci'][0]:.6f}, {hs['e1_ci'][1]:.6f}]</code>, <code>gems-segment-pooled-v1</code>, <code>60,988</code> withheld positives), beating the matched 59-feature <code>B0</code> control (<code>{hs['b0_dti']:.6f}</code>, <code>delta = +{hs['delta_mean']:.6f}</code>, winning <strong>3 of 4 spatial folds</strong>: <code>NW = {hs['folds']['NW']:.5f}</code>, <code>NE_LidarGapHeavy = {hs['folds']['NE_LidarGapHeavy']:.5f}</code>, <code>SW = {hs['folds']['SW']:.5f}</code>, <code>SE = {hs['folds']['SE']:.5f}</code>) and setting the <strong>highest <code>HOLDOUT-DTI</code> of all 7 lanes in <code>GEMSDOE36</code></strong>. It is also <strong>100% unique against all 9 focus-site top champions</strong> (max 3-px dot overlap <code>44.48% &lt;= 70%</code>; <code>35.35%</code> vs <code>GEMSDOE32 B2</code>; pre-placement surface max <code>|rho| = 0.5713 &lt;= 0.90</code> PASS; all 14 features PASS leakage canary with max AUC <code>0.6440 &lt;= 0.90</code>). However, our automated fail-closed gate withholds live portal submission because: (1) the paired 95% CI vs <code>B0</code> (<code>[{hs['delta_ci'][0]:+.6f}, {hs['delta_ci'][1]:+.6f}]</code>) includes zero; (2) pooled <code>HOLDOUT-DTI</code> (<code>{hs['e1_dti']:.6f}</code>) remains below the recorded 9-site holdout best <code>0.14876</code> (<code>GEMSDOE24 H24-GVC1</code>); and (3) on the literal 203-raster registry check, 3-px overlap exceeds 70% against dense union-pool/blanket rasters (<code>72.01%</code> on <code>gems28-h37-1-probe-union-pool-r1</code>, <code>88.37%</code> on <code>GEMSDOE67 ovtr-ml-cover</code>, <code>100.00%</code> on <code>13GEMSDOE</code> 5-px lattice).</li>
-      </ul>
-      <div class="cta-row">
-        <a class="btn" href="downloads/{e(hvg_tif)}" download>Download HVG-36 Research TIFF (0.135759 · do not submit)</a>
-        <a class="btn secondary" href="downloads/{e(hvg_zip)}" download>Download HVG-36 ZIP</a>
-        <a class="btn secondary" href="downloads/hvg36-run-card.json" download>HVG-36 Run Card JSON</a>
-        <a class="btn secondary" href="downloads/{e(tif)}" download>Download MTO-36 Research TIFF ({e(tif)})</a>
-        <a class="btn secondary" href="downloads/{e(zipn)}" download>Download MTO-36 ZIP</a>
-        <a class="btn secondary" href="downloads/mto36-run-card.json" download>MTO-36 Run Card JSON</a>
-        <a class="btn secondary" href="executive-summary.html">Submission &amp; Holdout Guide</a>
-      </div>
-      <p><strong>HVG-36 Name:</strong> <code>{e(hvg['submission']['name'])}</code> · <strong>Note ({hvg['submission']['note_length']} / 140 chars):</strong> <code>{e(hvg['submission']['note'])}</code> · <strong>TIF SHA-256:</strong> <code>{e(hvg['artifact']['tif_sha256'])}</code><br>
-         <strong>MTO-36 Name:</strong> <code>{e(card['submission_name'])}</code> · <strong>Note ({len(card['submission_note'])} / 140 chars; not for use while negative):</strong> <code>{e(card['submission_note'])}</code> · <strong>TIF SHA-256:</strong> <code>{e(card['raster_sha256'])}</code></p>
-      <div class="table-wrap verdict-meta"><table>
-        <tr><th>Current research TIFF</th><td><a href="downloads/{e(hvg_tif)}" download>{e(hvg_tif)}</a> (HVG-36 EXP-1, new repo best) &amp; <a href="downloads/{e(tif)}" download>{e(tif)}</a> (MTO-36)</td></tr>
-        <tr><th>Score evidence (not a leaderboard estimate)</th><td><strong>HVG-36 EXP-1: HOLDOUT-DTI {hs['e1_dti']:.6f}</strong>, 95% CI <code>[{hs['e1_ci'][0]:.6f}, {hs['e1_ci'][1]:.6f}]</code> (beats B0 <code>{hs['b0_dti']:.6f}</code> on 3/4 folds; EXP-2 <code>{hs['e2_dti']:.6f}</code>; EXP-3 <code>{hs['e3_dti']:.6f}</code>) · <strong>MTO-36: HOLDOUT-DTI {card['holdout_dti']['pooled_candidate']:.6f}</strong>, 95% CI <code>[{card['holdout_dti']['ci95_candidate'][0]:.6f}, {card['holdout_dti']['ci95_candidate'][1]:.6f}]</code>, <code>{e(card['holdout_dti']['evaluator_version'])}</code>, {card['holdout_dti']['withheld_positives']:,} withheld positives.</td></tr>
-        <tr><th>Unique under registry rule?</th><td><strong>YES vs all 9 focus-site champions</strong> (HVG-36 max 3-px overlap <code>44.48% &lt;= 70%</code>, <code>35.35%</code> vs B2; surface <code>|rho| = 0.5713 &lt;= 0.90</code>) · <strong>NO under literal all-203 registry rule</strong> (HVG-36 <code>72.01%</code> vs union-pool / <code>88.37%</code> vs blanket; MTO-36 final 3-px overlap {card['registry']['final_dots']['max_dot_overlap_3px_all']:.2%} &gt; 70% ceiling). Research download only.</td></tr>
-        <tr><th>Decision</th><td><strong>DOWNLOAD: YES (research) · DO NOT SUBMIT</strong></td></tr>
-      </table></div>
-      <div class="table-wrap">
-        <table>
-          <thead>
-            <tr>
-              <th>GEMSDOE36 Lane</th>
-              <th>Downloadable GeoTIFF (Whole-Array <code>[0, 1]</code>)</th>
-              <th>Estimated Score: <code>HOLDOUT-DTI</code> (<code>gems-segment-pooled-v1</code>, 60,988 withheld px, 95% CI)</th>
-              <th>Surface Rank <code>max |rho|</code> (&le;0.90)</th>
-              <th>3-px Overlap vs 9 Focus Champions (&le;70%)</th>
-              <th>3-px Overlap vs Full 203-Raster Registry</th>
-              <th>Automated Gate Verdict</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td><strong><code>HVG-36 EXP-1</code> (Latest · Best Holdout in Repo)</strong></td>
-              <td><a href="downloads/{e(hvg_tif)}" download><code>{e(hvg_tif)}</code></a><br><small>SHA-256 <code>{e(hvg['artifact']['tif_sha256'][:16])}...</code> · 37,654 dots</small></td>
-              <td><strong><code>{hs['e1_dti']:.6f}</code> HOLDOUT-DTI</strong><br><small>95% CI <code>[{hs['e1_ci'][0]:.6f}, {hs['e1_ci'][1]:.6f}]</code> · beats B0 <code>{hs['b0_dti']:.6f}</code> (<code>+{hs['delta_mean']:.6f}</code>, wins 3/4 folds; EXP-2 <code>{hs['e2_dti']:.6f}</code>, EXP-3 <code>{hs['e3_dti']:.6f}</code>)</small></td>
-              <td><code>0.5713</code> (PASS)</td>
-              <td><strong>PASS (<code>44.48%</code> max; <code>35.35%</code> vs B2)</strong></td>
-              <td>FAIL literal all-203 (<code>72.01%</code> union-pool; <code>88.37%</code> blanket; <code>100%</code> lattice)</td>
-              <td><strong><code>negative</code> · DO NOT SUBMIT</strong></td>
-            </tr>
-            <tr>
-              <td><code>MTO-36 E1</code></td>
-              <td><a href="downloads/{e(tif)}" download><code>{e(tif)}</code></a><br><small>SHA-256 <code>{e(card['raster_sha256'][:16])}...</code> · 37,654 dots</small></td>
-              <td><code>{card['holdout_dti']['pooled_candidate']:.6f}</code> HOLDOUT-DTI<br><small>95% CI <code>[{card['holdout_dti']['ci95_candidate'][0]:.6f}, {card['holdout_dti']['ci95_candidate'][1]:.6f}]</code> vs control <code>0.066923</code></small></td>
-              <td><code>0.1194</code> (PASS)</td>
-              <td>PASS (<code>51.20%</code> max)</td>
-              <td>FAIL literal all-199 (<code>73.50%</code> blanket; <code>100%</code> lattice)</td>
-              <td><code>negative</code> · DO NOT SUBMIT</td>
-            </tr>
-            <tr>
-              <td><code>WDP-36 EXP-1</code></td>
-              <td><a href="downloads/gemsdoe36-wdp36-exp1-20261026-zeros.tif" download><code>gemsdoe36-wdp36-exp1-20261026-zeros.tif</code></a><br><small>SHA-256 <code>ae9da29e45c6782a...</code> · 37,654 dots</small></td>
-              <td><code>0.093269</code> HOLDOUT-DTI<br><small>95% CI <code>[0.083380, 0.103501]</code> vs control <code>0.091901</code></small></td>
-              <td><code>0.2149</code> (PASS)</td>
-              <td>PASS (<code>49.09%</code> max)</td>
-              <td>FAIL literal all-200 (<code>72.27%</code> blanket; <code>100%</code> lattice)</td>
-              <td><code>negative</code> · DO NOT SUBMIT</td>
-            </tr>
-            <tr>
-              <td><code>MOE36 EXP-1</code></td>
-              <td><a href="downloads/gemsdoe36-moe36-exp1-20261026-zeros.tif" download><code>gemsdoe36-moe36-exp1-20261026-zeros.tif</code></a><br><small>SHA-256 <code>7ac5ef617b589d6b...</code> · 37,654 dots</small></td>
-              <td><code>0.128246</code> HOLDOUT-DTI<br><small>95% CI <code>[0.116049, 0.140744]</code> vs B0 <code>0.133749</code></small></td>
-              <td><code>0.5920</code> (PASS)</td>
-              <td>PASS (<code>45.36%</code> max)</td>
-              <td>FAIL literal all-198 (<code>89.64%</code> blanket; <code>100%</code> lattice)</td>
-              <td><code>negative</code> · DO NOT SUBMIT</td>
-            </tr>
-            <tr>
-              <td><code>ATVR-36 EXP-3</code></td>
-              <td><a href="downloads/gemsdoe36-atvr36-20261026.tif" download><code>gemsdoe36-atvr36-20261026.tif</code></a><br><small>SHA-256 <code>53aa2ff7702635d3...</code> · 37,654 dots</small></td>
-              <td><code>0.129224</code> HOLDOUT-DTI<br><small>95% CI <code>[0.117029, 0.141418]</code> vs B0 <code>0.133749</code></small></td>
-              <td><code>0.5798</code> (PASS)</td>
-              <td>PASS (<code>36.68%</code> vs B2)</td>
-              <td>FAIL literal all-196 (<code>91.50%</code> blanket; <code>100%</code> lattice)</td>
-              <td><code>negative</code> · DO NOT SUBMIT</td>
-            </tr>
-            <tr>
-              <td><code>H36-CTRB</code></td>
-              <td><a href="downloads/gemsdoe36-h36-ctrb-submod-36800-20261025T000000Z-a1d85443-zeros.tif" download><code>gemsdoe36-h36-ctrb-submod-36800-20261025T000000Z-a1d85443-zeros.tif</code></a><br><small>SHA-256 <code>2bb4513d6307e239...</code> · 36,800 dots</small></td>
-              <td><code>0.131910</code> HOLDOUT-DTI<br><small>95% CI <code>[0.120020, 0.144080]</code> vs B0 <code>0.133749</code></small></td>
-              <td><code>0.6295</code> (PASS)</td>
-              <td>PASS (<code>47.02%</code> max)</td>
-              <td>FAIL literal all-193 (<code>89.64%</code> blanket; <code>100%</code> lattice)</td>
-              <td><code>negative</code> · DO NOT SUBMIT</td>
-            </tr>
-            <tr>
-              <td><code>H36-GPS-Aniso-r3</code></td>
-              <td><a href="downloads/gemsdoe36-h36-gps-graben-pair-20261026-bb29ce2a4bb4-zeros.tif" download><code>gemsdoe36-h36-gps-graben-pair-20261026-bb29ce2a4bb4-zeros.tif</code></a><br><small>SHA-256 <code>473d363a97caeb87...</code> · 37,654 dots</small></td>
-              <td><code>0.133011</code> HOLDOUT-DTI<br><small>95% CI <code>[0.121387, 0.145053]</code> vs B0 <code>0.133749</code></small></td>
-              <td><code>0.5944</code> (PASS)</td>
-              <td>PASS (<code>42.68%</code> max)</td>
-              <td>FAIL literal all-193 (<code>87.17%</code> blanket; <code>100%</code> lattice)</td>
-              <td><code>negative</code> · DO NOT SUBMIT</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-      <p><a href="research/hvg36-20261026.md">Read HVG-36 research monograph</a> · <a href="research/mto36-evidence-and-nine-sites.md">Read audited nine-site summary, MTO-36 hypothesis and all limitations</a>. <code>ORGANIZER-CONFIRMED</code> requires a submission-page receipt; the user-supplied older scores do not satisfy this.</p>
-    </section>
-{END}"""
-
-
-def site_table(ledger: dict, uniqueness: dict | None = None) -> str:
-    if uniqueness is None:
-        uniqueness = json.loads(UNIQUENESS.read_text(encoding="utf-8"))
-    summaries = uniqueness["site_summary"]
+def site_table(ledger: dict) -> str:
+    """Historical file evidence, not a current roster or upload authorization."""
+    audit = json.loads(UNIQUENESS.read_text())["site_summary"]
     rows = []
     for item in ledger["focus_sites"]:
+        hist = item["highest_historical_submission"]
         site = item["site"]
-        h = item["highest_historical_submission"]
-        novelty = summaries[site]
-        meta = FOCUS9_META[site]
+        label = "USER-REPORTED" if hist["score_label"].startswith("USER-REPORTED") else "OWNER-REPORTED"
+        overlap = audit[site]["max_overlap_vs_other_eight"] * 100
         rows.append(
-            "<tr><td><code>{site}</code></td><td><a href=\"{link}\" target=\"_blank\" rel=\"noopener\"><code>{name}</code></a> "
-            "<small>SHA-256 {sha}</small></td><td>{dots:,} dots</td><td><strong>{score:.4f} OWNER-REPORTED</strong> "
-            "(receipt missing)</td><td>Unavailable; no calibrated leaderboard estimate — "
-            "<strong>{recent_holdout}</strong> <small>(Historical raster in-sample SegmentHoldout diag vs labels.tif: "
-            "<code>{in_dti:.6f}</code> HOLDOUT-DTI, 95% CI <code>{in_ci}</code>)</small></td>"
-            "<td><strong>NO</strong> · at least {min_overlap:.2%} of its dots overlap each other focus mask within 3 px. {lineage} "
-            "<small>({uniq_extra})</small></td>"
-            "<td>NO · historical/reused or negative</td></tr>".format(
-                site=e(site),
-                link=e(h["pinned_raster_source_url"]),
-                name=e(h["name"]),
-                sha=e(h["sha256_full"][:12]),
-                dots=h["dots"],
-                score=h["score"],
-                recent_holdout=e(meta["recent_holdout_str"]),
-                in_dti=meta["in_sample_dti"],
-                in_ci=e(meta["in_sample_ci"]),
-                min_overlap=novelty["min_overlap_vs_other_eight"],
-                lineage=e(h.get("forensic_note", "")),
-                uniq_extra=e(meta["unique_focus9"]),
-            )
+            f'<tr><th scope="row">{e(site)}</th><td><a href="{e(hist["pinned_raster_source_url"])}">'
+            f'{e(hist["name"])}</a><br><small>SHA-256 {e(hist["sha256_full"][:12])}… · '
+            f'{hist["dots"]:,} dots</small></td><td><strong>{hist["score"]:.4f} {label}</strong>'
+            f'</td><td><strong>NO</strong> · {overlap:.2f}% max directed overlap vs another pinned site</td></tr>'
         )
-    return """    <section class="section" aria-labelledby="focus-sites-title">
-      <div class="section-head"><div><div class="eyebrow">Pinned byte-forensics, Holdout-DTI estimates &amp; uniqueness</div><h2 id="focus-sites-title">Nine Focus Sites — Best Historical Submissions, Downloadable Files, Holdout-DTI Estimates &amp; Uniqueness</h2></div>
-      <p>All nine historical TIFF hashes, dots and grids were rechecked from pinned GitHub snapshots. No organizer submission-page receipt was available. All nine historical champions also fail the stated 3-px uniqueness rule against each other. Direct leaderboard projections are unavailable; we report exact <code>HOLDOUT-DTI</code> scores (<code>gems-segment-pooled-v1</code>, <code>60,988</code> withheld positives, 1,500 m buffer) alongside historical <code>OWNER-REPORTED</code> live scores. Do not choose an old file to resubmit.</p></div>
-      <div class="table-wrap"><table><tr><th>Site</th><th>Exact pinned file for audit</th><th>Measured</th><th>Reported score (unverified)</th><th>Estimated leaderboard score &amp; Holdout-DTI</th><th>Uniqueness / lineage evidence</th><th>Safe now?</th></tr>
-""" + "\n".join(rows) + """
-      </table></div>
-      <p>Highest reported in this set: GEMSDOE32 <code>0.2778 OWNER-REPORTED</code>, but its mask is an exact D2.8 subset (<code>0</code> XOR) after removing the 200 m known-fault collar (<code>6,436</code> collar FPs stripped; algebraic inversion across <code>D2.8 / R1 / B2 / PINN</code> fits with <code>R^2 = 0.998523</code>, yielding blind-test <code>TP_w = 5,151.3 px</code> and ground-truth weight <code>K = 12,852.7 px</code>). All nine historical files fail the 70% 3-px overlap uniqueness ceiling; see the <a href="downloads/focus-sites-pairwise-uniqueness.json">72-pair audit JSON</a>. By contrast, our newly generated <a href="downloads/gemsdoe36-hvg36-vent-dipole-20261026-b3ee97873192-zeros.tif" download><code>gemsdoe36-hvg36-vent-dipole-20261026-b3ee97873192-zeros.tif</code></a> achieves <code>HOLDOUT-DTI = 0.135759</code> (highest in <code>GEMSDOE36</code>) and is 100% unique against all 9 focus-site champions (<code>max 3-px overlap = 44.48%</code>), though it remains a <code>negative</code> research release. This is mask lineage, <strong>not</strong> proof that collar removal caused the blind score change. <a href="research/hvg36-20261026.md">HVG-36 Monograph</a> · <a href="research/mto36-evidence-and-nine-sites.md">MTO-36 &amp; Nine-Site Forensics</a>.</p>
-    </section>"""
+    return ('<div class="table-wrap"><table><thead><tr><th>Site</th><th>Pinned historical TIFF / SHA-256</th>'
+            '<th>Reported score, no receipt</th><th>Uniqueness vs other 8 pinned sites</th></tr></thead>'
+            '<tbody>' + ''.join(rows) + '</tbody></table></div>')
 
 
-def readme_status(card: dict, hvg: dict | None = None) -> str:
-    if hvg is None:
-        hvg = json.loads(HVG_CARD.read_text(encoding="utf-8"))
-    tif = Path(card["download"]["tif"]).name
-    zipn = Path(card["download"]["zip"]).name
-    hvg_tif = Path(hvg["artifact"]["tif_path"]).name
-    hvg_zip = Path(hvg["artifact"]["zip_path"]).name
-    hs = _hvg_summary(hvg)
-    return f"""<!-- STATUS:START -->
-> ## CURRENT DECISION · `DOWNLOAD: YES (research)` · `DO NOT SUBMIT` · `verdict: negative`
+def readme_table(ledger: dict) -> str:
+    audit = json.loads(UNIQUENESS.read_text())["site_summary"]
+    rows = ["| Site | Pinned historical TIFF (SHA-12) | Reported score | Max 3-px overlap vs 8 |",
+            "|---|---|---:|---:|"]
+    for row in ledger["focus_sites"]:
+        h = row["highest_historical_submission"]
+        lab = "USER-REPORTED" if h["score_label"].startswith("USER-REPORTED") else "OWNER-REPORTED"
+        pct = audit[row["site"]]["max_overlap_vs_other_eight"] * 100
+        rows.append(f'| {row["site"]} | [{h["name"]}]({h["pinned_raster_source_url"]}) '
+                    f'(`{h["sha256_full"][:12]}`) | {h["score"]:.4f} {lab} | {pct:.2f}% — NO |')
+    return '\n'.join(rows)
+
+
+def header(title: str) -> str:
+    return f'''<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="GEMSDOE36: evidence-led geothermal fault research and a fail-closed submission decision.">
+<title>{e(title)} · GEMS DOE 36</title><link rel="stylesheet" href="assets/site.css"></head>
+<body><a class="skip-link" href="#main">Skip to main content</a>
+<header class="site-header"><a class="brand" href="index.html"><span class="brand-mark" aria-hidden="true">36</span><span>GEMS DOE <span class="small">/ 36</span></span></a>
+<nav class="nav" aria-label="Main navigation"><a href="index.html">Decision</a><a href="executive-summary.html">Executive guide</a><a href="research/registry-preflight-20261026.md">Evidence &amp; research</a><a href="{LEADER}" target="_blank" rel="noopener">Official leaderboard ↗</a></nav></header><main id="main" class="wrap">'''
+
+
+FOOTER = f'''</main><footer class="site-footer wrap"><div class="footer-row"><p>GEMSDOE36 · <strong>Maximize P(Win)</strong> &amp; <strong>Own the Outcome</strong> · <a href="AI_DISCLOSURE.md">AI disclosure</a></p><p>Independent research; not affiliated with DOE, USGS or DrivenData. <a href="{PROBLEM}">Official specification</a></p></div></footer></body></html>'''
+
+
+def archive_section(mto: dict, hvg: dict, gvsc: dict) -> str:
+    gs = gvsc["submission"]
+    records = [
+        ("GVSC-36 EXP-3", gs["zeros_filename"], gs["zip_archive_name"], gs["raster_sha256"],
+         gs["note"], "0.158855", "[0.145456, 0.173084]", "99.6176%", "gvsc36-run-card.json"),
+        ("HVG-36 EXP-1", Path(hvg["artifact"]["tif_path"]).name, Path(hvg["artifact"]["zip_path"]).name,
+         hvg["artifact"]["tif_sha256"], hvg["submission"]["note"], "0.135759", "[0.123271, 0.148461]", "100%", "hvg36-run-card.json"),
+        ("MTO-36 E1", Path(mto["download"]["tif"]).name, Path(mto["download"]["zip"]).name,
+         mto["raster_sha256"], mto["submission_note"], "0.067611", "[0.058449, 0.077867]", "100%", "mto36-run-card.json"),
+    ]
+    parts = []
+    for lane, tif, zipname, sha, note, score, ci, overlap, card in records:
+        parts.append(f'''<article class="card archive-card"><span class="card-kicker">{e(lane)} · negative</span>
+<h3>HOLDOUT-DTI {score}</h3><p>95% CI {ci} · gems-segment-pooled-v1 · 60,988 withheld positives.
+{overlap} of dots within 3 px of the registered lattice. Not a leaderboard score.</p>
+<p><a href="downloads/{e(tif)}" download>{e(tif)}</a> · <a href="downloads/{e(zipname)}" download>ZIP</a> · <a href="downloads/{e(card)}">Run card</a></p>
+<details><summary>Artifact hash and historical note (not for submission)</summary><p>SHA-256: <code>{e(sha)}</code><br>Note: <code>{e(note)}</code></p></details></article>''')
+    others = []
+    for item in additional_archives():
+        zip_link = f' · <a href="downloads/{e(item["zip"])}" download>ZIP</a>' if item["zip"] else ""
+        others.append(f'<li><strong>{e(item["lane"])}</strong> · <a href="downloads/{e(item["file"])}" download>{e(item["file"])}</a>{zip_link} · <a href="downloads/{e(item["card"])}">historical card</a> · DO NOT SUBMIT</li>')
+    return '''<section class="section" id="archive"><div class="section-head"><div><span class="eyebrow">Prior work</span><h2>Research downloads only</h2></div><p>These are historical artifacts, not new unique submissions. DO NOT SUBMIT.</p></div>
+<div class="grid cols-3">''' + ''.join(parts) + '''</div><p class="fine-print">GVSC also has a protocol-order flaw and partial prior-hypothesis overlap. Prior zeros-only TIFFs pass local full-grid range checks but their run cards report that they do not meet the official outside-NaN profile. No organizer acceptance is established.</p><details><summary>More archived research downloads</summary><p>All are research-only. Lane36's old card says promote, but the <a href="downloads/lane36-crosscheck.json">independent expanded-registry crosscheck</a> found 93.17% overlap, so it is not approved.</p><ul>''' + ''.join(others) + '''</ul></details></section>'''
+
+
+def context_section(ledger: dict) -> str:
+    return f'''<section class="section" id="nine-sites"><div class="section-head"><div><span class="eyebrow">Pinned forensic snapshot</span><h2>Nine historical sites</h2></div><p>The TIFFs and counts were rechecked; the scores have no archived submission-page receipts. This is not a current complete inventory.</p></div>
+<p>All nine public <code>main</code> refs had changed relative to this snapshot on 26 October 2026. A changed ref does not prove a new raster; refresh the inventory before a full novelty audit. Maximum overlap is directional, candidate → comparator, within 3 pixels.</p>
+<!-- FOCUS9_EXEC:START -->{site_table(ledger)}<!-- FOCUS9_EXEC:END -->
+<p>GEMSDOE32's <strong>0.2778 OWNER-REPORTED</strong> is the highest of these pinned owner/user-reported numbers, not a verified competition receipt. Its B2 mask is exactly D2.8 with pixels ≤2 px from the visible catalogue removed; hidden false positives and causality are unknown. <a href="research/registry-preflight-20261026.md">Read the full explanation and limitations →</a></p></section>'''
+
+
+def feed_section() -> str:
+    return '''<section class="section" id="source-feed"><div class="section-head"><div><span class="eyebrow">Public repository activity</span><h2>Source freshness</h2></div><p>Live GitHub commit checks compare the nine public main refs with the pinned audit. They do not verify new TIFFs or scores.</p></div>
+<button class="button secondary" type="button" id="refresh-source-feed">Refresh public source refs</button><p id="source-feed-status" role="status" aria-live="polite">Checking public source refs…</p><ul id="source-feed-list"></ul>
+<p class="fine-print">GitHub rate limits or network restrictions can make this unavailable. The <a href="https://www.drivendata.org/competitions/306/competition-doe-gems/leaderboard/">official leaderboard</a> is checked manually, not scraped by this site.</p></section>'''
+
+
+def index_page(stop: dict, mto: dict, hvg: dict, gvsc: dict, ledger: dict) -> str:
+    b = stop["registry"]["literal_preflight"]["bound"]
+    return header("Decision and evidence") + f'''<section class="hero"><div><span class="eyebrow">DOE GEMS · audit 26 October 2026</span><h1>A clear answer before a costly submission.</h1>
+<p class="lede">We reviewed nine related projects and tested the literal novelty rule. At the standard dot budget, the rule blocks every possible placement.</p>
+<div class="hero-actions"><a class="button" href="executive-summary.html">Read the executive guide →</a><a class="button secondary" href="downloads/registry-preflight-run-card.json">View the negative run card</a></div></div>
+<aside class="status-card" aria-label="Current submission decision"><span class="eyebrow"><span class="status-pip"></span>Current decision</span><h2>DO NOT SUBMIT</h2><p>No new candidate TIFF was created, no holdout was run, and no weekly slot was selected or spent.</p><a href="research/registry-preflight-20261026.md">Why the run stopped →</a></aside></section>
+<div class="download-strip"><div><strong>DOWNLOAD: YES — Research downloads only · DO NOT SUBMIT</strong><p>Prior research files remain available for inspection. None is an approved competition entry.</p></div><a class="button warning" href="#archive">Browse research files</a></div>
+<section class="section"><div class="section-head"><div><span class="eyebrow">The limiting evidence</span><h2>The gate is impossible at this budget.</h2></div><p>Thresholds were not relaxed and dots were not moved to evade the registry.</p></div>
+<div class="grid cols-3"><article class="card"><span class="card-kicker">Footprint covered by lattice</span><h3>{b['covered_pixels']:,} / {b['footprint_pixels']:,}</h3><p>Only {b['uncovered_pixels']:,} pixels lie more than 3 px from registered lattice dots.</p></article>
+<article class="card"><span class="card-kicker">Any {b['candidate_distinct_dots']:,}-dot candidate</span><h3>≥ {b['minimum_overlap_fraction']*100:.2f}% overlap</h3><p>At least {b['minimum_overlapping_dots']:,} dots must overlap the lattice's 3-pixel neighborhood; the stop is &gt;70%.</p></article>
+<article class="card"><span class="card-kicker">Bound begins</span><h3>{b['first_dot_count_forced_over_threshold']:,} dots</h3><p>Above this count the proof forces a stop. Smaller outputs are not automatically unique.</p></article></div>
+<p><a href="research/registry-preflight-20261026.md">See the proof, inputs and ranked hypotheses →</a></p></section>
+{archive_section(mto,hvg,gvsc)}
+<section class="section"><div class="section-head"><div><span class="eyebrow">Context, not a projection</span><h2>Evidence is not a leaderboard estimate.</h2></div></div>
+<p>GVSC's recorded local HOLDOUT-DTI 0.158855 exceeds HVG's 0.135759, but GVSC fails uniqueness and protocol order. <a href="{G24_REVIEW}">GEMSDOE24's newer review</a> records HOLDOUT-DTI 0.1637924 [0.150446, 0.177390] with the same named evaluator and 60,988 withheld positives; it explicitly does not independently certify protocol, paired gain or novelty. These are not calibrated forecasts.</p>
+<p>The <a href="{LEADER}">official public leaderboard</a> showed 0.4437 on a manual read on 26 October 2026; this observation may be stale and is not a team receipt. <strong>ORGANIZER-CONFIRMED</strong> is reserved for a submission-page receipt, which is not archived here.</p></section>
+{context_section(ledger)}{feed_section()}<script defer src="assets/live-feed.js"></script>''' + FOOTER
+
+
+def executive_page(stop: dict, mto: dict, hvg: dict, gvsc: dict, ledger: dict) -> str:
+    return header("Executive summary and submission guide") + f'''<section class="hero compact-hero"><div><span class="eyebrow">Decision brief · 26 October 2026</span><h1>What to submit? Nothing yet.</h1><p class="lede">No new unique GeoTIFF or new holdout result exists from this continuation. The numerical preflight is a stop, not an exception.</p></div><aside class="status-card"><span class="eyebrow">Current status</span><h2>DO NOT SUBMIT</h2><p>DOWNLOAD: YES — Research downloads only. No real weekly slot was selected or spent.</p><a href="downloads/registry-preflight-run-card.json">Machine-readable run card →</a></aside></section>
+<section class="section"><div class="section-head"><div><span class="eyebrow">For the decision-maker</span><h2>Evidence at a glance</h2></div></div>
+<p><strong>Planned identifier, not created:</strong> <code>{e(stop["candidate"]["planned_name"])}</code><br><strong>Draft note ({stop["candidate"]["planned_note_length"]}/140 characters, not for upload):</strong> <code>{e(stop["candidate"]["planned_note"])}</code></p>
+<ol><li><strong>Historical leader:</strong> 0.2778 OWNER-REPORTED for GEMSDOE32 B2, with no archived receipt tying a score to exact bytes. A different public participant led at 0.4437 on a manual 26 October read; <a href="{LEADER}">check current standings</a>.</li>
+<li><strong>Current release:</strong> none. At 37,654 distinct dots the 5-px registered lattice forces ≥82.34% directed 3-px overlap, exceeding the literal &gt;70% stop. No previous raster is being passed off as a unique replacement.</li>
+<li><strong>Why B2 may have improved:</strong> it exactly removes 6,436 near-catalogue dots from D2.8. Pruning may reduce false positives, but unobserved labels and uploaded-file identity prevent a causal conclusion. <a href="{STAFF}">Staff clarify</a> that known faults are masked pixel-exactly and new truth can lie close by.</li>
+<li><strong>Research value:</strong> GVSC recorded HOLDOUT-DTI 0.158855 [0.145456, 0.173084] and HVG 0.135759 [0.123271, 0.148461], each <code>gems-segment-pooled-v1</code>, 60,988 withheld positives; both fail the literal gate. <a href="{G24_REVIEW}">GEMSDOE24 DPRF1</a> records 0.1637924 [0.150446, 0.177390], same named evaluator/positive count, but its review does not independently certify protocol or paired gain.</li></ol>
+<p>Scores above are not estimates of a new candidate. <strong>ORGANIZER-CONFIRMED</strong> requires a receipt, and none of the historical scores has one here.</p></section>
+{context_section(ledger)}
+<section class="section"><div class="section-head"><div><span class="eyebrow">Submission guide</span><h2>When a future file can be considered</h2></div></div>
+<ol><li>Resolve the registry/budget blocker with a scientifically justified plan, not threshold changes or lattice-hole targeting. Refresh all nine pinned inventories and the full registry. A non-failing feasibility bound is not a uniqueness pass.</li>
+<li>Use one preregistered lane and the shared feature stack, evaluator and writer. Screen the surface against every registry raster <em>before</em> placement and final dots afterward; stop on |rank correlation| &gt;0.90 or &gt;70% within 3 px of any entry.</li>
+<li>For holdout, hide whole fault segments with buffer, derive catalogue features from visible faults only, mask visible pixels exactly, test each feature for AUC leakage and pool DTI using α=0.2, β=0.8 and a 300 m triangular kernel. Record evaluator, positives and 95% CI.</li>
+<li>Validate the real file automatically: a <strong>single-band GeoTIFF (.tif)</strong>, float32, correct CRS, shape, and geotransform, all predicted values finite and within [0,1] as applicable, plus official null/NaN outside-footprint requirements. A <strong>.zip file containing a single GeoTIFF</strong> is also allowed. Resolve the full-array-vs-outside-NaN ambiguity from the authorized sample/organizer guidance; do not claim portal acceptance from a local check. A prior portal message was “Predicted values must be in range [0, 1]”. See the <a href="{PROBLEM}">official format and metric</a>.</li>
+<li>Record the SHA-256, validator output, run card and ≤140-character note. Only a separate selector can choose a live upload; official rules allow three weekly slots and one submission for both prize rounds. None is selected now. The official competition page listed 3 December 2026, 23:59 UTC as the deadline when checked on 26 October; recheck the <a href="https://www.drivendata.org/competitions/306/competition-doe-gems/">competition page</a>, <a href="https://docs.nlr.gov/docs/fy26osti/96647.pdf">rules</a> and AI disclosure.</li></ol>
+<p><a href="research/registry-preflight-20261026.md">Four ranked prospective hypotheses, data sources and full preflight →</a></p></section>{archive_section(mto,hvg,gvsc)}<script defer src="assets/live-feed.js"></script>''' + FOOTER
+
+
+def update_readme(stop: dict, ledger: dict) -> None:
+    original = README.read_text(encoding="utf-8")
+    if BRIEF_MARKER not in original:
+        raise RuntimeError("Cannot rewrite README without preserving the standing owner brief")
+    standing = original[original.index(BRIEF_MARKER):]
+    intro = f'''# GEMSDOE36 — current decision & reproducible research
+
+**Read this decision and the [standing owner brief](#full-standing-owner-brief-historical-wording) at the start of every session.** Core values: **Maximize P(Win)** and **Own the Outcome**.
+
+> ## CURRENT DECISION · DO NOT SUBMIT · negative
 >
-> **Latest original HVG-36 file (New GEMSDOE36 Holdout Record `{hs['e1_dti']:.6f}`):** [`{hvg_tif}`](docs/downloads/{hvg_tif}) · [one-TIFF ZIP](docs/downloads/{hvg_zip}) · [validator/run card](evidence/hvg36_run_card_20261026.json) · [monograph](docs/research/hvg36-20261026.md) · [preregistration](docs/research/preregistration-hvg36-20261026.md). **Not competition-authorized (`verdict: negative`).**
-> - Name: `{hvg['submission']['name']}`. Note ({hvg['submission']['note_length']} / 140 characters): `{hvg['submission']['note']}`.
-> - SHA-256: `{hvg['artifact']['tif_sha256']}` (ZIP SHA-256: `{hvg['artifact']['zip_sha256']}`). Template, single band, CRS/shape/transform, all-grid finite `[0,1]` **PASS locally** (`37,654` dots, `0` on `existing_faults.tif`).
-> - **HOLDOUT-DTI (HVG-36 EXP-1):** **`{hs['e1_dti']:.6f}`** (95% CI `[{hs['e1_ci'][0]:.6f}, {hs['e1_ci'][1]:.6f}]`; `gems-segment-pooled-v1`, `60,988` withheld positives; 1.5 km buffer; `NW={hs['folds']['NW']:.5f}`, `NE_LidarGapHeavy={hs['folds']['NE_LidarGapHeavy']:.5f}`, `SW={hs['folds']['SW']:.5f}`, `SE={hs['folds']['SE']:.5f}`). Beats matched `B0_base59` (`{hs['b0_dti']:.6f}`, delta `+{hs['delta_mean']:.6f}`, wins **3/4 folds**) and recorded `H36-GPS B0` (`0.133749`, delta `+0.002010`), setting the **highest HOLDOUT-DTI in GEMSDOE36** (`EXP-2 = 0.133383`, `EXP-3 = 0.133757`). However, paired 95% CI vs `B0` (`[{hs['delta_ci'][0]:+.6f}, {hs['delta_ci'][1]:+.6f}]`) crosses zero and pooled DTI remains below the recorded group best `0.14876` **HOLDOUT-DTI** (`GEMSDOE24` `H24-GVC1`).
-> - **Uniqueness & Canary (HVG-36):** All 14 HVG-36 features PASS leakage canary (`max two-polarity AUC = 0.6440 <= 0.90`). Pre-placement surface `max |rho| = 0.5713 <= 0.90` PASS. Final dots: **`35.35%`** vs `GEMSDOE32 B2` champion and **`44.48%`** max across all 9 focus-site top champions (**100% unique vs all 9 focus-site champions**), `72.01%` vs `gems28-h37-1-probe-union-pool-r1`, `88.37%` vs dense blankets, and `100.00%` vs 5-px calibration lattice (**FAIL literal all-203 gate**).
+> **No new candidate TIFF, surface, holdout result, slot selection or submission.** The literal registry includes a 5-pixel lattice that covers 5,160,724 of 5,167,373 footprint pixels within 3 px. At the standard 37,654-dot budget at least 31,005 / 37,654 = **82.34185%** must overlap it, exceeding the &gt;70% stop; the proof first forces a stop at 22,164 dots. A smaller count is not automatically unique. Do not target the uncovered pixels or silently exempt controls. [Run card](evidence/registry_preflight_run_card_20261026.json) · [proof and ranked hypotheses](docs/research/registry-preflight-20261026.md) · [three review passes](evidence/registry_preflight_review_passes_20261026.md).
 >
-> **Original MTO-36 file:** [`{tif}`](docs/downloads/{tif}) · [one-TIFF ZIP](docs/downloads/{zipn}) · [validator/run card](evidence/mto36_run_card_20261026.json). **Not competition-authorized.**
-> - Name: `{card['submission_name']}`. Note ({len(card['submission_note'])} / 140 characters): `{card['submission_note']}`. SHA-256: `{card['raster_sha256']}`.
-> - **HOLDOUT-DTI (MTO-36):** `{card['holdout_dti']['pooled_candidate']:.6f}` (95% CI `[{card['holdout_dti']['ci95_candidate'][0]:.6f}, {card['holdout_dti']['ci95_candidate'][1]:.6f}]`; `{card['holdout_dti']['evaluator_version']}`, `{card['holdout_dti']['withheld_positives']:,}` withheld positives; 1.5 km buffer). Matched control `{card['holdout_dti']['pooled_control']:.6f}`; paired CI `[{card['holdout_dti']['paired_ci95'][0]:.6f}, {card['holdout_dti']['paired_ci95'][1]:.6f}]` crosses zero.
-> - **Archived prior negative lanes:** [`gemsdoe36-wdp36-exp1-20261026-zeros.tif`](docs/downloads/gemsdoe36-wdp36-exp1-20261026-zeros.tif) (`0.093269` **HOLDOUT-DTI**), [`gemsdoe36-moe36-exp1-20261026-zeros.tif`](docs/downloads/gemsdoe36-moe36-exp1-20261026-zeros.tif) (`0.128246` **HOLDOUT-DTI**), [`gemsdoe36-atvr36-20261026.tif`](docs/downloads/gemsdoe36-atvr36-20261026.tif) (`0.129224` **HOLDOUT-DTI**), [`gemsdoe36-h36-ctrb-submod-36800-20261025T000000Z-a1d85443-zeros.tif`](docs/downloads/gemsdoe36-h36-ctrb-submod-36800-20261025T000000Z-a1d85443-zeros.tif) (`0.131910` **HOLDOUT-DTI**), and [`gemsdoe36-h36-gps-graben-pair-20261026-bb29ce2a4bb4-zeros.tif`](docs/downloads/gemsdoe36-h36-gps-graben-pair-20261026-bb29ce2a4bb4-zeros.tif) (`0.133011` **HOLDOUT-DTI**).
-> - **Historical scores:** Nine focus-site TIFFs (`0.2449`–`0.2778`) were re-audited by byte hash and XOR algebra ([ledger](evidence/focus_sites_9repo_summary_20261026.json)); because no portal screenshot/HTML receipt is archived, they are labeled **OWNER-REPORTED**, not `ORGANIZER-CONFIRMED`.
-<!-- STATUS:END -->"""
+> **Research downloads only:** [GVSC-36 EXP-3 TIFF](docs/downloads/gemsdoe36-gvsc36-exp3-20261026-5fb822bdfb60-zeros.tif), [ZIP](docs/downloads/gemsdoe36-gvsc36-exp3-20261026-5fb822bdfb60-zeros.zip), [card](evidence/gvsc36_run_card_20261026.json); [HVG-36 EXP-1 TIFF](docs/downloads/gemsdoe36-hvg36-vent-dipole-20261026-b3ee97873192-zeros.tif), [card](evidence/hvg36_run_card_20261026.json); [MTO-36 TIFF](docs/downloads/gemsdoe36-mto36-ortho-contact-20261026-c41282e9da7a-zeros.tif), [card](evidence/mto36_run_card_20261026.json). All are **DO NOT SUBMIT**. GVSC's 99.6176% lattice overlap and post-placement surface check are blocking.
+>
+> GVSC recorded **HOLDOUT-DTI 0.158855** [0.145456, 0.173084]; HVG **HOLDOUT-DTI 0.135759** [0.123271, 0.148461], both `gems-segment-pooled-v1`, 60,988 withheld positives. Neither is a leaderboard projection. A newer [GEMSDOE24 DPRF1 review]({G24_REVIEW}) records **HOLDOUT-DTI 0.1637924** [0.150446, 0.177390], same named evaluator and positives, but does not independently certify protocol/paired gain/novelty; do not call the old 0.14876 the current group record or assume matched comparability.
 
+## Nine-site executive summary — pinned historical snapshot
 
-def readme_focus9_table(ledger: dict) -> str:
-    rows = []
-    for item in ledger["focus_sites"]:
-        site = item["site"]
-        h = item["highest_historical_submission"]
-        meta = FOCUS9_META[site]
-        rows.append(
-            f"| `{site}` | [`{h['name']}`]({h['pinned_raster_source_url']}) (`{h['sha256_full'][:12]}`) | "
-            f"`{h['dots']:,}` | **`{h['score']:.4f}` OWNER-REPORTED** | "
-            f"{meta['recent_holdout_str']} *(Hist. in-sample diag: `{meta['in_sample_dti']:.6f}`)* | "
-            f"{meta['unique_focus9']} | **NO** (historical family / negative) |"
-        )
-    header = (
-        f"{FOCUS9_README_START}\n"
-        "| Site | Highest Historical File (Pinned Download Link & SHA-12) | Dots | Historical Live Score (Label) | Estimated Score: `HOLDOUT-DTI` (`gems-segment-pooled-v1`, 60,988 withheld px, 95% CI) | Unique vs Other 8 Focus Sites & Registry? | OK to Submit Now? |\n"
-        "|---|---|---:|---|---|---|---|"
-    )
-    return header + "\n" + "\n".join(rows) + f"\n{FOCUS9_README_END}"
+The TIFF links and masks are rehashed; no historical score has an archived organizer receipt and pinned bytes do not prove which file was uploaded. All nine main refs changed since the snapshot ([freshness receipt](evidence/source_freshness_20261026.json)); the table is **not** a current complete raster inventory. All nine historical masks fail the literal pairwise rule against at least one other pinned site. GEMSDOE32 B2 is exactly D2.8 with 6,436 catalogue-near dots removed; why its **0.2778 OWNER-REPORTED** score resulted cannot be proven without hidden labels and a receipt. Nearby new truth can be penalized, because the [organizer's mask is pixel-exact]({STAFF}).
+
+<!-- FOCUS9_TABLE:START -->
+{readme_table(ledger)}
+<!-- FOCUS9_TABLE:END -->
+
+The public [leaderboard]({LEADER}) showed **0.4437** on a manual 2026-10-26 read, not a team receipt and not necessarily current. Never call a historical score `ORGANIZER-CONFIRMED` without its submission-page receipt. No calibrated leaderboard estimate is available for a nonexistent candidate.
+
+## Reproduce and review
+
+```bash
+python scripts/restore_data.py --group core
+python scripts/restore_data.py --group scored
+python scripts/registry_feasibility.py --dots 37654  # exit 2: guaranteed duplicate; 0: NOT proven; 1: error
+python scripts/build_site.py
+python scripts/check_site.py
+python scripts/verify_gvsc36_release.py
+python scripts/verify_mto_release.py
+pytest -q
+ruff check src scripts tests
+```
+
+For the pinned nine-site forensic rerun, run `python scripts/cache_focus9_audit.py` to fetch the ten SHA-verified comparison TIFFs at their pinned commits, then run `python scripts/audit_focus_sources.py` and `python scripts/audit_focus_uniqueness.py`. Owner-mirror hash verification is not organizer authentication. Prior all-finite TIFFs pass a local whole-grid range check but their cards flag noncompliance with the official outside-NaN profile; portal acceptance is unknown. The [site](docs/index.html) and [executive guide](docs/executive-summary.html) have the current negative decision. No automated leaderboard monitor is shipped.
+
+**Next:** reconcile the budget/rule conflict without relaxing the user's protocol; refresh the registry, then perform a preregistered one-lane, leakage-canary and buffered whole-segment holdout with every surface/final-dot comparison, a real raster validator and a separate slot selector. Do not spend a slot to test a known duplicate.
+
+---
+
+'''
+    README.write_text(intro + standing, encoding="utf-8")
 
 
 def main() -> int:
-    card = json.loads(CARD.read_text(encoding="utf-8"))
-    hvg = json.loads(HVG_CARD.read_text(encoding="utf-8"))
-    ledger = json.loads(LEDGER.read_text(encoding="utf-8"))
-    ensure_status(card, ledger, hvg)
-
-    idx = INDEX.read_text(encoding="utf-8")
-    if idx.count(START) != 1 or idx.count(END) != 1:
-        raise RuntimeError("index.html missing single MTO-36 block markers")
-    replacement = executive_card(card, hvg) + "\n" + site_table(ledger)
-    updated = re.sub(
-        re.escape(START) + r".*?" + re.escape(END) + r"(?:\s*<section class=\"section\" aria-labelledby=\"focus-sites-title\">.*?</section>)?",
-        lambda _: replacement,
-        idx,
-        count=1,
-        flags=re.S,
-    )
-    script = '<script>fetch("current-run.json").then(r=>r.json()).then(d=>{if(d.slot_approved||d.ok_to_download_and_submit)throw new Error("invalid positive state");});</script>'
-    if 'fetch("current-run.json")' not in updated:
-        updated = updated.replace('</body>', '  ' + script + '\n</body>', 1)
-    INDEX.write_text(updated, encoding="utf-8")
-
-    summary = SUMMARY.read_text(encoding="utf-8")
-    if summary.count(START) == 1 and summary.count(END) == 1:
-        summary = re.sub(
-            re.escape(START) + r".*?" + re.escape(END),
-            lambda _: executive_card(card, hvg),
-            summary,
-            count=1,
-            flags=re.S,
-        )
-    start, end = "<!-- FOCUS9_EXEC:START -->", "<!-- FOCUS9_EXEC:END -->"
-    block = start + "\n" + site_table(ledger) + "\n" + end
-    if start in summary:
-        if summary.count(start) != 1 or summary.count(end) != 1:
-            raise RuntimeError("Executive nine-site markers missing/duplicated")
-        summary = re.sub(
-            re.escape(start) + r".*?" + re.escape(end),
-            lambda _: block,
-            summary,
-            count=1,
-            flags=re.S,
-        )
-    else:
-        summary = summary.replace("<!-- MTO-36:END -->", "<!-- MTO-36:END -->\n" + block, 1)
-    SUMMARY.write_text(summary, encoding="utf-8")
-
-    s = README.read_text(encoding="utf-8")
-    if s.count("<!-- STATUS:START -->") != 1 or s.count("<!-- STATUS:END -->") != 1:
-        raise RuntimeError("README status markers missing/duplicated")
-    s = re.sub(r'<!-- STATUS:START -->.*?<!-- STATUS:END -->', lambda _: readme_status(card, hvg), s, count=1, flags=re.S)
-    if FOCUS9_README_START in s and FOCUS9_README_END in s:
-        s = re.sub(
-            re.escape(FOCUS9_README_START) + r".*?" + re.escape(FOCUS9_README_END),
-            lambda _: readme_focus9_table(ledger),
-            s,
-            count=1,
-            flags=re.S,
-        )
-    branch = current_branch().replace("`", "")
-    s = re.sub(
-        r'^(\*\*Working [Bb]ranch:\*\* `)[^`]*(`.*)$',
-        lambda match: f"{match.group(1)}{branch}{match.group(2)}",
-        s,
-        count=1,
-        flags=re.M,
-    )
-    README.write_text(s, encoding="utf-8")
-
-    current = {
-        "updated_utc": card["generated_utc"],
-        "lane_id": "MTO-36",
-        "experiment_id": "MTO-36-E1",
-        "verdict": "negative",
-        "slot_approved": False,
-        "ok_to_download_for_research": True,
-        "ok_to_download_and_submit": False,
-        "research_tif": "downloads/" + Path(card["download"]["tif"]).name,
-        "research_zip": "downloads/" + Path(card["download"]["zip"]).name,
-        "tif_sha256": card["raster_sha256"],
-        "zip_sha256": card["download"]["zip_sha256"],
-        "submission_name": card["submission_name"],
-        "submission_note": card["submission_note"],
-        "submission_note_chars": len(card["submission_note"]),
-        "holdout_dti": card["holdout_dti"],
-        "leakage_canary": card["leakage_canary"],
-        "registry_uniqueness": card["registry"],
-        "validator_output": card["validator_output"],
-        "latest_hvg36_lane": {
-            "lane_id": "HVG-36",
-            "experiment_id": "HVG-36-EXP-1",
-            "verdict": "negative",
-            "ok_to_download_for_research": True,
-            "ok_to_download_and_submit": False,
-            "research_tif": "downloads/" + Path(hvg["artifact"]["tif_path"]).name,
-            "research_zip": "downloads/" + Path(hvg["artifact"]["zip_path"]).name,
-            "tif_sha256": hvg["artifact"]["tif_sha256"],
-            "zip_sha256": hvg["artifact"]["zip_sha256"],
-            "submission_name": hvg["submission"]["name"],
-            "submission_note": hvg["submission"]["note"],
-            "submission_note_chars": hvg["submission"]["note_length"],
-            "pooled_holdout_dti": hvg["holdout"]["pooled_dti"],
-            "ci95": hvg["holdout"]["ci95"],
-            "focus9_champions_max_overlap_3px": hvg["registry_uniqueness"]["final_dots"]["max_3px_overlap_focus9_top_champions"],
-            "focus9_champions_unique": True,
-        },
-        "historical_scores_policy": "All nine historical site scores are labeled OWNER-REPORTED because no submission-page receipt was archived.",
-    }
-    (DOCS / "current-run.json").write_text(json.dumps(current, indent=2) + "\n", encoding="utf-8")
-    for source, name in (
-        (CARD, "mto36-run-card.json"),
-        (HVG_CARD, "hvg36-run-card.json"),
-        (LEDGER, "focus9-verified-source-ledger.json"),
-        (ROOT / "evidence/mto36_ninesite_forensics.json", "focus9-source-integrity.json"),
-        (UNIQUENESS, "focus-sites-pairwise-uniqueness.json"),
+    mto, hvg, gvsc, stop, ledger = (json.loads(p.read_text(encoding="utf-8")) for p in
+                                   (CARD, HVG_CARD, GVSC_CARD, STOP_CARD, LEDGER))
+    ensure_status(mto, ledger, hvg)
+    ensure_stop_card(stop, gvsc)
+    for source, target in (
+        (STOP_CARD, DOCS / "downloads/registry-preflight-run-card.json"),
+        (CARD, DOCS / "downloads/mto36-run-card.json"),
+        (HVG_CARD, DOCS / "downloads/hvg36-run-card.json"),
+        (GVSC_CARD, DOCS / "downloads/gvsc36-run-card.json"),
+        (LEDGER, DOCS / "downloads/focus9-verified-source-ledger.json"),
+        (UNIQUENESS, DOCS / "downloads/focus-sites-pairwise-uniqueness.json"),
+        (ROOT / "evidence/mto36_ninesite_forensics.json", DOCS / "downloads/focus9-source-integrity.json"),
+        (ROOT / "evidence/lane36_crosscheck.json", DOCS / "downloads/lane36-crosscheck.json"),
+        (ROOT / "evidence/moe36_run_card_20261026.json", DOCS / "downloads/moe36-run-card.json"),
+        (ROOT / "evidence/atvr36_run_card_20261026.json", DOCS / "downloads/atvr36-run-card.json"),
     ):
-        copyfile(source, DOCS / "downloads" / name)
-    print(f"Refreshed site & README from negative HVG-36 ({hvg['artifact']['tif_sha256'][:12]}) & MTO-36 ({card['raster_sha256'][:12]}) cards")
+        copyfile(source, target)
+    snapshot = json.loads((ROOT / "registry/priority_source_snapshot.json").read_text())
+    refs = {x["repo"].split("/")[-1]: x["ref"] for x in snapshot["sources"]}
+    (DOCS / "data").mkdir(exist_ok=True)
+    (DOCS / "data/focus-refs.json").write_text(json.dumps(refs, indent=2) + "\n")
+    current = {
+        "schema": "gemsdoe36.current-run.v3", "lane_id": stop["lane_id"], "verdict": "negative",
+        "slot_approved": False, "ok_to_download_and_submit": False, "research_downloads_only": True,
+        "tif_path": None, "tif_sha256": None, "holdout_dti": None,
+        "run_card": "downloads/registry-preflight-run-card.json", "run_card_sha256": _digest(STOP_CARD),
+        "registry_preflight": stop["registry"]["literal_preflight"]["bound"],
+    }
+    (DOCS / "current-run.json").write_text(json.dumps(current, indent=2) + "\n")
+    manifest = {"schema": "gemsdoe36.research-downloads.v3", "slot_approved": False,
+                "current_candidate": None, "run_card": "registry-preflight-run-card.json",
+                "archived_research_only": [
+                    {"file": gvsc["submission"]["zeros_filename"], "sha256": gvsc["submission"]["raster_sha256"], "submit_ok": False},
+                    {"file": Path(hvg["artifact"]["tif_path"]).name, "sha256": hvg["artifact"]["tif_sha256"], "submit_ok": False},
+                    {"file": Path(mto["download"]["tif"]).name, "sha256": mto["raster_sha256"], "submit_ok": False},
+                ] + additional_archives()}
+    (DOCS / "downloads/submissions_manifest.json").write_text(json.dumps(manifest, indent=2) + "\n")
+    (DOCS / "index.html").write_text(index_page(stop, mto, hvg, gvsc, ledger), encoding="utf-8")
+    (DOCS / "executive-summary.html").write_text(executive_page(stop, mto, hvg, gvsc, ledger), encoding="utf-8")
+    update_readme(stop, ledger)
+    print("Built Pages and README: literal-registry preflight NEGATIVE; no candidate or slot")
     return 0
 
 

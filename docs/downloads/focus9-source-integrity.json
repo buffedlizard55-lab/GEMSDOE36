@@ -1,7 +1,7 @@
 {
   "schema": "focus9-source-integrity-v2",
   "checked_date_utc": "2026-10-26",
-  "score_provenance": "OWNER-REPORTED only; none of these nine scores has an authenticated submission-page receipt in this repo",
+  "score_provenance": "OWNER-REPORTED or USER-REPORTED as stated for each site; no authenticated submission-page receipt is archived",
   "source": "registry/scored_registry.json + evidence/focus_sites_9repo_summary_20261026.json",
   "sites": [
     {

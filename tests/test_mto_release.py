@@ -1,5 +1,4 @@
-"""Fail-closed MTO-36 release + historical score provenance regression tests."""
-
+"""Archived release integrity and current fail-closed Pages regressions."""
 from __future__ import annotations
 
 import json
@@ -11,27 +10,34 @@ import pytest
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "scripts"))
-from build_mto_site import current_branch, ensure_status, site_table  # noqa: E402
+from build_mto_site import (  # noqa: E402
+    additional_archives,
+    current_branch,
+    ensure_status,
+    ensure_stop_card,
+    site_table,
+    update_readme,
+)
+from check_site import sha, validate_current  # noqa: E402
 from verify_mto_release import verify_all  # noqa: E402
 
 
-def _card_and_ledger() -> tuple[dict, dict]:
-    return (
-        json.loads((ROOT / "evidence/mto36_run_card_20261026.json").read_text()),
-        json.loads((ROOT / "evidence/focus_sites_9repo_summary_20261026.json").read_text()),
-    )
+def load(name: str) -> dict:
+    return json.loads((ROOT / name).read_text())
 
 
-def test_current_negative_release_is_locally_valid_but_never_submit_authorized() -> None:
+def test_archived_negative_release_is_locally_valid_but_not_authorized() -> None:
     result = verify_all(ROOT)
     assert result["passed"], result["errors"]
     assert result["verdict"] == "negative"
+    assert result["archived_not_current_candidate"] is True
     assert result["download_research"] is True
     assert result["download_and_submit"] is False
 
 
-def test_generator_fails_closed_if_verdict_or_historical_score_labels_forged() -> None:
-    card, ledger = _card_and_ledger()
+def test_generator_fails_closed_if_old_verdict_or_score_labels_forged() -> None:
+    card = load("evidence/mto36_run_card_20261026.json")
+    ledger = load("evidence/focus_sites_9repo_summary_20261026.json")
     ensure_status(card, ledger)
     promoted = deepcopy(card)
     promoted["submit_ok"] = True
@@ -55,36 +61,100 @@ def test_working_branch_is_read_from_checkout_not_a_historical_run_card(monkeypa
     assert current_branch() == "arena/test-branch"
 
 
-def test_nine_pinned_links_measured_not_organizer_authenticated() -> None:
-    _, ledger = _card_and_ledger()
+def test_nine_pinned_links_labels_and_measured_lineage() -> None:
+    ledger = load("evidence/focus_sites_9repo_summary_20261026.json")
     table = site_table(ledger)
-    checked = json.loads((ROOT / "evidence/mto36_ninesite_forensics.json").read_text())
+    checked = load("evidence/mto36_ninesite_forensics.json")
     assert len(checked["sites"]) == 9
     for site in checked["sites"]:
         assert site["pinned_source_url"] in table
         assert site["sha256"][:12] in table
-        assert f"{site['reported_score_not_organizer_authenticated']:.4f} OWNER-REPORTED" in table
+        label = "USER-REPORTED" if site["site"] == "GEMSDOE24" else "OWNER-REPORTED"
+        assert f"{site['reported_score_not_organizer_authenticated']:.4f} {label}" in table
     assert "ORGANIZER-CONFIRMED" not in table
     assert checked["nested_family_crosschecks"]["b2_vs_d28_gt_2px_xor"] == 0
     assert checked["nested_family_crosschecks"]["d28_removed_to_b2"] == 6436
     assert checked["nested_family_crosschecks"]["solo_removed_to_b2"] == 2545
 
 
-def test_nine_site_table_separates_history_estimates_and_uniqueness() -> None:
-    _, ledger = _card_and_ledger()
+def test_table_does_not_call_estimates_holdouts_or_nine_sites_unique() -> None:
+    ledger = load("evidence/focus_sites_9repo_summary_20261026.json")
     table = site_table(ledger)
-    assert table.count("Unavailable; no calibrated leaderboard estimate") == 9
-    assert table.count("NO · historical/reused or negative") == 9
-    assert "Estimated leaderboard score" in table
-    assert "Uniqueness / lineage evidence" in table
-    assert "Pixel-identical in footprint (0 XOR) to GEMSDOE30" in table
+    assert table.count("<strong>NO</strong>") == 9
+    assert "Reported score, no receipt" in table
+    assert "Uniqueness vs other 8 pinned sites" in table
+    assert "Estimated Score" not in table
     for item in ledger["focus_sites"]:
         assert item["highest_historical_submission"]["name"] in table
-
-
-def test_executive_summary_includes_generated_nine_site_table() -> None:
-    _, ledger = _card_and_ledger()
     summary = (ROOT / "docs/executive-summary.html").read_text()
     assert summary.count("<!-- FOCUS9_EXEC:START -->") == 1
     assert summary.count("<!-- FOCUS9_EXEC:END -->") == 1
-    assert site_table(ledger) in summary
+    assert table in summary
+
+
+def test_negative_preflight_cannot_be_forged_to_promote():
+    stop = load("evidence/registry_preflight_run_card_20261026.json")
+    gvsc = load("evidence/gvsc36_run_card_20261026.json")
+    ensure_stop_card(stop, gvsc)
+    for change in ("submit", "candidate", "score", "bound"):
+        fake = deepcopy(stop)
+        if change == "submit":
+            fake["submit_ok"] = True
+        elif change == "candidate":
+            fake["candidate"]["raster_sha256"] = "0" * 64
+        elif change == "score":
+            fake["holdout"]["dti"] = 0.9
+        else:
+            fake["registry"]["literal_preflight"]["bound"]["minimum_overlapping_dots"] -= 1
+        with pytest.raises(RuntimeError):
+            ensure_stop_card(fake, gvsc)
+
+
+def test_current_manifest_binds_negative_card_and_rejects_positive_mutations():
+    stop_path = ROOT / "evidence/registry_preflight_run_card_20261026.json"
+    stop = json.loads(stop_path.read_text())
+    current = load("docs/current-run.json")
+    assert validate_current(current, stop, sha(stop_path)) == []
+    for key, value in (("slot_approved", True), ("tif_sha256", "invented"),
+                       ("ok_to_download_and_submit", True), ("run_card_sha256", "bad")):
+        fake = deepcopy(current)
+        fake[key] = value
+        assert validate_current(fake, stop, sha(stop_path))
+
+
+def test_lane36_self_promotion_cannot_bypass_expanded_registry():
+    lane = load("docs/downloads/lane36_run_card.json")
+    crosscheck = load("evidence/lane36_crosscheck.json")
+    assert lane["verdict"] == "promote" and lane["ok_to_submit"] is True
+    assert crosscheck["final_dot_uniqueness_passed"] is False
+    assert crosscheck["max_competing_dot_overlap"] > 0.70
+    rows = additional_archives()
+    assert len(rows) == 6
+    assert all(row["submit_ok"] is False for row in rows)
+    assert next(row for row in rows if row["lane"] == "Lane36")["sha256"] == crosscheck["sha256"]
+
+
+def test_builder_preserves_standing_owner_brief_verbatim(tmp_path, monkeypatch):
+    import build_mto_site
+
+    fake_readme = tmp_path / "README.md"
+    standing = "## Full standing owner brief (historical wording)\n\nExact user text.\n- Preserve me.\n"
+    fake_readme.write_text("old introductory status\n\n" + standing)
+    monkeypatch.setattr(build_mto_site, "README", fake_readme)
+    update_readme(load("evidence/registry_preflight_run_card_20261026.json"),
+                  load("evidence/focus_sites_9repo_summary_20261026.json"))
+    assert fake_readme.read_text().endswith(standing)
+
+
+def test_newer_external_holdout_review_is_hash_pinned_and_qualified():
+    provenance = load("evidence/gemsdoe24_current_best_review_provenance_20261026.json")
+    snapshot = ROOT / provenance["snapshot_path"]
+    assert sha(snapshot) == provenance["source_sha256"]
+    reviewed = json.loads(snapshot.read_text())["current_recorded_point_best"]
+    assert reviewed["holdout"]["label"] == "HOLDOUT-DTI"
+    assert reviewed["holdout"]["dti"] == pytest.approx(0.1637924246971501)
+    assert reviewed["holdout"]["n_withheld_positive_pixels"] == 60_988
+    assert reviewed["holdout"]["evaluator_version"] == "gems-segment-pooled-v1"
+    assert reviewed["holdout"]["ci95"]["interval"] == pytest.approx([0.15044621733051888, 0.1773903019943756])
+    assert reviewed["verdict"] == "negative" and reviewed["ok_to_submit"] is False
+    assert "no independent protocol/paired-gain/novelty certification" in reviewed["scope"]

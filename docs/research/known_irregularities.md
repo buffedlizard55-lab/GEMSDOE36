@@ -1,6 +1,8 @@
 # Known Irregularities & Forensic Audit Flags
 
-> **Current MTO-36 correction (2026-10-26):** No historical focus-site score has a saved organizer submission-page receipt. All earlier “ORGANIZER-CONFIRMED” score statements in this historical register must be read as **OWNER-REPORTED**; the MTO-36 result is **HOLDOUT-DTI** only. See [new six-item irregularity review, SHA correction and strict duplicate gate](mto36-evidence-and-nine-sites.md#irregularities-and-inference-boundaries). Owner-supplied 0.3195/0.4413 are unverified and conflicting.
+> **Latest correction:** The literal-registry lattice forces >70% overlap for every candidate of at least 22,164 distinct footprint dots; standard-budget placement stopped. GVSC (0.158855 local HOLDOUT-DTI) is higher than the older HVG result, and the newer GEMSDOE24 review records 0.1637924 without independent protocol certification. See the [current preflight](registry-preflight-20261026.md).
+
+> **Current MTO-36 correction (2026-10-26):** No historical focus-site score has a saved organizer submission-page receipt. All earlier “ORGANIZER-CONFIRMED” score statements in this historical register must be read as **OWNER- or USER-REPORTED** according to their source; the MTO-36 result is **HOLDOUT-DTI** only. See [new six-item irregularity review, SHA correction and strict duplicate gate](mto36-evidence-and-nine-sites.md#irregularities-and-inference-boundaries). Owner-supplied 0.3195/0.4413 are unverified and conflicting.
 
 
 Updated **2026-10-26 UTC** on branch `arena/62b9a92c-gemsdoe36` (reconciled across earlier `ATVR-36`, `H36-CTRB`, `H36-GPS`, and `Lane36` lanes). The active `arena/20b1a132-gemsdoe36` session adds four GVSC-36 flags below; the branch label in these archived historical sections is provenance, not the current working branch.
