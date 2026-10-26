@@ -1,3 +1,11 @@
+# Lane36 gate-passed candidate (parallel lane session, 2026-10-26)
+
+> **Download:** [`docs/downloads/gemsdoe36-lane36-supgbm-68302-20261026T002651Z-f35cb3e4-zeros.tif`](docs/downloads/gemsdoe36-lane36-supgbm-68302-20261026T002651Z-f35cb3e4-zeros.tif) — unique supervised-GBM TIF, 68,302 dots, all cells finite in [0,1], validator PASS, SHA-256 `45e626c01f9dc6e8aed59875d2758467c39f008c87543f566b3ae9d26a2234e7`.
+> **Name:** `GEMSDOE36-Lane36-SupGBM-20261026T002651Z` · **Note:** `Lane36 supervised GBM lineament surf, seg-holdout DTI 0.178 vs champ-analog 0.162; s2.0 b68302 B2`
+> HOLDOUT-DTI **0.1777 [0.164, 0.191]** (hide-and-recover, 60,988 withheld, organizer metric) vs champion-analog 0.1615; canary ≤0.603 AUC; uniqueness ρ=0.13 / overlap ≤43.7%. Run card: `docs/downloads/lane36_run_card.json`; forensics: `docs/research/lane36_20261025.md`. This resolves the blockers listed below *for this lane* (data restored, shared metric/writer reused, evaluator run); **slot promotion remains the separate selector step (§6)** and no organizer score exists yet. Legacy-file DO-NOT-SUBMIT status below is unchanged.
+
+---
+
 # Current submission status — 2026-10-26: NOT APPROVED
 
 **Read this section and [the current review](docs/research/review-20261026.md) every session.** The [2026-10-25 safety review](docs/research/review-20261025.md) remains the protocol/source audit. This 2026-10-26 review includes the nine-site historical shortlist; current-session test reruns and PR status are recorded in its verification section.
