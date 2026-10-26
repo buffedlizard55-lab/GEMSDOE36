@@ -127,7 +127,29 @@
       "group": "external",
       "sha256": "f91bafbaccaaf2754e71d60434fc0f9eb2c7b880c6e714883f4974542ff6a0bf",
       "bytes": 672,
-      "provenance": "GDR 1391 Quaternary volcanic vents in the footprint"
+      "provenance": "GDR 1391 Quaternary volcanic vents in the footprint; its dist_known_fault_px column is label-derived and is NOT used"
+    },
+    {
+      "id": "ext_gdr_paleo_geothermal_regional_zip",
+      "repo": "buffedlizard55-lab/GEMSDOE24",
+      "ref": "fc2bc6f350bf5c6ce8da5d7a2ab03578ea1259d1",
+      "path": "data/external/paleo_geothermal_regional.zip",
+      "dest": "external/paleo_geothermal_regional.zip",
+      "group": "external",
+      "sha256": "faffcf697f32dbbf6cbb317cd1effb3e305538ce38eb239d72d0c6fa071e91ca",
+      "bytes": 84008,
+      "provenance": "DOE OpenEI GDR 1391 INGENIOUS Regional Paleo-Geothermal Deposits (DOI 10.15121/1881483, CC BY 4.0; Faulds et al., NBMG/UNR): 709 Great Basin paleo-vent records (281 inside GEMS footprint: sinter, travertine, tufa, silica-cemented sand, explosion craters, silicified fault breccia, alteration, veins); zero fault-distance/label columns"
+    },
+    {
+      "id": "ext_gdr_2m_temperature_probe_regional_zip",
+      "repo": "buffedlizard55-lab/GEMSDOE24",
+      "ref": "fc2bc6f350bf5c6ce8da5d7a2ab03578ea1259d1",
+      "path": "data/external/2m_temperature_probe_INGENIOUS_regional_data.zip",
+      "dest": "external/2m_temperature_probe_INGENIOUS_regional_data.zip",
+      "group": "external",
+      "sha256": "1301f70d230058e616ea5d34d1c7a32fabf7d49198172f376c59c89bd652eca3",
+      "bytes": 1080530,
+      "provenance": "DOE OpenEI GDR 1391 INGENIOUS 2-Meter Temperature Probe Survey Compilation (DOI 10.15121/1881483, CC BY 4.0; Coolbaugh et al., GBCGE/UNR): 3,800 shallow 2 m probe stations (2,782 inside GEMS footprint across 34 blind geothermal survey areas, F2mDAB degrees above background); zero fault-distance/label columns"
     },
     {
       "id": "scored_h19_5",

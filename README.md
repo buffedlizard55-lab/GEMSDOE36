@@ -1,6 +1,6 @@
 # GEMSDOE36 — current decision & reproducible research
 
-**Working branch:** `arena/c54ee17a-gemsdoe36`. **Read this first** before starting work: the decision below is the current branch decision, alongside archived ATVR/CTRB/GPS/Lane36/MOE36 research lanes. Core values: **Maximize P(Win)** and **Own the Outcome**. The [full standing owner brief](#full-standing-owner-brief-historical-wording) is preserved verbatim below; its historical leaderboard claims are not verified observations.
+**Working branch:** `arena/20b1a132-gemsdoe36`. **Read this first** before starting work: the decision below is the current branch decision, alongside archived ATVR/CTRB/GPS/Lane36/MOE36 research lanes. Core values: **Maximize P(Win)** and **Own the Outcome**. The [full standing owner brief](#full-standing-owner-brief-historical-wording) is preserved verbatim below; its historical leaderboard claims are not verified observations.
 
 **Latest repository review:** [three-pass audit, checks and remaining blockers](evidence/review_c54ee17a_20261026.md). Executive subpage now includes the nine-site file/estimate/uniqueness table. No new experiment or submission is authorized by this review.
 
@@ -15,6 +15,17 @@
 > - Prior/parallel lanes: [ATVR-36](evidence/atvr36_run_card_20261026.json), [H36-CTRB](evidence/h36_ctrb_run_card_20261025.json), [H36-GPS](evidence/h36_run_card.json), [Lane36](evidence/lane36_crosscheck.json), [MOE36](evidence/moe36_run_card_20261026.json) (HOLDOUT-DTI 0.124900, strict 198-raster duplicate-flag; [report](docs/research/moe36-20261026.md)); **all negative**. [Nine-site SHA/dot crosscheck](evidence/mto36_ninesite_forensics.json) · [manual-review sources and next steps](docs/research/mto36-evidence-and-nine-sites.md).
 > - Historical competition results are **OWNER-REPORTED**, not `ORGANIZER-CONFIRMED`: no submission-page receipts are archived. User-supplied public maxima `0.3195` and `0.4413` are inconsistent in date and not refreshed here. Live board: [DrivenData leaderboard](https://www.drivendata.org/competitions/306/competition-doe-gems/leaderboard/).
 <!-- STATUS:END -->
+
+## Latest 2026-10-26 experiment — GVSC-36 (research only; do not submit)
+
+**Download: yes for research · OK to submit: NO.** [`gemsdoe36-gvsc36-exp3-20261026-5fb822bdfb60-zeros.tif`](docs/downloads/gemsdoe36-gvsc36-exp3-20261026-5fb822bdfb60-zeros.tif) · [single-TIFF ZIP](docs/downloads/gemsdoe36-gvsc36-exp3-20261026-5fb822bdfb60-zeros.zip) · [run card](evidence/gvsc36_run_card_20261026.json) · [full analysis, limitations, and three review passes](docs/research/gvsc36-20261026.md).
+
+- TIFF SHA-256: `ad809c2b0919d4b71afee80f0b4827aa9ad4ecd8c66507109a3d3f7292cac1a1`. Local validators: single-band float32, EPSG:32611, 3730×3292, exact template transform; all grid values finite in `[0,1]`; one-TIFF ZIP and SHA verified. This is **not** organizer acceptance.
+- **HOLDOUT-DTI 0.158855** (95% CI `[0.145456, 0.173084]`; `gems-segment-pooled-v1`; 60,988 withheld positives; whole-component 1,500 m buffer). Paired B0 difference `+0.030740` (95% CI `[+0.022172, +0.039694]`). This is holdout evidence, **not a leaderboard score or projection**.
+- Canary: 89 features; max symmetric AUC `0.668429`. Surface rank correlation screen passed (`max |rho|=0.496905`). Final 3 px overlap failed: `94.60%` vs GEMSDOE22 H23-B, `94.11%` vs GEMSDOE67 OVTR, and `99.62%` literal all-entry max across 206 comparators. Final dots also crossed the 70% method-uniqueness threshold.
+- The method family overlaps prior GEMSDOE24 H24-GVC1; the tufa filter used detrended rather than absolute elevation; preregistration's LiDAR-blind count differs from code (73 vs 74); and surface screening occurred after mask generation. These are explicitly flagged; no post-hoc tuning and no weekly slot used.
+
+**Decision:** original TIFF bytes, but **not protocol-unique and not OK to submit**. The highest historical score among the nine focus sites remains GEMSDOE32 B2 at `0.2778 OWNER-REPORTED` (no organizer receipt), whose bytes/lineage are audited below. No calibrated leaderboard estimate is available for GVSC-36.
 
 ## Nine-site executive summary (pinned bytes, unverified scores)
 

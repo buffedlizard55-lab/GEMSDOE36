@@ -1,0 +1,96 @@
+{
+  "lane_id": "GVSC-36",
+  "preregistered_utc": "2026-10-26T16:26:08.852647+00:00",
+  "markdown_spec_path": "docs/research/preregistration-gvsc36-20261026.md",
+  "markdown_spec_sha256": "42bc538d3c6fc7baa391a51ecc4d20e1469a47300601c1bee57a26625db44986",
+  "evaluator": {
+    "module": "gems.holdout.SegmentHoldout",
+    "version": "gems-segment-pooled-v1",
+    "buffer_px": 15,
+    "buffer_m": 1500.0,
+    "withheld_positives": 60988,
+    "total_components": 3199,
+    "metric": "DTI(alpha=0.2, beta=0.8, 300m Euclidean triangular kernel)",
+    "ci_draws": 1999
+  },
+  "banned_inputs": [
+    "existing_faults.tif (never read in feature builder)",
+    "labels.tif (never read in feature builder)",
+    "external/derived_sgmc_faults_100m_u8.tif",
+    "external/gdr_qfaults_traces.csv",
+    "dist_known_fault_px column in gdr_wellspring_in_footprint.csv",
+    "dist_known_fault_px column in gdr_volcanic_vents_in_footprint.csv",
+    "any registry or scored submission raster"
+  ],
+  "ranked_hypotheses": [
+    {
+      "rank": 1,
+      "id": "H36-V1 / GVSC-36",
+      "status": "selected_for_implementation"
+    },
+    {
+      "rank": 2,
+      "id": "H36-V2",
+      "status": "deferred_lower_expected_gain"
+    },
+    {
+      "rank": 3,
+      "id": "H36-V3",
+      "status": "core_ratio_included_in_sa_strain_seis_ratio"
+    },
+    {
+      "rank": 4,
+      "id": "H36-V4",
+      "status": "blocked_by_sandbox_network_allowlist_documented_for_ci"
+    }
+  ],
+  "frozen_budget": {
+    "max_experiments": 3,
+    "max_walltime_seconds": 7200,
+    "target_dots": 37654,
+    "fold_budgets_area_proportional": [
+      8414,
+      10404,
+      10410,
+      8426
+    ],
+    "arms": [
+      {
+        "id": "B0",
+        "role": "control",
+        "n_features": 59,
+        "emitter": "emit_dots"
+      },
+      {
+        "id": "EXP-1",
+        "role": "experiment_1_structural_submod_ablation",
+        "n_features": 75,
+        "emitter": "emit_submodular_cover(gamma=1.0, min_spacing_px=2.0)"
+      },
+      {
+        "id": "EXP-2",
+        "role": "experiment_2_full_gvsc36_vent_conduit",
+        "n_features": 89,
+        "emitter": "emit_submodular_cover(gamma=1.0, min_spacing_px=2.0)"
+      },
+      {
+        "id": "EXP-3",
+        "role": "experiment_3_lidar_debiased_gvsc36_bridge",
+        "n_features_full": 89,
+        "n_features_blind": 73,
+        "emitter": "emit_submodular_cover(gamma=1.0, min_spacing_px=2.0)"
+      }
+    ]
+  },
+  "gates": {
+    "G1_canary_max_symmetric_auc": 0.9,
+    "G2_holdout_repo_b0": 0.13375,
+    "G2_holdout_group_best": 0.148763,
+    "G3_whole_array_range": [
+      0.0,
+      1.0
+    ],
+    "G4_max_surface_abs_spearman": 0.9,
+    "G4_max_3px_dot_overlap": 0.7
+  }
+}

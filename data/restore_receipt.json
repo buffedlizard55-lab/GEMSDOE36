@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "verified_files_count": 23,
+  "verified_files_count": 25,
   "storage_root": "/home/user/GEMSDOE36/data/raw",
   "files": [
     {
@@ -186,6 +186,22 @@
       "status": "restored",
       "bytes": 1635084,
       "sha256": "33003374335d84bf885f2d8f5e9dd4c57044c8ec58fa6a0d7fa581e8bc41c11d"
+    },
+    {
+      "id": "ext_gdr_paleo_geothermal_regional_zip",
+      "dest": "external/paleo_geothermal_regional.zip",
+      "group": "external",
+      "status": "restored",
+      "bytes": 84008,
+      "sha256": "faffcf697f32dbbf6cbb317cd1effb3e305538ce38eb239d72d0c6fa071e91ca"
+    },
+    {
+      "id": "ext_gdr_2m_temperature_probe_regional_zip",
+      "dest": "external/2m_temperature_probe_INGENIOUS_regional_data.zip",
+      "group": "external",
+      "status": "restored",
+      "bytes": 1080530,
+      "sha256": "1301f70d230058e616ea5d34d1c7a32fabf7d49198172f376c59c89bd652eca3"
     }
   ]
 }
