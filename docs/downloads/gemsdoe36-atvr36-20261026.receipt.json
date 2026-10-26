@@ -1,7 +1,11 @@
 {
   "submission_name": "gemsdoe36-atvr36-exp-2-20261026",
-  "submission_note": "ATVR-36 EXP-2: tilt/LiDAR+hydrothermal+Anderson PDE+300m CELF cover (zero SGMC, zero prior rasters; 37654 dots)",
-  "submission_note_len": 111,
+  "submission_note": "GEMSDOE36 ATVR-36 EXP-2 | tilt/LiDAR+hydrothermal+Anderson PDE+CELF | HOLDOUT-DTI 0.1145/0.1179 | NEGATIVE hold slot",
+  "submission_note_len": 116,
+  "verdict": "negative",
+  "ok_to_download_research_tif": true,
+  "safe_to_download_and_submit": false,
+  "expanded_201_registry_audit_ref": "evidence/atvr36_crosscheck_20261026.json",
   "tif_path": "/home/user/GEMSDOE36/docs/downloads/gemsdoe36-atvr36-20261026.tif",
   "tif_bytes": 292540,
   "tif_sha256": "54f493f4fa5c74ed3a02f88ca6d47272b0c3cee0cc0bd9bbd9cb94eaf997204a",

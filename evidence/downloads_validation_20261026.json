@@ -30,7 +30,7 @@
         ]
       },
       "submit_ready": false,
-      "reason": "Legacy artifact: retired / do not submit"
+      "reason": "Research / legacy artifact: verdict=negative or retired \u2014 do not submit"
     },
     {
       "sha256": "c88237daa47c4f4f8bf9061677c1f05a52239c4d7a7c677f7329861de27af836",
@@ -57,7 +57,7 @@
         "errors": []
       },
       "submit_ready": false,
-      "reason": "Legacy artifact: retired / do not submit"
+      "reason": "Research / legacy artifact: verdict=negative or retired \u2014 do not submit"
     },
     {
       "sha256": "96d451d5ffc819fc3834052f22ab66190621f206c0bf8990446082a3363dc2ef",
@@ -84,7 +84,7 @@
         "errors": []
       },
       "submit_ready": false,
-      "reason": "Legacy artifact: retired / do not submit"
+      "reason": "Research / legacy artifact: verdict=negative or retired \u2014 do not submit"
     },
     {
       "sha256": "e15891020b9c57056ac7fa874a5e506fbd6ed9314a4ea8e73af0753887a3708a",
@@ -111,7 +111,7 @@
         "errors": []
       },
       "submit_ready": false,
-      "reason": "Legacy artifact: retired / do not submit"
+      "reason": "Research / legacy artifact: verdict=negative or retired \u2014 do not submit"
     },
     {
       "sha256": "54f493f4fa5c74ed3a02f88ca6d47272b0c3cee0cc0bd9bbd9cb94eaf997204a",
@@ -137,9 +137,144 @@
         "passed": true,
         "errors": []
       },
-      "submit_ready": true,
-      "reason": "Promoted ATVR-36 EXP-2 cross-fitted submission (see evidence/atvr36_run_card_20261026.json)"
+      "submit_ready": false,
+      "reason": "ATVR-36 EXP-2 cross-fitted research raster: format-valid [0, 1] (DOWNLOAD: YES; DO NOT SUBMIT standalone \u2014 verdict=negative)"
+    },
+    {
+      "sha256": "d30c767aed69c8fcfdefd0ffc07b9d09bd261573b18525c7c3122f99409caf1c",
+      "validator": {
+        "path": "docs/downloads/gemsdoe36-h36-ctrb-submod-36800-20261025T000000Z-a1d85443-nan.tif",
+        "width": 3292,
+        "height": 3730,
+        "count": 1,
+        "dtype": "float32",
+        "crs": "EPSG:32611",
+        "resolution_m": [
+          100.0,
+          100.0
+        ],
+        "finite_in_bounds": 5167373,
+        "invalid_in_bounds": 0,
+        "finite_outside_bounds": 0,
+        "infinite_outside_bounds": 0,
+        "minimum": 0.0,
+        "maximum": 1.0,
+        "nodata": "NaN",
+        "template_match": true,
+        "passed": true,
+        "errors": []
+      },
+      "submit_ready": false,
+      "reason": "Research / legacy artifact: verdict=negative or retired \u2014 do not submit"
+    },
+    {
+      "sha256": "2bb4513d6307e2394d5de7e7e7649e28eff067b602b805a0215e82aa5ff89907",
+      "validator": {
+        "path": "docs/downloads/gemsdoe36-h36-ctrb-submod-36800-20261025T000000Z-a1d85443-zeros.tif",
+        "width": 3292,
+        "height": 3730,
+        "count": 1,
+        "dtype": "float32",
+        "crs": "EPSG:32611",
+        "resolution_m": [
+          100.0,
+          100.0
+        ],
+        "finite_in_bounds": 5167373,
+        "invalid_in_bounds": 0,
+        "finite_outside_bounds": 7111787,
+        "infinite_outside_bounds": 0,
+        "minimum": 0.0,
+        "maximum": 1.0,
+        "nodata": null,
+        "template_match": true,
+        "passed": true,
+        "errors": []
+      },
+      "submit_ready": false,
+      "reason": "Research / legacy artifact: verdict=negative or retired \u2014 do not submit"
+    },
+    {
+      "sha256": "fce12bd37ac6a9fb53df676be8090eafffa6a2188594faa720b492562fc983f0",
+      "validator": {
+        "path": "docs/downloads/gemsdoe36-h36-gps-graben-pair-20261026-bb29ce2a4bb4-nan.tif",
+        "width": 3292,
+        "height": 3730,
+        "count": 1,
+        "dtype": "float32",
+        "crs": "EPSG:32611",
+        "resolution_m": [
+          100.0,
+          100.0
+        ],
+        "finite_in_bounds": 5167373,
+        "invalid_in_bounds": 0,
+        "finite_outside_bounds": 0,
+        "infinite_outside_bounds": 0,
+        "minimum": 0.0,
+        "maximum": 1.0,
+        "nodata": "NaN",
+        "template_match": true,
+        "passed": true,
+        "errors": []
+      },
+      "submit_ready": false,
+      "reason": "Research / legacy artifact: verdict=negative or retired \u2014 do not submit"
+    },
+    {
+      "sha256": "e3800971b44116bca8ef8f996c3b2796b4d316962f797975f17d643abfac379b",
+      "validator": {
+        "path": "docs/downloads/gemsdoe36-h36-gps-graben-pair-20261026-bb29ce2a4bb4-zeros.tif",
+        "width": 3292,
+        "height": 3730,
+        "count": 1,
+        "dtype": "float32",
+        "crs": "EPSG:32611",
+        "resolution_m": [
+          100.0,
+          100.0
+        ],
+        "finite_in_bounds": 5167373,
+        "invalid_in_bounds": 0,
+        "finite_outside_bounds": 7111787,
+        "infinite_outside_bounds": 0,
+        "minimum": 0.0,
+        "maximum": 1.0,
+        "nodata": null,
+        "template_match": true,
+        "passed": true,
+        "errors": []
+      },
+      "submit_ready": false,
+      "reason": "Research / legacy artifact: verdict=negative or retired \u2014 do not submit"
+    },
+    {
+      "sha256": "45e626c01f9dc6e8aed59875d2758467c39f008c87543f566b3ae9d26a2234e7",
+      "validator": {
+        "path": "docs/downloads/gemsdoe36-lane36-supgbm-68302-20261026T002651Z-f35cb3e4-zeros.tif",
+        "width": 3292,
+        "height": 3730,
+        "count": 1,
+        "dtype": "float32",
+        "crs": "EPSG:32611",
+        "resolution_m": [
+          100.0,
+          100.0
+        ],
+        "finite_in_bounds": 5167373,
+        "invalid_in_bounds": 0,
+        "finite_outside_bounds": 7111787,
+        "infinite_outside_bounds": 0,
+        "minimum": 0.0,
+        "maximum": 1.0,
+        "nodata": null,
+        "template_match": true,
+        "passed": true,
+        "errors": []
+      },
+      "submit_ready": false,
+      "reason": "Research / legacy artifact: verdict=negative or retired \u2014 do not submit"
     }
   ],
-  "promoted_count": 1
+  "promoted_count": 0
 }

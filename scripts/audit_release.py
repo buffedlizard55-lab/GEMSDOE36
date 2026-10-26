@@ -25,6 +25,11 @@ def main() -> int:
     if sha256_file(template) != entry["sha256"]:
         raise SystemExit("Template hash mismatch")
 
+    atvr_card = json.loads(
+        (ROOT / "evidence/atvr36_run_card_20261026.json").read_text(encoding="utf-8")
+    )
+    atvr_promoted = bool(atvr_card.get("verdict") == "promote")
+
     rows = []
     for path in sorted((ROOT / "docs/downloads").glob("*.tif")):
         zeros_mode = path.name.endswith("-zeros.tif") or ("atvr36" in path.name)
@@ -37,12 +42,16 @@ def main() -> int:
             {
                 "sha256": sha256_file(path),
                 "validator": report,
-                "submit_ready": bool(is_atvr36 and report["passed"]),
+                "submit_ready": bool(is_atvr36 and report["passed"] and atvr_promoted),
                 "reason": (
-                    "Promoted ATVR-36 EXP-2 cross-fitted submission "
-                    "(see evidence/atvr36_run_card_20261026.json)"
-                    if is_atvr36
-                    else "Legacy artifact: retired / do not submit"
+                    "Promoted ATVR-36 EXP-2 cross-fitted submission"
+                    if (is_atvr36 and atvr_promoted)
+                    else (
+                        "ATVR-36 EXP-2 cross-fitted research raster: format-valid [0, 1] "
+                        "(DOWNLOAD: YES; DO NOT SUBMIT standalone — verdict=negative)"
+                        if is_atvr36
+                        else "Research / legacy artifact: verdict=negative or retired — do not submit"
+                    )
                 ),
             }
         )
