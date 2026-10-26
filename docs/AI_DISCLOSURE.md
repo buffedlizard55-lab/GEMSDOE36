@@ -4,13 +4,14 @@ _Required by the official rules (§3.2): generative AI use is allowed, but the
 submission narrative must state the **extent** and **how** it was used. This
 document is that statement, kept current as the project evolves._
 
-**Last updated:** 2026-10-04 (after the H6 candidate passed the 5-fold holdout
-gate and the upload-ready TIFF was generated).
+**Last updated:** 2026-10-25 (H36-GPS session: forensics of the 0.2778 file, preregistered
+hypotheses, shared-template hide-and-recover holdout, unique GeoTIFF with an automatic verdict).
 
 ## Extent and how generative AI was used
 
-Generative AI — specifically **Claude, operated through Arena.ai's Agent Mode**
-as an autonomous coding agent — was used to:
+Generative AI — **AI coding agents operated through Arena.ai's Agent Mode** (the platform
+routes sessions to several underlying models; the model used in each session is not recorded
+here) — was used autonomously to:
 
 1. **Implement the entire prediction pipeline.** The agent wrote the data
    preparation (`scripts/prepare_data.py`), the belief-field construction
@@ -67,3 +68,15 @@ fold before the slot was spent.
   protocol. All code, metrics, and the generated GeoTIFF in this session are
   AI-produced; the upload decision and any submission-slot expenditure remain the
   owner's. Update this narrative in the competition form accordingly.
+
+## 2026-10-25 session (H36-GPS)
+
+An AI coding agent (Arena.ai Agent Mode) autonomously: verified the metric, rules and leaderboard
+from official pages; restored the hash-pinned data mirrors; downloaded 118 owner-scored GEMSDOE
+rasters for forensics/uniqueness only (no pixels reused); vendored the shared template
+(GEMSDOE24@fc2bc6f) byte-for-byte; wrote the H36-GPS feature code
+(`src/gemsdoe36/h36_features.py`), emission (`src/gemsdoe36/h36_emission.py`), experiment driver
+(`scripts/run_h36_experiment.py`), submission builder (`scripts/build_h36_submission.py`), site
+generator (`scripts/build_site.py`), tests and all documentation. Every number on the site is either
+HOLDOUT-DTI (computed by code in this repository) or explicitly labeled owner-reported. The human
+owner supplied the brief and the owner-reported scores; no human edited results.

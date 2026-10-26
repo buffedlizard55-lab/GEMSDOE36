@@ -1,3 +1,5 @@
+> **2026-10-25 hypotheses (ranked, preregistered before any holdout number): see `knowledge/h36_preregistration_2026-10-25.md`. The lead (H36-GPS) was negative on the shared holdout; see `knowledge/h36_findings_2026-10-25.md`.**
+
 # GEMSDOE36 Hypotheses Register — two independent candidate lines (2026-10-04)
 
 > **Two candidate lines (non-destructive merge of two parallel sessions).** This
