@@ -1,6 +1,6 @@
 # Current submission status — 2026-10-26: NOT APPROVED
 
-**Read this section and the [latest cross-repository review](docs/research/repo-review-20261026.md) every session.** The [2026-10-25 safety review](docs/research/review-20261025.md) remains the protocol/source audit; the 2026-10-26 report adds the requested nine-site best-reported-submission table and is the current session's run record.
+**Read this section and [the current review](docs/research/review-20261026.md) every session.** The [2026-10-25 safety review](docs/research/review-20261025.md) remains the protocol/source audit. This 2026-10-26 review includes the nine-site historical shortlist; current-session test reruns and PR status are recorded in its verification section.
 This notice supersedes the historical README below. No new unique submission has
 passed the current protocol. Old TIFFs are educational downloads only. Existing
 mirror scores, live projections and H6 gate claims do not establish promotion.
@@ -32,6 +32,15 @@ shared evaluator, lane assignment, complete registry and a valid incumbent gate
 are also missing. Official reference README supports CPU training.
 
 ---
+
+## Current-session findings (2026-10-26)
+
+The requested nine-site comparison and ranked research shortlist are recorded in
+[the 2026-10-26 review](docs/research/review-20261026.md). Site scores are copied
+from the owner-supplied prompt, not organizer receipts. No new TIFF is approved or
+generated: the exact shared hide-and-recover evaluator, assigned lane, feature
+cache, and complete novelty registry are unavailable. The review includes the
+three-pass audit, source links, blockers, and required JSON negative run card.
 
 ## Integrated parallel work
 
