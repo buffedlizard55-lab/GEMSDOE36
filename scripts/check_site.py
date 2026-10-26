@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Fail-closed Pages link/status checks for MTO-36 and five archived lanes.
+"""Fail-closed Pages link/status checks for MTO-36 and six archived lanes.
 
 Does not claim organizer portal acceptance or authenticate historical score claims.
 """
@@ -22,6 +22,7 @@ LANE36_CARD = DOCS_ROOT / "downloads/lane36_run_card.json"
 LANE36_CC = REPO_ROOT / "evidence/lane36_crosscheck.json"
 MTO_CARD = REPO_ROOT / "evidence/mto36_run_card_20261026.json"
 MOE_CARD = REPO_ROOT / "evidence/moe36_run_card_20261026.json"
+WDP_CARD = REPO_ROOT / "evidence/wdp36_run_card_20261026.json"
 CURRENT_RUN = DOCS_ROOT / "current-run.json"
 BOTH_PAGES = ("DO NOT SUBMIT", "Research downloads only", "HOLDOUT-DTI", "ORGANIZER-CONFIRMED")
 REQUIRED_PAGES = ("index.html", "executive-summary.html")
@@ -109,6 +110,7 @@ def main() -> int:
 
     mto = json.loads(MTO_CARD.read_text(encoding="utf-8"))
     moe = json.loads(MOE_CARD.read_text(encoding="utf-8"))
+    wdp = json.loads(WDP_CARD.read_text(encoding="utf-8"))
     atvr = json.loads(ATVR_CARD.read_text(encoding="utf-8"))
     ctrb = json.loads(CTRB_CARD.read_text(encoding="utf-8"))
     gps = json.loads(GPS_CARD.read_text(encoding="utf-8"))
@@ -159,11 +161,15 @@ def main() -> int:
         errors.append("H36-GPS note exceeds 140 characters")
 
     any_ok = (
-        (atvr["verdict"] == "promote")
+        (wdp["verdict"] == "promote")
+        or (atvr["verdict"] == "promote")
         or (ctrb["verdict"] == "promote")
         or (gps["verdict"] == "promote")
     )
     must = [
+        wdp["submission_file"],
+        wdp["raster_sha256"],
+        wdp["submission_note"],
         Path(mto["download"]["tif"]).name,
         mto["raster_sha256"],
         mto["submission_note"],
@@ -195,6 +201,9 @@ def main() -> int:
             errors.append(f"stale/incorrect claim present: {phrase}")
 
     for phrase in EXECUTIVE_COPY + (
+        wdp["submission_note"],
+        wdp["submission_file"],
+        wdp["raster_sha256"],
         mto["submission_note"],
         Path(mto["download"]["tif"]).name,
         mto["raster_sha256"],
@@ -239,6 +248,23 @@ def main() -> int:
         errors.append("Archived MOE36 must remain a negative duplicate-flag release")
     if len(moe["submission_note"]) > 140:
         errors.append("MOE36 submission note exceeds 140 characters")
+    for file, expected in (
+        (DOCS_ROOT / "downloads" / wdp["submission_file"], wdp["raster_sha256"]),
+        (DOCS_ROOT / "downloads" / wdp["submission_zip"], wdp["zip_sha256"]),
+    ):
+        if not file.is_file() or _sha(file) != expected:
+            errors.append(f"WDP-36 artifact missing / SHA-256 mismatch: {file.name}")
+    if (
+        wdp["verdict"] != "negative"
+        or wdp["validator_output"]["safe_to_download_and_submit"]
+        or wdp["registry_uniqueness"]["final_dots"]["competing_method_passed"]
+    ):
+        errors.append("Archived WDP-36 must remain a negative duplicate-flag release")
+    if len(wdp["submission_note"]) > 140:
+        errors.append("WDP-36 submission note exceeds 140 characters")
+    wdp_receipt = DOCS_ROOT / "downloads" / (Path(wdp["submission_file"]).stem + ".receipt.json")
+    if not wdp_receipt.is_file() or wdp_receipt.read_bytes() != WDP_CARD.read_bytes():
+        errors.append("public WDP-36 receipt mirror differs from evidence")
     for page, text in (("index.html", landing), ("executive-summary.html", execp)):
         if re.search(r"(?:0\.\d{3,4}).{0,25}ORGANIZER-CONFIRMED", text, re.I):
             errors.append(f"docs/{page}: numeric historical score incorrectly called organizer-confirmed")
@@ -267,7 +293,7 @@ def main() -> int:
         for err in errors:
             print(f"- {err}")
         return 1
-    print("SITE CHECK PASS — MTO-36 negative research release and 5 archived lanes verified")
+    print("SITE CHECK PASS — MTO-36 negative research release and 6 archived lanes verified")
     return 0
 
 

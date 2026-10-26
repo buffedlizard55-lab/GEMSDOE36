@@ -1,0 +1,19 @@
+{
+  "lane": "WDP-36 post-merge overlap addendum",
+  "date": "2026-10-26",
+  "wdp_dots": 37654,
+  "MOE36": {
+    "candidate_within_3px_of_reference": 0.2894778775163329,
+    "reference_within_3px_of_candidate": 0.12559090667658152,
+    "radius_px": 3.0,
+    "candidate_dots": 37654,
+    "reference_dots": 37654
+  },
+  "MTO-36": {
+    "candidate_within_3px_of_reference": 0.4721676315929251,
+    "reference_within_3px_of_candidate": 0.2624953524193977,
+    "radius_px": 3.0,
+    "candidate_dots": 37654,
+    "reference_dots": 37654
+  }
+}

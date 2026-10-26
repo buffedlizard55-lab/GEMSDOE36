@@ -5,6 +5,19 @@
 
 Updated **2026-10-26 UTC** on branch `arena/62b9a92c-gemsdoe36` (reconciled across `ATVR-36`, `H36-CTRB`, `H36-GPS`, and `Lane36`). Every irregularity encountered across repository history, sibling-lane forensics, raw competition rasters, and pass-by-pass QA is documented below without omission.
 
+## `WDP-36` Audit Discoveries (`arena/b8f55e32-gemsdoe36` / PR #19, `2026-10-26`)
+
+| ID | Irregularity Discovered | Resolution Implemented |
+|---|---|---|
+| **IR-36-WDP-01** | Generated submission note misdescribed winner (`+strain/seis` vs persistence-only EXP-1) | Generator fixed; card+receipt patched with logged correction; regression test + exact-note site checks. |
+| **IR-36-WDP-02** | Portal “[0, 1]” path characterised: `-zeros` strict-PASS, `-nan` strict-FAIL, 32×48 fixture | WDP-36 zeros-only; site quarantines nan twins / fixture. |
+| **IR-36-WDP-03** | One 54.8%-coverage blanket (GEMSDOE67, 0.7227) drives literal uniqueness failure despite focus-9 max 0.4909 | Fail-closed negative; dots never perturbed to evade. |
+| **IR-36-WDP-04** | Strain gradients hurt (0.091090 < 0.093269); persistence ≈ single-scale (paired CI includes 0) | Reported negative; no post-hoc reweighting. |
+| **IR-36-WDP-05** | InSAR / flight-line hypotheses sandbox-unobtainable (measured `curl 000` vs github `200`) | Deferred in preregistration with official free sources named; zero numbers claimed. |
+| **IR-36-WDP-06** | WDP docs initially labelled historical live numbers organizer-confirmed | Read as **OWNER-REPORTED** per MTO-36 correction (no receipts archived); site copy aligned at merge. |
+
+---
+
 ## `ATVR-36` Audit Discoveries (`arena/62b9a92c-gemsdoe36`, `2026-10-26`)
 
 | ID | Irregularity Discovered | Forensic Proof | Resolution Implemented |

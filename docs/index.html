@@ -15,6 +15,7 @@
       <a href="index.html">Download &amp; verdict</a>
       <a href="executive-summary.html">Executive summary &amp; how to submit</a>
       <a href="research/mto36-evidence-and-nine-sites.md">MTO-36 &amp; 9-Site Audit</a>
+      <a href="research/wdp36-20261026.md">WDP-36 Monograph</a>
       <a href="research/forensic_audit_and_results_2026-10-25.md">CTRB Audit</a>
       <a href="research/known_irregularities.md">Irregularities</a>
       <a href="https://www.drivendata.org/competitions/306/competition-doe-gems/leaderboard/" target="_blank" rel="noopener">Official leaderboard &#8599;</a>
@@ -61,6 +62,11 @@
         <table>
           <tr><th>Candidate GeoTIFF</th><th>Lane &amp; Key Discovery</th><th>Automatic Gate Verdict</th></tr>
           <tr>
+            <td><a href="downloads/gemsdoe36-wdp36-exp1-20261026-zeros.tif" download><code>gemsdoe36-wdp36-exp1-20261026-zeros.tif</code></a></td>
+            <td><strong>WDP-36 EXP-1</strong> (unsupervised 0&ndash;800 m upward-continuation worm persistence, TMI+gravity only; PR #19)</td>
+            <td><strong>DO NOT SUBMIT — automatic NEGATIVE verdict (HOLDOUT-DTI <code>0.093269</code>; focus-9 max overlap <code>0.4909</code>; one dense-blanket literal overlap <code>0.7227</code>)</strong></td>
+          </tr>
+          <tr>
             <td><a href="downloads/gemsdoe36-atvr36-20261026.tif" download><code>gemsdoe36-atvr36-20261026.tif</code></a></td>
             <td><strong>ATVR-36 EXP-2</strong> (44-feat tilt/LiDAR + hydrothermal + Raissi&ndash;Anderson PDE + 300 m CELF cover; <code>arena/62b9a92c-gemsdoe36</code>)</td>
             <td><strong>DO NOT SUBMIT — automatic NEGATIVE verdict (<code>0.114542</code> 3 km audit / <code>0.117925</code> <code>gems-segment-pooled-v1</code> with breakthrough <code>NW = 0.15048</code> &amp; <code>SE = 0.15438</code>; 100% unique across all 9 focus sites at <code>63.28%</code> max &amp; <code>35.94%</code> vs <code>B2</code>)</strong></td>
@@ -99,6 +105,26 @@
         <tr><th>SHA-256</th><td>TIF <code>9209d76bab1c4a6d6f64fb794e881a85d70b1a48fdc6288a0e390cfea64aabb7</code> · ZIP <code>1960ccc51a2f4c9041c41e7c1da76d55032af245c467ae2a25ac0c757f2d4471</code></td></tr>
         <tr><th>Format</th><td>37,654 dots, float32, EPSG:32611, 3730&times;3292, whole array finite in [0,1] — local template/range validator PASS; organizer portal acceptance unverified</td></tr>
       </table></div>
+    </section>
+
+    <!-- ARCHIVED PARALLEL WDP-36 DOWNLOAD CARD (merged from PR #19) -->
+    <section class="verdict verdict-bad" id="download-wdp36" aria-labelledby="wdp36-verdict-title">
+      <div class="eyebrow">Earlier parallel lane · WDP-36 · research only · PR #19 · 2026-10-26 UTC</div>
+      <h2 id="wdp36-verdict-title">WDP-36 EXP-1 (ae9da29e45c6): DO NOT SUBMIT — original format-safe research download (zeros-only)</h2>
+      <p class="verdict-sub"><strong>DOWNLOAD: YES · SUBMIT: NO</strong> — Unsupervised buried-fault lane (zero catalogue-trained parameters): geometric-mean persistence of spectral THDR worms across 0/200/400/800 m upward continuation (TMI + isostatic gravity). <strong>HOLDOUT-DTI 0.093269</strong> (95% CI [0.083380, 0.103501], <code>gems-segment-pooled-v1</code>, 60,988 withheld px) vs single-scale control 0.091901 (paired difference CI includes zero; strain add-on hurt, seismic neutral) — below repo B0 and the group bar, so no weekly slot. Canary PASS (max AUC 0.6145); surface rank max 0.264 over 198 rasters; focus-9 dot overlap max 0.4909; literal check flags one dense blanket at 0.7227 — logged duplicate-flag, lane stopped. Post-merge overlaps: MOE36 0.289, MTO-36 0.472. Ships zeros-only (no NaN twin). Full report: <a href="research/wdp36-20261026.md">WDP-36 monograph</a>. No organizer score exists for this file (never submitted).</p>
+      <div class="hero-actions">
+        <a class="button" href="downloads/gemsdoe36-wdp36-exp1-20261026-zeros.tif" download>Download WDP-36 GeoTIFF (research only) &#8595;</a>
+        <a class="button secondary" href="downloads/gemsdoe36-wdp36-exp1-20261026-zeros.zip" download>ZIP (single GeoTIFF)</a>
+        <a class="button secondary" href="downloads/gemsdoe36-wdp36-exp1-20261026-zeros.receipt.json">Run card / receipt</a>
+      </div>
+      <div class="table-wrap verdict-meta"><table>
+        <tr><th>Submission name / note (95 &le; 140)</th><td><code>gemsdoe36-wdp36-exp1-20261026</code> (file <code>gemsdoe36-wdp36-exp1-20261026-zeros.tif</code>) · <code>GEMSDOE36 WDP-36 EXP-1 | worm persistence 0-800m only | HOLDOUT-DTI 0.0933 | NEGATIVE hold slot</code></td></tr>
+        <tr><th>SHA-256</th><td>TIF <code>ae9da29e45c67d03b7a7fd438a3cf0686f0678111181cd960b86dffb56f0f698</code> · ZIP <code>c6767fb5e05fe8f573a365b24913b1b58544a4d16ee9c6cd1eb7f7ae241f7de5</code></td></tr>
+        <tr><th>Format</th><td>37,654 dots (median 2.1 km from catalogue, 0 within 2 px), float32, EPSG:32611, 3730&times;3292, nodata=None, whole array finite in [0,1] — local template/range validator PASS; organizer portal acceptance unverified</td></tr>
+      </table></div>
+      <div class="fig-card">
+        <img src="assets/wdp36_overview.png" alt="3-panel overview: WDP-36 worm-persistence surface, catalogue faults, and 37,654 emitted dots">
+      </div>
     </section>
 
     <!-- ATVR-36 DOWNLOAD CARD -->
