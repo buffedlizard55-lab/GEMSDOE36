@@ -1,0 +1,93 @@
+{
+ "schema": "gems-parallel-run-card-v1",
+ "generated_utc": "2026-10-26T00:00:00Z",
+ "lane": "GEMSDOE36 / MOE36",
+ "branch": "arena/be830a51-gemsdoe36",
+ "hypothesis": "Disjoint physical experts (RAW19 GeoDAWN, CTRB local potential/hydrothermal/LiDAR, CTRB 1.5km worm/relay structural) make partly independent errors; cross-fitted rank fusion recovers withheld whole fault segments better than any single expert or repo B0.",
+ "mechanism": "Per SegmentHoldout fold: 3 HGB experts trained on visible faults only, rank-normalised, fused (EXP-1 equal / EXP-2 fold+LiDAR-gated / EXP-3 +agreement), emitted by ctrb.submodular_dti_emit (300m triangular, dstar 0.22) outside d_visible>2px at 37,654 total dots. Final TIF = full-catalogue refit of EXP-1.",
+ "named_non_fault_mimic": "Unfaulted volcanic flow margins/caldera contacts, playa shorelines, alluvial-fan distributary channels, magnetic flight-line tie artifacts.",
+ "holdout_dti": {
+  "label": "HOLDOUT-DTI",
+  "evaluator_version": "gems-segment-pooled-v1",
+  "n_withheld_positives": 60988,
+  "best_experiment": "EXP-1",
+  "dti": 0.1249003979085644,
+  "ci95": [
+   0.1164709218945774,
+   0.13393920008765062
+  ],
+  "experiments": {
+   "EXP-1": {
+    "dti": 0.1249003979085644,
+    "ci95": [
+     0.1164709218945774,
+     0.13393920008765062
+    ]
+   },
+   "EXP-2": {
+    "dti": 0.12334537988351853,
+    "ci95": [
+     0.11443035621364586,
+     0.1327101806873432
+    ]
+   },
+   "EXP-3": {
+    "dti": 0.12126653783257638,
+    "ci95": [
+     0.1127238099100847,
+     0.13061990473792348
+    ]
+   }
+  },
+  "single_expert_controls": {
+   "E_RAW": 0.11208033699426484,
+   "E_LOCAL": 0.1147858665896938,
+   "E_STRUCT": 0.10076023867544116
+  },
+  "paired_delta_vs_best_single_expert": 0.010114531318870607,
+  "paired_delta_ci95": [
+   0.0016961664956934646,
+   0.018197127751853854
+  ],
+  "B0_reference_same_evaluator": 0.13375,
+  "beats_B0": false
+ },
+ "leakage_canary": {
+  "passed": true,
+  "n_features": 44,
+  "max_two_polarity_auc": 0.6394099938720592,
+  "cap": 0.9
+ },
+ "registry_uniqueness": {
+  "gate_20_raster_audit": {
+   "max_abs_surface_spearman": 0.173467,
+   "max_dot_overlap_3px": 0.542306,
+   "passed": true
+  },
+  "full_198_raster_crosscheck": {
+   "max_abs_rank_correlation": 0.40567695420175776,
+   "max_competing_dot_overlap": 0.8788973283050937,
+   "passed": false,
+   "note": "Literal >0.70 failures are against 32-55% footprint-coverage blanket rasters (coverage-driven) plus 12GEMSDOE r7 scarp (0.758 at 0.322 coverage); per Parallel-Run Protocol this is logged as a duplicate-flag and the lane stops."
+  }
+ },
+ "raster_sha256": "9209d76bab1c4a6d6f64fb794e881a85d70b1a48fdc6288a0e390cfea64aabb7",
+ "zip_sha256": "1960ccc51a2f4c9041c41e7c1da76d55032af245c467ae2a25ac0c757f2d4471",
+ "validator_output": {
+  "valid_for_portal": true,
+  "strict_whole_array_0_1": true,
+  "template_format_valid": true,
+  "crs": "EPSG:32611",
+  "shape": [
+   3730,
+   3292
+  ],
+  "dots": 37654,
+  "values": "finite float32 in [0,1] whole array (zeros outside footprint)"
+ },
+ "submission_name": "gemsdoe36-moe36-exp1-20261026",
+ "submission_note": "GEMSDOE36 MOE36 EXP-1 equal rank fusion RAW19+CTRB-local+struct | HOLDOUT-DTI 0.1249 | NEGATIVE do not submit",
+ "verdict": "negative",
+ "ok_to_download_research_tif": true,
+ "ok_to_download_and_submit": false
+}
