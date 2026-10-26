@@ -68,3 +68,23 @@ def test_nine_pinned_links_measured_not_organizer_authenticated() -> None:
     assert checked["nested_family_crosschecks"]["b2_vs_d28_gt_2px_xor"] == 0
     assert checked["nested_family_crosschecks"]["d28_removed_to_b2"] == 6436
     assert checked["nested_family_crosschecks"]["solo_removed_to_b2"] == 2545
+
+
+def test_nine_site_table_separates_history_estimates_and_uniqueness() -> None:
+    _, ledger = _card_and_ledger()
+    table = site_table(ledger)
+    assert table.count("Unavailable; no calibrated leaderboard estimate") == 9
+    assert table.count("NO · historical/reused or negative") == 9
+    assert "Estimated leaderboard score" in table
+    assert "Uniqueness / lineage evidence" in table
+    assert "Pixel-identical in footprint (0 XOR) to GEMSDOE30" in table
+    for item in ledger["focus_sites"]:
+        assert item["highest_historical_submission"]["name"] in table
+
+
+def test_executive_summary_includes_generated_nine_site_table() -> None:
+    _, ledger = _card_and_ledger()
+    summary = (ROOT / "docs/executive-summary.html").read_text()
+    assert summary.count("<!-- FOCUS9_EXEC:START -->") == 1
+    assert summary.count("<!-- FOCUS9_EXEC:END -->") == 1
+    assert site_table(ledger) in summary

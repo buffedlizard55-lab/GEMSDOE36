@@ -140,8 +140,7 @@ def executive_card(card: dict) -> str:
       </table></div>
       <p><a href="research/mto36-evidence-and-nine-sites.md">Read audited nine-site summary, current hypothesis and all limitations</a>. <code>ORGANIZER-CONFIRMED</code> requires a submission-page receipt; the user-supplied older scores do not satisfy this.</p>
     </section>
-{END}
-{site_table(json.loads(LEDGER.read_text(encoding="utf-8")))}"""
+{END}"""
 
 
 def site_table(ledger: dict, uniqueness: dict | None = None) -> str:
@@ -155,16 +154,18 @@ def site_table(ledger: dict, uniqueness: dict | None = None) -> str:
         rows.append(
             "<tr><td><code>{site}</code></td><td><a href=\"{link}\" target=\"_blank\" rel=\"noopener\"><code>{name}</code></a> "
             "<small>SHA-256 {sha}</small></td><td>{dots:,} dots</td><td><strong>{score:.4f} OWNER-REPORTED</strong> "
-            "(receipt missing)</td><td><strong>NO</strong> · at least {min_overlap:.2%} of its dots are within 3 px of each of the other 8</td></tr>".format(
+            "(receipt missing)</td><td>Unavailable; no calibrated leaderboard estimate</td><td><strong>NO</strong> · at least {min_overlap:.2%} of its dots overlap each other focus mask within 3 px. {lineage}</td>"
+            "<td>NO · historical/reused or negative</td></tr>".format(
                 site=e(item["site"]), link=e(h["pinned_raster_source_url"]),
                 name=e(h["name"]), sha=e(h["sha256_full"][:12]), dots=h["dots"],
                 score=h["score"], min_overlap=novelty["min_overlap_vs_other_eight"],
+                lineage=e(h.get("forensic_note", "")),
             )
         )
     return """    <section class="section" aria-labelledby="focus-sites-title">
       <div class="section-head"><div><div class="eyebrow">Pinned byte-forensics, not live receipts</div><h2 id="focus-sites-title">Nine Focus Sites — best historical owner-reported results</h2></div>
-      <p>All nine historical TIFF hashes, dots and grids were rechecked from pinned GitHub snapshots. No organizer submission-page receipt was available. All nine also fail the stated 3-px uniqueness rule against each other. Do not choose an old file to resubmit.</p></div>
-      <div class="table-wrap"><table><tr><th>Site</th><th>Exact pinned file for audit</th><th>Measured</th><th>Reported score (unverified)</th><th>Unique vs other 8?</th></tr>
+      <p>All nine historical TIFF hashes, dots and grids were rechecked from pinned GitHub snapshots. No organizer submission-page receipt was available. All nine also fail the stated 3-px uniqueness rule against each other. The leaderboard estimates are unavailable; do not treat holdout DTI or historical claims as an estimate. Do not choose an old file to resubmit.</p></div>
+      <div class="table-wrap"><table><tr><th>Site</th><th>Exact pinned file for audit</th><th>Measured</th><th>Reported score (unverified)</th><th>Estimated leaderboard score</th><th>Uniqueness / lineage evidence</th><th>Safe now?</th></tr>
 """ + "\n".join(rows) + """
       </table></div>
       <p>Highest reported in this set: GEMSDOE32 <code>0.2778 OWNER-REPORTED</code>, but its mask is an exact D2.8 subset after removing the 200 m known-fault collar. All nine historical files fail the 70% 3-px overlap uniqueness ceiling; see the <a href="downloads/focus-sites-pairwise-uniqueness.json">72-pair audit JSON</a>. This is mask lineage, <strong>not</strong> proof that collar removal caused the blind score change. <a href="research/mto36-evidence-and-nine-sites.md">Method, data provenance and next steps</a>.</p>
@@ -222,6 +223,23 @@ def main() -> int:
     if script not in updated:
         updated = updated.replace('</body>', '  ' + script + '\n</body>', 1)
     INDEX.write_text(updated, encoding="utf-8")
+
+    summary = SUMMARY.read_text(encoding="utf-8")
+    start, end = "<!-- FOCUS9_EXEC:START -->", "<!-- FOCUS9_EXEC:END -->"
+    block = start + "\n" + site_table(ledger) + "\n" + end
+    if start in summary:
+        if summary.count(start) != 1 or summary.count(end) != 1:
+            raise RuntimeError("Executive nine-site markers missing/duplicated")
+        summary = re.sub(
+            re.escape(start) + r".*?" + re.escape(end),
+            lambda _: block,
+            summary,
+            count=1,
+            flags=re.S,
+        )
+    else:
+        summary = summary.replace("<!-- MTO-36:END -->", "<!-- MTO-36:END -->\n" + block, 1)
+    SUMMARY.write_text(summary, encoding="utf-8")
 
     s = README.read_text(encoding="utf-8")
     if s.count("<!-- STATUS:START -->") != 1 or s.count("<!-- STATUS:END -->") != 1:
