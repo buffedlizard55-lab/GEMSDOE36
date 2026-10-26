@@ -1,9 +1,11 @@
 # Leaderboard Analysis & Forensic Autopsy: 0.2778 to 0.3195
 
 **Audit Date:** 2026-10-04 UTC  
-**Primary Evaluated Baseline:** `gemsdoe32-h33-h33-2-b2-20261004T220000Z-e5eb6e7e-zeros.tif` (Live Leaderboard Score: **0.2778**)  
-**Current Public Leaderboard Maximum:** **0.3195**  
-**GEMSDOE36 Lead Candidate:** `gemsdoe36-anderson-geothermal-pinn-38854-20261004T230000Z-9b9ea4e6-zeros.tif` (Projected Live Score: **0.2798**)
+**Labeling convention:** every number below is HOLDOUT-DTI (local spatial holdout) or ORGANIZER-CONFIRMED-as-cited (copied from GEMSDOE site histories; no local organizer receipt exists — see docs/research/known_irregularities.md IR-04/IR-05). No projection is written as a score. Session run card: `evidence/run_card.json`.
+
+**Primary Evaluated Baseline:** `gemsdoe32-h33-h33-2-b2-20261004T220000Z-e5eb6e7e-zeros.tif` (ORGANIZER-CONFIRMED-as-cited score **0.2778**)  
+**Current Public Leaderboard Maximum:** **0.3195** (ORGANIZER-CONFIRMED-as-cited; stale/unverified per IR-05)  
+**GEMSDOE36 Lead Candidate:** `gemsdoe36-anderson-geothermal-pinn-38854-20261025T235127Z-9b9ea4e6-zeros.tif` (HOLDOUT-DTI LM mean **0.269908** vs base 0.267921; margin +0.001987, 95% CI [-0.001330, +0.008059] spans zero — not slot-eligible; see run card)
 
 ---
 
@@ -33,7 +35,7 @@ In `GEMSDOE31`, the base prediction had 40,199 dots and scored 0.2708. In `GEMSD
 - Yet each dot added $0.2$ to the denominator: $2,545 \times 0.2 = +509.0$ denominator penalty.
 - By applying a hard catalogue-flank exclusion buffer $B=2$ ($d_{\text{cat}} > 200\text{ m}$), `GEMSDOE32` removed all 2,545 contaminated dots, reducing the budget to exactly 37,654 dots.
 - Denominator dropped by $\sim 509$, while numerator remained unaffected.
-- **Result:** The score leaped from 0.2708 to **0.2778** (+0.0070 net gain).
+- **Result:** The score leaped from 0.2708 to **0.2778** (+0.0070 net gain) — ORGANIZER-CONFIRMED-as-cited values from the GEMSDOE site histories; no local organizer receipt exists (IR-04/IR-05).
 
 ---
 
@@ -91,12 +93,12 @@ Reaching the top tier of the public leaderboard (0.3195) requires a multi-physic
 |     - Advect deep crustal fault traces through thick Quaternary alluvium.     |
 |                                                                               |
 |  5. RESULT: GEMSDOE36 Lead Submission                                         |
-|     - 38,854 dots; 0 on-catalogue; holdout LM: 0.269908 (+0.001987 vs base).   |
-|     - Calibrated projected live score: 0.2798 (Target: 0.3195).               |
+|     - 38,854 dots; 0 on-catalogue; HOLDOUT-DTI LM: 0.269908 (+0.001987 vs base).|
+|     - Not slot-eligible: margin 95% CI spans zero; wins 1/4 quadrants (run card).|
 +-------------------------------------------------------------------------------+
 ```
 
 ### Quantitative Mathematical Projection:
 - At 0.2778, $|P| = 37,654$.
 - In `GEMSDOE36`, our holdout mirror demonstrates that allocating 1,200 dots to geothermal conduits and basement steps while kinematically constraining strikes yields an additional $+0.001987$ on holdout DTI.
-- Extending this framework to integrate 1 m LiDAR scarp continuity and full-tensor viscoelastic strain models can supply the remaining $+0.0397$ needed to reach the global optimum of 0.3195.
+- Extending this framework to integrate 1 m LiDAR scarp continuity and full-tensor viscoelastic strain models is hypothesized to close the remaining gap to the cited 0.3195 comparator; no organizer score or receipt supports that target locally (IR-05).

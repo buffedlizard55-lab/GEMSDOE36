@@ -42,8 +42,8 @@ from gemsdoe36.paths import (
 )
 from gemsdoe36.submission import write_submission_bundle
 
-TIMESTAMP_TAG = "20261004T230000Z"
-BASE_LIVE_SCORE = 0.2778
+TIMESTAMP_TAG = datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%SZ")
+BASE_LIVE_SCORE = 0.2778  # site-reported comparator (GEMSDOE32); unverified locally — see IR-04/IR-05
 
 
 def load_band(bands_dir: Path, idx: int, name: str) -> np.ndarray:
@@ -233,14 +233,13 @@ def main() -> int:
     lead_mask = candidates["GEMSDOE36-LEAD-PINN"]["mask"].astype(np.float32)
     template_tif = ddir / "sample_submission.tif"
 
-    submission_name = "GEMSDOE36-Anderson-PINN-MultiPhysics-20261004"
+    submission_name = "GEMSDOE36-Anderson-PINN-20261025"
     note_text = (
-        f"GEMSDOE36 Anderson PINN | H36-1/3 GDR geotherm conduit + B=2 catalogue-flank prune: "
-        f"{lead_mask.sum():,.0f} dots; 0 on-cat; LM holdout {lead_eval['lm_calibrated_mean']:.4f} "
-        f"(+{lead_eval['margin_vs_base']:.4f} vs 0.2778 base, {lead_eval['folds_beat_base']}/4 quads); projected {lead_eval['projected_live_score']:.4f}"
+        f"GEMSDOE36 Anderson-PINN | B=2 catalogue-flank prune + Anderson/geothermal dots; "
+        f"{lead_mask.sum():,.0f} dots; 0 on-cat; HOLDOUT-DTI {lead_eval['lm_calibrated_mean']:.4f}"
     )
-    if len(note_text) > 200:
-        note_text = note_text[:197] + "..."
+    if len(note_text) > 140:
+        note_text = note_text[:137] + "..."
 
     bundle = write_submission_bundle(
         lead_mask,

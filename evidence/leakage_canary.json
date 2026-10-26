@@ -1,0 +1,241 @@
+{
+  "schema_version": 1,
+  "generated_utc": "2026-10-25T23:47:05+00:00",
+  "protocol": {
+    "leakage_auc_threshold": 0.9,
+    "background_cap_per_fold": 60000,
+    "holdout": "4-quadrant spatial blocks (live_mirror.quadrant_ids)",
+    "truth": "sgmc_off_catalogue (>300 m from provided catalogue labels)"
+  },
+  "leakage_found": false,
+  "bands": [
+    {
+      "band": "01_mag_anom",
+      "per_fold_auc": {
+        "0": 0.403931,
+        "1": 0.576566,
+        "2": 0.534171,
+        "3": 0.440585
+      },
+      "max_auc": 0.576566,
+      "mean_auc": 0.488813,
+      "leakage_flag": false
+    },
+    {
+      "band": "02_rtp",
+      "per_fold_auc": {
+        "0": 0.421348,
+        "1": 0.56593,
+        "2": 0.549425,
+        "3": 0.465291
+      },
+      "max_auc": 0.56593,
+      "mean_auc": 0.500498,
+      "leakage_flag": false
+    },
+    {
+      "band": "03_tmi_hg",
+      "per_fold_auc": {
+        "0": 0.622214,
+        "1": 0.492771,
+        "2": 0.631434,
+        "3": 0.453037
+      },
+      "max_auc": 0.631434,
+      "mean_auc": 0.549864,
+      "leakage_flag": false
+    },
+    {
+      "band": "04_geod_2ndinv",
+      "per_fold_auc": {
+        "0": 0.669411,
+        "1": 0.592446,
+        "2": 0.538127,
+        "3": 0.544311
+      },
+      "max_auc": 0.669411,
+      "mean_auc": 0.586074,
+      "leakage_flag": false
+    },
+    {
+      "band": "05_iso_grav_anom_slope",
+      "per_fold_auc": {
+        "0": 0.432479,
+        "1": 0.384603,
+        "2": 0.483715,
+        "3": 0.44823
+      },
+      "max_auc": 0.483715,
+      "mean_auc": 0.437257,
+      "leakage_flag": false
+    },
+    {
+      "band": "06_tc",
+      "per_fold_auc": {
+        "0": 0.377158,
+        "1": 0.303684,
+        "2": 0.341371,
+        "3": 0.42083
+      },
+      "max_auc": 0.42083,
+      "mean_auc": 0.360761,
+      "leakage_flag": false
+    },
+    {
+      "band": "07_geod_shearrate",
+      "per_fold_auc": {
+        "0": 0.653458,
+        "1": 0.479672,
+        "2": 0.616189,
+        "3": 0.584823
+      },
+      "max_auc": 0.653458,
+      "mean_auc": 0.583535,
+      "leakage_flag": false
+    },
+    {
+      "band": "08_geod_dilaterate",
+      "per_fold_auc": {
+        "0": 0.661816,
+        "1": 0.60329,
+        "2": 0.435516,
+        "3": 0.356583
+      },
+      "max_auc": 0.661816,
+      "mean_auc": 0.514301,
+      "leakage_flag": false
+    },
+    {
+      "band": "09_tmi_vg",
+      "per_fold_auc": {
+        "0": 0.477852,
+        "1": 0.518601,
+        "2": 0.490709,
+        "3": 0.501645
+      },
+      "max_auc": 0.518601,
+      "mean_auc": 0.497202,
+      "leakage_flag": false
+    },
+    {
+      "band": "10_deq_n100a15",
+      "per_fold_auc": {
+        "0": 0.602247,
+        "1": 0.547019,
+        "2": 0.429439,
+        "3": 0.506883
+      },
+      "max_auc": 0.602247,
+      "mean_auc": 0.521397,
+      "leakage_flag": false
+    },
+    {
+      "band": "11_iso_grav_anom_vg",
+      "per_fold_auc": {
+        "0": 0.502019,
+        "1": 0.484282,
+        "2": 0.469837,
+        "3": 0.439513
+      },
+      "max_auc": 0.502019,
+      "mean_auc": 0.473913,
+      "leakage_flag": false
+    },
+    {
+      "band": "12_det_elev",
+      "per_fold_auc": {
+        "0": 0.635278,
+        "1": 0.744398,
+        "2": 0.709947,
+        "3": 0.668142
+      },
+      "max_auc": 0.744398,
+      "mean_auc": 0.689441,
+      "leakage_flag": false
+    },
+    {
+      "band": "13_iso_grav_anom",
+      "per_fold_auc": {
+        "0": 0.66329,
+        "1": 0.607062,
+        "2": 0.539381,
+        "3": 0.609288
+      },
+      "max_auc": 0.66329,
+      "mean_auc": 0.604755,
+      "leakage_flag": false
+    },
+    {
+      "band": "14_tmi",
+      "per_fold_auc": {
+        "0": 0.426186,
+        "1": 0.583349,
+        "2": 0.543066,
+        "3": 0.46111
+      },
+      "max_auc": 0.583349,
+      "mean_auc": 0.503428,
+      "leakage_flag": false
+    },
+    {
+      "band": "15_depth_to_base_surf",
+      "per_fold_auc": {
+        "0": 0.369799,
+        "1": 0.300645,
+        "2": 0.449296,
+        "3": 0.346712
+      },
+      "max_auc": 0.449296,
+      "mean_auc": 0.366613,
+      "leakage_flag": false
+    },
+    {
+      "band": "16_ieq_n100a15",
+      "per_fold_auc": {
+        "0": 0.66348,
+        "1": 0.540637,
+        "2": 0.518655,
+        "3": 0.392619
+      },
+      "max_auc": 0.66348,
+      "mean_auc": 0.528848,
+      "leakage_flag": false
+    },
+    {
+      "band": "17_cond_surf",
+      "per_fold_auc": {
+        "0": 0.573654,
+        "1": 0.493266,
+        "2": 0.48673,
+        "3": 0.489314
+      },
+      "max_auc": 0.573654,
+      "mean_auc": 0.510741,
+      "leakage_flag": false
+    },
+    {
+      "band": "18_iso_grav_anom_hg",
+      "per_fold_auc": {
+        "0": 0.508371,
+        "1": 0.524478,
+        "2": 0.504575,
+        "3": 0.499682
+      },
+      "max_auc": 0.524478,
+      "mean_auc": 0.509277,
+      "leakage_flag": false
+    },
+    {
+      "band": "19_det_elev_slope",
+      "per_fold_auc": {
+        "0": 0.743381,
+        "1": 0.75659,
+        "2": 0.754567,
+        "3": 0.735792
+      },
+      "max_auc": 0.75659,
+      "mean_auc": 0.747583,
+      "leakage_flag": false
+    }
+  ]
+}

@@ -28,9 +28,9 @@ DOCS_ROOT = REPO_ROOT / "docs"
 REQUIRED_PAGES = ("index.html", "executive-summary.html")
 
 # Main's Anderson-PINN deliverable bundle (the established primary on main).
-PRIMARY_TIF = "gemsdoe36-anderson-geothermal-pinn-38854-20261004T230000Z-9b9ea4e6-zeros.tif"
-NAN_TIF = "gemsdoe36-anderson-geothermal-pinn-38854-20261004T230000Z-9b9ea4e6-nan.tif"
-ZIP_FILE = "gemsdoe36-anderson-geothermal-pinn-38854-20261004T230000Z-9b9ea4e6-zeros.zip"
+PRIMARY_TIF = "gemsdoe36-anderson-geothermal-pinn-38854-20261025T235127Z-9b9ea4e6-zeros.tif"
+NAN_TIF = "gemsdoe36-anderson-geothermal-pinn-38854-20261025T235127Z-9b9ea4e6-nan.tif"
+ZIP_FILE = "gemsdoe36-anderson-geothermal-pinn-38854-20261025T235127Z-9b9ea4e6-zeros.zip"
 MANIFEST_FILE = "submissions_manifest.json"
 
 # The landing page must reference BOTH candidate lines and current honest status.

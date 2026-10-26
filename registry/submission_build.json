@@ -1,12 +1,12 @@
 {
   "schema_version": 1,
-  "built_utc": "2026-10-04T18:56:26+00:00",
-  "primary_file": "gemsdoe36-anderson-geothermal-pinn-38854-20261004T230000Z-9b9ea4e6-zeros.tif",
-  "primary_sha256": "e15891020b9c57056ac7fa874a5e506fbd6ed9314a4ea8e73af0753887a3708a",
-  "companion_nan_file": "gemsdoe36-anderson-geothermal-pinn-38854-20261004T230000Z-9b9ea4e6-nan.tif",
-  "zip_archive": "gemsdoe36-anderson-geothermal-pinn-38854-20261004T230000Z-9b9ea4e6-zeros.zip",
-  "submission_name": "GEMSDOE36-Anderson-PINN-MultiPhysics-20261004",
-  "note": "GEMSDOE36 Anderson PINN | H36-1/3 GDR geotherm conduit + B=2 catalogue-flank prune: 38,854 dots; 0 on-cat; LM holdout 0.2699 (+0.0020 vs 0.2778 base, 1/4 quads); projected 0.2798",
+  "built_utc": "2026-10-25T23:51:50+00:00",
+  "primary_file": "gemsdoe36-anderson-geothermal-pinn-38854-20261025T235127Z-9b9ea4e6-zeros.tif",
+  "primary_sha256": "686f6773ab0d678942103830c96ddb9dcec6c2c12f503395b5a9752ca6c59fe7",
+  "companion_nan_file": "gemsdoe36-anderson-geothermal-pinn-38854-20261025T235127Z-9b9ea4e6-nan.tif",
+  "zip_archive": "gemsdoe36-anderson-geothermal-pinn-38854-20261025T235127Z-9b9ea4e6-zeros.zip",
+  "submission_name": "GEMSDOE36-Anderson-PINN-20261025",
+  "note": "GEMSDOE36 Anderson-PINN | B=2 catalogue-flank prune + Anderson/geothermal dots; 38,854 dots; 0 on-cat; HOLDOUT-DTI 0.2699",
   "emitted_dots": 38854,
   "on_catalogue_dots": 0,
   "holdout_results": {
@@ -101,5 +101,5 @@
       "slot_eligible": false
     }
   },
-  "elapsed_seconds": 30.6
+  "elapsed_seconds": 23.0
 }

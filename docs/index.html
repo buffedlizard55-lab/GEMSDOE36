@@ -27,14 +27,14 @@
         <h1 id="hero-title">Anderson PINN &amp;<br>Geothermal Conduits.</h1>
         <p class="lede">A physics-informed multi-dataset framework predicting unmapped faults across the Great Basin GeoDAWN footprint. Combining Anderson's (1905) faulting kinematics, Raissi et al. (2019) structure-tensor loss, GDR 1391 geothermal reservoir mapping, and rigorous 4-quadrant spatial holdout validation.</p>
         <div class="hero-actions">
-          <a class="button" href="downloads/gemsdoe36-anderson-geothermal-pinn-38854-20261004T230000Z-9b9ea4e6-zeros.tif" download>Download Submission TIFF (311 KB) <span aria-hidden="true">↓</span></a>
+          <a class="button" href="downloads/gemsdoe36-anderson-geothermal-pinn-38854-20261025T235127Z-9b9ea4e6-zeros.tif" download>Download Submission TIFF (311 KB) <span aria-hidden="true">↓</span></a>
           <a class="button secondary" href="executive-summary.html">How to Submit on DrivenData <span aria-hidden="true">→</span></a>
         </div>
       </div>
       <aside class="status-card" aria-label="Current project status">
-        <div class="eyebrow"><span class="status-pip" aria-hidden="true"></span>Two candidate lines · 2026-10-04 UTC</div>
+        <div class="eyebrow"><span class="status-pip" aria-hidden="true"></span>Two candidate lines · 2026-10-25 UTC</div>
         <h2>GEMSDOE36 Lead Artifacts Ready</h2>
-        <p><strong>Anderson-PINN</strong>: 38,854 positive dots · 0 on-catalogue · 100% cells finite in [0, 1] with <code>nodata=None</code> (fixing the portal range error). Holdout Mirror: <strong>0.269908</strong> (+0.001987 vs 0.2778 base). Projected live score: <strong>0.2798</strong>.</p>
+        <p><strong>Anderson-PINN</strong>: 38,854 positive dots · 0 on-catalogue · 100% cells finite in [0, 1] with <code>nodata=None</code> (fixing the portal range error). Holdout Mirror: <strong>0.269908 HOLDOUT-DTI</strong> (+0.001987 margin vs the 0.2778 base; 95% CI [-0.001330, +0.008059] spans zero — gain within noise on 4 blocks; wins 1/4 quadrants — see <a href="research/run_card.json">run card</a>). No projection is stated as a score.</p>
         <p><strong>Off-catalogue H6 prior</strong>: 24,881 dots on the exact organizer grid; beat the incumbent on all 5 spatially-blocked folds (mean 0.43 vs 0.10, ~4.4&times; on the off-catalogue proxy). Both are unique, download-ready candidate TIFs; the owner selects the single final file to upload.</p>
         <a href="research/results.md">View Full Validation Ledger →</a>
       </aside>
@@ -43,14 +43,39 @@
     <!-- ONE-CLICK DOWNLOAD STRIP -->
     <section class="download-strip" id="submission" aria-label="Submission download and metadata">
       <div>
-        <strong>Two unique candidate TIFs — the owner selects the single final file: <code>gemsdoe36-anderson-geothermal-pinn-38854-20261004T230000Z-9b9ea4e6-zeros.tif</code> (Anderson-PINN) and <code>GEMS36_h6_offcatalog_network_prior_20261004T193432.021282Z_3276c04090_3c064db2.tif</code> (off-catalogue H6).</strong>
-        <p><strong>Anderson-PINN (primary):</strong> single-band float32 GeoTIFF, EPSG:32611, 100 m, 3730 &times; 3292 grid. SHA-256: <code>e15891020b9c57056ac7fa874a5e506fbd6ed9314a4ea8e73af0753887a3708a</code>. 38,854 dots, 0 on-catalogue, finite [0,1] across all 12,279,160 cells. <strong>Off-catalogue H6 (gate-passed 5/5):</strong> binary dot map, 24,881 dots, exact organizer grid, [0,1] in-bounds, NaN outside.</p>
+        <strong>Two unique candidate TIFs — the owner selects the single final file: <code>gemsdoe36-anderson-geothermal-pinn-38854-20261025T235127Z-9b9ea4e6-zeros.tif</code> (Anderson-PINN, this session's build) and <code>GEMS36_h6_offcatalog_network_prior_20261004T193432.021282Z_3276c04090_3c064db2.tif</code> (off-catalogue H6).</strong>
+        <p><strong>Anderson-PINN (primary):</strong> single-band float32 GeoTIFF, EPSG:32611, 100 m, 3730 &times; 3292 grid. SHA-256: <code>686f6773ab0d678942103830c96ddb9dcec6c2c12f503395b5a9752ca6c59fe7</code>. 38,854 dots, 0 on-catalogue, finite [0,1] across all 12,279,160 cells. <strong>Off-catalogue H6 (gate-passed 5/5):</strong> binary dot map, 24,881 dots, exact organizer grid, [0,1] in-bounds, NaN outside.</p>
       </div>
       <div class="hero-actions">
-        <a class="button" href="downloads/gemsdoe36-anderson-geothermal-pinn-38854-20261004T230000Z-9b9ea4e6-zeros.tif" download>Download PINN primary TIFF (311 KB)</a>
-        <a class="button secondary" href="downloads/gemsdoe36-anderson-geothermal-pinn-38854-20261004T230000Z-9b9ea4e6-zeros.zip" download>Download PINN ZIP (208 KB)</a>
-        <a class="button secondary" href="downloads/gemsdoe36-anderson-geothermal-pinn-38854-20261004T230000Z-9b9ea4e6-nan.tif" download>Download PINN NaN Companion (363 KB)</a>
+        <a class="button" href="downloads/gemsdoe36-anderson-geothermal-pinn-38854-20261025T235127Z-9b9ea4e6-zeros.tif" download>Download PINN primary TIFF (311 KB)</a>
+        <a class="button secondary" href="downloads/gemsdoe36-anderson-geothermal-pinn-38854-20261025T235127Z-9b9ea4e6-zeros.zip" download>Download PINN ZIP (208 KB)</a>
+        <a class="button secondary" href="downloads/gemsdoe36-anderson-geothermal-pinn-38854-20261025T235127Z-9b9ea4e6-nan.tif" download>Download PINN NaN Companion (363 KB)</a>
         <a class="button" href="downloads/GEMS36_h6_offcatalog_network_prior_20261004T193432.021282Z_3276c04090_3c064db2.tif" download>Download H6 gate-passed candidate TIFF</a>
+      </div>
+    </section>
+
+    <!-- SUBMISSION READINESS (obvious at a glance) -->
+    <section class="section readiness-banner" aria-labelledby="readiness-title">
+      <div class="section-head">
+        <div><div class="eyebrow">Submission Readiness</div><h2 id="readiness-title">Is It OK to Download and Submit This TIF?</h2></div>
+        <p>Yes — the file below is format-validated against the organizer's own sample template before publication.</p>
+      </div>
+      <div class="grid cols-2">
+        <article class="card pass-card">
+          <span class="card-kicker">Validator output</span>
+          <h3>PASS — safe to download and upload</h3>
+          <ul>
+            <li>Single-band <code>float32</code> GeoTIFF, EPSG:32611, 100 m, exact organizer grid (3730 &times; 3292)</li>
+            <li><strong>All 12,279,160 cells finite in [0, 1]</strong> — minimum 0.0, maximum 1.0, <strong>0 NaN</strong> anywhere</li>
+            <li>Cells outside the survey footprint are <code>0.0</code> with <code>nodata=None</code> — this is the fix that prevents the DrivenData ingestion error <em>"Predicted values must be in range [0, 1]"</em></li>
+            <li>CRS/shape/transform match the sample template; SHA-256 seal: <code>686f6773&hellip;59fe7</code></li>
+          </ul>
+        </article>
+        <article class="card">
+          <span class="card-kicker">Scoring expectation</span>
+          <h3>Not a promised score</h3>
+          <p>The local spatial holdout gives HOLDOUT-DTI 0.269908 vs the 0.2778 base (margin +0.001987; 95% CI [-0.001330, +0.008059] spans zero — within noise on 4 blocks). This is <strong>not</strong> an organizer score and no submission slot has been spent. Upload is the owner's manual step on <a href="https://www.drivendata.org/competitions/306/competition-doe-gems/submissions/" target="_blank" rel="noopener">DrivenData ↗</a>.</p>
+        </article>
       </div>
     </section>
 
@@ -74,7 +99,7 @@
         <article class="card">
           <span class="card-kicker">Submission Details</span>
           <h3>Verified Platform Metadata</h3>
-          <p><strong>Submission Name:</strong><br><code>GEMSDOE36-Anderson-PINN-MultiPhysics-20261004</code><br><br><strong>Submission Note:</strong><br><code>GEMSDOE36 Anderson PINN | H36-1/3 GDR geotherm conduit + B=2 catalogue-flank prune: 38,854 dots; 0 on-cat; LM holdout 0.2699 (+0.0020 vs 0.2778 base, 1/4 quads); projected 0.2798</code></p>
+          <p><strong>Submission Name:</strong><br><code>GEMSDOE36-Anderson-PINN-20261025</code><br><br><strong>Submission Note:</strong><br><code>GEMSDOE36 Anderson-PINN | B=2 catalogue-flank prune + Anderson/geothermal dots; 38,854 dots; 0 on-cat; HOLDOUT-DTI 0.2699</code> (121 chars, within the 200-char platform cap and the run-card 140 cap)</p>
         </article>
       </div>
     </section>
@@ -82,7 +107,7 @@
     <!-- DEEP SCIENTIFIC ANALYSIS -->
     <section class="section" aria-labelledby="forensic-title">
       <div class="section-head">
-        <div><div class="eyebrow">Forensic Autopsy</div><h2 id="forensic-title">Why GEMSDOE32 Reached 0.2778 &amp; The Path to 0.3195</h2></div>
+        <div><div class="eyebrow">Forensic Autopsy</div><h2 id="forensic-title">Why GEMSDOE32 Reached 0.2778 &amp; the Path Toward the Cited 0.3195 Comparator</h2></div>
         <p>A mathematical and geological examination of the Distance-Weighted Tversky Index (DTI) and the Great Basin extensional stress field.</p>
       </div>
       <div class="grid cols-2">
@@ -101,7 +126,7 @@
           <ul>
             <li><strong>Anderson (1905) Kinematics:</strong> In the Great Basin extensional regime (&sigma;<sub>1</sub> vertical, &sigma;<sub>3</sub> horizontal &sim; 105&deg;), normal faults must strike NNE-SSW (000&deg;&ndash;045&deg;, 160&deg;&ndash;180&deg;) and strike-slip faults strike NW-SE (125&deg;&ndash;160&deg;).</li>
             <li><strong>The Flaw:</strong> <strong>9,972 dots (26.5%)</strong> strike E-W (070&deg;&ndash;115&deg;), parallel to regional extension &sigma;<sub>3</sub>. Opening along these planes is mechanically impossible. They are false positive artifacts (flight-line noise, lithologic contacts, drainage).</li>
-            <li><strong>Targeting 0.3195:</strong> Pruning kinematically forbidden dots via Raissi et al. (2019) PINN loss and reallocating budget to 465 high-temperature GDR 1391 blind geothermal conduits bridges the gap to the 0.3195 global optimum.</li>
+            <li><strong>Strategy toward the cited 0.3195 comparator</strong> (ORGANIZER-CONFIRMED-as-cited, unverified locally — IR-05): prune kinematically forbidden dots via Raissi et al. (2019) PINN loss and reallocate budget to 465 high-temperature GDR 1391 blind geothermal conduits. The 0.3195 figure is a citation, not a locally verified organizer score.</li>
           </ul>
         </article>
       </div>
@@ -124,9 +149,8 @@
               <th>Fold 1 (NE)</th>
               <th>Fold 2 (SW)</th>
               <th>Fold 3 (SE)</th>
-              <th>LM Mean DTI</th>
+              <th>LM Mean DTI (HOLDOUT-DTI)</th>
               <th>Margin vs Base</th>
-              <th>Projected Live</th>
             </tr>
           </thead>
           <tbody>
@@ -134,64 +158,60 @@
               <td><strong>BASE-0.2778</strong> (h33-h33-2-b2)</td>
               <td>37,654</td>
               <td>0 on-cat (B=2)</td>
-              <td>0.231908</td>
-              <td>0.284112</td>
-              <td>0.281145</td>
-              <td>0.274519</td>
+              <td>0.178454</td>
+              <td>0.422879</td>
+              <td>0.213825</td>
+              <td>0.256524</td>
               <td><strong>0.267921</strong></td>
               <td>+0.000000</td>
-              <td>0.2778</td>
             </tr>
             <tr>
               <td><strong>H36-1-StepOver</strong></td>
               <td>38,554</td>
               <td>0 on-cat (B=2)</td>
-              <td>0.231945</td>
-              <td>0.284140</td>
-              <td>0.281170</td>
-              <td>0.274570</td>
+              <td>0.178454</td>
+              <td>0.422879</td>
+              <td>0.213969</td>
+              <td>0.256524</td>
               <td>0.267956</td>
               <td>+0.000036</td>
-              <td>0.2778</td>
             </tr>
             <tr>
               <td><strong>H36-2-BasementStep</strong></td>
               <td>38,554</td>
               <td>0 on-cat (B=2)</td>
-              <td>0.233010</td>
-              <td>0.285200</td>
-              <td>0.282500</td>
-              <td>0.275830</td>
+              <td>0.182487</td>
+              <td>0.422256</td>
+              <td>0.216210</td>
+              <td>0.255586</td>
               <td>0.269135</td>
               <td>+0.001214</td>
-              <td>0.2790</td>
             </tr>
             <tr>
               <td><strong>H36-3-GeothermalConduit</strong></td>
               <td>38,854</td>
               <td>0 on-cat (B=2)</td>
-              <td>0.233780</td>
-              <td>0.285750</td>
-              <td>0.282890</td>
-              <td>0.276690</td>
+              <td>0.176956</td>
+              <td>0.422366</td>
+              <td>0.226154</td>
+              <td>0.253638</td>
               <td>0.269778</td>
               <td>+0.001858</td>
-              <td>0.2796</td>
             </tr>
             <tr style="background: var(--paper-2); font-weight: 600;">
               <td><strong>GEMSDOE36-LEAD-PINN</strong> (Primary)</td>
               <td>38,854</td>
               <td>0 on-cat (B=2)</td>
-              <td>0.233890</td>
-              <td>0.285901</td>
-              <td>0.283015</td>
-              <td>0.276826</td>
+              <td>0.177000</td>
+              <td>0.422342</td>
+              <td>0.224972</td>
+              <td>0.255320</td>
               <td><strong>0.269908</strong></td>
               <td><strong>+0.001987</strong></td>
-              <td><strong>0.2798</strong></td>
             </tr>
           </tbody>
         </table>
+        <p class="note">All LM means are HOLDOUT-DTI (4-quadrant spatially blocked mirror). The lead's margin 95% CI [-0.001330, +0.008059] spans zero and it wins 1/4 quadrants — not statistically significant; verdict: negative, no slot spent (<a href="research/run_card.json">run card</a>).</p>
       </div>
     </section>
 
@@ -242,7 +262,7 @@
     <div class="wrap footer-row">
       <p>GEMS DOE 36 · Autonomous Physics-Informed Geothermal Discovery · Arena.ai</p>
       <p>
-        <a href="downloads/gemsdoe36-anderson-geothermal-pinn-38854-20261004T230000Z-9b9ea4e6-zeros.tif" download>Download Primary TIFF</a> · 
+        <a href="downloads/gemsdoe36-anderson-geothermal-pinn-38854-20261025T235127Z-9b9ea4e6-zeros.tif" download>Download Primary TIFF</a> · 
         <a href="executive-summary.html">Executive Summary</a> · 
         <a href="research/hypotheses.md">Hypotheses</a> · 
         <a href="research/leaderboard.md">Leaderboard Analysis</a> · 

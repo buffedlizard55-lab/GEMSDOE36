@@ -1,0 +1,122 @@
+{
+  "schema_version": 1,
+  "generated_utc": "2026-10-26T00:00:33+00:00",
+  "labeling_convention": "Every number is HOLDOUT-DTI (local spatial holdout below) or ORGANIZER-CONFIRMED (copied from a submission-page receipt). No projection is written as a score. The 0.2778 GEMSDOE32 figure is site-reported (ORGANIZER-CONFIRMED-as-cited, no local organizer receipt; see docs/research/known_irregularities.md IR-04/IR-05).",
+  "candidate_file": "docs/downloads/gemsdoe36-anderson-geothermal-pinn-38854-20261025T235127Z-9b9ea4e6-zeros.tif",
+  "raster_sha256": "686f6773ab0d678942103830c96ddb9dcec6c2c12f503395b5a9752ca6c59fe7",
+  "candidate_bytes": 318120,
+  "hypothesis": {
+    "id": "H36-PINN-Lead",
+    "name": "Anderson-PINN multi-physics: B=2 catalogue-flank pruned d28 base + Anderson-consistent geothermal conduit & step-over dots",
+    "statement": "Pruning mechanically impossible E-W strikes (parallel to sigma_3 ~105\u00b0 extension) and reallocating the dot budget to GDR-1391 blind geothermal conduits plus geodetic step-over dilatation, under Raissi et al. (2019) structure-tensor orientation regularization, raises off-catalogue DTI over the h33-2-b2 base."
+  },
+  "mechanism": "DTI = TP_w / (0.2|P| + 0.8|G| + 0.8(TP_g - TP_p)); alpha=0.2 makes every extra dot a denominator tax, so redundant/continuos-line dots are thinned to ~300 m Poisson-disk spacing. Dots within 200 m of known catalogue faults are masked in scoring, so they pay pure FP tax: the B=2 (200 m) catalogue-flank exclusion removes them. The added dots target off-catalogue geothermal upflow conduits (GDR 1391, T>=130 C, >1.5 km off catalogue) and geodetic step-over dilatation, gated by Anderson-consistent strike (NNE-SSW normal / NW-SE transtensional; E-W strikes parallel to sigma_3 suppressed).",
+  "named_non_fault_mimic_process": "E-W geophysical lineaments from flight-line noise, lithologic contacts, and drainage channels mimic fault strikes; radiometric clay-alteration halos, spring/vent density, and broad magnetic or gravity anomaly bodies can mimic geothermal conduits without an underlying fault.",
+  "holdout_dti": {
+    "label": "HOLDOUT-DTI",
+    "evaluator_version": "gemsdoe36.live_mirror (4-quadrant spatially blocked mirror) + gemsdoe36.metric.py distance_weighted_tversky (alpha=0.2, beta=0.8, triangular R=300 m)",
+    "evaluator_files": [
+      "src/gemsdoe36/live_mirror.py",
+      "src/gemsdoe36/metric.py"
+    ],
+    "withheld_positives_per_fold": {
+      "foldNW": 8857,
+      "foldNE": 24800,
+      "foldSW": 10081,
+      "foldSE": 16294
+    },
+    "withheld_positives_total": 60032,
+    "blocks": 4,
+    "lead_mean_dti": 0.2699079014319995,
+    "lead_mean_dti_ci95": [
+      0.19657829027777846,
+      0.3729996846388316
+    ],
+    "base_mean_dti": 0.26792053156904116,
+    "base_mean_dti_ci95": [
+      0.19613977565511814,
+      0.37061516711095543
+    ],
+    "margin_vs_base_dti": 0.0019873698629583325,
+    "margin_vs_base_ci95": [
+      -0.0013304526739280065,
+      0.008058835258483818
+    ],
+    "folds_lead_wins": 1,
+    "lead_per_fold_dti": {
+      "foldNW": 0.17699779396397708,
+      "foldNE": 0.42234235300524403,
+      "foldSW": 0.22497167953959424,
+      "foldSE": 0.25531977921918264
+    },
+    "base_per_fold_dti": {
+      "foldNW": 0.17845441391442363,
+      "foldNE": 0.4228785103493363,
+      "foldSW": 0.21382513739581266,
+      "foldSE": 0.2565240646165921
+    },
+    "note": "CI95 is a nonparametric bootstrap over the 4 block means (20000 resamples). With only 4 blocks the CI is wide; the observed margin is within noise."
+  },
+  "leakage_canary": {
+    "label": "HOLDOUT-DTI per-feature screen",
+    "rule": "single-feature AUC > 0.90 on the holdout => leakage until proven otherwise",
+    "max_single_feature_auc": 0.75659,
+    "leakage_found": false,
+    "source": "evidence/leakage_canary.json"
+  },
+  "correlation_overlap_vs_registry": {
+    "label": "HOLDOUT-DTI lane context",
+    "lane_duplicate_found": true,
+    "vs_h6_lane": {
+      "raster": "GEMS36_h6_offcatalog_network_prior_...tif",
+      "spearman_rho": -0.000456,
+      "dots_within_3px_fraction": 0.043728,
+      "verdict": "distinct lane"
+    },
+    "vs_d28_h33_base_by_design": {
+      "raster": "gems24-h25-1-dotted-h19-5-d2-8-...tif (learning reference)",
+      "spearman_rho": 0.909038,
+      "dots_within_3px_fraction": 0.974983,
+      "verdict": "DUPLICATE-LANE by overlap; BY DESIGN: this pipeline's base IS the B=2-pruned d28 field (37,654 of 38,854 dots retained). The novel increment is the ~1,200 Anderson/geothermal added dots, which are lane-distinct from H6 (rho -0.0005)."
+    },
+    "max_distinct_lane_rho": 0.047037,
+    "max_distinct_lane_dot_overlap": 0.64696,
+    "source": "evidence/lane_check.json"
+  },
+  "validator_output": {
+    "label": "HOLDOUT-DTI format gate (local; not organizer acceptance)",
+    "passed": true,
+    "errors": [],
+    "shape_rows_cols": [
+      3730,
+      3292
+    ],
+    "count": 1,
+    "dtype": "float32",
+    "crs": "EPSG:32611",
+    "resolution_m": [
+      100.0,
+      100.0
+    ],
+    "template_match": true,
+    "no_nan_inside_footprint": true,
+    "finite_in_bounds": 5167373,
+    "values_in_01": [
+      0.0,
+      1.0
+    ],
+    "nodata": null,
+    "finite_outside_bounds": 7111787,
+    "source": "scripts/validate_submission.py read-back of final on-disk bytes"
+  },
+  "submission_form": {
+    "name": "GEMSDOE36-Anderson-PINN-20261025",
+    "note": "GEMSDOE36 Anderson-PINN | B=2 catalogue-flank prune + Anderson/geothermal dots; 38,854 dots; 0 on-cat; HOLDOUT-DTI 0.2699",
+    "note_chars": 121,
+    "note_label": "truthful method + holdout note (<=140 chars on this card; platform cap 200)"
+  },
+  "verdict": "negative",
+  "slot_eligible": false,
+  "rationale": "Unique format-validated TIF generated (gemsdoe36-anderson-geothermal-pinn-38854-20261025T235127Z-9b9ea4e6-zeros.tif); lane-distinct from the H6 lane (rho 0.047037, 64.7% dots within 3 px); no single-feature leakage (max AUC 0.75659). HOLDOUT-DTI lead 0.269908 vs base 0.267921 (margin +0.001987) but the 95% CI on the margin (-0.001330 .. +0.008059) spans zero and the lead wins only 1/4 spatial blocks -> gain is within noise on this holdout; NOT slot-eligible. No weekly submission slot was spent; upload remains the owner's manual step.",
+  "next_step": "Re-gate on a fold-consistent, CI-cleared gain before spending a weekly submission slot; upload (single final file for both prize rounds) is the owner's manual step."
+}

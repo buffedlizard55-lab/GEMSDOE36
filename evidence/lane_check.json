@@ -1,0 +1,293 @@
+{
+  "schema_version": 1,
+  "generated_utc": "2026-10-25T23:52:23+00:00",
+  "candidate": "docs/downloads/gemsdoe36-anderson-geothermal-pinn-38854-20261025T235127Z-9b9ea4e6-zeros.tif",
+  "candidate_sha256": "686f6773ab0d678942103830c96ddb9dcec6c2c12f503395b5a9752ca6c59fe7",
+  "candidate_dots": 38854,
+  "protocol": {
+    "corr_duplicate_threshold": 0.9,
+    "dot_overlap_duplicate_threshold": 0.7,
+    "dot_near_px": 3
+  },
+  "duplicate_found": true,
+  "checks": [
+    {
+      "registry_raster": "/home/user/GEMSDOE36/docs/downloads/GEMS36_h6_offcatalog_network_prior_20261004T193432.021282Z_3276c04090_3c064db2.tif",
+      "sha256": "c88237daa47c4f4f8bf9061677c1f05a52239c4d7a7c677f7329861de27af836",
+      "same_content_as_candidate": false,
+      "same_grid": true,
+      "spearman_rho": -0.000456,
+      "common_finite_px": 5167373,
+      "dots_within_3px_fraction": 0.043728,
+      "candidate_dots": 38854,
+      "registry_dots": 24881,
+      "duplicate_trigger": [],
+      "verdict": "distinct lane"
+    },
+    {
+      "registry_raster": "/home/user/GEMSDOE36/docs/downloads/gemsdoe36-anderson-geothermal-pinn-38854-20261004T230000Z-9b9ea4e6-nan.tif",
+      "sha256": "96d451d5ffc819fc3834052f22ab66190621f206c0bf8990446082a3363dc2ef",
+      "same_content_as_candidate": false,
+      "same_grid": true,
+      "spearman_rho": 1.0,
+      "common_finite_px": 5167373,
+      "companion_same_prediction": true,
+      "dots_within_3px_fraction": 1.0,
+      "candidate_dots": 38854,
+      "registry_dots": 38854,
+      "duplicate_trigger": [
+        "spearman rho 1.000 > 0.9",
+        "100.0% of dots within 3 px"
+      ],
+      "verdict": "companion variant (identical footprint prediction); not a lane drift"
+    },
+    {
+      "registry_raster": "/home/user/GEMSDOE36/docs/downloads/gemsdoe36-anderson-geothermal-pinn-38854-20261004T230000Z-9b9ea4e6-zeros.tif",
+      "sha256": "e15891020b9c57056ac7fa874a5e506fbd6ed9314a4ea8e73af0753887a3708a",
+      "same_content_as_candidate": false,
+      "same_grid": true,
+      "spearman_rho": 1.0,
+      "common_finite_px": 12279160,
+      "companion_same_prediction": true,
+      "dots_within_3px_fraction": 1.0,
+      "candidate_dots": 38854,
+      "registry_dots": 38854,
+      "duplicate_trigger": [
+        "spearman rho 1.000 > 0.9",
+        "100.0% of dots within 3 px"
+      ],
+      "verdict": "companion variant (identical footprint prediction); not a lane drift"
+    },
+    {
+      "registry_raster": "/home/user/GEMSDOE36/docs/downloads/gemsdoe36-anderson-geothermal-pinn-38854-20261025T234243Z-9b9ea4e6-nan.tif",
+      "sha256": "96d451d5ffc819fc3834052f22ab66190621f206c0bf8990446082a3363dc2ef",
+      "same_content_as_candidate": false,
+      "same_grid": true,
+      "spearman_rho": 1.0,
+      "common_finite_px": 5167373,
+      "companion_same_prediction": true,
+      "dots_within_3px_fraction": 1.0,
+      "candidate_dots": 38854,
+      "registry_dots": 38854,
+      "duplicate_trigger": [
+        "spearman rho 1.000 > 0.9",
+        "100.0% of dots within 3 px"
+      ],
+      "verdict": "companion variant (identical footprint prediction); not a lane drift"
+    },
+    {
+      "registry_raster": "/home/user/GEMSDOE36/docs/downloads/gemsdoe36-anderson-geothermal-pinn-38854-20261025T234243Z-9b9ea4e6-zeros.tif",
+      "sha256": "e15891020b9c57056ac7fa874a5e506fbd6ed9314a4ea8e73af0753887a3708a",
+      "same_content_as_candidate": false,
+      "same_grid": true,
+      "spearman_rho": 1.0,
+      "common_finite_px": 12279160,
+      "companion_same_prediction": true,
+      "dots_within_3px_fraction": 1.0,
+      "candidate_dots": 38854,
+      "registry_dots": 38854,
+      "duplicate_trigger": [
+        "spearman rho 1.000 > 0.9",
+        "100.0% of dots within 3 px"
+      ],
+      "verdict": "companion variant (identical footprint prediction); not a lane drift"
+    },
+    {
+      "registry_raster": "/home/user/GEMSDOE36/docs/downloads/gemsdoe36-anderson-geothermal-pinn-38854-20261025T235127Z-9b9ea4e6-nan.tif",
+      "sha256": "17d396f0b5c97c160d500212b987f3a1092ba3ac32e85d6f7b1e0a0e08a38b5a",
+      "same_content_as_candidate": false,
+      "same_grid": true,
+      "spearman_rho": 1.0,
+      "common_finite_px": 5167373,
+      "companion_same_prediction": true,
+      "dots_within_3px_fraction": 1.0,
+      "candidate_dots": 38854,
+      "registry_dots": 38854,
+      "duplicate_trigger": [
+        "spearman rho 1.000 > 0.9",
+        "100.0% of dots within 3 px"
+      ],
+      "verdict": "companion variant (identical footprint prediction); not a lane drift"
+    },
+    {
+      "registry_raster": "/home/user/GEMSDOE36/docs/downloads/gemsdoe36-anderson-geothermal-pinn-38854-20261025T235127Z-9b9ea4e6-zeros.tif",
+      "sha256": "686f6773ab0d678942103830c96ddb9dcec6c2c12f503395b5a9752ca6c59fe7",
+      "same_content_as_candidate": true,
+      "spearman_rho": null,
+      "common_finite_px": 0,
+      "dots_within_3px_fraction": null,
+      "verdict": "same-content rebuild (own lane; not a drift)"
+    },
+    {
+      "registry_raster": "/home/user/GEMSDOE36/data/raw/scored/13gems_20261001_r13-lattice-s5_v2_nan-outside.tif",
+      "sha256": "b4570b406efec198eb2f4d142ad8d0d6184b14b66f2f52b5c4d697f0647dc9b2",
+      "same_content_as_candidate": false,
+      "same_grid": true,
+      "spearman_rho": -3e-05,
+      "common_finite_px": 5167373,
+      "dots_within_3px_fraction": 0.999176,
+      "candidate_dots": 38854,
+      "registry_dots": 206895,
+      "duplicate_trigger": [
+        "99.9% of dots within 3 px"
+      ],
+      "verdict": "DUPLICATE-LANE"
+    },
+    {
+      "registry_raster": "/home/user/GEMSDOE36/data/raw/scored/8GEMSDOE_Hedge-v2_submission.tif",
+      "sha256": "052688eafbc7a55d90caab72252a50304fe5caa8ecf973f8e791b4ae910f0792",
+      "same_content_as_candidate": false,
+      "same_grid": true,
+      "spearman_rho": 0.034706,
+      "common_finite_px": 5167373,
+      "dots_within_3px_fraction": 0.64696,
+      "candidate_dots": 38854,
+      "registry_dots": 227507,
+      "duplicate_trigger": [],
+      "verdict": "distinct lane"
+    },
+    {
+      "registry_raster": "/home/user/GEMSDOE36/data/raw/scored/gems10-h25-ctx-ridge-20260927T232947704150Z-6452ae1d00.tif",
+      "sha256": "1381e784fb8b8340beffd0e735ac9eea89ad35d1a807f8a9bab5506e3fc8275e",
+      "same_content_as_candidate": false,
+      "same_grid": true,
+      "spearman_rho": 0.047037,
+      "common_finite_px": 5167373,
+      "dots_within_3px_fraction": 0.584727,
+      "candidate_dots": 38854,
+      "registry_dots": 174232,
+      "duplicate_trigger": [],
+      "verdict": "distinct lane"
+    },
+    {
+      "registry_raster": "/home/user/GEMSDOE36/data/raw/scored/gems10-h28-dotted-ridge-20260928T020256236880Z-6452ae1d00.tif",
+      "sha256": "7637b72d4c6c3e10226bf46bd72a20272d62ccbe29743062632d10b158b49c58",
+      "same_content_as_candidate": false,
+      "same_grid": true,
+      "spearman_rho": 0.027193,
+      "common_finite_px": 5167373,
+      "dots_within_3px_fraction": 0.610413,
+      "candidate_dots": 38854,
+      "registry_dots": 69281,
+      "duplicate_trigger": [],
+      "verdict": "distinct lane"
+    },
+    {
+      "registry_raster": "/home/user/GEMSDOE36/data/raw/scored/gems16-h16-1-topo-geophys-baseline-ridges-20260930-df20f65e-nan.tif",
+      "sha256": "055309694ed499ca3d87e76b3f5e81c292aef6e39c418d33ff5a817aa1309bea",
+      "same_content_as_candidate": false,
+      "same_grid": true,
+      "spearman_rho": 0.385661,
+      "common_finite_px": 5167373,
+      "dots_within_3px_fraction": 0.931024,
+      "candidate_dots": 38854,
+      "registry_dots": 123939,
+      "duplicate_trigger": [
+        "93.1% of dots within 3 px"
+      ],
+      "verdict": "DUPLICATE-LANE"
+    },
+    {
+      "registry_raster": "/home/user/GEMSDOE36/data/raw/scored/gems19-h19-4-multiline-corroborated-openness-thermal-pop-20260930-691e4dfa-nan.tif",
+      "sha256": "89109a3bd2cd3b12e7a0f388113c519843acfc9c4f46825affefc3e63dd99b22",
+      "same_content_as_candidate": false,
+      "same_grid": true,
+      "spearman_rho": 0.46637,
+      "common_finite_px": 5167373,
+      "dots_within_3px_fraction": 0.958923,
+      "candidate_dots": 38854,
+      "registry_dots": 123779,
+      "duplicate_trigger": [
+        "95.9% of dots within 3 px"
+      ],
+      "verdict": "DUPLICATE-LANE"
+    },
+    {
+      "registry_raster": "/home/user/GEMSDOE36/data/raw/scored/gems19-h19-5-powerlaw-budget-multiline-corroborated-20260930-e27054cf-nan.tif",
+      "sha256": "ec1f9b56b83ce33cad781ceb9f104b18fb4f2ff785263a4e89616af4aabdee8d",
+      "same_content_as_candidate": false,
+      "same_grid": true,
+      "spearman_rho": 0.544043,
+      "common_finite_px": 5167373,
+      "dots_within_3px_fraction": 0.977506,
+      "candidate_dots": 38854,
+      "registry_dots": 121131,
+      "duplicate_trigger": [
+        "97.8% of dots within 3 px"
+      ],
+      "verdict": "DUPLICATE-LANE"
+    },
+    {
+      "registry_raster": "/home/user/GEMSDOE36/data/raw/scored/gems24-h25-1-dotted-h19-5-d1-5-20261002-989f59505db1-nan.tif",
+      "sha256": "68d0e2e4fcc594f9a23f56c44b885fee733d026d39be55e18ad2a07289525310",
+      "same_content_as_candidate": false,
+      "same_grid": true,
+      "spearman_rho": 0.523873,
+      "common_finite_px": 5167373,
+      "dots_within_3px_fraction": 0.975678,
+      "candidate_dots": 38854,
+      "registry_dots": 60069,
+      "duplicate_trigger": [
+        "97.6% of dots within 3 px"
+      ],
+      "verdict": "DUPLICATE-LANE"
+    },
+    {
+      "registry_raster": "/home/user/GEMSDOE36/data/raw/scored/gems24-h25-1-dotted-h19-5-d2-8-20261002-e56ea318af89-nan.tif",
+      "sha256": "91eae1ca42ec845eaa8c2ba32da49806e24751743459b8a10017c479bbe639b8",
+      "same_content_as_candidate": false,
+      "same_grid": true,
+      "spearman_rho": 0.909038,
+      "common_finite_px": 5167373,
+      "dots_within_3px_fraction": 0.974983,
+      "candidate_dots": 38854,
+      "registry_dots": 44090,
+      "duplicate_trigger": [
+        "spearman rho 0.909 > 0.9",
+        "97.5% of dots within 3 px"
+      ],
+      "verdict": "DUPLICATE-LANE"
+    },
+    {
+      "registry_raster": "/home/user/GEMSDOE36/data/raw/scored/gems27-topo-gap-closure-t-v2-on-d1-5-20261002-5512495c6bd1-nan.tif",
+      "sha256": "33003374335d84bf885f2d8f5e9dd4c57044c8ec58fa6a0d7fa581e8bc41c11d",
+      "same_content_as_candidate": false,
+      "same_grid": true,
+      "spearman_rho": 0.518356,
+      "common_finite_px": 5167373,
+      "dots_within_3px_fraction": 0.975781,
+      "candidate_dots": 38854,
+      "registry_dots": 61328,
+      "duplicate_trigger": [
+        "97.6% of dots within 3 px"
+      ],
+      "verdict": "DUPLICATE-LANE"
+    },
+    {
+      "registry_raster": "/home/user/GEMSDOE36/data/raw/scored/gemsdoe-ens12-adopted-7f00890a.tif",
+      "sha256": "7f00890a62878d612fb5eef67a9a364a2df819433dde74b6762ce4fc0fc4fe15",
+      "same_content_as_candidate": false,
+      "same_grid": true,
+      "spearman_rho": 0.044691,
+      "common_finite_px": 5167373,
+      "dots_within_3px_fraction": 0.635353,
+      "candidate_dots": 38854,
+      "registry_dots": 172974,
+      "duplicate_trigger": [],
+      "verdict": "distinct lane"
+    },
+    {
+      "registry_raster": "/home/user/GEMSDOE36/data/raw/scored/gemsdoe9-PLACEHOLDER-2314b599.tif",
+      "sha256": "2314b59920bfeeaf6a592d4868b25eca62212825620f9945723c2f6d0a2e5b22",
+      "same_content_as_candidate": false,
+      "same_grid": true,
+      "spearman_rho": 0.000563,
+      "common_finite_px": 12279160,
+      "dots_within_3px_fraction": 0.063906,
+      "candidate_dots": 38854,
+      "registry_dots": 343816,
+      "duplicate_trigger": [],
+      "verdict": "distinct lane"
+    }
+  ]
+}

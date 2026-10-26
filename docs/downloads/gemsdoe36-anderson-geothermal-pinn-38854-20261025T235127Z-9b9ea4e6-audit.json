@@ -1,0 +1,54 @@
+{
+  "candidate_id": "GEMSDOE36-Anderson-PINN-20261025",
+  "prefix": "gemsdoe36-anderson-geothermal-pinn",
+  "content_digest8": "9b9ea4e6",
+  "timestamp_tag": "20261025T235127Z",
+  "emitted_positive_pixels": 38854,
+  "note": "GEMSDOE36 Anderson-PINN | B=2 catalogue-flank prune + Anderson/geothermal dots; 38,854 dots; 0 on-cat; HOLDOUT-DTI 0.2699",
+  "zeros_tif": {
+    "filename": "gemsdoe36-anderson-geothermal-pinn-38854-20261025T235127Z-9b9ea4e6-zeros.tif",
+    "path": "/home/user/GEMSDOE36/docs/downloads/gemsdoe36-anderson-geothermal-pinn-38854-20261025T235127Z-9b9ea4e6-zeros.tif",
+    "bytes": 318120,
+    "sha256": "686f6773ab0d678942103830c96ddb9dcec6c2c12f503395b5a9752ca6c59fe7",
+    "mode": "zeros",
+    "nodata": null,
+    "in_footprint_all_finite": true,
+    "full_grid_all_finite": true,
+    "range_in_01": true
+  },
+  "nan_tif": {
+    "filename": "gemsdoe36-anderson-geothermal-pinn-38854-20261025T235127Z-9b9ea4e6-nan.tif",
+    "path": "/home/user/GEMSDOE36/docs/downloads/gemsdoe36-anderson-geothermal-pinn-38854-20261025T235127Z-9b9ea4e6-nan.tif",
+    "bytes": 371056,
+    "sha256": "17d396f0b5c97c160d500212b987f3a1092ba3ac32e85d6f7b1e0a0e08a38b5a",
+    "mode": "nan",
+    "nodata": "nan",
+    "in_footprint_all_finite": true,
+    "full_grid_all_finite": false,
+    "range_in_01": true
+  },
+  "zip_archive": {
+    "filename": "gemsdoe36-anderson-geothermal-pinn-38854-20261025T235127Z-9b9ea4e6-zeros.zip",
+    "path": "/home/user/GEMSDOE36/docs/downloads/gemsdoe36-anderson-geothermal-pinn-38854-20261025T235127Z-9b9ea4e6-zeros.zip",
+    "bytes": 212160,
+    "sha256": "24e9929a938fe1c606e381f058156b482ac2053580d26d20d5b3774e724a6082"
+  },
+  "meta": {
+    "candidate_id": "GEMSDOE36-LEAD-PINN",
+    "hypothesis": "H36-PINN-Lead",
+    "description": "GEMSDOE36 Multi-Physics Anderson PINN: B=2 base + Anderson-consistent geothermal & step-over conduits (38,854 dots)",
+    "emitted_dots": 38854,
+    "on_catalogue_dots": 0,
+    "lm_calibrated_mean": 0.2699079014319995,
+    "lm_per_fold": {
+      "foldNW": 0.17699779396397708,
+      "foldNE": 0.42234235300524403,
+      "foldSW": 0.22497167953959424,
+      "foldSE": 0.25531977921918264
+    },
+    "margin_vs_base": 0.0019873698629583325,
+    "folds_beat_base": 1,
+    "projected_live_score": 0.2797873698629583,
+    "slot_eligible": false
+  }
+}

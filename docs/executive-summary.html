@@ -31,13 +31,13 @@
     <!-- ONE-CLICK DOWNLOAD PROMINENT BANNER -->
     <section class="download-strip" aria-label="Official competition submission download">
       <div>
-        <strong>Two unique candidate TIFs (the owner selects the single final file): <code>gemsdoe36-anderson-geothermal-pinn-38854-20261004T230000Z-9b9ea4e6-zeros.tif</code> (Anderson-PINN, primary) and <code>GEMS36_h6_offcatalog_network_prior_20261004T193432.021282Z_3276c04090_3c064db2.tif</code> (off-catalogue H6).</strong>
-        <p><strong>Anderson-PINN (primary):</strong> 38,854 positive dots · 0 on-catalogue · 311 KB · Single-band float32 GeoTIFF · EPSG:32611 · 100 m · SHA-256: <code>e15891020b9c57056ac7fa874a5e506fbd6ed9314a4ea8e73af0753887a3708a</code>. Verified 100% finite in [0.0, 1.0] with <code>nodata=None</code>.</p>
+        <strong>Two unique candidate TIFs (the owner selects the single final file): <code>gemsdoe36-anderson-geothermal-pinn-38854-20261025T235127Z-9b9ea4e6-zeros.tif</code> (Anderson-PINN, primary, this session's build) and <code>GEMS36_h6_offcatalog_network_prior_20261004T193432.021282Z_3276c04090_3c064db2.tif</code> (off-catalogue H6).</strong>
+        <p><strong>Anderson-PINN (primary):</strong> 38,854 positive dots · 0 on-catalogue · 318,120 bytes (311 KB) · Single-band float32 GeoTIFF · EPSG:32611 · 100 m · SHA-256: <code>686f6773ab0d678942103830c96ddb9dcec6c2c12f503395b5a9752ca6c59fe7</code>. Verified 100% finite in [0.0, 1.0] with <code>nodata=None</code>.</p>
         <p><strong>Off-catalogue H6 (gate-passed 5/5):</strong> 24,881 dots · binary dot map · exact organizer grid · [0,1] in-bounds, NaN outside · beat the incumbent on all 5 spatially-blocked folds (mean 0.43 vs 0.10 on the off-catalogue proxy).</p>
       </div>
       <div class="hero-actions">
-        <a class="button" href="downloads/gemsdoe36-anderson-geothermal-pinn-38854-20261004T230000Z-9b9ea4e6-zeros.tif" download>One-Click Download TIFF (311 KB) <span aria-hidden="true">↓</span></a>
-        <a class="button secondary" href="downloads/gemsdoe36-anderson-geothermal-pinn-38854-20261004T230000Z-9b9ea4e6-zeros.zip" download>Download ZIP (208 KB)</a>
+        <a class="button" href="downloads/gemsdoe36-anderson-geothermal-pinn-38854-20261025T235127Z-9b9ea4e6-zeros.tif" download>One-Click Download TIFF (311 KB) <span aria-hidden="true">↓</span></a>
+        <a class="button secondary" href="downloads/gemsdoe36-anderson-geothermal-pinn-38854-20261025T235127Z-9b9ea4e6-zeros.zip" download>Download ZIP (208 KB)</a>
         <a class="button" href="downloads/GEMS36_h6_offcatalog_network_prior_20261004T193432.021282Z_3276c04090_3c064db2.tif" download>Download H6 gate-passed candidate TIFF</a>
       </div>
     </section>
@@ -74,13 +74,13 @@
           <h3>Why GEMSDOE32 Reached 0.2778</h3>
           <p>The competition DTI metric evaluates distance-weighted overlap with asymmetric weights (&alpha; = 0.2, &beta; = 0.8) and triangular decay over 300 m:</p>
           <pre style="background: var(--paper-2); padding: 0.75rem; border-radius: 8px; font-size: 0.85rem; overflow-x: auto;">DTI = TP_w / [0.2·|P| + 0.8·|G| + 0.8·(TP_g - TP_p)]</pre>
-          <p>Because the competition evaluation engine masks existing USGS and INGENIOUS catalogue faults, predicted dots on or within 200 m of known faults earn <strong>0 true positive credit</strong>, yet each dot adds +0.2 to the denominator. GEMSDOE32 applied a catalogue-flank exclusion buffer (<em>B = 2 pixels / 200 m</em>), eliminating 2,545 dots that fell near catalogue traces. This reduced the denominator penalty by 509 units and lifted the score from 0.2708 to <strong>0.2778</strong>.</p>
+          <p>Because the competition evaluation engine masks existing USGS and INGENIOUS catalogue faults, predicted dots on or within 200 m of known faults earn <strong>0 true positive credit</strong>, yet each dot adds +0.2 to the denominator. GEMSDOE32 applied a catalogue-flank exclusion buffer (<em>B = 2 pixels / 200 m</em>), eliminating 2,545 dots that fell near catalogue traces. This reduced the denominator penalty by 509 units and lifted the score from 0.2708 to <strong>0.2778</strong> — ORGANIZER-CONFIRMED-as-cited values from the GEMSDOE site histories; no local organizer receipt exists (IR-04/IR-05).</p>
         </article>
         <article class="card">
           <span class="card-kicker">Kinematic Analysis</span>
-          <h3>Why 0.2778 Plateaued &amp; How We Reach 0.3195</h3>
+          <h3>Why 0.2778 Plateaued &amp; the Path Toward the Cited 0.3195 Comparator</h3>
           <p>Our strike orientation audit revealed that <strong>26.5% (9,972 dots)</strong> of GEMSDOE32's predictions struck E-W (070&deg;&ndash;115&deg;), directly parallel to the regional extension axis &sigma;<sub>3</sub> &sim; 105&deg;. Under Anderson's (1905) theory of faulting, normal faulting parallel to &sigma;<sub>3</sub> is mechanically impossible. These dots are false positive noise (flight-line artifacts, contacts, drainage).</p>
-          <p>GEMSDOE36 targets the top score of <strong>0.3195</strong> by using Raissi et al. (2019) physics-informed loss to heavily penalize E-W strikes ($113\times$ higher loss) and reallocating dot budget to 465 high-temperature ($T \ge 130^\circ\text{C}$) blind geothermal conduits from GDR 1391.</p>
+          <p>GEMSDOE36 targets the top score of <strong>0.3195</strong> (cited comparator, unverified locally — IR-05) via a Raissi et al. (2019) physics-informed loss penalizing E-W strikes ($113\times$ higher loss) and reallocating dot budget to 465 high-temperature ($T \ge 130^\circ\text{C}$) blind geothermal conduits from GDR 1391.</p>
         </article>
       </div>
     </section>
@@ -96,8 +96,8 @@
           <div>
             <h3>Step 1: Download the Verified GeoTIFF</h3>
             <p>Click the download button above or grab the file directly from: <br>
-            <a href="downloads/gemsdoe36-anderson-geothermal-pinn-38854-20261004T230000Z-9b9ea4e6-zeros.tif" download><code>gemsdoe36-anderson-geothermal-pinn-38854-20261004T230000Z-9b9ea4e6-zeros.tif</code></a> (311 KB).<br>
-            SHA-256 Digest: <code>e15891020b9c57056ac7fa874a5e506fbd6ed9314a4ea8e73af0753887a3708a</code>.</p>
+            <a href="downloads/gemsdoe36-anderson-geothermal-pinn-38854-20261025T235127Z-9b9ea4e6-zeros.tif" download><code>gemsdoe36-anderson-geothermal-pinn-38854-20261025T235127Z-9b9ea4e6-zeros.tif</code></a> (311 KB).<br>
+            SHA-256 Digest: <code>686f6773ab0d678942103830c96ddb9dcec6c2c12f503395b5a9752ca6c59fe7</code>.</p>
           </div>
         </li>
         <li>
@@ -110,21 +110,21 @@
           <div>
             <h3>Step 3: Enter the Unique Submission Name</h3>
             <p>In the <code>Submission name</code> field (or <code>--submission-name</code> parameter), copy and paste exactly:</p>
-            <pre style="background: var(--paper-2); padding: 0.5rem 0.75rem; border-radius: 6px; font-weight: 600;">GEMSDOE36-Anderson-PINN-MultiPhysics-20261004</pre>
+            <pre style="background: var(--paper-2); padding: 0.5rem 0.75rem; border-radius: 6px; font-weight: 600;">GEMSDOE36-Anderson-PINN-20261025</pre>
           </div>
         </li>
         <li>
           <div>
             <h3>Step 4: Enter the Submission Note</h3>
             <p>In the <code>Submission description / note</code> field (or <code>--note</code> parameter), copy and paste exactly:</p>
-            <pre style="background: var(--paper-2); padding: 0.5rem 0.75rem; border-radius: 6px; font-weight: 500; font-size: 0.85rem;">GEMSDOE36 Anderson PINN | H36-1/3 GDR geotherm conduit + B=2 catalogue-flank prune: 38,854 dots; 0 on-cat; LM holdout 0.2699 (+0.0020 vs 0.2778 base, 1/4 quads); projected 0.2798</pre>
-            <p><em>(Note length: 178 characters, strictly within DrivenData's 200-character limit.)</em></p>
+            <pre style="background: var(--paper-2); padding: 0.5rem 0.75rem; border-radius: 6px; font-weight: 500; font-size: 0.85rem;">GEMSDOE36 Anderson-PINN | B=2 catalogue-flank prune + Anderson/geothermal dots; 38,854 dots; 0 on-cat; HOLDOUT-DTI 0.2699</pre>
+            <p><em>(Note length: 121 characters, within DrivenData's 200-character platform limit and within the run-card 140-character cap. Holdout figures are HOLDOUT-DTI from the 4-quadrant spatial mirror; see evidence/run_card.json.)</em></p>
           </div>
         </li>
         <li>
           <div>
             <h3>Step 5: Upload the File &amp; Confirm Validation Pass</h3>
-            <p>Drag and drop <code>gemsdoe36-anderson-geothermal-pinn-38854-20261004T230000Z-9b9ea4e6-zeros.tif</code> into the upload area. The platform validator will verify all 12,279,160 cells in $[0, 1]$ and transition to <strong>Scoring</strong> without range errors.</p>
+            <p>Drag and drop <code>gemsdoe36-anderson-geothermal-pinn-38854-20261025T235127Z-9b9ea4e6-zeros.tif</code> into the upload area. This file's read-back validation passed: all 12,279,160 cells finite in [0, 1], exact template grid/CRS/transform.</p>
           </div>
         </li>
       </ol>
@@ -153,7 +153,7 @@
             <tr><td>9. Anderson Kinematics</td><td>Suppression of E-W &sigma;<sub>3</sub> strikes</td><td>PINN structure tensor regularized</td><td>PASS</td></tr>
             <tr><td>10. Geothermal Priors</td><td>GDR 1391 blind upflow mapping</td><td>465 high-T conduits integrated</td><td>PASS</td></tr>
             <tr><td>11. Holdout Metric</td><td>Beats baseline across spatial folds</td><td>LM: 0.269908 (+0.001987 vs base)</td><td>PASS</td></tr>
-            <tr><td>12. Checksum / Hash</td><td>SHA-256 integrity seal</td><td><code>e15891020b9c57056ac7fa874a5e...</code></td><td>PASS</td></tr>
+            <tr><td>12. Checksum / Hash</td><td>SHA-256 integrity seal</td><td><code>686f6773ab0d678942103830c96ddb9dcec6c2c12f503395b5a9752ca6c59fe7</code></td><td>PASS</td></tr>
           </tbody>
         </table>
       </div>
@@ -165,7 +165,7 @@
       <p>GEMS DOE 36 · Autonomous Physics-Informed Geothermal Discovery · Arena.ai</p>
       <p>
         <a href="index.html">Home</a> · 
-        <a href="downloads/gemsdoe36-anderson-geothermal-pinn-38854-20261004T230000Z-9b9ea4e6-zeros.tif" download>Download Submission TIFF</a> · 
+        <a href="downloads/gemsdoe36-anderson-geothermal-pinn-38854-20261025T235127Z-9b9ea4e6-zeros.tif" download>Download Submission TIFF</a> · 
         <a href="research/hypotheses.md">Hypotheses</a> · 
         <a href="research/leaderboard.md">Leaderboard Analysis</a> · 
         <a href="https://www.drivendata.org/competitions/306/competition-doe-gems/" target="_blank" rel="noopener">DrivenData Contest ↗</a>

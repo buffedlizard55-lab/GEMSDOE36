@@ -1,7 +1,7 @@
 # GEMSDOE36: Two Independent Candidate Lines (Anderson-PINN + Off-Catalogue H6 Prior)
 
 > **Department of Energy (DOE) Geologic Enhanced Mapping System (GEMS) Prize Challenge**  
-> **Official Public Leaderboard Target:** 0.3195 (Historical Baseline: 0.2778)  
+> **Score references cited from GEMSDOE pages:** 0.3195 (current public leaderboard maximum, as cited) and 0.2778 (GEMSDOE32 h33-h33-2-b2, as cited) — ORGANIZER-CONFIRMED-as-cited only; no local organizer receipt exists for either value (see docs/research/known_irregularities.md IR-04/IR-05). Comparators, not locally verified organizer scores.  
 > **Repository state:** merged to `main` from sessions `arena/01a10833-gemsdoe36` (Anderson-PINN) and `arena/01a10834-gemsdoe36` (off-catalogue H6)  
 > **Submission Status:** Two unique, validated candidate GeoTIFFs published to `docs/downloads/` — Anderson-PINN primary (sections 1–3) and off-catalogue H6 gate-passed candidate (section 8). The owner selects the single final file for both prize rounds.
 
@@ -71,7 +71,7 @@ they use different holdout protocols and are not compared head-to-head):
 - **Anderson-PINN (main):** `prepare_data.py` → `anderson.py` (kinematic
   consistency) → `geothermal.py` → `run_pipeline.py`; LM-calibrated 4-quadrant
   mirror; primary deliverable
-  `docs/downloads/gemsdoe36-anderson-geothermal-pinn-38854-20261004T230000Z-9b9ea4e6-zeros.tif`
+  `docs/downloads/gemsdoe36-anderson-geothermal-pinn-38854-20261025T235127Z-9b9ea4e6-zeros.tif`
   (details in sections 1–3 below).
 - **Off-catalogue H6:** `prepare_data_h6.py` → `field.py` (multi-family
   corroboration belief field + off-catalogue SGMC prior) → `anderson_dip.py`
@@ -103,17 +103,18 @@ The primary submission artifact has been synthesized, rigorously audited against
 
 | Artifact | File Name | Format / CRS / Dtype | Size | SHA-256 Digest | Emitted Dots / Range |
 |---|---|---|---|---|---|
-| **Primary Submission TIF** | [`gemsdoe36-anderson-geothermal-pinn-38854-20261004T230000Z-9b9ea4e6-zeros.tif`](docs/downloads/gemsdoe36-anderson-geothermal-pinn-38854-20261004T230000Z-9b9ea4e6-zeros.tif) | 1-band GeoTIFF, EPSG:32611, float32, `nodata=None` | 311 KB | `e15891020b9c57056ac7fa874a5e506fbd6ed9314a4ea8e73af0753887a3708a` | **38,854 dots**; 100% finite in [0.0, 1.0] (0 NaN) |
-| **Single-Member ZIP** | [`gemsdoe36-anderson-geothermal-pinn-38854-20261004T230000Z-9b9ea4e6-zeros.zip`](docs/downloads/gemsdoe36-anderson-geothermal-pinn-38854-20261004T230000Z-9b9ea4e6-zeros.zip) | ZIP archive containing primary GeoTIFF | 208 KB | `89528f8f041ff360ca6774e1d167ae2c43105ff76166164d785a975765792ec0` | 1 member |
-| **NaN Companion TIF** | [`gemsdoe36-anderson-geothermal-pinn-38854-20261004T230000Z-9b9ea4e6-nan.tif`](docs/downloads/gemsdoe36-anderson-geothermal-pinn-38854-20261004T230000Z-9b9ea4e6-nan.tif) | 1-band GeoTIFF, EPSG:32611, float32, `nodata=nan` | 363 KB | `0692a54fb2a62886c9134b9d0ecad8d9ffc7128695beee78ce6c86720f496101` | **38,854 dots**; 5,167,373 finite in [0.0, 1.0]; NaN outside |
-| **12-Point Audit JSON** | [`gemsdoe36-anderson-geothermal-pinn-38854-20261004T230000Z-9b9ea4e6-audit.json`](docs/downloads/gemsdoe36-anderson-geothermal-pinn-38854-20261004T230000Z-9b9ea4e6-audit.json) | JSON validation sidecar | 2.4 KB | `b348d2fc7603c7340b17169f470aa10ec33dca3d6ee178049a46327b7c251d13` | Complete 12-point check report |
+| **Primary Submission TIF** | [`gemsdoe36-anderson-geothermal-pinn-38854-20261025T235127Z-9b9ea4e6-zeros.tif`](docs/downloads/gemsdoe36-anderson-geothermal-pinn-38854-20261025T235127Z-9b9ea4e6-zeros.tif) | 1-band GeoTIFF, EPSG:32611, float32, `nodata=None` | 318,120 bytes (311 KB) | `686f6773ab0d678942103830c96ddb9dcec6c2c12f503395b5a9752ca6c59fe7` | **38,854 dots**; 100% finite in [0.0, 1.0] (0 NaN) |
+| **Single-Member ZIP** | [`gemsdoe36-anderson-geothermal-pinn-38854-20261025T235127Z-9b9ea4e6-zeros.zip`](docs/downloads/gemsdoe36-anderson-geothermal-pinn-38854-20261025T235127Z-9b9ea4e6-zeros.zip) | ZIP archive containing primary GeoTIFF | 212,160 bytes (208 KB) | `24e9929a938fe1c606e381f058156b482ac2053580d26d20d5b3774e724a6082` | 1 member |
+| **NaN Companion TIF** | [`gemsdoe36-anderson-geothermal-pinn-38854-20261025T235127Z-9b9ea4e6-nan.tif`](docs/downloads/gemsdoe36-anderson-geothermal-pinn-38854-20261025T235127Z-9b9ea4e6-nan.tif) | 1-band GeoTIFF, EPSG:32611, float32, `nodata=nan` | 371,056 bytes (363 KB) | `17d396f0b5c97c160d500212b987f3a1092ba3ac32e85d6f7b1e0a0e08a38b5a` | **38,854 dots**; 5,167,373 finite in [0.0, 1.0]; NaN outside |
+| **12-Point Audit JSON** | [`gemsdoe36-anderson-geothermal-pinn-38854-20261025T235127Z-9b9ea4e6-audit.json`](docs/downloads/gemsdoe36-anderson-geothermal-pinn-38854-20261025T235127Z-9b9ea4e6-audit.json) | JSON validation sidecar | 2,319 bytes | `d49489373d22e6b0d499abc5069c9581aeef0aa6983debb4df80df3813f5559a` | Complete 12-point check report |
 | **Submissions Manifest** | [`submissions_manifest.json`](docs/downloads/submissions_manifest.json) | JSON registry | 4.1 KB | Registered in bundle | SHA-256 hashes & metadata |
 
 ### Competition Metadata for Portal Upload:
 - **Submission Name:**  
-  `GEMSDOE36-Anderson-PINN-MultiPhysics-20261004`
-- **Submission Note (178 characters, strictly under the 200 character platform limit):**  
-  `GEMSDOE36 Anderson PINN | H36-1/3 GDR geotherm conduit + B=2 catalogue-flank prune: 38,854 dots; 0 on-cat; LM holdout 0.2699 (+0.0020 vs 0.2778 base, 1/4 quads); projected 0.2798`
+  `GEMSDOE36-Anderson-PINN-20261025`
+- **Submission Note (121 characters, within the 200 character platform limit; run-card cap 140):**  
+  `GEMSDOE36 Anderson-PINN | B=2 catalogue-flank prune + Anderson/geothermal dots; 38,854 dots; 0 on-cat; HOLDOUT-DTI 0.2699`
+- **Holdout number labeling:** `0.2699` LM mean and `+0.001987` margin are HOLDOUT-DTI (4-quadrant spatially blocked mirror, `src/gemsdoe36/live_mirror.py` + `src/gemsdoe36/metric.py`, DTI alpha=0.2, beta=0.8, triangular R=300 m; withheld positives per fold and 95% CIs in `evidence/run_card.json`). No projection is written as a score; `evidence/run_card.json` is the protocol run card (verdict: negative — see § below).
 
 ---
 
@@ -149,7 +150,7 @@ On DrivenData's hidden evaluation server, **all pre-existing USGS and INGENIOUS 
 - Because catalogue faults are masked in $G$, these 2,545 dots earned **zero true positive credit** ($\text{TP}_w = 0$).
 - Yet they incurred a denominator penalty of $2,545 \times 0.2 = +509.0$.
 - By removing all dots with $d_{\text{cat}} \le 200\text{ m}$, `GEMSDOE32` cut $|P|$ to 37,654 dots, reducing the denominator by 509 without losing any true positives.
-- **Result:** Score leaped from 0.2708 to **0.2778** (+0.0070 net jump).
+- **Result:** Score leaped from 0.2708 to **0.2778** (+0.0070 net jump) — 0.2708/0.2778 are ORGANIZER-CONFIRMED-as-cited values from the GEMSDOE site histories; no local organizer receipt exists (IR-04/IR-05).
 
 ### 3.3 Why 0.2778 Plateaued & Analysis of Kinematic Deficiencies
 Despite reaching 0.2778, the 37,654 dots in `GEMSDOE32` suffered from severe geological and physical flaws:
@@ -173,9 +174,9 @@ Reaching 0.3195 requires:
 
 ## 4. Ranked Geological Hypotheses
 
-| Rank | Hypothesis ID | Physical Mechanism & Inputs | Off-Catalogue Rationale | Expected DTI Impact | Cost | Status |
+| Rank | Hypothesis ID | Physical Mechanism & Inputs | Off-Catalogue Rationale | Expected DTI Impact (HOLDOUT-DTI margin vs base) | Cost | Status |
 |---|---|---|---|---|---|---|
-| **1 (Lead)** | **H36-1: Extensional Step-Over & Relay Ramp PINN** | GeoDAWN aeromagnetic tilt derivatives, Bouguer gravity HGM, WSM 2025 extension azimuth ($\sigma_3 \sim 105^\circ$), Raissi et al. (2019) structure-tensor loss. | Relay ramps and step-overs host intense fracturing without continuous surface scarps. Prunes 9,972 E-W non-Andersonian dots and adds NNE relay dots. | **+0.001987** over base (Holdout LM: 0.269908 vs 0.267921; live projection: 0.2798). | Medium | Fully Ingested & Verified |
+| **1 (Lead)** | **H36-1: Extensional Step-Over & Relay Ramp PINN** | GeoDAWN aeromagnetic tilt derivatives, Bouguer gravity HGM, WSM 2025 extension azimuth ($\sigma_3 \sim 105^\circ$), Raissi et al. (2019) structure-tensor loss. | Relay ramps and step-overs host intense fracturing without continuous surface scarps. Prunes 9,972 E-W non-Andersonian dots and adds NNE relay dots. | **+0.001987** over base (HOLDOUT-DTI: LM 0.269908 vs base 0.267921; margin +0.001987; margin 95% CI [-0.001330, +0.008059] spans zero — not statistically significant on 4 blocks; wins 1/4 quadrants). | Medium | Fully Ingested & Verified |
 | **2** | **H36-3: Blind Hydrothermal Upflow Conduit Mapping** | GDR 1391 geothermal well/spring geochemistry ($T \ge 130^\circ\text{C}$), 3 km IDW reservoir temperature field. | Active geothermal fluid circulation in the Great Basin is localized at high-dilation blind fault step-overs $>1.5\text{ km}$ off-catalogue. | **+0.001858** over base (Holdout LM: 0.269778). | Low-Med | Fully Ingested & Verified |
 | **3** | **H36-2: Pre-Cenozoic Basement Step Multi-Scale Advection** | Multiscale Bouguer gravity horizontal gradient magnitude (HGM), magnetic analytic signal. | Cenozoic normal faults reactivate deep crustal boundaries obscured by Quaternary alluvium. | **+0.001214** over base (Holdout LM: 0.269135). | Medium | Fully Ingested & Verified |
 | **4** | **H36-4: High-Resolution Geomorphic Scarp Coherence** | 1 m USGS 3DEP LiDAR DEM scarp slope breaks, curvature, detrended valley-to-ridge relief. | Identifies Holocene surface ruptures across alluvial fans. | +0.000400 to +0.000800 | High | Conditional on 1 m tile coverage |
@@ -192,17 +193,17 @@ GEMSDOE36 MULTI-PHYSICS HOLDOUT VALIDATION SUMMARY
 ================================================================================
 Candidate Model       Dots    Fold 0 (NW)  Fold 1 (NE)  Fold 2 (SW)  Fold 3 (SE)  LM Mean   Margin vs Base
 --------------------------------------------------------------------------------------------------------
-BASE-0.2778          37,654   0.231908     0.284112     0.281145     0.274519     0.267921  +0.000000
-H36-1-StepOver       38,554   0.231945     0.284140     0.281170     0.274570     0.267956  +0.000036
-H36-2-BasementStep   38,554   0.233010     0.285200     0.282500     0.275830     0.269135  +0.001214
-H36-3-Geothermal     38,854   0.233780     0.285750     0.282890     0.276690     0.269778  +0.001858
-GEMSDOE36-LEAD-PINN  38,854   0.233890     0.285901     0.283015     0.276826     0.269908  +0.001987
+BASE-0.2778          37,654   0.178454     0.422879     0.213825     0.256524     0.267921  +0.000000
+H36-1-StepOver       38,554   0.178454     0.422879     0.213969     0.256524     0.267956  +0.000036
+H36-2-BasementStep   38,554   0.182487     0.422256     0.216210     0.255586     0.269135  +0.001214
+H36-3-Geothermal     38,854   0.176956     0.422366     0.226154     0.253638     0.269778  +0.001858
+GEMSDOE36-LEAD-PINN  38,854   0.177000     0.422342     0.224972     0.255320     0.269908  +0.001987
 ================================================================================
 ```
 
-### Statistical Significance:
-- `GEMSDOE36-LEAD-PINN` outperforms the baseline across **all 4 quadrants** (NW: +0.001982, NE: +0.001789, SW: +0.001870, SE: +0.002307).
-- Calibrated to the 0.2778 leaderboard baseline, this $+0.001987$ holdout margin projects to a live score of **0.2798**.
+### Statistical Significance (HOLDOUT-DTI):
+- `GEMSDOE36-LEAD-PINN` beats the base mean (+0.001987) but wins only **1 of 4 quadrants** (SW); the paired block bootstrap 95% CI on the margin is [-0.001330, +0.008059] — it **spans zero**, so the gain is within noise on this 4-block holdout and is **not statistically significant**. No live-score projection is stated (a projection is never a score).
+- The lead is therefore **not slot-eligible** under the promotion gate (positive pooled mean is required *and* fold-consistency with a CI clearing zero). Verdict in `evidence/run_card.json`: negative. No weekly submission slot was spent.
 
 ---
 
@@ -251,7 +252,7 @@ python3 scripts/check_site.py
 
 # Validate the generated submission file
 python3 scripts/validate_submission.py \
-  docs/downloads/gemsdoe36-anderson-geothermal-pinn-38854-20261004T230000Z-9b9ea4e6-zeros.tif \
+  docs/downloads/gemsdoe36-anderson-geothermal-pinn-38854-20261025T235127Z-9b9ea4e6-zeros.tif \
   --json
 ```
 
