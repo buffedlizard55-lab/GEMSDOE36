@@ -1,0 +1,26 @@
+{
+  "lane_id": "KPL-36",
+  "kind": "post-merge local-prior addendum vs candidates merged to main after KPL deploy (PR #27/#28)",
+  "candidate": "gemsdoe36-kpl36-exp3-20261026-fc869911e88c-zeros.tif",
+  "results": {
+    "BDC-36": {
+      "file": "docs/downloads/gemsdoe36-bdc36-exp-2-20261026-18000dots-zeros.tif",
+      "dots": 18000,
+      "kpl_dots_within_3px_of_ref": 0.0581,
+      "ref_dots_within_3px_of_kpl": 0.1647
+    },
+    "LATTICE-AVOIDING-UPFLOW": {
+      "file": "docs/downloads/gemsdoe36-lattice-avoiding-upflow-20261026-6e268a98cbf3-zeros.tif",
+      "dots": 505,
+      "kpl_dots_within_3px_of_ref": 0.0092,
+      "ref_dots_within_3px_of_kpl": 0.4158
+    },
+    "13GEM_LATTICE_S5_CALIBRATION_CONTROL": {
+      "file": "13gems_20261001_r13-lattice-s5_v2_nan-outside.tif",
+      "dots": 206895,
+      "footprint_3px_coverage": 0.9987,
+      "kpl_dots_within_3px_of_ref": 0.9917,
+      "note": "blind space-filling calibration lattice; any 37654-dot subset of the footprint has >=82% forced 3px overlap (pigeonhole); not a competing detector and not in the preregistered champion gate"
+    }
+  }
+}

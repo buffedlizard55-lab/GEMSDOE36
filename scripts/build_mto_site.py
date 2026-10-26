@@ -496,7 +496,6 @@ def main() -> int:
     manifest = {"schema": "gemsdoe36.research-downloads.v3", "slot_approved": False,
                 "current_candidate": None, "run_card": "registry-preflight-run-card.json",
                 "archived_research_only": [
-                    {"file": csdl["submission"]["zeros_filename"], "sha256": csdl["submission"]["raster_sha256"], "submit_ok": False},
                     {"file": gvsc["submission"]["zeros_filename"], "sha256": gvsc["submission"]["raster_sha256"], "submit_ok": False},
                     {"file": Path(hvg["artifact"]["tif_path"]).name, "sha256": hvg["artifact"]["tif_sha256"], "submit_ok": False},
                     {"file": Path(mto["download"]["tif"]).name, "sha256": mto["raster_sha256"], "submit_ok": False},

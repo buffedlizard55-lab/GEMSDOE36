@@ -1,0 +1,16 @@
+{
+  "schema": "gemsdoe36.current-run.v4",
+  "lane_id": "BDC-36",
+  "verdict": "negative",
+  "slot_approved": false,
+  "ok_to_download_and_submit": false,
+  "research_downloads_only": true,
+  "tif_path": "downloads/gemsdoe36-bdc36-exp-2-20261026-18000dots-zeros.tif",
+  "tif_sha256": "4c1b7bdd5868679bcc2f3a3f81682b6074723bbd5cac00deaced070df59a296a",
+  "holdout_dti": 0.012429667987760212,
+  "ci95": [0.007996933313792457, 0.017338944517965686],
+  "evaluator_version": "gems-segment-pooled-v1",
+  "withheld_positives": 60988,
+  "run_card": "downloads/bdc36-run-card.json",
+  "note": "BDC-36 EXP-2 basement-step x dilatation | HOLDOUT-DTI 0.0124 | negative | 18000 dots"
+}

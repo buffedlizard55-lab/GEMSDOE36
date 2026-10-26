@@ -560,10 +560,14 @@ def legacy_main() -> int:
 
 
 def main() -> int:
-    """Refresh current Pages without overwriting archived research lanes."""
+    """Refresh current Pages and preserve all research lanes."""
+    from build_kpl_site import main as refresh_kpl
     from build_mto_site import main as refresh_current
 
-    return refresh_current()
+    rc = refresh_current()
+    if rc != 0:
+        return rc
+    return refresh_kpl()
 
 
 if __name__ == "__main__":
