@@ -289,6 +289,25 @@
         "ok_to_download_research_tif": true,
         "ok_to_download_and_submit": false
       },
+      "latest_hvg36_candidate": {
+        "name": "gemsdoe36-hvg36-vent-dipole-20261026-b3ee97873192-zeros.tif (docs/downloads/gemsdoe36-hvg36-vent-dipole-20261026-b3ee97873192-zeros.tif)",
+        "sha256": "85d56b03aff18f72d85de9c1e1ca02a2274263fffcd95aa0a6edac7bc9a08596",
+        "dots": 37654,
+        "holdout_dti_shared_1500m": 0.135759,
+        "holdout_ci95_shared_1500m": [
+          0.123271,
+          0.148461
+        ],
+        "score_label": "HOLDOUT-DTI (gems-segment-pooled-v1 1.5 km; 60,988 withheld px, 3,199 segments; new GEMSDOE36 repo best)",
+        "max_focus_9site_champions_3px_overlap": 0.444813,
+        "max_focus_9site_all_rasters_3px_overlap": 0.720056,
+        "overlap_vs_B2_champ": 0.353535,
+        "max_competing_method_overlap": 0.883678,
+        "max_all_203_literal_overlap": 1.0,
+        "verdict": "negative",
+        "ok_to_download_research_tif": true,
+        "ok_to_download_and_submit": false
+      },
       "safe_unique_candidate_available": false
     }
   ],
