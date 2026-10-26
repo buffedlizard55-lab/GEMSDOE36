@@ -167,6 +167,21 @@ def holdout_section(card: dict) -> str:
 """
 
 
+def duplicate_block(dots: dict) -> str:
+    rows = [
+        r for r in dots.get("top_overlap_rows", [])
+        if r.get("comparator_class") == "competing_method" and (r.get("candidate_dot_overlap_within_3px") or 0) > 0.70
+    ]
+    if not rows:
+        return '<p class="small">No competing-method raster exceeds the 70% final-dot overlap limit.</p>'
+    body = "".join(
+        f"<tr><td><code>{e(r['file'])}</code></td><td>{r['candidate_dot_overlap_within_3px']:.4f}</td><td>{(r.get('footprint_3px_coverage') or 0):.3f}</td></tr>"
+        for r in rows
+    )
+    return f"""<div class="callout warning"><p><strong>Logged as a lane duplicate (final-dot stage) — stop.</strong> More than 70% of the final dots fall within 3 px of the dots of the registry rasters below, so by the parallel-run rule this file has drifted into another lane. The file itself is new (no copied pixels; max |ρ| {dots['max_abs_rank_correlation']:.4f}); many of these comparators are dense rasters whose 3-px halo covers 19–55% of the footprint.</p></div>
+      <div class="table-wrap"><table><tr><th>Registry raster (top rows shown)</th><th>Share of our dots within 3 px</th><th>Its 3-px footprint coverage</th></tr>{body}</table></div>"""
+
+
 def index_page(card: dict) -> str:
     rc = card["registry_comparison"]
     dots = rc["final_dots"]
@@ -188,6 +203,7 @@ def index_page(card: dict) -> str:
         <tr><td>Final dots — max share within 3 px of a competing-method raster</td><td>{fmt(dots.get('max_competing_dot_overlap'), 4)}</td><td>0.70</td></tr>
         <tr><td>Final dots — max share incl. space-filling calibration controls (reported, not gated)</td><td>{fmt(dots.get('max_dot_overlap'), 4)}</td><td>—</td></tr>
       </table></div>
+      {duplicate_block(dots)}
     </section>
 
     <section class="section" aria-labelledby="why-title">
@@ -308,8 +324,41 @@ def update_readme(card: dict) -> None:
     p.write_text(s[:a] + readme_status(card) + s[b:], encoding="utf-8")
 
 
+def write_manifest(card: dict) -> None:
+    r, sub = card["raster"], card["submission"]
+    manifest = {
+        "schema_version": 2,
+        "generated_from": "evidence/h36_run_card.json",
+        "current": {
+            "file": Path(r["zeros_tif"]).name,
+            "sha256": r["zeros_sha256"],
+            "nan_twin": Path(r["nan_tif"]).name,
+            "nan_sha256": r["nan_sha256"],
+            "zip": Path(r["zip"]).name,
+            "zip_sha256": r["zip_sha256"],
+            "submission_name": sub["name"],
+            "note": sub["note"],
+            "verdict": card["verdict"],
+            "status": card["status"],
+            "ok_to_download": True,
+            "ok_to_submit": card["verdict"] == "promote",
+            "organizer_score": None,
+        },
+        "historical_do_not_submit": [
+            {"file": "gemsdoe36-anderson-geothermal-pinn-38854-20261004T230000Z-9b9ea4e6-zeros.tif",
+             "status": "already scored: owner-reported 0.2750 (< 0.2778); do not resubmit"},
+            {"file": "GEMS36_h6_offcatalog_network_prior_20261004T193432.021282Z_3276c04090_3c064db2.tif",
+             "status": "never scored; validated on a circular SGMC proxy; not submit-eligible"},
+            {"file": "GEMS36_FORMAT_TEST_NOT_SUBMISSION.tif", "status": "format fixture only"},
+        ],
+        "superseded_manifest": "submissions_manifest_2026-10-04_superseded.json (contains projections that were never scores)",
+    }
+    (DOCS / "downloads" / "submissions_manifest.json").write_text(json.dumps(manifest, indent=1) + "\n")
+
+
 def main() -> int:
     card = json.loads(CARD.read_text())
+    write_manifest(card)
     (DOCS / "index.html").write_text(index_page(card), encoding="utf-8")
     (DOCS / "executive-summary.html").write_text(exec_page(card), encoding="utf-8")
     update_readme(card)

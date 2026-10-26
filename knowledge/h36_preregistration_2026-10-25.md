@@ -46,3 +46,14 @@ masked pixel-exactly, pooled TPw/FPw/FNw, α = 0.2, β = 0.8, 300 m kernel, 10 k
 
 No organizer score is predicted. A pass authorises nothing by itself: slot selection is a separate
 selector step within the weekly cap (three per week per the official rules PDF, §3.2/§3.4).
+
+---
+
+### Addendum (written after E1/E2; does not change any rule above)
+
+External-source obtainability for H36-SEIS / H36-SHORE was verified through GitHub Actions
+(`.github/workflows/verify-external-sources.yml`, run
+https://github.com/buffedlizard55-lab/GEMSDOE36/actions/runs/40249277516): USGS ComCat FDSN
+returned HTTP 200 with 6,264 M ≥ 2.5 events (2000-01-01 → 2026-10-25) in the footprint bbox, and the
+USGS TNM API listed 1,985 3DEP 1 m DEM products and 106 1/3 arc-second products intersecting it
+(`evidence/external_source_verification.json`). None of these data were used in today's candidate.

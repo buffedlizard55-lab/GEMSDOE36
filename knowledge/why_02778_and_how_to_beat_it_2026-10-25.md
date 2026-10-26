@@ -89,8 +89,9 @@ conjugate synthetic/antithetic LiDAR scarp pairs and strike-coherent scarp integ
 59-feature multi-sensor model. On the shared hide-and-recover evaluator (HOLDOUT-DTI,
 `gems-segment-pooled-v1`, 60,988 withheld positives) it scored **0.13203** (95% CI [0.12053, 0.14433])
 against **0.13375** ([0.12224, 0.14604]) for the matched baseline: paired Δ −0.00172
-([−0.00667, +0.00319], 2/4 folds). The physics-only variant scored 0.05354. The lane is therefore
-**negative**: its unique GeoTIFF is published for research with an automatic **DO NOT SUBMIT** verdict
+([−0.00667, +0.00319], 2/4 folds). The physics-only variant scored 0.05354, and the final dots fell > 70% within 3 px of seven
+registry rasters (lane-duplicate rule; 36% vs the 0.2778 file). The lane is therefore **negative**:
+its new GeoTIFF is published for research with an automatic **DO NOT SUBMIT** verdict
 (`evidence/h36_run_card.json`, `knowledge/h36_findings_2026-10-25.md`). No organizer score exists.
 
 The honest answer to "can we beat 0.2778?" is: not with anything validated today. The arithmetic in §5

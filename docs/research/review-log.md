@@ -1,3 +1,5 @@
+> **Superseded on 2026-10-25.** This 2026-10-04 document contains projections (e.g. a projected 0.2798) that were never scores; the Anderson file's owner-reported live score is 0.2750. The verified 2026-10-25 leaderboard top is 0.4413 (0.3195 is stale). Current status: `README.md`, `evidence/h36_run_card.json`, `knowledge/h36_findings_2026-10-25.md`.
+
 # Three-pass review log
 
 **This log covers the carried-forward scaffold and the current follow-up.** The fresh check count is the source of truth; older README claims of 26/28 passing tests were not supported by the test environment without optional Torch.

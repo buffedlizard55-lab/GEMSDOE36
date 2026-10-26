@@ -1,7 +1,17 @@
 # GEMSDOE36 — DOE GEMS Prize (DrivenData #306) fault-discovery research
 
 <!-- STATUS:START -->
-_Status block is generated from `evidence/h36_run_card.json` by `scripts/build_site.py`._
+> ## Latest file: `gemsdoe36-h36-gps-graben-pair-20261026-bb29ce2a4bb4-zeros.tif`
+> **DOWNLOAD: YES · SUBMIT: NO — automatic NEGATIVE verdict (`DO_NOT_SUBMIT`)**
+>
+> [Download the GeoTIFF](docs/downloads/gemsdoe36-h36-gps-graben-pair-20261026-bb29ce2a4bb4-zeros.tif) · [ZIP](docs/downloads/gemsdoe36-h36-gps-graben-pair-20261026-bb29ce2a4bb4-zeros.zip) · [NaN twin](docs/downloads/gemsdoe36-h36-gps-graben-pair-20261026-bb29ce2a4bb4-nan.tif) · [JSON run card](evidence/h36_run_card.json)
+>
+> * Name: `gemsdoe36-h36-gps-graben-pair-20261026-bb29ce2a4bb4-zeros` · SHA-256 `e3800971b44116bca8ef8f996c3b2796b4d316962f797975f17d643abfac379b`
+> * Note (118 chars): `GEMSDOE36 H36-GPS graben-pair | HOLDOUT-DTI 0.1320 [0.1205,0.1443] seg-pooled-v1 60988pos | NEGATIVE | id bb29ce2a4bb4`
+> * Lane H36-GPS: **HOLDOUT-DTI 0.13203** (95% CI [0.12053, 0.14433], `gems-segment-pooled-v1`, 60,988 withheld positives) vs matched baseline 0.13375; paired Δ -0.00172 (CI [-0.00667, +0.00319], 2/4 folds); recorded group best 0.14876.
+> * Uniqueness vs 198 registry rasters: max |ρ| 0.5279 (≤ 0.90); max 3-px dot overlap with a competing method 0.8985 (≤ 0.70).
+> * Gates: G1 FAIL · G2 FAIL · G3 PASS · G4a PASS · G4b FAIL · G5 PASS
+> * Organizer score: none. Generated 2026-10-26T00:32:13+00:00.
 <!-- STATUS:END -->
 
 **Live site:** https://buffedlizard55-lab.github.io/GEMSDOE36/docs/ ·
@@ -891,8 +901,10 @@ Registry rasters are re-downloadable from the repo/path/sha256 rows in
 * **No organizer receipts.** Every live score is owner-reported; the site never shows a projection as a score.
 * **Proxy truth.** The holdout truth is the mapped catalogue; the competition truth is new expert-mapped faults.
   A detector that wins the holdout can still lose live, and vice versa.
-* **Network.** The sandbox reaches only GitHub/PyPI/npm. USGS 3DEP, ComCat, NBMG and GDR downloads need a
-  GitHub Actions workflow (as 7GEMSDOE/19GEMSDOE did) or an owner-run machine.
+* **Network.** The sandbox reaches only GitHub/PyPI/npm. A GitHub Actions workflow in this repo
+  (`.github/workflows/verify-external-sources.yml`) verified on 2026-10-26 that USGS ComCat (6,264 M ≥ 2.5
+  events in the footprint bbox since 2000) and the USGS TNM/3DEP API (1,985 1 m DEM products) are obtainable
+  that way (`evidence/external_source_verification.json`); bulk processing must run there, not here.
 * **Compute.** 2 vCPU / 3 GB RAM: no 1 m DEM processing or CNN training here.
 * **Compliance check for the owner (IR-20):** ≈118 scored entries in a month vs. the rules' three per week per entity.
 
