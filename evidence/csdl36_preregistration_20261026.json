@@ -1,0 +1,116 @@
+{
+  "lane_id": "CSDL-36",
+  "preregistered_utc": "2026-10-26T22:25:00+00:00",
+  "markdown_spec_path": "docs/research/preregistration-csdl36-20261026.md",
+  "markdown_spec_sha256": "103d981c0d28f95652ed4380c0f2a0dff9c25f3078afbc6fa44c4ba4bb1d5ff6",
+  "evaluator": {
+    "module": "gems.holdout.SegmentHoldout",
+    "version": "gems-segment-pooled-v1",
+    "buffer_px": 15,
+    "buffer_m": 1500.0,
+    "withheld_positives": 60988,
+    "total_components": 3199,
+    "metric": "DTI(alpha=0.2, beta=0.8, 300m Euclidean triangular kernel)",
+    "ci_draws": 1999
+  },
+  "banned_inputs": [
+    "existing_faults.tif (never read in feature builder)",
+    "labels.tif (never read in feature builder)",
+    "external/derived_sgmc_faults_100m_u8.tif",
+    "external/gdr_qfaults_traces.csv",
+    "dist_known_fault_px column in gdr_wellspring_in_footprint.csv",
+    "dist_known_fault_px column in gdr_volcanic_vents_in_footprint.csv",
+    "any registry or scored submission raster"
+  ],
+  "audit_remediations": {
+    "IR-GVSC36-01": "Strict single-factor ablation: EXP-1 (75 features: 59 Base + 16 CSDL_STRUCTURAL) vs EXP-2 (87 features: EXP-1 + 12 CSDL_CONDUIT) vs EXP-3 (Two-Regime + Relief-Conditioned LiDAR Bridge)",
+    "IR-GVSC36-02": "Removed invalid det_elev <= -60 m Lake Lahontan tufa threshold; paleo-geothermal deposits weighted purely by mineralogical class",
+    "IR-GVSC36-03": "Pre-placement surface rank-correlation screening (|rho| <= 0.90) executed and UTC-timestamped strictly prior to submodular dot placement",
+    "IR-GVSC36-04": "Exact programmatic feature counts asserted: BASE=59, STRUCTURAL=16, CONDUIT=12, EXP1=75, EXP2=87, LIDAR_REMOVED=14, EXP3_BLIND=73"
+  },
+  "feature_counts": {
+    "base": 59,
+    "csdl_structural": 16,
+    "csdl_conduit": 12,
+    "exp1_total": 75,
+    "exp2_total": 87,
+    "lidar_features_removed": 14,
+    "exp3_blind_total": 73
+  },
+  "ranked_hypotheses": [
+    {
+      "rank": 1,
+      "id": "CSDL-36-A",
+      "title": "Cross-Strike Displaced-Lag Shear/Dip-Slip Coherence, Co-Signed Basement-Gravity Throw Covariance & 3-D Euler Sheet Structural Index",
+      "status": "selected_for_EXP1"
+    },
+    {
+      "rank": 2,
+      "id": "CSDL-36-B",
+      "title": "Mineralogically Deconfounded Hydrothermal Conduit Back-Projection & Transtensional Strain Coupling",
+      "status": "selected_for_EXP2"
+    },
+    {
+      "rank": 3,
+      "id": "CSDL-36-C",
+      "title": "Stratified Near-Apron Negative De-Haloing, Relief-Conditioned LiDAR-Gap Bridge & Two-Regime 300 m Submodular Allocation",
+      "status": "selected_for_EXP3"
+    },
+    {
+      "rank": 4,
+      "id": "CSDL-36-D",
+      "title": "Raw 1-D GeoDAWN Flight-Line Crossover Residual & USGS 3DEP 1 m Absolute Shoreline Elevation Mask",
+      "status": "deferred_blocked_by_sandbox_network_allowlist"
+    }
+  ],
+  "frozen_budget": {
+    "max_experiments": 3,
+    "max_walltime_seconds": 7200,
+    "target_dots": 37654,
+    "fold_budgets_area_proportional": [
+      8414,
+      10404,
+      10410,
+      8426
+    ],
+    "arms": [
+      {
+        "id": "B0",
+        "role": "control",
+        "n_features": 59,
+        "emitter": "emit_dots"
+      },
+      {
+        "id": "EXP-1",
+        "role": "experiment_1_csdl_structural_ablation",
+        "n_features": 75,
+        "emitter": "sharpen_ridge_coherence + emit_submodular_cover(gamma=1.0, min_spacing_px=2.2)"
+      },
+      {
+        "id": "EXP-2",
+        "role": "experiment_2_csdl_conduit_ablation",
+        "n_features": 87,
+        "emitter": "sharpen_ridge_coherence + emit_submodular_cover(gamma=1.0, min_spacing_px=2.2)"
+      },
+      {
+        "id": "EXP-3",
+        "role": "experiment_3_two_regime_relief_lidar_bridge",
+        "n_features_full": 87,
+        "n_features_blind": 73,
+        "emitter": "sharpen_ridge_coherence + emit_two_regime_submodular_cover(primary_share=0.72, min_spacing_px=2.5)"
+      }
+    ]
+  },
+  "gates": {
+    "G1_canary_max_symmetric_auc": 0.9,
+    "G2_holdout_repo_b0": 0.13375,
+    "G2_holdout_prev_repo_best_gvsc36": 0.158855,
+    "G2_holdout_group_best_dprf1": 0.1637924,
+    "G3_whole_array_range": [
+      0.0,
+      1.0
+    ],
+    "G4_max_surface_abs_spearman": 0.9,
+    "G4_max_3px_dot_overlap": 0.7
+  }
+}

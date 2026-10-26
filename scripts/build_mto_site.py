@@ -19,6 +19,8 @@ DOCS = ROOT / "docs"
 CARD = ROOT / "evidence/mto36_run_card_20261026.json"
 HVG_CARD = ROOT / "evidence/hvg36_run_card_20261026.json"
 GVSC_CARD = ROOT / "evidence/gvsc36_run_card_20261026.json"
+CSDL_CARD = ROOT / "evidence/csdl36_run_card_20261026.json"
+BDC_CARD = ROOT / "evidence/bdc36_run_card_20261026.json"
 STOP_CARD = ROOT / "evidence/registry_preflight_run_card_20261026.json"
 DW_CARD = ROOT / "evidence/dw36_run_card_20261026.json"
 LEDGER = ROOT / "evidence/focus_sites_9repo_summary_20261026.json"
@@ -172,6 +174,26 @@ def parallel_dw_section(dw: dict) -> str:
 <p><a href="downloads/dw36-run-card.json">Parallel run card</a> · <a href="research/dw36-20261026.md">DW36 experiment report</a></p></section>'''
 
 
+def ensure_csdl_card(csdl: dict) -> None:
+    """Verify CSDL-36 run card, pre-placement chronology, and research-only negative status."""
+    if csdl.get("lane_id") != "CSDL-36" or csdl.get("verdict") != "negative" or csdl.get("safe_to_submit_live_slot") is not False:
+        raise RuntimeError("CSDL-36 must remain a negative research download")
+    if csdl["experiment_budget"]["experiments_executed"] != 3 or csdl["experiment_budget"]["elapsed_walltime_seconds"] > 7200:
+        raise RuntimeError("CSDL-36 experiment/walltime budget violated")
+    if not csdl["leakage_canary"]["passed"] or csdl["leakage_canary"]["total_features_tested"] != 87:
+        raise RuntimeError("CSDL-36 leakage canary check failed")
+    chron = csdl["chronology_proof"]
+    if not chron["surface_checked_strictly_before_dot_placement"] or not (chron["pre_placement_surface_check_utc"] <= chron["dot_emission_started_utc"]):
+        raise RuntimeError("CSDL-36 pre-placement surface chronology check failed")
+    sub = csdl["submission"]
+    if not (1 <= sub["note_length"] <= 140) or len(sub["note"]) != sub["note_length"]:
+        raise RuntimeError("CSDL-36 note length invalid")
+    for name, expected in ((sub["zeros_filename"], sub["raster_sha256"]),
+                           (sub["zip_archive_name"], sub["zip_sha256"])):
+        if _digest(DOCS / "downloads" / name) != expected:
+            raise RuntimeError(f"CSDL-36 artifact mismatch: {name}")
+
+
 def additional_archives() -> list[dict]:
     """Preserve older downloads without treating a self-promotion as approval."""
     def read(rel: str) -> dict:
@@ -270,9 +292,14 @@ def header(title: str) -> str:
 FOOTER = f'''</main><footer class="site-footer wrap"><div class="footer-row"><p>GEMSDOE36 · <strong>Maximize P(Win)</strong> &amp; <strong>Own the Outcome</strong> · <a href="AI_DISCLOSURE.md">AI disclosure</a></p><p>Independent research; not affiliated with DOE, USGS or DrivenData. <a href="{PROBLEM}">Official specification</a></p></div></footer></body></html>'''
 
 
-def archive_section(mto: dict, hvg: dict, gvsc: dict) -> str:
+def archive_section(mto: dict, hvg: dict, gvsc: dict, csdl: dict | None = None) -> str:
+    if csdl is None:
+        csdl = json.loads(CSDL_CARD.read_text(encoding="utf-8"))
     gs = gvsc["submission"]
+    cs_sub = csdl["submission"]
     records = [
+        ("CSDL-36 EXP-2", cs_sub["zeros_filename"], cs_sub["zip_archive_name"], cs_sub["raster_sha256"],
+         cs_sub["note"], "0.155970", "[0.141880, 0.170267]", "99.4104% (68.69% vs 9 focus sites)", "csdl36-run-card.json"),
         ("GVSC-36 EXP-3", gs["zeros_filename"], gs["zip_archive_name"], gs["raster_sha256"],
          gs["note"], "0.158855", "[0.145456, 0.173084]", "99.6176%", "gvsc36-run-card.json"),
         ("HVG-36 EXP-1", Path(hvg["artifact"]["tif_path"]).name, Path(hvg["artifact"]["zip_path"]).name,
@@ -291,8 +318,8 @@ def archive_section(mto: dict, hvg: dict, gvsc: dict) -> str:
     for item in additional_archives():
         zip_link = f' · <a href="downloads/{e(item["zip"])}" download>ZIP</a>' if item["zip"] else ""
         others.append(f'<li><strong>{e(item["lane"])}</strong> · <a href="downloads/{e(item["file"])}" download>{e(item["file"])}</a>{zip_link} · <a href="downloads/{e(item["card"])}">historical card</a> · DO NOT SUBMIT</li>')
-    return '''<section class="section" id="archive"><div class="section-head"><div><span class="eyebrow">Prior work</span><h2>Research downloads only</h2></div><p>These are historical artifacts, not new unique submissions. DO NOT SUBMIT.</p></div>
-<div class="grid cols-3">''' + ''.join(parts) + '''</div><p class="fine-print">GVSC also has a protocol-order flaw and partial prior-hypothesis overlap. Prior zeros-only TIFFs pass local full-grid range checks but do not use the official outside-NaN profile; the GVSC and HVG cards explicitly record this conflict. No organizer acceptance is established.</p><details><summary>More archived research downloads</summary><p>All are research-only. Lane36's old card says promote, but the <a href="downloads/lane36-crosscheck.json">independent expanded-registry crosscheck</a> found 93.17% overlap, so it is not approved.</p><ul>''' + ''.join(others) + '''</ul></details></section>'''
+    return '''<section class="section" id="archive"><div class="section-head"><div><span class="eyebrow">Prior &amp; deconfounded research lanes</span><h2>Research downloads only</h2></div><p>These are validated research artifacts with fail-closed negative verdicts. DO NOT SUBMIT.</p></div>
+<div class="grid cols-3">''' + ''.join(parts) + '''</div><p class="fine-print">CSDL-36 (EXP-1 0.155206, EXP-2 0.155970, EXP-3 0.152541) remediates GVSC-36 audit flags IR-GVSC36-01..04 (strict single-factor ablation, mineralogical-only paleo-deposit weighting without det_elev thresholds, pre-placement surface check |rho|=0.4398 &le; 0.90 strictly before dot placement, and exact 87/73 feature counts) and passes the 9-site &le;70% overlap gate (68.69%), but still hits 99.41% against the 5-px lattice (reg-052). GVSC also has a protocol-order flaw and partial prior-hypothesis overlap. Prior zeros-only TIFFs pass local full-grid range checks but do not use the official outside-NaN profile; the CSDL, GVSC and HVG cards explicitly record this conflict. No organizer acceptance is established. <a href="research/csdl36-20261026.md">CSDL-36 monograph →</a></p><details><summary>More archived research downloads</summary><p>All are research-only. Lane36's old card says promote, but the <a href="downloads/lane36-crosscheck.json">independent expanded-registry crosscheck</a> found 93.17% overlap, so it is not approved.</p><ul>''' + ''.join(others) + '''</ul></details></section>'''
 
 
 def context_section(ledger: dict) -> str:
@@ -308,7 +335,9 @@ def feed_section() -> str:
 <p class="fine-print">GitHub rate limits or network restrictions can make this unavailable. The <a href="https://www.drivendata.org/competitions/306/competition-doe-gems/leaderboard/">official leaderboard</a> is checked manually, not scraped by this site.</p></section>'''
 
 
-def index_page(stop: dict, mto: dict, hvg: dict, gvsc: dict, ledger: dict, dw: dict) -> str:
+def index_page(stop: dict, mto: dict, hvg: dict, gvsc: dict, ledger: dict, dw: dict, csdl: dict | None = None) -> str:
+    if csdl is None:
+        csdl = json.loads(CSDL_CARD.read_text(encoding="utf-8"))
     b = stop["registry"]["literal_preflight"]["bound"]
     return header("Decision and evidence") + f'''<section class="hero"><div><span class="eyebrow">DOE GEMS · audit 26 October 2026</span><h1>A clear answer before a costly submission.</h1>
 <p class="lede">We reviewed nine related projects and tested the literal novelty rule. At the standard dot budget, the rule blocks every possible placement.</p>
@@ -320,22 +349,24 @@ def index_page(stop: dict, mto: dict, hvg: dict, gvsc: dict, ledger: dict, dw: d
 <article class="card"><span class="card-kicker">Any {b['candidate_distinct_dots']:,}-dot candidate</span><h3>≥ {b['minimum_overlap_fraction']*100:.2f}% overlap</h3><p>At least {b['minimum_overlapping_dots']:,} dots must overlap the lattice's 3-pixel neighborhood; the stop is &gt;70%.</p></article>
 <article class="card"><span class="card-kicker">Bound begins</span><h3>{b['first_dot_count_forced_over_threshold']:,} dots</h3><p>At or above this count the proof forces a stop. Smaller outputs are not automatically unique.</p></article></div>
 <p><a href="research/registry-preflight-20261026.md">See the proof, inputs and ranked hypotheses →</a></p></section>
-{archive_section(mto,hvg,gvsc)}
+{archive_section(mto, hvg, gvsc, csdl)}
 {parallel_dw_section(dw)}
 <section class="section"><div class="section-head"><div><span class="eyebrow">Context, not a projection</span><h2>Evidence is not a leaderboard estimate.</h2></div></div>
-<p>GVSC's recorded local HOLDOUT-DTI 0.158855 exceeds HVG's 0.135759, but GVSC fails uniqueness and protocol order. <a href="{G24_REVIEW}">GEMSDOE24's newer review</a> records HOLDOUT-DTI 0.1637924 [0.150446, 0.177390] with the same named evaluator and 60,988 withheld positives; it explicitly does not independently certify protocol, paired gain or novelty. These are not calibrated forecasts.</p>
+<p>CSDL-36 EXP-2 recorded local HOLDOUT-DTI 0.155970 [0.141880, 0.170267] (EXP-1: 0.155206, EXP-3: 0.152541) with all four GVSC-36 audit flags fixed and 68.69% &le; 70% max overlap across the 9 focus sites, while GVSC's recorded local HOLDOUT-DTI 0.158855 exceeds HVG's 0.135759, but GVSC fails uniqueness and protocol order. <a href="{G24_REVIEW}">GEMSDOE24's newer review</a> records HOLDOUT-DTI 0.1637924 [0.150446, 0.177390] with the same named evaluator and 60,988 withheld positives; it explicitly does not independently certify protocol, paired gain or novelty. These are not calibrated forecasts.</p>
 <p>The <a href="{LEADER}">official public leaderboard</a> showed 0.4437 on a manual read on 26 October 2026; this observation may be stale and is not a team receipt. <strong>ORGANIZER-CONFIRMED</strong> is reserved for a submission-page receipt, which is not archived here.</p></section>
 {context_section(ledger)}{feed_section()}<script defer src="assets/live-feed.js"></script>''' + FOOTER
 
 
-def executive_page(stop: dict, mto: dict, hvg: dict, gvsc: dict, ledger: dict, dw: dict) -> str:
+def executive_page(stop: dict, mto: dict, hvg: dict, gvsc: dict, ledger: dict, dw: dict, csdl: dict | None = None) -> str:
+    if csdl is None:
+        csdl = json.loads(CSDL_CARD.read_text(encoding="utf-8"))
     return header("Executive summary and submission guide") + f'''<section class="hero compact-hero"><div><span class="eyebrow">Decision brief · 26 October 2026</span><h1>What to submit? Nothing yet.</h1><p class="lede">No new unique GeoTIFF or new holdout result exists from this continuation. The numerical preflight is a stop, not an exception.</p></div><aside class="status-card"><span class="eyebrow">Current status</span><h2>DO NOT SUBMIT</h2><p>DOWNLOAD: YES — Research downloads only. No real weekly slot was selected or spent.</p><a href="downloads/registry-preflight-run-card.json">Machine-readable run card →</a></aside></section>
 <section class="section"><div class="section-head"><div><span class="eyebrow">For the decision-maker</span><h2>Evidence at a glance</h2></div></div>
 <p><strong>Planned identifier, not created:</strong> <code>{e(stop["candidate"]["planned_name"])}</code><br><strong>Draft note ({stop["candidate"]["planned_note_length"]}/140 characters, not for upload):</strong> <code>{e(stop["candidate"]["planned_note"])}</code></p>
 <ol><li><strong>Historical leader:</strong> 0.2778 OWNER-REPORTED for GEMSDOE32 B2, with no archived receipt tying a score to exact bytes. A different public participant led at 0.4437 on a manual 26 October read; <a href="{LEADER}">check current standings</a>.</li>
 <li><strong>Current release:</strong> none. At 37,654 distinct dots the 5-px registered lattice forces ≥82.34% directed 3-px overlap, exceeding the literal &gt;70% stop. No previous raster is being passed off as a unique replacement.</li>
 <li><strong>Why B2 may have improved:</strong> it exactly removes 6,436 near-catalogue dots from D2.8. Pruning may reduce false positives, but unobserved labels and uploaded-file identity prevent a causal conclusion. <a href="{STAFF}">Staff clarify</a> that known faults are masked pixel-exactly and new truth can lie close by.</li>
-<li><strong>Research value:</strong> GVSC recorded HOLDOUT-DTI 0.158855 [0.145456, 0.173084] and HVG 0.135759 [0.123271, 0.148461], each <code>gems-segment-pooled-v1</code>, 60,988 withheld positives; both fail the literal gate. <a href="{G24_REVIEW}">GEMSDOE24 DPRF1</a> records 0.1637924 [0.150446, 0.177390], same named evaluator/positive count, but its review does not independently certify protocol or paired gain.</li></ol>
+<li><strong>Research value:</strong> CSDL-36 EXP-2 recorded HOLDOUT-DTI 0.155970 [0.141880, 0.170267] (EXP-1: 0.155206, EXP-3: 0.152541; 68.69% max 3-px overlap across the 9 focus sites; <a href="research/csdl36-20261026.md">CSDL-36 monograph</a>), GVSC recorded HOLDOUT-DTI 0.158855 [0.145456, 0.173084] and HVG 0.135759 [0.123271, 0.148461], each <code>gems-segment-pooled-v1</code>, 60,988 withheld positives; all fail the literal all-registry gate due to the 5-px lattice. <a href="{G24_REVIEW}">GEMSDOE24 DPRF1</a> records 0.1637924 [0.150446, 0.177390], same named evaluator/positive count, but its review does not independently certify protocol or paired gain.</li></ol>
 <p>Scores above are not estimates of a new candidate. <strong>ORGANIZER-CONFIRMED</strong> requires a receipt, and none of the historical scores has one here.</p></section>
 {context_section(ledger)}
 {parallel_dw_section(dw)}
@@ -345,12 +376,15 @@ def executive_page(stop: dict, mto: dict, hvg: dict, gvsc: dict, ledger: dict, d
 <li>For holdout, hide whole fault segments with buffer, derive catalogue features from visible faults only, mask visible pixels exactly, test each feature for AUC leakage and pool DTI using α=0.2, β=0.8 and a 300 m triangular kernel. Record evaluator, positives and 95% CI.</li>
 <li>Validate the real file automatically: a <strong>single-band GeoTIFF (.tif)</strong>, float32, correct CRS, shape, and geotransform, all predicted values finite and within [0,1] as applicable, plus official null/NaN outside-footprint requirements. A <strong>.zip file containing a single GeoTIFF</strong> is also allowed. Resolve the full-array-vs-outside-NaN ambiguity from the authorized sample/organizer guidance; do not claim portal acceptance from a local check. A prior portal message was “Predicted values must be in range [0, 1]”. See the <a href="{PROBLEM}">official format and metric</a>.</li>
 <li>Record the SHA-256, validator output, run card and ≤140-character note. Only a separate selector can choose a live upload; official rules allow three weekly slots and one submission for both prize rounds. None is selected now. The official competition page listed 3 December 2026, 23:59 UTC as the deadline when checked on 26 October; recheck the <a href="https://www.drivendata.org/competitions/306/competition-doe-gems/">competition page</a>, <a href="https://docs.nlr.gov/docs/fy26osti/96647.pdf">rules</a> and AI disclosure.</li></ol>
-<p><a href="research/registry-preflight-20261026.md">Four ranked prospective hypotheses, data sources and full preflight →</a></p></section>{archive_section(mto,hvg,gvsc)}<script defer src="assets/live-feed.js"></script>''' + FOOTER
+<p><a href="research/registry-preflight-20261026.md">Four ranked prospective hypotheses, data sources and full preflight →</a> · <a href="research/preregistration-csdl36-20261026.md">CSDL-36 preregistration →</a></p></section>{archive_section(mto, hvg, gvsc, csdl)}<script defer src="assets/live-feed.js"></script>''' + FOOTER
 
 
-def update_readme(stop: dict, ledger: dict, dw: dict | None = None) -> None:
+def update_readme(stop: dict, ledger: dict, dw: dict | None = None, csdl: dict | None = None) -> None:
     if dw is None:
         dw = json.loads(DW_CARD.read_text())
+    if csdl is None:
+        csdl = json.loads(CSDL_CARD.read_text())
+    cs_sub = csdl["submission"]
     original = README.read_text(encoding="utf-8")
     if BRIEF_MARKER not in original:
         raise RuntimeError("Cannot rewrite README without preserving the standing owner brief")
@@ -363,11 +397,11 @@ def update_readme(stop: dict, ledger: dict, dw: dict | None = None) -> None:
 >
 > **This preflight lane created no candidate TIFF, surface, holdout result, slot selection or submission.** The literal registry includes a 5-pixel lattice that covers 5,160,724 of 5,167,373 footprint pixels within 3 px. At the standard 37,654-dot budget at least 31,005 / 37,654 = **82.34185%** must overlap it, exceeding the &gt;70% stop; the proof first forces a stop at 22,164 dots. A smaller count is not automatically unique. Do not target the uncovered pixels or silently exempt controls. [Run card](evidence/registry_preflight_run_card_20261026.json) · [proof and ranked hypotheses](docs/research/registry-preflight-20261026.md) · [three review passes](evidence/registry_preflight_review_passes_20261026.md).
 >
-> **Research downloads only:** [GVSC-36 EXP-3 TIFF](docs/downloads/gemsdoe36-gvsc36-exp3-20261026-5fb822bdfb60-zeros.tif), [ZIP](docs/downloads/gemsdoe36-gvsc36-exp3-20261026-5fb822bdfb60-zeros.zip), [card](evidence/gvsc36_run_card_20261026.json); [HVG-36 EXP-1 TIFF](docs/downloads/gemsdoe36-hvg36-vent-dipole-20261026-b3ee97873192-zeros.tif), [card](evidence/hvg36_run_card_20261026.json); [MTO-36 TIFF](docs/downloads/gemsdoe36-mto36-ortho-contact-20261026-c41282e9da7a-zeros.tif), [card](evidence/mto36_run_card_20261026.json). All are **DO NOT SUBMIT**. GVSC's 99.6176% lattice overlap and post-placement surface check are blocking.
+> **Research downloads only:** [CSDL-36 EXP-2 TIFF](docs/downloads/{cs_sub["zeros_filename"]}), [ZIP](docs/downloads/{cs_sub["zip_archive_name"]}), [card](evidence/csdl36_run_card_20261026.json), [monograph](docs/research/csdl36-20261026.md); [GVSC-36 EXP-3 TIFF](docs/downloads/gemsdoe36-gvsc36-exp3-20261026-5fb822bdfb60-zeros.tif), [ZIP](docs/downloads/gemsdoe36-gvsc36-exp3-20261026-5fb822bdfb60-zeros.zip), [card](evidence/gvsc36_run_card_20261026.json); [HVG-36 EXP-1 TIFF](docs/downloads/gemsdoe36-hvg36-vent-dipole-20261026-b3ee97873192-zeros.tif), [card](evidence/hvg36_run_card_20261026.json); [MTO-36 TIFF](docs/downloads/gemsdoe36-mto36-ortho-contact-20261026-c41282e9da7a-zeros.tif), [card](evidence/mto36_run_card_20261026.json). All are **DO NOT SUBMIT**. CSDL-36 (`HOLDOUT-DTI 0.155970`, 95% CI `[0.141880, 0.170267]`, `EXP-1 0.155206`, `EXP-3 0.152541`) fixes GVSC-36 audit flags `IR-GVSC36-01`..`04` and passes the 9-site &le;70% overlap check (`68.69%`), but hits `99.4104%` on the 5-px lattice (`reg-052`). GVSC's 99.6176% lattice overlap and post-placement surface check are also blocking.
 >
 > **Parallel DW36 (merged separately):** one experiment recorded **HOLDOUT-DTI {dw["holdout_dti"]["pooled_candidate"]:.6f}** [{dw["holdout_dti"]["ci95_candidate"][0]:.6f}, {dw["holdout_dti"]["ci95_candidate"][1]:.6f}], `{dw["holdout_dti"]["evaluator_version"]}`, {dw["holdout_dti"]["withheld_positives"]:,} withheld positives; its matched control HOLDOUT-DTI was {dw["holdout_dti"]["pooled_control"]:.6f} [{dw["holdout_dti"]["ci95_control"][0]:.6f}, {dw["holdout_dti"]["ci95_control"][1]:.6f}]. Final in-memory dots overlapped the lattice by 100%; it stopped before exporting a TIFF and remains negative. [Parallel card](evidence/dw36_run_card_20261026.json) · [report](docs/research/dw36-20261026.md). This was not an experiment in the current preflight lane.
 >
-> GVSC recorded **HOLDOUT-DTI 0.158855** [0.145456, 0.173084]; HVG **HOLDOUT-DTI 0.135759** [0.123271, 0.148461], both `gems-segment-pooled-v1`, 60,988 withheld positives. Neither is a leaderboard projection. A newer [GEMSDOE24 DPRF1 review]({G24_REVIEW}) records **HOLDOUT-DTI 0.1637924** [0.150446, 0.177390], same named evaluator and positives, but does not independently certify protocol/paired gain/novelty; do not call the old 0.14876 the current group record or assume matched comparability.
+> CSDL-36 recorded **HOLDOUT-DTI 0.155970** [0.141880, 0.170267]; GVSC recorded **HOLDOUT-DTI 0.158855** [0.145456, 0.173084]; HVG **HOLDOUT-DTI 0.135759** [0.123271, 0.148461], all `gems-segment-pooled-v1`, 60,988 withheld positives. None is a leaderboard projection. A newer [GEMSDOE24 DPRF1 review]({G24_REVIEW}) records **HOLDOUT-DTI 0.1637924** [0.150446, 0.177390], same named evaluator and positives, but does not independently certify protocol/paired gain/novelty; do not call the old 0.14876 the current group record or assume matched comparability.
 
 ## Nine-site executive summary — pinned historical snapshot
 
@@ -387,6 +421,7 @@ python scripts/restore_data.py --group scored
 python scripts/registry_feasibility.py --dots 37654  # exit 2: guaranteed duplicate; 0: NOT proven; 1: error
 python scripts/build_site.py
 python scripts/check_site.py
+python scripts/verify_csdl36_release.py
 python scripts/verify_gvsc36_release.py
 python scripts/verify_mto_release.py
 pytest -q
@@ -404,10 +439,13 @@ For the pinned nine-site forensic rerun, run `python scripts/cache_focus9_audit.
 
 
 def main() -> int:
-    mto, hvg, gvsc, stop, ledger, dw = (json.loads(p.read_text(encoding="utf-8")) for p in
-                                       (CARD, HVG_CARD, GVSC_CARD, STOP_CARD, LEDGER, DW_CARD))
+    mto, hvg, gvsc, csdl, stop, ledger, dw = (
+        json.loads(p.read_text(encoding="utf-8"))
+        for p in (CARD, HVG_CARD, GVSC_CARD, CSDL_CARD, STOP_CARD, LEDGER, DW_CARD)
+    )
     ensure_status(mto, ledger, hvg)
     ensure_stop_card(stop, gvsc)
+    ensure_csdl_card(csdl)
     ensure_parallel_dw(dw)
     for source, target in (
         (STOP_CARD, DOCS / "downloads/registry-preflight-run-card.json"),
@@ -415,6 +453,8 @@ def main() -> int:
         (CARD, DOCS / "downloads/mto36-run-card.json"),
         (HVG_CARD, DOCS / "downloads/hvg36-run-card.json"),
         (GVSC_CARD, DOCS / "downloads/gvsc36-run-card.json"),
+        (CSDL_CARD, DOCS / "downloads/csdl36-run-card.json"),
+        (BDC_CARD, DOCS / "downloads/bdc36-run-card.json"),
         (LEDGER, DOCS / "downloads/focus9-verified-source-ledger.json"),
         (UNIQUENESS, DOCS / "downloads/focus-sites-pairwise-uniqueness.json"),
         (ROOT / "evidence/mto36_ninesite_forensics.json", DOCS / "downloads/focus9-source-integrity.json"),
@@ -434,19 +474,37 @@ def main() -> int:
         "run_card": "downloads/registry-preflight-run-card.json", "run_card_sha256": _digest(STOP_CARD),
         "registry_preflight": stop["registry"]["literal_preflight"]["bound"],
         "parallel_experiments": [parallel_dw_projection(dw)],
+        "csdl36_experiment": {
+            "lane_id": csdl["lane_id"],
+            "best_arm": csdl["best_arm"],
+            "verdict": csdl["verdict"],
+            "slot_approved": False,
+            "holdout_label": "HOLDOUT-DTI",
+            "holdout_dti": csdl["holdout"][csdl["best_arm"]]["dti"],
+            "ci95": csdl["holdout"][csdl["best_arm"]]["ci95"],
+            "evaluator_version": csdl["holdout"]["evaluator_version"],
+            "withheld_positives": csdl["holdout"]["withheld_positives"],
+            "focus9_max_overlap_3px": csdl["registry_uniqueness"]["focus_9_sites_max_overlap_3px"],
+            "focus9_passed": csdl["registry_uniqueness"]["focus_9_sites_passed"],
+            "literal_all_entry_max_overlap_3px": csdl["registry_uniqueness"]["literal_all_entry_max_overlap_3px"],
+            "tif": f"downloads/{csdl['submission']['zeros_filename']}",
+            "raster_sha256": csdl["submission"]["raster_sha256"],
+            "run_card": "downloads/csdl36-run-card.json",
+        },
     }
     (DOCS / "current-run.json").write_text(json.dumps(current, indent=2) + "\n")
     manifest = {"schema": "gemsdoe36.research-downloads.v3", "slot_approved": False,
                 "current_candidate": None, "run_card": "registry-preflight-run-card.json",
                 "archived_research_only": [
+                    {"file": csdl["submission"]["zeros_filename"], "sha256": csdl["submission"]["raster_sha256"], "submit_ok": False},
                     {"file": gvsc["submission"]["zeros_filename"], "sha256": gvsc["submission"]["raster_sha256"], "submit_ok": False},
                     {"file": Path(hvg["artifact"]["tif_path"]).name, "sha256": hvg["artifact"]["tif_sha256"], "submit_ok": False},
                     {"file": Path(mto["download"]["tif"]).name, "sha256": mto["raster_sha256"], "submit_ok": False},
                 ] + additional_archives()}
     (DOCS / "downloads/submissions_manifest.json").write_text(json.dumps(manifest, indent=2) + "\n")
-    (DOCS / "index.html").write_text(index_page(stop, mto, hvg, gvsc, ledger, dw), encoding="utf-8")
-    (DOCS / "executive-summary.html").write_text(executive_page(stop, mto, hvg, gvsc, ledger, dw), encoding="utf-8")
-    update_readme(stop, ledger, dw)
+    (DOCS / "index.html").write_text(index_page(stop, mto, hvg, gvsc, ledger, dw, csdl), encoding="utf-8")
+    (DOCS / "executive-summary.html").write_text(executive_page(stop, mto, hvg, gvsc, ledger, dw, csdl), encoding="utf-8")
+    update_readme(stop, ledger, dw, csdl)
     print("Built Pages and README: literal-registry preflight NEGATIVE; no candidate or slot")
     return 0
 

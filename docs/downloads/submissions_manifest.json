@@ -5,6 +5,11 @@
   "run_card": "registry-preflight-run-card.json",
   "archived_research_only": [
     {
+      "file": "gemsdoe36-csdl36-exp2-20261026-12962cc72ae1-zeros.tif",
+      "sha256": "d840ce6aa03c8fc6c44d6ab761b7be1590859a00c711d623e4c9eb5479cfc778",
+      "submit_ok": false
+    },
+    {
       "file": "gemsdoe36-gvsc36-exp3-20261026-5fb822bdfb60-zeros.tif",
       "sha256": "ad809c2b0919d4b71afee80f0b4827aa9ad4ecd8c66507109a3d3f7292cac1a1",
       "submit_ok": false

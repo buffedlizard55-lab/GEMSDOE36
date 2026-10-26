@@ -1,0 +1,14 @@
+{
+  "lane_id": "CSDL-36",
+  "generated_utc": "2026-10-26T23:22:22.177233+00:00",
+  "experiments_executed": 3,
+  "budget_max_experiments": 3,
+  "budget_max_seconds": 7200,
+  "stage_seconds": {
+    "feature_store": 0.21,
+    "leakage_canary": 0.0,
+    "holdout_evaluation": 634.74,
+    "total_elapsed": 1194.37
+  },
+  "within_budget": true
+}

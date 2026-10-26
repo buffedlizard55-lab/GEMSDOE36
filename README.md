@@ -2,17 +2,15 @@
 
 **Read this decision and the [standing owner brief](#full-standing-owner-brief-historical-wording) at the start of every session.** Core values: **Maximize P(Win)** and **Own the Outcome**.
 
-> ## CURRENT DECISION · DO NOT SUBMIT · BDC-36 negative
+> ## CURRENT DECISION · DO NOT SUBMIT · negative
 >
-> **File (research only, NOT OK to submit):** [`docs/downloads/gemsdoe36-bdc36-exp-2-20261026-18000dots-zeros.tif`](docs/downloads/gemsdoe36-bdc36-exp-2-20261026-18000dots-zeros.tif) · SHA-256 `4c1b7bdd5868679bcc2f3a3f81682b6074723bbd5cac00deaced070df59a296a` · note `BDC-36 EXP-2 basement-step x dilatation | HOLDOUT-DTI 0.0124 | negative | 18000 dots`.
+> **This preflight lane created no candidate TIFF, surface, holdout result, slot selection or submission.** The literal registry includes a 5-pixel lattice that covers 5,160,724 of 5,167,373 footprint pixels within 3 px. At the standard 37,654-dot budget at least 31,005 / 37,654 = **82.34185%** must overlap it, exceeding the &gt;70% stop; the proof first forces a stop at 22,164 dots. A smaller count is not automatically unique. Do not target the uncovered pixels or silently exempt controls. [Run card](evidence/registry_preflight_run_card_20261026.json) · [proof and ranked hypotheses](docs/research/registry-preflight-20261026.md) · [three review passes](evidence/registry_preflight_review_passes_20261026.md).
 >
-> **HOLDOUT-DTI 0.012430** 95% CI [0.007997, 0.017339], evaluator `gems-segment-pooled-v1`, 60,988 withheld positives. Three preregistered experiments (depth-gradient, dilatation, geometric mean). Leakage canaries passed. Spearman |ρ| ≤ 0.047 vs 26 local rasters; **100% 3-px overlap with the 5-px lattice** → protocol duplicate. Cannot beat 0.2778 OWNER-REPORTED B2. [Run card](evidence/bdc36_run_card_20261026.json) · [report](docs/research/bdc36-20261026.md).
->
-> **Research downloads only:** [GVSC-36 EXP-3 TIFF](docs/downloads/gemsdoe36-gvsc36-exp3-20261026-5fb822bdfb60-zeros.tif), [ZIP](docs/downloads/gemsdoe36-gvsc36-exp3-20261026-5fb822bdfb60-zeros.zip), [card](evidence/gvsc36_run_card_20261026.json); [HVG-36 EXP-1 TIFF](docs/downloads/gemsdoe36-hvg36-vent-dipole-20261026-b3ee97873192-zeros.tif), [card](evidence/hvg36_run_card_20261026.json); [MTO-36 TIFF](docs/downloads/gemsdoe36-mto36-ortho-contact-20261026-c41282e9da7a-zeros.tif), [card](evidence/mto36_run_card_20261026.json). All are **DO NOT SUBMIT**. GVSC's 99.6176% lattice overlap and post-placement surface check are blocking.
+> **Research downloads only:** [CSDL-36 EXP-2 TIFF](docs/downloads/gemsdoe36-csdl36-exp2-20261026-12962cc72ae1-zeros.tif), [ZIP](docs/downloads/gemsdoe36-csdl36-exp2-20261026-12962cc72ae1-zeros.zip), [card](evidence/csdl36_run_card_20261026.json), [monograph](docs/research/csdl36-20261026.md); [GVSC-36 EXP-3 TIFF](docs/downloads/gemsdoe36-gvsc36-exp3-20261026-5fb822bdfb60-zeros.tif), [ZIP](docs/downloads/gemsdoe36-gvsc36-exp3-20261026-5fb822bdfb60-zeros.zip), [card](evidence/gvsc36_run_card_20261026.json); [HVG-36 EXP-1 TIFF](docs/downloads/gemsdoe36-hvg36-vent-dipole-20261026-b3ee97873192-zeros.tif), [card](evidence/hvg36_run_card_20261026.json); [MTO-36 TIFF](docs/downloads/gemsdoe36-mto36-ortho-contact-20261026-c41282e9da7a-zeros.tif), [card](evidence/mto36_run_card_20261026.json). All are **DO NOT SUBMIT**. CSDL-36 (`HOLDOUT-DTI 0.155970`, 95% CI `[0.141880, 0.170267]`, `EXP-1 0.155206`, `EXP-3 0.152541`) fixes GVSC-36 audit flags `IR-GVSC36-01`..`04` and passes the 9-site &le;70% overlap check (`68.69%`), but hits `99.4104%` on the 5-px lattice (`reg-052`). GVSC's 99.6176% lattice overlap and post-placement surface check are also blocking.
 >
 > **Parallel DW36 (merged separately):** one experiment recorded **HOLDOUT-DTI 0.066052** [0.059383, 0.072682], `gems-segment-pooled-v1`, 60,988 withheld positives; its matched control HOLDOUT-DTI was 0.072326 [0.064510, 0.080404]. Final in-memory dots overlapped the lattice by 100%; it stopped before exporting a TIFF and remains negative. [Parallel card](evidence/dw36_run_card_20261026.json) · [report](docs/research/dw36-20261026.md). This was not an experiment in the current preflight lane.
 >
-> GVSC recorded **HOLDOUT-DTI 0.158855** [0.145456, 0.173084]; HVG **HOLDOUT-DTI 0.135759** [0.123271, 0.148461], both `gems-segment-pooled-v1`, 60,988 withheld positives. Neither is a leaderboard projection. A newer [GEMSDOE24 DPRF1 review](https://github.com/buffedlizard55-lab/GEMSDOE24/blob/7ab1c8f77f0b4b8644e3929403a0dab65838b008/docs/data/current_best_review.json) records **HOLDOUT-DTI 0.1637924** [0.150446, 0.177390], same named evaluator and positives, but does not independently certify protocol/paired gain/novelty; do not call the old 0.14876 the current group record or assume matched comparability.
+> CSDL-36 recorded **HOLDOUT-DTI 0.155970** [0.141880, 0.170267]; GVSC recorded **HOLDOUT-DTI 0.158855** [0.145456, 0.173084]; HVG **HOLDOUT-DTI 0.135759** [0.123271, 0.148461], all `gems-segment-pooled-v1`, 60,988 withheld positives. None is a leaderboard projection. A newer [GEMSDOE24 DPRF1 review](https://github.com/buffedlizard55-lab/GEMSDOE24/blob/7ab1c8f77f0b4b8644e3929403a0dab65838b008/docs/data/current_best_review.json) records **HOLDOUT-DTI 0.1637924** [0.150446, 0.177390], same named evaluator and positives, but does not independently certify protocol/paired gain/novelty; do not call the old 0.14876 the current group record or assume matched comparability.
 
 ## Nine-site executive summary — pinned historical snapshot
 
@@ -42,6 +40,7 @@ python scripts/restore_data.py --group scored
 python scripts/registry_feasibility.py --dots 37654  # exit 2: guaranteed duplicate; 0: NOT proven; 1: error
 python scripts/build_site.py
 python scripts/check_site.py
+python scripts/verify_csdl36_release.py
 python scripts/verify_gvsc36_release.py
 python scripts/verify_mto_release.py
 pytest -q

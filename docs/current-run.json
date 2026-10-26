@@ -1,16 +1,64 @@
 {
-  "schema": "gemsdoe36.current-run.v4",
-  "lane_id": "BDC-36",
+  "schema": "gemsdoe36.current-run.v3",
+  "lane_id": "REGISTRY-PREFLIGHT-36",
   "verdict": "negative",
   "slot_approved": false,
   "ok_to_download_and_submit": false,
   "research_downloads_only": true,
-  "tif_path": "downloads/gemsdoe36-bdc36-exp-2-20261026-18000dots-zeros.tif",
-  "tif_sha256": "4c1b7bdd5868679bcc2f3a3f81682b6074723bbd5cac00deaced070df59a296a",
-  "holdout_dti": 0.012429667987760212,
-  "ci95": [0.007996933313792457, 0.017338944517965686],
-  "evaluator_version": "gems-segment-pooled-v1",
-  "withheld_positives": 60988,
-  "run_card": "downloads/bdc36-run-card.json",
-  "note": "BDC-36 EXP-2 basement-step x dilatation | HOLDOUT-DTI 0.0124 | negative | 18000 dots"
+  "tif_path": null,
+  "tif_sha256": null,
+  "holdout_dti": null,
+  "run_card": "downloads/registry-preflight-run-card.json",
+  "run_card_sha256": "92689ae1c51e66fd159b2b29b869bc47f8716ee00834735b4c17dd34a99a7980",
+  "registry_preflight": {
+    "footprint_pixels": 5167373,
+    "covered_pixels": 5160724,
+    "uncovered_pixels": 6649,
+    "candidate_distinct_dots": 37654,
+    "minimum_overlapping_dots": 31005,
+    "minimum_overlap_fraction": 0.8234184947150369,
+    "threshold_fraction": 0.7,
+    "guaranteed_duplicate": true,
+    "first_dot_count_forced_over_threshold": 22164
+  },
+  "parallel_experiments": [
+    {
+      "lane_id": "DW36",
+      "source": "parallel session merged from main",
+      "verdict": "negative",
+      "experiments_run": 1,
+      "raster_sha256": null,
+      "slot_approved": false,
+      "holdout_label": "HOLDOUT-DTI",
+      "holdout_dti": 0.06605205634872657,
+      "ci95": [
+        0.059382595043455375,
+        0.07268155968091702
+      ],
+      "evaluator_version": "gems-segment-pooled-v1",
+      "withheld_positives": 60988,
+      "final_lattice_overlap": 1.0,
+      "run_card": "downloads/dw36-run-card.json"
+    }
+  ],
+  "csdl36_experiment": {
+    "lane_id": "CSDL-36",
+    "best_arm": "EXP-2",
+    "verdict": "negative",
+    "slot_approved": false,
+    "holdout_label": "HOLDOUT-DTI",
+    "holdout_dti": 0.15597,
+    "ci95": [
+      0.14187967394466613,
+      0.17026697127531537
+    ],
+    "evaluator_version": "gems-segment-pooled-v1",
+    "withheld_positives": 60988,
+    "focus9_max_overlap_3px": 0.686859,
+    "focus9_passed": true,
+    "literal_all_entry_max_overlap_3px": 0.9941042120359059,
+    "tif": "downloads/gemsdoe36-csdl36-exp2-20261026-12962cc72ae1-zeros.tif",
+    "raster_sha256": "d840ce6aa03c8fc6c44d6ab761b7be1590859a00c711d623e4c9eb5479cfc778",
+    "run_card": "downloads/csdl36-run-card.json"
+  }
 }
