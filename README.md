@@ -2,9 +2,11 @@
 
 **Read this decision and the [standing owner brief](#full-standing-owner-brief-historical-wording) at the start of every session.** Core values: **Maximize P(Win)** and **Own the Outcome**.
 
-> ## CURRENT DECISION · DO NOT SUBMIT · negative
+> ## CURRENT DECISION · DO NOT SUBMIT · BDC-36 negative
 >
-> **This preflight lane created no candidate TIFF, surface, holdout result, slot selection or submission.** The literal registry includes a 5-pixel lattice that covers 5,160,724 of 5,167,373 footprint pixels within 3 px. At the standard 37,654-dot budget at least 31,005 / 37,654 = **82.34185%** must overlap it, exceeding the &gt;70% stop; the proof first forces a stop at 22,164 dots. A smaller count is not automatically unique. Do not target the uncovered pixels or silently exempt controls. [Run card](evidence/registry_preflight_run_card_20261026.json) · [proof and ranked hypotheses](docs/research/registry-preflight-20261026.md) · [three review passes](evidence/registry_preflight_review_passes_20261026.md).
+> **File (research only, NOT OK to submit):** [`docs/downloads/gemsdoe36-bdc36-exp-2-20261026-18000dots-zeros.tif`](docs/downloads/gemsdoe36-bdc36-exp-2-20261026-18000dots-zeros.tif) · SHA-256 `4c1b7bdd5868679bcc2f3a3f81682b6074723bbd5cac00deaced070df59a296a` · note `BDC-36 EXP-2 basement-step x dilatation | HOLDOUT-DTI 0.0124 | negative | 18000 dots`.
+>
+> **HOLDOUT-DTI 0.012430** 95% CI [0.007997, 0.017339], evaluator `gems-segment-pooled-v1`, 60,988 withheld positives. Three preregistered experiments (depth-gradient, dilatation, geometric mean). Leakage canaries passed. Spearman |ρ| ≤ 0.047 vs 26 local rasters; **100% 3-px overlap with the 5-px lattice** → protocol duplicate. Cannot beat 0.2778 OWNER-REPORTED B2. [Run card](evidence/bdc36_run_card_20261026.json) · [report](docs/research/bdc36-20261026.md).
 >
 > **Research downloads only:** [GVSC-36 EXP-3 TIFF](docs/downloads/gemsdoe36-gvsc36-exp3-20261026-5fb822bdfb60-zeros.tif), [ZIP](docs/downloads/gemsdoe36-gvsc36-exp3-20261026-5fb822bdfb60-zeros.zip), [card](evidence/gvsc36_run_card_20261026.json); [HVG-36 EXP-1 TIFF](docs/downloads/gemsdoe36-hvg36-vent-dipole-20261026-b3ee97873192-zeros.tif), [card](evidence/hvg36_run_card_20261026.json); [MTO-36 TIFF](docs/downloads/gemsdoe36-mto36-ortho-contact-20261026-c41282e9da7a-zeros.tif), [card](evidence/mto36_run_card_20261026.json). All are **DO NOT SUBMIT**. GVSC's 99.6176% lattice overlap and post-placement surface check are blocking.
 >
