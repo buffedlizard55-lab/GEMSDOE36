@@ -20,5 +20,25 @@
     "threshold_fraction": 0.7,
     "guaranteed_duplicate": true,
     "first_dot_count_forced_over_threshold": 22164
-  }
+  },
+  "parallel_experiments": [
+    {
+      "lane_id": "DW36",
+      "source": "parallel session merged from main",
+      "verdict": "negative",
+      "experiments_run": 1,
+      "raster_sha256": null,
+      "slot_approved": false,
+      "holdout_label": "HOLDOUT-DTI",
+      "holdout_dti": 0.06605205634872657,
+      "ci95": [
+        0.059382595043455375,
+        0.07268155968091702
+      ],
+      "evaluator_version": "gems-segment-pooled-v1",
+      "withheld_positives": 60988,
+      "final_lattice_overlap": 1.0,
+      "run_card": "downloads/dw36-run-card.json"
+    }
+  ]
 }

@@ -20,6 +20,7 @@ CARD = ROOT / "evidence/mto36_run_card_20261026.json"
 HVG_CARD = ROOT / "evidence/hvg36_run_card_20261026.json"
 GVSC_CARD = ROOT / "evidence/gvsc36_run_card_20261026.json"
 STOP_CARD = ROOT / "evidence/registry_preflight_run_card_20261026.json"
+DW_CARD = ROOT / "evidence/dw36_run_card_20261026.json"
 LEDGER = ROOT / "evidence/focus_sites_9repo_summary_20261026.json"
 UNIQUENESS = ROOT / "evidence/focus_sites_pairwise_uniqueness_20261026.json"
 README = ROOT / "README.md"
@@ -125,6 +126,50 @@ def ensure_stop_card(stop: dict, gvsc: dict) -> None:
                            (sub["zip_archive_name"], sub["zip_sha256"])):
         if _digest(DOCS / "downloads" / name) != expected:
             raise RuntimeError(f"GVSC-36 artifact mismatch: {name}")
+
+
+def ensure_parallel_dw(dw: dict) -> None:
+    """Preserve the concurrently merged DW36 result without promoting it."""
+    registry, holdout = dw["registry"], dw["holdout_dti"]
+    preregistration = ROOT / "knowledge/dw36_preregistration_2026-10-26.md"
+    if _digest(preregistration) != dw["preregistration_sha256"]:
+        raise RuntimeError("DW36 preregistration SHA does not match its run card")
+    if (dw["verdict"] != "negative" or dw["submit_ok"] is not False
+            or dw["experiments_run"] != 1 or dw["elapsed_wall_seconds"] > 7200
+            or dw["raster_sha256"] is not None or dw["validator_output"] is not None
+            or dw["submission_name"] is not None or dw["submission_note"] is not None
+            or dw["duplicate_stop_stage"] != "final"):
+        raise RuntimeError("DW36 must remain a negative experiment without an exported TIFF")
+    if (registry["missing"] or registry["pinned_count"] != registry["verified_count"]
+            or not registry["preplacement"]["passed_present_comparators"]
+            or registry["preplacement"]["max_abs_rank"] > 0.90
+            or registry["final"]["passed_present_comparators"]
+            or registry["final"]["max_3px_overlap"] <= 0.70
+            or not any("lattice-s5" in x["file"] and x["overlap"] > 0.70
+                       for x in registry["final"]["duplicates"])):
+        raise RuntimeError("DW36 duplicate stop or registry coverage is inconsistent")
+    if (holdout["label"] != "HOLDOUT-DTI" or holdout["evaluator_version"] != "gems-segment-pooled-v1"
+            or holdout["withheld_positives"] != 60_988 or len(holdout["ci95_candidate"]) != 2
+            or not dw["leakage_canary"]["passed"] or list((DOCS / "downloads").glob("gemsdoe36-dw36*.tif"))):
+        raise RuntimeError("DW36 holdout provenance or missing-export invariant is inconsistent")
+
+
+def parallel_dw_projection(dw: dict) -> dict:
+    h = dw["holdout_dti"]
+    return {"lane_id": "DW36", "source": "parallel session merged from main", "verdict": "negative",
+            "experiments_run": dw["experiments_run"], "raster_sha256": None, "slot_approved": False,
+            "holdout_label": h["label"], "holdout_dti": h["pooled_candidate"],
+            "ci95": h["ci95_candidate"], "evaluator_version": h["evaluator_version"],
+            "withheld_positives": h["withheld_positives"],
+            "final_lattice_overlap": dw["registry"]["final"]["max_3px_overlap"],
+            "run_card": "downloads/dw36-run-card.json"}
+
+
+def parallel_dw_section(dw: dict) -> str:
+    h = dw["holdout_dti"]
+    return f'''<section class="section" id="parallel-dw"><div class="section-head"><div><span class="eyebrow">Parallel session · merged separately</span><h2>DW36: a negative experiment, no TIFF.</h2></div><p>This experiment ran in another session; it is not the current preflight's zero-experiment lane.</p></div>
+<p><strong>HOLDOUT-DTI {h["pooled_candidate"]:.6f}</strong>, 95% CI [{h["ci95_candidate"][0]:.6f}, {h["ci95_candidate"][1]:.6f}], {e(h["evaluator_version"])}, {h["withheld_positives"]:,} withheld positives. The matched control HOLDOUT-DTI was {h["pooled_control"]:.6f} [{h["ci95_control"][0]:.6f}, {h["ci95_control"][1]:.6f}]; paired CI [{h["paired_ci95"][0]:+.6f}, {h["paired_ci95"][1]:+.6f}] was below zero. Final in-memory dots overlapped the registered lattice by {dw["registry"]["final"]["max_3px_overlap"]:.0%}; the run stopped before export. These measurements are from its run card, not independently replayed here. <strong>DO NOT SUBMIT.</strong></p>
+<p><a href="downloads/dw36-run-card.json">Parallel run card</a> · <a href="research/dw36-20261026.md">DW36 experiment report</a></p></section>'''
 
 
 def additional_archives() -> list[dict]:
@@ -263,12 +308,12 @@ def feed_section() -> str:
 <p class="fine-print">GitHub rate limits or network restrictions can make this unavailable. The <a href="https://www.drivendata.org/competitions/306/competition-doe-gems/leaderboard/">official leaderboard</a> is checked manually, not scraped by this site.</p></section>'''
 
 
-def index_page(stop: dict, mto: dict, hvg: dict, gvsc: dict, ledger: dict) -> str:
+def index_page(stop: dict, mto: dict, hvg: dict, gvsc: dict, ledger: dict, dw: dict) -> str:
     b = stop["registry"]["literal_preflight"]["bound"]
     return header("Decision and evidence") + f'''<section class="hero"><div><span class="eyebrow">DOE GEMS · audit 26 October 2026</span><h1>A clear answer before a costly submission.</h1>
 <p class="lede">We reviewed nine related projects and tested the literal novelty rule. At the standard dot budget, the rule blocks every possible placement.</p>
 <div class="hero-actions"><a class="button" href="executive-summary.html">Read the executive guide →</a><a class="button secondary" href="downloads/registry-preflight-run-card.json">View the negative run card</a></div></div>
-<aside class="status-card" aria-label="Current submission decision"><span class="eyebrow"><span class="status-pip"></span>Current decision</span><h2>DO NOT SUBMIT</h2><p>No new candidate TIFF was created, no holdout was run, and no weekly slot was selected or spent.</p><a href="research/registry-preflight-20261026.md">Why the run stopped →</a></aside></section>
+<aside class="status-card" aria-label="Current submission decision"><span class="eyebrow"><span class="status-pip"></span>Current decision</span><h2>DO NOT SUBMIT</h2><p>This preflight lane created no candidate TIFF and ran no holdout; no weekly slot was selected or spent.</p><a href="research/registry-preflight-20261026.md">Why the run stopped →</a></aside></section>
 <div class="download-strip"><div><strong>DOWNLOAD: YES — Research downloads only · DO NOT SUBMIT</strong><p>Prior research files remain available for inspection. None is an approved competition entry.</p></div><a class="button warning" href="#archive">Browse research files</a></div>
 <section class="section"><div class="section-head"><div><span class="eyebrow">The limiting evidence</span><h2>The gate is impossible at this budget.</h2></div><p>Thresholds were not relaxed and dots were not moved to evade the registry.</p></div>
 <div class="grid cols-3"><article class="card"><span class="card-kicker">Footprint covered by lattice</span><h3>{b['covered_pixels']:,} / {b['footprint_pixels']:,}</h3><p>Only {b['uncovered_pixels']:,} pixels lie more than 3 px from registered lattice dots.</p></article>
@@ -276,13 +321,14 @@ def index_page(stop: dict, mto: dict, hvg: dict, gvsc: dict, ledger: dict) -> st
 <article class="card"><span class="card-kicker">Bound begins</span><h3>{b['first_dot_count_forced_over_threshold']:,} dots</h3><p>Above this count the proof forces a stop. Smaller outputs are not automatically unique.</p></article></div>
 <p><a href="research/registry-preflight-20261026.md">See the proof, inputs and ranked hypotheses →</a></p></section>
 {archive_section(mto,hvg,gvsc)}
+{parallel_dw_section(dw)}
 <section class="section"><div class="section-head"><div><span class="eyebrow">Context, not a projection</span><h2>Evidence is not a leaderboard estimate.</h2></div></div>
 <p>GVSC's recorded local HOLDOUT-DTI 0.158855 exceeds HVG's 0.135759, but GVSC fails uniqueness and protocol order. <a href="{G24_REVIEW}">GEMSDOE24's newer review</a> records HOLDOUT-DTI 0.1637924 [0.150446, 0.177390] with the same named evaluator and 60,988 withheld positives; it explicitly does not independently certify protocol, paired gain or novelty. These are not calibrated forecasts.</p>
 <p>The <a href="{LEADER}">official public leaderboard</a> showed 0.4437 on a manual read on 26 October 2026; this observation may be stale and is not a team receipt. <strong>ORGANIZER-CONFIRMED</strong> is reserved for a submission-page receipt, which is not archived here.</p></section>
 {context_section(ledger)}{feed_section()}<script defer src="assets/live-feed.js"></script>''' + FOOTER
 
 
-def executive_page(stop: dict, mto: dict, hvg: dict, gvsc: dict, ledger: dict) -> str:
+def executive_page(stop: dict, mto: dict, hvg: dict, gvsc: dict, ledger: dict, dw: dict) -> str:
     return header("Executive summary and submission guide") + f'''<section class="hero compact-hero"><div><span class="eyebrow">Decision brief · 26 October 2026</span><h1>What to submit? Nothing yet.</h1><p class="lede">No new unique GeoTIFF or new holdout result exists from this continuation. The numerical preflight is a stop, not an exception.</p></div><aside class="status-card"><span class="eyebrow">Current status</span><h2>DO NOT SUBMIT</h2><p>DOWNLOAD: YES — Research downloads only. No real weekly slot was selected or spent.</p><a href="downloads/registry-preflight-run-card.json">Machine-readable run card →</a></aside></section>
 <section class="section"><div class="section-head"><div><span class="eyebrow">For the decision-maker</span><h2>Evidence at a glance</h2></div></div>
 <p><strong>Planned identifier, not created:</strong> <code>{e(stop["candidate"]["planned_name"])}</code><br><strong>Draft note ({stop["candidate"]["planned_note_length"]}/140 characters, not for upload):</strong> <code>{e(stop["candidate"]["planned_note"])}</code></p>
@@ -292,6 +338,7 @@ def executive_page(stop: dict, mto: dict, hvg: dict, gvsc: dict, ledger: dict) -
 <li><strong>Research value:</strong> GVSC recorded HOLDOUT-DTI 0.158855 [0.145456, 0.173084] and HVG 0.135759 [0.123271, 0.148461], each <code>gems-segment-pooled-v1</code>, 60,988 withheld positives; both fail the literal gate. <a href="{G24_REVIEW}">GEMSDOE24 DPRF1</a> records 0.1637924 [0.150446, 0.177390], same named evaluator/positive count, but its review does not independently certify protocol or paired gain.</li></ol>
 <p>Scores above are not estimates of a new candidate. <strong>ORGANIZER-CONFIRMED</strong> requires a receipt, and none of the historical scores has one here.</p></section>
 {context_section(ledger)}
+{parallel_dw_section(dw)}
 <section class="section"><div class="section-head"><div><span class="eyebrow">Submission guide</span><h2>When a future file can be considered</h2></div></div>
 <ol><li>Resolve the registry/budget blocker with a scientifically justified plan, not threshold changes or lattice-hole targeting. Refresh all nine pinned inventories and the full registry. A non-failing feasibility bound is not a uniqueness pass.</li>
 <li>Use one preregistered lane and the shared feature stack, evaluator and writer. Screen the surface against every registry raster <em>before</em> placement and final dots afterward; stop on |rank correlation| &gt;0.90 or &gt;70% within 3 px of any entry.</li>
@@ -301,7 +348,9 @@ def executive_page(stop: dict, mto: dict, hvg: dict, gvsc: dict, ledger: dict) -
 <p><a href="research/registry-preflight-20261026.md">Four ranked prospective hypotheses, data sources and full preflight →</a></p></section>{archive_section(mto,hvg,gvsc)}<script defer src="assets/live-feed.js"></script>''' + FOOTER
 
 
-def update_readme(stop: dict, ledger: dict) -> None:
+def update_readme(stop: dict, ledger: dict, dw: dict | None = None) -> None:
+    if dw is None:
+        dw = json.loads(DW_CARD.read_text())
     original = README.read_text(encoding="utf-8")
     if BRIEF_MARKER not in original:
         raise RuntimeError("Cannot rewrite README without preserving the standing owner brief")
@@ -312,9 +361,11 @@ def update_readme(stop: dict, ledger: dict) -> None:
 
 > ## CURRENT DECISION · DO NOT SUBMIT · negative
 >
-> **No new candidate TIFF, surface, holdout result, slot selection or submission.** The literal registry includes a 5-pixel lattice that covers 5,160,724 of 5,167,373 footprint pixels within 3 px. At the standard 37,654-dot budget at least 31,005 / 37,654 = **82.34185%** must overlap it, exceeding the &gt;70% stop; the proof first forces a stop at 22,164 dots. A smaller count is not automatically unique. Do not target the uncovered pixels or silently exempt controls. [Run card](evidence/registry_preflight_run_card_20261026.json) · [proof and ranked hypotheses](docs/research/registry-preflight-20261026.md) · [three review passes](evidence/registry_preflight_review_passes_20261026.md).
+> **This preflight lane created no candidate TIFF, surface, holdout result, slot selection or submission.** The literal registry includes a 5-pixel lattice that covers 5,160,724 of 5,167,373 footprint pixels within 3 px. At the standard 37,654-dot budget at least 31,005 / 37,654 = **82.34185%** must overlap it, exceeding the &gt;70% stop; the proof first forces a stop at 22,164 dots. A smaller count is not automatically unique. Do not target the uncovered pixels or silently exempt controls. [Run card](evidence/registry_preflight_run_card_20261026.json) · [proof and ranked hypotheses](docs/research/registry-preflight-20261026.md) · [three review passes](evidence/registry_preflight_review_passes_20261026.md).
 >
 > **Research downloads only:** [GVSC-36 EXP-3 TIFF](docs/downloads/gemsdoe36-gvsc36-exp3-20261026-5fb822bdfb60-zeros.tif), [ZIP](docs/downloads/gemsdoe36-gvsc36-exp3-20261026-5fb822bdfb60-zeros.zip), [card](evidence/gvsc36_run_card_20261026.json); [HVG-36 EXP-1 TIFF](docs/downloads/gemsdoe36-hvg36-vent-dipole-20261026-b3ee97873192-zeros.tif), [card](evidence/hvg36_run_card_20261026.json); [MTO-36 TIFF](docs/downloads/gemsdoe36-mto36-ortho-contact-20261026-c41282e9da7a-zeros.tif), [card](evidence/mto36_run_card_20261026.json). All are **DO NOT SUBMIT**. GVSC's 99.6176% lattice overlap and post-placement surface check are blocking.
+>
+> **Parallel DW36 (merged separately):** one experiment recorded **HOLDOUT-DTI {dw["holdout_dti"]["pooled_candidate"]:.6f}** [{dw["holdout_dti"]["ci95_candidate"][0]:.6f}, {dw["holdout_dti"]["ci95_candidate"][1]:.6f}], `{dw["holdout_dti"]["evaluator_version"]}`, {dw["holdout_dti"]["withheld_positives"]:,} withheld positives; its matched control HOLDOUT-DTI was {dw["holdout_dti"]["pooled_control"]:.6f} [{dw["holdout_dti"]["ci95_control"][0]:.6f}, {dw["holdout_dti"]["ci95_control"][1]:.6f}]. Final in-memory dots overlapped the lattice by 100%; it stopped before exporting a TIFF and remains negative. [Parallel card](evidence/dw36_run_card_20261026.json) · [report](docs/research/dw36-20261026.md). This was not an experiment in the current preflight lane.
 >
 > GVSC recorded **HOLDOUT-DTI 0.158855** [0.145456, 0.173084]; HVG **HOLDOUT-DTI 0.135759** [0.123271, 0.148461], both `gems-segment-pooled-v1`, 60,988 withheld positives. Neither is a leaderboard projection. A newer [GEMSDOE24 DPRF1 review]({G24_REVIEW}) records **HOLDOUT-DTI 0.1637924** [0.150446, 0.177390], same named evaluator and positives, but does not independently certify protocol/paired gain/novelty; do not call the old 0.14876 the current group record or assume matched comparability.
 
@@ -353,12 +404,14 @@ For the pinned nine-site forensic rerun, run `python scripts/cache_focus9_audit.
 
 
 def main() -> int:
-    mto, hvg, gvsc, stop, ledger = (json.loads(p.read_text(encoding="utf-8")) for p in
-                                   (CARD, HVG_CARD, GVSC_CARD, STOP_CARD, LEDGER))
+    mto, hvg, gvsc, stop, ledger, dw = (json.loads(p.read_text(encoding="utf-8")) for p in
+                                       (CARD, HVG_CARD, GVSC_CARD, STOP_CARD, LEDGER, DW_CARD))
     ensure_status(mto, ledger, hvg)
     ensure_stop_card(stop, gvsc)
+    ensure_parallel_dw(dw)
     for source, target in (
         (STOP_CARD, DOCS / "downloads/registry-preflight-run-card.json"),
+        (DW_CARD, DOCS / "downloads/dw36-run-card.json"),
         (CARD, DOCS / "downloads/mto36-run-card.json"),
         (HVG_CARD, DOCS / "downloads/hvg36-run-card.json"),
         (GVSC_CARD, DOCS / "downloads/gvsc36-run-card.json"),
@@ -380,6 +433,7 @@ def main() -> int:
         "tif_path": None, "tif_sha256": None, "holdout_dti": None,
         "run_card": "downloads/registry-preflight-run-card.json", "run_card_sha256": _digest(STOP_CARD),
         "registry_preflight": stop["registry"]["literal_preflight"]["bound"],
+        "parallel_experiments": [parallel_dw_projection(dw)],
     }
     (DOCS / "current-run.json").write_text(json.dumps(current, indent=2) + "\n")
     manifest = {"schema": "gemsdoe36.research-downloads.v3", "slot_approved": False,
@@ -390,9 +444,9 @@ def main() -> int:
                     {"file": Path(mto["download"]["tif"]).name, "sha256": mto["raster_sha256"], "submit_ok": False},
                 ] + additional_archives()}
     (DOCS / "downloads/submissions_manifest.json").write_text(json.dumps(manifest, indent=2) + "\n")
-    (DOCS / "index.html").write_text(index_page(stop, mto, hvg, gvsc, ledger), encoding="utf-8")
-    (DOCS / "executive-summary.html").write_text(executive_page(stop, mto, hvg, gvsc, ledger), encoding="utf-8")
-    update_readme(stop, ledger)
+    (DOCS / "index.html").write_text(index_page(stop, mto, hvg, gvsc, ledger, dw), encoding="utf-8")
+    (DOCS / "executive-summary.html").write_text(executive_page(stop, mto, hvg, gvsc, ledger, dw), encoding="utf-8")
+    update_readme(stop, ledger, dw)
     print("Built Pages and README: literal-registry preflight NEGATIVE; no candidate or slot")
     return 0
 

@@ -32,7 +32,9 @@ def main() -> int:
             continue
         out.parent.mkdir(parents=True, exist_ok=True)
         res = subprocess.run(
-            ["gh", "api", f"repos/{OWNER}/{r['repo']}/contents/{r['path']}", "-H", "Accept: application/vnd.github.raw"],
+            ["gh", "api", f"repos/{OWNER}/{r['repo']}/contents/{r['path']}" +
+             (f"?ref={r['ref']}" if r.get("ref") else ""),
+             "-H", "Accept: application/vnd.github.raw"],
             capture_output=True,
         )
         if res.returncode or hashlib.sha256(res.stdout).hexdigest() != r["sha256"]:

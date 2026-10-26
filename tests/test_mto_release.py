@@ -13,8 +13,10 @@ sys.path.insert(0, str(ROOT / "scripts"))
 from build_mto_site import (  # noqa: E402
     additional_archives,
     current_branch,
+    ensure_parallel_dw,
     ensure_status,
     ensure_stop_card,
+    parallel_dw_projection,
     site_table,
     update_readme,
 )
@@ -158,3 +160,20 @@ def test_newer_external_holdout_review_is_hash_pinned_and_qualified():
     assert reviewed["holdout"]["ci95"]["interval"] == pytest.approx([0.15044621733051888, 0.1773903019943756])
     assert reviewed["verdict"] == "negative" and reviewed["ok_to_submit"] is False
     assert "no independent protocol/paired-gain/novelty certification" in reviewed["scope"]
+
+
+def test_parallel_dw_remains_negative_and_separate_from_preflight():
+    dw = load("evidence/dw36_run_card_20261026.json")
+    ensure_parallel_dw(dw)
+    current = load("docs/current-run.json")
+    assert current["parallel_experiments"] == [parallel_dw_projection(dw)]
+    assert current["holdout_dti"] is None  # current preflight, not the parallel experiment
+    assert dw["holdout_dti"]["pooled_candidate"] == pytest.approx(0.06605205634872657)
+    fake = deepcopy(dw)
+    fake["submit_ok"] = True
+    with pytest.raises(RuntimeError, match="negative"):
+        ensure_parallel_dw(fake)
+    fake = deepcopy(dw)
+    fake["registry"]["final"]["max_3px_overlap"] = 0.0
+    with pytest.raises(RuntimeError, match="duplicate"):
+        ensure_parallel_dw(fake)

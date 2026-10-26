@@ -78,17 +78,26 @@ def validate_current(current: dict, stop: dict, stop_sha: str) -> list[str]:
 def main() -> int:
     # Reuse the builder's independent card/proof contract rather than accepting a
     # self-consistent but fabricated positive manifest.
-    from build_mto_site import additional_archives, ensure_status, ensure_stop_card, site_table
+    from build_mto_site import (
+        additional_archives,
+        ensure_parallel_dw,
+        ensure_status,
+        ensure_stop_card,
+        parallel_dw_projection,
+        site_table,
+    )
 
     errors: list[str] = []
     mto = json.loads((ROOT / "evidence/mto36_run_card_20261026.json").read_text())
     hvg = json.loads((ROOT / "evidence/hvg36_run_card_20261026.json").read_text())
     gvsc = json.loads((ROOT / "evidence/gvsc36_run_card_20261026.json").read_text())
     stop = json.loads(STOP.read_text())
+    dw = json.loads((ROOT / "evidence/dw36_run_card_20261026.json").read_text())
     ledger = json.loads((ROOT / "evidence/focus_sites_9repo_summary_20261026.json").read_text())
     try:
         ensure_status(mto, ledger, hvg)
         ensure_stop_card(stop, gvsc)
+        ensure_parallel_dw(dw)
     except (RuntimeError, OSError, KeyError, StopIteration, ValueError) as exc:
         errors.append(f"Release evidence invalid: {exc}")
 
@@ -116,7 +125,7 @@ def main() -> int:
             if "noopener" not in rel.split():
                 errors.append(f"docs/{page}: target=_blank without rel=noopener: {href}")
         for phrase in ("DO NOT SUBMIT", "DOWNLOAD: YES", "Research downloads only", "HOLDOUT-DTI",
-                       "ORGANIZER-CONFIRMED", "0.158855", "0.135759", "0.1637924", "0.2778"):
+                       "ORGANIZER-CONFIRMED", "0.158855", "0.135759", "0.1637924", "0.2778", "DW36", "0.066052"):
             if phrase not in text:
                 errors.append(f"docs/{page}: missing {phrase}")
         first_screen = text[: max(1, len(text) // 4)]
@@ -147,11 +156,15 @@ def main() -> int:
 
     current_path = DOCS / "current-run.json"
     if current_path.is_file():
-        errors.extend(validate_current(json.loads(current_path.read_text()), stop, sha(STOP)))
+        current = json.loads(current_path.read_text())
+        errors.extend(validate_current(current, stop, sha(STOP)))
+        if current.get("parallel_experiments") != [parallel_dw_projection(dw)]:
+            errors.append("Current manifest must preserve the separately run negative DW36 experiment")
     else:
         errors.append("Missing docs/current-run.json")
     for original, copy in (
         (STOP, DOCS / "downloads/registry-preflight-run-card.json"),
+        (ROOT / "evidence/dw36_run_card_20261026.json", DOCS / "downloads/dw36-run-card.json"),
         (ROOT / "evidence/mto36_run_card_20261026.json", DOCS / "downloads/mto36-run-card.json"),
         (ROOT / "evidence/hvg36_run_card_20261026.json", DOCS / "downloads/hvg36-run-card.json"),
         (ROOT / "evidence/gvsc36_run_card_20261026.json", DOCS / "downloads/gvsc36-run-card.json"),
