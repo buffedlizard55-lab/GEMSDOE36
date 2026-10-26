@@ -1,0 +1,44 @@
+{
+  "candidate_id": "GEMSDOE36-H36-CTRB-Submod",
+  "prefix": "gemsdoe36-h36-ctrb-submod",
+  "content_digest8": "a1d85443",
+  "timestamp_tag": "20261025T000000Z",
+  "emitted_positive_pixels": 36800,
+  "note": "GEMSDOE36 H36-CTRB | 1.5km strike-worm+trunk relay+NSQ-PCC submod | 36800px d_cat>2 | HOLDOUT-DTI 0.1144",
+  "zeros_tif": {
+    "filename": "gemsdoe36-h36-ctrb-submod-36800-20261025T000000Z-a1d85443-zeros.tif",
+    "path": "/home/user/GEMSDOE36/docs/downloads/gemsdoe36-h36-ctrb-submod-36800-20261025T000000Z-a1d85443-zeros.tif",
+    "bytes": 310972,
+    "sha256": "2bb4513d6307e2394d5de7e7e7649e28eff067b602b805a0215e82aa5ff89907",
+    "mode": "zeros",
+    "nodata": null,
+    "in_footprint_all_finite": true,
+    "full_grid_all_finite": true,
+    "range_in_01": true
+  },
+  "nan_tif": {
+    "filename": "gemsdoe36-h36-ctrb-submod-36800-20261025T000000Z-a1d85443-nan.tif",
+    "path": "/home/user/GEMSDOE36/docs/downloads/gemsdoe36-h36-ctrb-submod-36800-20261025T000000Z-a1d85443-nan.tif",
+    "bytes": 363862,
+    "sha256": "d30c767aed69c8fcfdefd0ffc07b9d09bd261573b18525c7c3122f99409caf1c",
+    "mode": "nan",
+    "nodata": "nan",
+    "in_footprint_all_finite": true,
+    "full_grid_all_finite": false,
+    "range_in_01": true
+  },
+  "zip_archive": {
+    "filename": "gemsdoe36-h36-ctrb-submod-36800-20261025T000000Z-a1d85443-zeros.zip",
+    "path": "/home/user/GEMSDOE36/docs/downloads/gemsdoe36-h36-ctrb-submod-36800-20261025T000000Z-a1d85443-zeros.zip",
+    "bytes": 199478,
+    "sha256": "4f7f7eae2f41a33f69de264e01722152b2cae3dbede37153dae9fa6f0e7eed7f"
+  },
+  "meta": {
+    "evaluator_version": "gems-segment-pooled-v1",
+    "holdout_dti": 0.11442490603305516,
+    "holdout_ci95": [
+      0.10379483612241487,
+      0.12575588550870148
+    ]
+  }
+}

@@ -27,26 +27,24 @@ REPO_ROOT = Path(__file__).resolve().parents[1]
 DOCS_ROOT = REPO_ROOT / "docs"
 REQUIRED_PAGES = ("index.html", "executive-summary.html")
 
-# Main's Anderson-PINN deliverable bundle (the established primary on main).
-PRIMARY_TIF = "gemsdoe36-anderson-geothermal-pinn-38854-20261004T230000Z-9b9ea4e6-zeros.tif"
-NAN_TIF = "gemsdoe36-anderson-geothermal-pinn-38854-20261004T230000Z-9b9ea4e6-nan.tif"
-ZIP_FILE = "gemsdoe36-anderson-geothermal-pinn-38854-20261004T230000Z-9b9ea4e6-zeros.zip"
+# Primary H36-CTRB deliverable bundle (2026-10-25 Parallel-Run promoted artifact).
+PRIMARY_TIF = "gemsdoe36-h36-ctrb-submod-36800-20261025T000000Z-a1d85443-zeros.tif"
+NAN_TIF = "gemsdoe36-h36-ctrb-submod-36800-20261025T000000Z-a1d85443-nan.tif"
+ZIP_FILE = "gemsdoe36-h36-ctrb-submod-36800-20261025T000000Z-a1d85443-zeros.zip"
 MANIFEST_FILE = "submissions_manifest.json"
 
-# The landing page must reference BOTH candidate lines and current honest status.
 REQUIRED_COPY = (
     "GEMSDOE36",
-    "Anderson",
-    PRIMARY_TIF,            # main's PINN primary is referenced
-    "off-catalogue",        # the H6 off-catalogue candidate line is referenced
-    "holdout",              # spatial-holdout validation is described
+    "H36-CTRB",
+    PRIMARY_TIF,
+    "off-catalogue",
+    "HOLDOUT-DTI",
 )
-# The landing page must NOT regress to the pre-gate "no prediction" framing.
 FORBIDDEN_COPY = (
     "No upload-ready prediction yet",
     "Competition TIFF: not available",
+    "Projected live score",
 )
-# Executive page must keep the exact submission-guide items and describe both lines.
 EXECUTIVE_COPY = (
     "--submission-name",
     "--note",
