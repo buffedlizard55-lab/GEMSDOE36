@@ -1,3 +1,33 @@
+# GEMSDOE36 — Lane36 supervised-GBM submission (2026-10-26) ✅ OK TO DOWNLOAD AND SUBMIT
+
+> **Download (the one file):** [`docs/downloads/gemsdoe36-lane36-supgbm-68302-20261026T002651Z-f35cb3e4-zeros.tif`](docs/downloads/gemsdoe36-lane36-supgbm-68302-20261026T002651Z-f35cb3e4-zeros.tif) (354 KB)
+> **Submission name:** `GEMSDOE36-Lane36-SupGBM-20261026T002651Z` · **Note (97 ch):** `Lane36 supervised GBM lineament surf, seg-holdout DTI 0.178 vs champ-analog 0.162; s2.0 b68302 B2`
+> **SHA-256:** `45e626c01f9dc6e8aed59875d2758467c39f008c87543f566b3ae9d26a2234e7` · 68,302 dots · 0 within 200 m of catalogue · float32 · EPSG:32611 · 100 m · **all 12,279,160 cells finite in [0,1], nodata=None** (the historic portal “[0,1]” rejection cannot recur) · validator PASS (template match).
+> **Evidence:** HOLDOUT-DTI **0.1777** (95% CI 0.164–0.191; hide-and-recover, 60,988 withheld positives, organizer metric `gemsdoe36.metric`) vs fair champion-analog **0.1615**. Uniqueness gates pass: rank-corr 0.13 vs h19-5 surface (≤0.90), max dot-overlap ≤3 px 43.7% vs any registry raster (≤70%; champion 33.8%). Run card: [`docs/downloads/lane36_run_card.json`](docs/downloads/lane36_run_card.json). Method/forensics: [`docs/research/lane36_20261025.md`](docs/research/lane36_20261025.md). **No organizer score exists for this file; all leaderboard numbers cited anywhere in this repo are owner-reported without receipts.**
+> ⚠️ Older TIFs in `docs/downloads/` are **archive/audit only — DO NOT SUBMIT as the unique entry**: Anderson-PINN = 0.2778-champion core + additions (~97% overlap, duplicate lane; owner-reported 0.2750); H6's “5/5 gate” was circular (SGMC feature+truth; honest hide-and-recover ≈0.0001).
+
+## Standing brief update (2026-10-25, reread every session)
+
+Focus sites: GEMSDOE24/25/27/28/30/31/32/33/36 highest scorers. Parallel-run protocol:
+(1) one lane per session — rank-corr ≤0.90 and ≤70% dots within 3 px vs every registry
+raster or log duplicate & stop; (2) reuse cached stacks/metric/writer, fix shared tools
+in place; (3) label every number HOLDOUT-DTI (evaluator, N withheld, 95% CI) or
+ORGANIZER-CONFIRMED (receipt) — projections never written as scores; (4) leakage canary:
+single-feature AUC >0.90 = leakage until proven otherwise; (5) end with one JSON run
+card (hypothesis, mechanism, named mimic, holdout+CI, registry correlation/overlap,
+sha256, validator output, name+≤140 ch note, verdict promote/negative); (6) ≤3
+experiments / ≤2 h; slot promotion is a separate selector step. Generate a UNIQUE TIF;
+make submit/no-submit obvious on the site; validate without human intervention.
+Core values: **Maximize P(Win)** · **Own the Outcome**. Why 0.2778 won and how to beat
+it: `docs/research/lane36_20261025.md` (thinning + B=2 on an exhausted h19-5 surface;
+beating it needs a better-ranked surface — this lane — and honest budget choice).
+Irregularities found 2026-10-25: IR-A `live_mirror.official_dti` ≠ organizer metric
+(prior “LM/projected 0.2798” numbers invalid as organizer-metric claims); IR-B
+Anderson-PINN duplicate lane + H6 circular gate; IR-C final-round expanded-label
+ambiguity re catalogue pixels (B=2 kept, risk flagged).
+
+---
+
 # GEMSDOE36: Two Independent Candidate Lines (Anderson-PINN + Off-Catalogue H6 Prior)
 
 > **Department of Energy (DOE) Geologic Enhanced Mapping System (GEMS) Prize Challenge**  
