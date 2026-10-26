@@ -46,7 +46,7 @@ pytest -q
 ruff check src scripts tests
 ```
 
-For the pinned nine-site forensic rerun, run `python scripts/cache_focus9_audit.py` to fetch the ten SHA-verified comparison TIFFs at their pinned commits, then run `python scripts/audit_focus_sources.py` and `python scripts/audit_focus_uniqueness.py`. Owner-mirror hash verification is not organizer authentication. Prior all-finite TIFFs pass a local whole-grid range check but their cards flag noncompliance with the official outside-NaN profile; portal acceptance is unknown. The [site](docs/index.html) and [executive guide](docs/executive-summary.html) have the current negative decision. No automated leaderboard monitor is shipped.
+For the pinned nine-site forensic rerun, run `python scripts/cache_focus9_audit.py` to fetch the ten SHA-verified comparison TIFFs at their pinned commits, then run `python scripts/audit_focus_sources.py` and `python scripts/audit_focus_uniqueness.py`. Owner-mirror hash verification is not organizer authentication. Prior all-finite TIFFs pass a local whole-grid range check but do not use the official outside-NaN profile; GVSC and HVG cards explicitly flag the conflict. Portal acceptance is unknown. The [site](docs/index.html) and [executive guide](docs/executive-summary.html) have the current negative decision. No automated leaderboard monitor is shipped.
 
 **Next:** reconcile the budget/rule conflict without relaxing the user's protocol; refresh the registry, then perform a preregistered one-lane, leakage-canary and buffered whole-segment holdout with every surface/final-dot comparison, a real raster validator and a separate slot selector. Do not spend a slot to test a known duplicate.
 

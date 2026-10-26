@@ -292,7 +292,7 @@ def archive_section(mto: dict, hvg: dict, gvsc: dict) -> str:
         zip_link = f' · <a href="downloads/{e(item["zip"])}" download>ZIP</a>' if item["zip"] else ""
         others.append(f'<li><strong>{e(item["lane"])}</strong> · <a href="downloads/{e(item["file"])}" download>{e(item["file"])}</a>{zip_link} · <a href="downloads/{e(item["card"])}">historical card</a> · DO NOT SUBMIT</li>')
     return '''<section class="section" id="archive"><div class="section-head"><div><span class="eyebrow">Prior work</span><h2>Research downloads only</h2></div><p>These are historical artifacts, not new unique submissions. DO NOT SUBMIT.</p></div>
-<div class="grid cols-3">''' + ''.join(parts) + '''</div><p class="fine-print">GVSC also has a protocol-order flaw and partial prior-hypothesis overlap. Prior zeros-only TIFFs pass local full-grid range checks but their run cards report that they do not meet the official outside-NaN profile. No organizer acceptance is established.</p><details><summary>More archived research downloads</summary><p>All are research-only. Lane36's old card says promote, but the <a href="downloads/lane36-crosscheck.json">independent expanded-registry crosscheck</a> found 93.17% overlap, so it is not approved.</p><ul>''' + ''.join(others) + '''</ul></details></section>'''
+<div class="grid cols-3">''' + ''.join(parts) + '''</div><p class="fine-print">GVSC also has a protocol-order flaw and partial prior-hypothesis overlap. Prior zeros-only TIFFs pass local full-grid range checks but do not use the official outside-NaN profile; the GVSC and HVG cards explicitly record this conflict. No organizer acceptance is established.</p><details><summary>More archived research downloads</summary><p>All are research-only. Lane36's old card says promote, but the <a href="downloads/lane36-crosscheck.json">independent expanded-registry crosscheck</a> found 93.17% overlap, so it is not approved.</p><ul>''' + ''.join(others) + '''</ul></details></section>'''
 
 
 def context_section(ledger: dict) -> str:
@@ -318,7 +318,7 @@ def index_page(stop: dict, mto: dict, hvg: dict, gvsc: dict, ledger: dict, dw: d
 <section class="section"><div class="section-head"><div><span class="eyebrow">The limiting evidence</span><h2>The gate is impossible at this budget.</h2></div><p>Thresholds were not relaxed and dots were not moved to evade the registry.</p></div>
 <div class="grid cols-3"><article class="card"><span class="card-kicker">Footprint covered by lattice</span><h3>{b['covered_pixels']:,} / {b['footprint_pixels']:,}</h3><p>Only {b['uncovered_pixels']:,} pixels lie more than 3 px from registered lattice dots.</p></article>
 <article class="card"><span class="card-kicker">Any {b['candidate_distinct_dots']:,}-dot candidate</span><h3>≥ {b['minimum_overlap_fraction']*100:.2f}% overlap</h3><p>At least {b['minimum_overlapping_dots']:,} dots must overlap the lattice's 3-pixel neighborhood; the stop is &gt;70%.</p></article>
-<article class="card"><span class="card-kicker">Bound begins</span><h3>{b['first_dot_count_forced_over_threshold']:,} dots</h3><p>Above this count the proof forces a stop. Smaller outputs are not automatically unique.</p></article></div>
+<article class="card"><span class="card-kicker">Bound begins</span><h3>{b['first_dot_count_forced_over_threshold']:,} dots</h3><p>At or above this count the proof forces a stop. Smaller outputs are not automatically unique.</p></article></div>
 <p><a href="research/registry-preflight-20261026.md">See the proof, inputs and ranked hypotheses →</a></p></section>
 {archive_section(mto,hvg,gvsc)}
 {parallel_dw_section(dw)}
@@ -393,7 +393,7 @@ pytest -q
 ruff check src scripts tests
 ```
 
-For the pinned nine-site forensic rerun, run `python scripts/cache_focus9_audit.py` to fetch the ten SHA-verified comparison TIFFs at their pinned commits, then run `python scripts/audit_focus_sources.py` and `python scripts/audit_focus_uniqueness.py`. Owner-mirror hash verification is not organizer authentication. Prior all-finite TIFFs pass a local whole-grid range check but their cards flag noncompliance with the official outside-NaN profile; portal acceptance is unknown. The [site](docs/index.html) and [executive guide](docs/executive-summary.html) have the current negative decision. No automated leaderboard monitor is shipped.
+For the pinned nine-site forensic rerun, run `python scripts/cache_focus9_audit.py` to fetch the ten SHA-verified comparison TIFFs at their pinned commits, then run `python scripts/audit_focus_sources.py` and `python scripts/audit_focus_uniqueness.py`. Owner-mirror hash verification is not organizer authentication. Prior all-finite TIFFs pass a local whole-grid range check but do not use the official outside-NaN profile; GVSC and HVG cards explicitly flag the conflict. Portal acceptance is unknown. The [site](docs/index.html) and [executive guide](docs/executive-summary.html) have the current negative decision. No automated leaderboard monitor is shipped.
 
 **Next:** reconcile the budget/rule conflict without relaxing the user's protocol; refresh the registry, then perform a preregistered one-lane, leakage-canary and buffered whole-segment holdout with every surface/final-dot comparison, a real raster validator and a separate slot selector. Do not spend a slot to test a known duplicate.
 

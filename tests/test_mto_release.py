@@ -177,3 +177,9 @@ def test_parallel_dw_remains_negative_and_separate_from_preflight():
     fake["registry"]["final"]["max_3px_overlap"] = 0.0
     with pytest.raises(RuntimeError, match="duplicate"):
         ensure_parallel_dw(fake)
+
+
+def test_published_threshold_copy_includes_the_boundary():
+    landing = (ROOT / "docs/index.html").read_text()
+    assert "At or above this count the proof forces a stop" in landing
+    assert "Above this count the proof forces a stop" not in landing
