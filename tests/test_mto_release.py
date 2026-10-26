@@ -11,7 +11,7 @@ import pytest
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "scripts"))
-from build_mto_site import ensure_status, site_table  # noqa: E402
+from build_mto_site import current_branch, ensure_status, site_table  # noqa: E402
 from verify_mto_release import verify_all  # noqa: E402
 
 
@@ -41,6 +41,18 @@ def test_generator_fails_closed_if_verdict_or_historical_score_labels_forged() -
     fake_score["focus_sites"][6]["highest_historical_submission"]["score_label"] = "ORGANIZER-CONFIRMED"
     with pytest.raises(RuntimeError, match="owner-reported"):
         ensure_status(card, fake_score)
+
+
+def test_working_branch_is_read_from_checkout_not_a_historical_run_card(monkeypatch) -> None:
+    class Result:
+        stdout = "arena/test-branch\n"
+
+    def fake_run(*args, **kwargs):
+        assert args[0] == ["git", "branch", "--show-current"]
+        return Result()
+
+    monkeypatch.setattr("build_mto_site.subprocess.run", fake_run)
+    assert current_branch() == "arena/test-branch"
 
 
 def test_nine_pinned_links_measured_not_organizer_authenticated() -> None:
