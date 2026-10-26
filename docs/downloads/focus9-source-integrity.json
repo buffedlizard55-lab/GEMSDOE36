@@ -1,0 +1,100 @@
+{
+  "schema": "focus9-source-integrity-v2",
+  "checked_date_utc": "2026-10-26",
+  "score_provenance": "OWNER-REPORTED only; none of these nine scores has an authenticated submission-page receipt in this repo",
+  "source": "registry/scored_registry.json + evidence/focus_sites_9repo_summary_20261026.json",
+  "sites": [
+    {
+      "site": "GEMSDOE24",
+      "name": "gems24-h25-1-dotted-h19-5-d1-5-20261002-989f59505db1-nan.tif",
+      "sha256": "68d0e2e4fcc594f9a23f56c44b885fee733d026d39be55e18ad2a07289525310",
+      "dots_in_footprint": 60069,
+      "reported_score_not_organizer_authenticated": 0.2477,
+      "score_provenance": "USER-REPORTED (no portal screenshot receipt in repo; subset of GEMSDOE27 0.2449 at Jaccard 0.9795)",
+      "pinned_source_url": "https://github.com/buffedlizard55-lab/GEMSDOE24/blob/fc2bc6f350bf5c6ce8da5d7a2ab03578ea1259d1/docs/downloads/gems24-h25-1-dotted-h19-5-d1-5-20261002-989f59505db1-nan.tif"
+    },
+    {
+      "site": "GEMSDOE25",
+      "name": "gems25-dotted-h19-5-d2-8-20261002-e56ea318af89-nan.tif",
+      "sha256": "91eae1ca42ec845eaa8c2ba32da49806e24751743459b8a10017c479bbe639b8",
+      "dots_in_footprint": 44090,
+      "reported_score_not_organizer_authenticated": 0.26,
+      "score_provenance": "OWNER-REPORTED (no organizer submission-page receipt archived)",
+      "pinned_source_url": "https://github.com/buffedlizard55-lab/GEMSDOE25/blob/e40b9b5e3871cb34d138f586bde97f5099658d01/docs/downloads/gems25-dotted-h19-5-d2-8-20261002-e56ea318af89-nan.tif"
+    },
+    {
+      "site": "GEMSDOE27",
+      "name": "gems27-topo-gap-closure-t-v2-on-d1-5-20261002-5512495c6bd1-nan.tif",
+      "sha256": "33003374335d84bf885f2d8f5e9dd4c57044c8ec58fa6a0d7fa581e8bc41c11d",
+      "dots_in_footprint": 61328,
+      "reported_score_not_organizer_authenticated": 0.2449,
+      "score_provenance": "OWNER-REPORTED (no organizer submission-page receipt archived)",
+      "pinned_source_url": "https://github.com/buffedlizard55-lab/GEMSDOE27/blob/927322eadbde56be42ae129ccdfb9b37540d8e60/docs/downloads/gems27-topo-gap-closure-t-v2-on-d1-5-20261002-5512495c6bd1-nan.tif"
+    },
+    {
+      "site": "GEMSDOE28",
+      "name": "gems28-h36-1-rung30-blind-r1-20261003-b531dae0a36f-nan.tif",
+      "sha256": "5556aa1438fd67376b60d5ffc99228ec09dcc11a8408298a743ccb88d6163641",
+      "dots_in_footprint": 37660,
+      "reported_score_not_organizer_authenticated": 0.271,
+      "score_provenance": "OWNER-REPORTED (no organizer submission-page receipt archived)",
+      "pinned_source_url": "https://github.com/buffedlizard55-lab/GEMSDOE28/blob/e6321461066f89080e3b1bb670d3951ab20d3638/docs/downloads/gems28-h36-1-rung30-blind-r1-20261003-b531dae0a36f-nan.tif"
+    },
+    {
+      "site": "GEMSDOE30",
+      "name": "gemsdoe30-d28-poisson300m-offcat-44090-20261003T233156Z-91eae1ca.tif",
+      "sha256": "8cf893ead5667df21d3288a9968c35fd5385c425b029d82ee71d311715b129fd",
+      "dots_in_footprint": 44090,
+      "reported_score_not_organizer_authenticated": 0.26,
+      "score_provenance": "OWNER-REPORTED (no organizer submission-page receipt archived)",
+      "pinned_source_url": "https://github.com/buffedlizard55-lab/GEMSDOE30/blob/760af3005dd40b9f36d8fef97d6dc384fd9f2a2f/docs/downloads/gemsdoe30-d28-poisson300m-offcat-44090-20261003T233156Z-91eae1ca.tif"
+    },
+    {
+      "site": "GEMSDOE31",
+      "name": "gemsdoe31-h27-4-solo-d28-20261004-8acb75e1-nan.tif",
+      "sha256": "07b6db440535404bb41ec8ddc797713e200d308e3da35937393efde5eb84bc40",
+      "dots_in_footprint": 40199,
+      "reported_score_not_organizer_authenticated": 0.2708,
+      "score_provenance": "OWNER-REPORTED (no organizer submission-page receipt archived)",
+      "pinned_source_url": "https://github.com/buffedlizard55-lab/GEMSDOE31/blob/597b04cd1afb65d1ebbe3e9417fd952be48e3d74/docs/downloads/gemsdoe31-h27-4-solo-d28-20261004-8acb75e1-nan.tif"
+    },
+    {
+      "site": "GEMSDOE32",
+      "name": "gemsdoe32-h33-h33-2-b2-20261004T220000Z-e5eb6e7e-zeros.tif",
+      "sha256": "c55bafc470054e8271dcb89347a17e07fefe50de6af6e6ba6c4b169ef7ab6fa9",
+      "dots_in_footprint": 37654,
+      "reported_score_not_organizer_authenticated": 0.2778,
+      "score_provenance": "OWNER-REPORTED (no organizer submission-page receipt archived)",
+      "pinned_source_url": "https://github.com/buffedlizard55-lab/GEMSDOE32/blob/5fc7792c5887735ecd3aa9a612787da588a7bf2c/docs/downloads/gemsdoe32-h33-h33-2-b2-20261004T220000Z-e5eb6e7e-zeros.tif"
+    },
+    {
+      "site": "GEMSDOE33",
+      "name": "GEMSDOE33-h33d-analog-tip-stepover-r30-20261004-cb490425926e.tif",
+      "sha256": "87f857d505e23247e991ccfab2cbe9f49a04df4f9c8028dce7ea261554690757",
+      "dots_in_footprint": 41865,
+      "reported_score_not_organizer_authenticated": 0.2632,
+      "score_provenance": "OWNER-REPORTED (no organizer submission-page receipt archived)",
+      "pinned_source_url": "https://github.com/buffedlizard55-lab/GEMSDOE33/blob/f618cc54773bd9b4d6c2b3ebf78103a05cc10cb6/docs/downloads/GEMSDOE33-h33d-analog-tip-stepover-r30-20261004-cb490425926e.tif"
+    },
+    {
+      "site": "GEMSDOE36",
+      "name": "gemsdoe36-anderson-geothermal-pinn-38854-20261004T230000Z-9b9ea4e6-zeros.tif",
+      "sha256": "e15891020b9c57056ac7fa874a5e506fbd6ed9314a4ea8e73af0753887a3708a",
+      "dots_in_footprint": 38854,
+      "reported_score_not_organizer_authenticated": 0.275,
+      "score_provenance": "OWNER-REPORTED (no organizer submission-page receipt archived)",
+      "pinned_source_url": "https://github.com/buffedlizard55-lab/GEMSDOE36/blob/c5a8ae7da3bd2fcff5aa5855afd44c7a3346c16f/docs/downloads/gemsdoe36-anderson-geothermal-pinn-38854-20261004T230000Z-9b9ea4e6-zeros.tif"
+    }
+  ],
+  "nested_family_crosschecks": {
+    "d28_25_vs_30_xor": 0,
+    "solo_31_vs_28_xor": 0,
+    "solo_31_vs_d28_gt_1px_xor": 0,
+    "b2_vs_d28_gt_2px_xor": 0,
+    "d28_removed_to_b2": 6436,
+    "solo_removed_to_b2": 2545,
+    "legacy36_added_over_b2": 1200,
+    "legacy36_missing_b2": 0
+  },
+  "limit": "Exact raster identity proves neither which bytes were uploaded nor why the blind organizer score changed; extra off-catalogue truth is unavailable."
+}

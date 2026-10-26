@@ -1,0 +1,29 @@
+# Three-pass implementation & forensic review · MTO-36
+
+Date: 2026-10-26 UTC · fixed branch `arena/cee70ea1-gemsdoe36` · **DOWNLOAD: YES for research; DO NOT SUBMIT**. These are three separate reviews of one preregistered experiment, **not** three experiments. Only E1 ran (249.3 s; cap three experiments/two hours). A single JSON run card of record: [`mto36_run_card_20261026.json`](mto36_run_card_20261026.json). No DrivenData upload, live slot or score.
+
+## Pass 1 — method, holdout and leakage (physical correctness)
+
+- Before implementing E1, locked four ranked hypotheses in `knowledge/mtop36_preregistration_2026-10-26.md`. Isolated MTO-36's one-sided magnetic-contact termination crossed by an orthogonal gravity gradient. Intrusive/plutonic contact junction is a named non-fault mimic. No scored registry TIFF entered the feature generator or emitter; owner-mirror band 02 and band 13 and the footprint were the physics inputs.
+- Confirmed code reuses shared `gems.holdout.SegmentHoldout`, `gems.submission.write_submission`, `gems.novelty.compare_registry`; `tests/test_mto_contact.py` synthetic one-sided-vs-continuous contact and unsurveyed-boundary rejection pass. Inspected whole 8-connected fault components, buffered validation (1,500 m), visible-only catalogue semantics and pixel-exact fault masking. Holdout scored *pooled* α=0.2, β=0.8 weighted DTI with a 300 m triangular kernel, not the mean of four folds.
+- Nine feature-alone, two-polarity canaries passed (max AUC 0.5878). Candidate HOLDOUT-DTI 0.067611, CI [0.058449, 0.077867] vs matched raw-edge 0.066923; paired CI [−0.003002, +0.004433] contains zero. Below prior 0.14876 comparable holdout. **Pass 1 finding: no promotion; do not repeat in this lane.**
+
+## Pass 2 — nine-site byte audit and provenance (forensic correctness)
+
+- Rehashed all nine historical best raster files against the pinned scored-source registry and checked exact names, template grid and dot counts with `python scripts/audit_focus_sources.py`. Corrected nine inaccurate `sha256_12` suffixes and one misnamed GEMSDOE25 artifact; immutable GitHub commit/file links and full SHA-256 values are in `evidence/focus_sites_9repo_summary_20261026.json` and `evidence/mto36_ninesite_forensics.json`.
+- Independently checked mask algebra: GEMSDOE25↔30 D2.8 zero XOR; GEMSDOE28↔31 solo zero XOR; B2 equals D2.8 ∧ catalogue distance >2 px with zero XOR, 6,436 removed (2,545 additional relative to solo); historical GEMSDOE36 B2+1,200. An exact raster identity does not verify what was uploaded or prove why a blind score moved.
+- Historic numbers previously labeled `ORGANIZER-CONFIRMED` had no archived organizer submission-page receipts. Corrected the current ledger, landing, guide, README, linked ATVR monograph and legacy manifest to **OWNER-REPORTED**. Archived leaderboard page now warns the 0.3195/0.4413 values are conflicting/undated and not verified. Official competition/USGS URLs are leads for manual review only; owner-mirrored bytes are SHA-pinned but not independently authenticated at the authority. **Pass 2 finding: highest reported nine-site 0.2778 is conditional; no verified current leaderboard target.**
+
+## Pass 3 — artifact, strict registry gate, public release & regression (deployment correctness)
+
+- Confirmed pre-placement all-entry surface max |rho| = 0.4366 <0.90 (PASS) and final-dot max |rho| = 0.5531 <0.90 but directed 3-px overlap **1.0000** against 13GEMSDOE five-pixel lattice; four non-lattice rasters 0.7551/0.7409/0.7402/0.7147 (>0.70). Focus-nine max 0.6573 and B2 0.2376 are narrower diagnostics, **not** a waiver. The lattice covers 99.8713% within 3 px; max off-lattice pixels 6,649 gives minimum theoretical overlap >82% at 37,654 dots. This is a literal duplicate-stop, recorded before publishing the TIFF for research; no post-hoc placement tuning.
+- `scripts/verify_mto_release.py`: SHA-256 verified the original TIFF `3e6594fe39facbffd433dc4500a7e8766fab2dd0d5089d2f591ed47713261607`, identical public JSON copies, one-file ZIP and both local format validators; grid 3730×3292 EPSG:32611 float32, exact template, all 12,279,160 pixels finite [0,1], 37,654 off-catalogue dots. Does **not** claim portal acceptance. Current Pages status and negative card are cross-checked by `scripts/check_site.py`; source-freshness JavaScript fetches public commits, never organizer scores.
+- End-to-end checks: `python scripts/audit_focus_sources.py` **9 sites / 8 nested-family checks passed**; `python scripts/check_site.py` **pass**; `python scripts/verify_mto_release.py` **pass with `verdict: negative`, `download_and_submit: false`**; legacy `python scripts/verify_release_gate.py` **negative/pass**; `.venv/bin/pytest -q` **101 passed, 1 skipped** (`torch` missing); `.venv/bin/ruff check src scripts tests`, `python -m compileall -q scripts src tests`, `node --check docs/assets/live-feed.js`, `git diff --check` **pass**. `scripts/build_site.py` rerun is byte-idempotent on README, two Pages, current JSON and public run-card. **Pass 3 finding: research download is reproducible, not eligible for a live slot.**
+
+### Residual limitations, not gates waived
+
+1. No official authenticated competition/USGS file retrieval, blind labels, live leaderboard query, organizer score or submission receipt; local format and metric code are not portal acceptance.
+2. The strict all-registry novelty rule is nearly infeasible at this dot budget due to dense masks. Document it; do **not** weaken the rule for MTO-36 or fit against registry gaps.
+3. Missing optional `torch` leaves one preexisting orientation test skipped. Historical source score claims remain owner-reported. The owner referenced a “single method paragraph” but none was identifiable; MTO-36 was explicitly preregistered before testing.
+
+**Final selector decision:** Negative. **Do not spend a weekly submission slot.** Core values: **Maximize P(Win)**, **Own the Outcome**.

@@ -1,0 +1,304 @@
+{
+  "schema": "gems36.focus_sites_9repo_summary.v1",
+  "audit_date_utc": "2026-10-26",
+  "grid_cells_verified": 12279160,
+  "footprint_pixels": 5167373,
+  "known_fault_pixels": 60988,
+  "off_catalogue_footprint_pixels": 5106385,
+  "algebraic_hidden_truth_inversion": {
+    "tversky_formula": "DTI = TP_w / (0.2 * TP_w + 0.2 * FP_w + 0.8 * K)",
+    "d28_collar_family_reciprocal_fit": {
+      "members": [
+        {
+          "site": "GEMSDOE25/30",
+          "candidate": "d2.8 (d_cat > 0)",
+          "dots": 44090,
+          "score": 0.26,
+          "score_label": "OWNER-REPORTED (no organizer submission-page receipt archived)"
+        },
+        {
+          "site": "GEMSDOE28/31",
+          "candidate": "h27-4-solo (d2.8 & d_cat > 1 px)",
+          "dots": 40199,
+          "score": 0.2708,
+          "score_label": "OWNER-REPORTED (no organizer submission-page receipt archived)"
+        },
+        {
+          "site": "GEMSDOE32",
+          "candidate": "h33-h33-2-b2 (d2.8 & d_cat > 2 px)",
+          "dots": 37654,
+          "score": 0.2778,
+          "score_label": "OWNER-REPORTED (no organizer submission-page receipt archived)"
+        },
+        {
+          "site": "GEMSDOE36_legacy",
+          "candidate": "anderson-geothermal-pinn-38854 (B2 + 1200 thermal IDW dots)",
+          "dots": 38854,
+          "score": 0.275,
+          "score_label": "OWNER-REPORTED (no organizer submission-page receipt archived)"
+        }
+      ],
+      "r_squared_inv_dti_vs_N": 0.998523,
+      "inferred_family_tp_w_px": 5151.3,
+      "K_from_b2_intercept_px": 12852.7,
+      "K_from_5px_calibration_lattice_px": 12631.8,
+      "K_agreement_pct": 1.72,
+      "implied_off_catalogue_prevalence_pct": 0.247,
+      "b2_weighted_recall_pct": 40.78,
+      "tp_w_required_at_37654_for_0p3195": 5906.5,
+      "tp_w_required_at_37654_for_0p4413": 8279.4,
+      "key_finding": "Pure pruning of the 19GEMSDOE h19-5 / d2.8 lineage asymptotes below ~0.295; surpassing 0.3195 and 0.4413 requires genuine recall expansion into blind piedmont, basin-fill, and non-LiDAR fault zones."
+    },
+    "caveat": "Derived quantities assume that owner-reported score/file pairings are correct and that the test-truth size/public subset and reported metric are as modeled. Neither hidden-truth size nor expected leaderboard score is independently verified; do not use these projections as a promotion gate."
+  },
+  "focus_sites": [
+    {
+      "site": "GEMSDOE24",
+      "repo": "buffedlizard55-lab/GEMSDOE24",
+      "highest_historical_submission": {
+        "name": "gems24-h25-1-dotted-h19-5-d1-5-20261002-989f59505db1-nan.tif",
+        "sha256_12": "68d0e2e4fcc5",
+        "dots": 60069,
+        "score": 0.2477,
+        "score_label": "USER-REPORTED (no portal screenshot receipt in repo; subset of GEMSDOE27 0.2449 at Jaccard 0.9795)",
+        "sha256_full": "68d0e2e4fcc594f9a23f56c44b885fee733d026d39be55e18ad2a07289525310",
+        "pinned_raster_source_url": "https://github.com/buffedlizard55-lab/GEMSDOE24/blob/fc2bc6f350bf5c6ce8da5d7a2ab03578ea1259d1/docs/downloads/gems24-h25-1-dotted-h19-5-d1-5-20261002-989f59505db1-nan.tif",
+        "integrity": "SHA-256 recomputed from local GitHub-cached raster bytes on 2026-10-26; does not authenticate a submission score."
+      },
+      "latest_2026_10_25_candidates": [
+        {
+          "name": "GVC1 (abe8e51c)",
+          "dots": 37654,
+          "score": 0.0859,
+          "score_label": "OWNER-REPORTED (no organizer submission-page receipt archived)",
+          "forensic_note": "Full-map in-sample HGB halo collapse (74.3% of dots within 10 px of existing_faults)."
+        },
+        {
+          "name": "RSHG1 (98f69d77)",
+          "dots": 37722,
+          "score": null,
+          "status": "DO_NOT_SUBMIT (72.69% 3-px overlap vs dense ridge)"
+        }
+      ],
+      "safe_unique_candidate_available": false
+    },
+    {
+      "site": "GEMSDOE25",
+      "repo": "buffedlizard55-lab/GEMSDOE25",
+      "highest_historical_submission": {
+        "name": "gems25-dotted-h19-5-d2-8-20261002-e56ea318af89-nan.tif",
+        "sha256_12": "91eae1ca42ec",
+        "dots": 44090,
+        "score": 0.26,
+        "score_label": "OWNER-REPORTED (no organizer submission-page receipt archived)",
+        "forensic_note": "Pixel-identical in footprint (0 XOR) to GEMSDOE30 d2.8.",
+        "sha256_full": "91eae1ca42ec845eaa8c2ba32da49806e24751743459b8a10017c479bbe639b8",
+        "pinned_raster_source_url": "https://github.com/buffedlizard55-lab/GEMSDOE25/blob/e40b9b5e3871cb34d138f586bde97f5099658d01/docs/downloads/gems25-dotted-h19-5-d2-8-20261002-e56ea318af89-nan.tif",
+        "integrity": "SHA-256 recomputed from local GitHub-cached raster bytes on 2026-10-26; does not authenticate a submission score."
+      },
+      "latest_2026_10_25_candidates": [
+        {
+          "name": "H66 (da617550)",
+          "dots": 44832,
+          "score": 0.0742,
+          "score_label": "OWNER-REPORTED (no organizer submission-page receipt archived)",
+          "status": "NEGATIVE_LIVE"
+        }
+      ],
+      "safe_unique_candidate_available": false
+    },
+    {
+      "site": "GEMSDOE27",
+      "repo": "buffedlizard55-lab/GEMSDOE27",
+      "highest_historical_submission": {
+        "name": "gems27-topo-gap-closure-t-v2-on-d1-5-20261002-5512495c6bd1-nan.tif",
+        "sha256_12": "33003374335d",
+        "dots": 61328,
+        "score": 0.2449,
+        "score_label": "OWNER-REPORTED (no organizer submission-page receipt archived)",
+        "sha256_full": "33003374335d84bf885f2d8f5e9dd4c57044c8ec58fa6a0d7fa581e8bc41c11d",
+        "pinned_raster_source_url": "https://github.com/buffedlizard55-lab/GEMSDOE27/blob/927322eadbde56be42ae129ccdfb9b37540d8e60/docs/downloads/gems27-topo-gap-closure-t-v2-on-d1-5-20261002-5512495c6bd1-nan.tif",
+        "integrity": "SHA-256 recomputed from local GitHub-cached raster bytes on 2026-10-26; does not authenticate a submission score."
+      },
+      "latest_2026_10_25_candidates": [
+        {
+          "name": "H29-S (51189874)",
+          "dots": 37654,
+          "score": 0.219,
+          "score_label": "OWNER-REPORTED (no organizer submission-page receipt archived)",
+          "forensic_note": "Strongest zero-copy standalone live benchmark among the 9 focus sites (median d_known = 16.2 px); already submitted."
+        }
+      ],
+      "safe_unique_candidate_available": false
+    },
+    {
+      "site": "GEMSDOE28",
+      "repo": "buffedlizard55-lab/GEMSDOE28",
+      "highest_historical_submission": {
+        "name": "gems28-h36-1-rung30-blind-r1-20261003-b531dae0a36f-nan.tif",
+        "sha256_12": "5556aa1438fd",
+        "dots": 37660,
+        "score": 0.271,
+        "score_label": "OWNER-REPORTED (no organizer submission-page receipt archived)",
+        "forensic_note": "h27-4-r1-solo (40,199 dots, 0.2708) is pixel-identical (0 XOR) to GEMSDOE31 solo and equals (d2.8 & d_cat > 1 px).",
+        "sha256_full": "5556aa1438fd67376b60d5ffc99228ec09dcc11a8408298a743ccb88d6163641",
+        "pinned_raster_source_url": "https://github.com/buffedlizard55-lab/GEMSDOE28/blob/e6321461066f89080e3b1bb670d3951ab20d3638/docs/downloads/gems28-h36-1-rung30-blind-r1-20261003-b531dae0a36f-nan.tif",
+        "integrity": "SHA-256 recomputed from local GitHub-cached raster bytes on 2026-10-26; does not authenticate a submission score."
+      },
+      "latest_2026_10_25_candidates": [
+        {
+          "name": "S18 (3e95505c)",
+          "dots": 11082,
+          "score": 0.0217,
+          "score_label": "OWNER-REPORTED (no organizer submission-page receipt archived)",
+          "status": "NEGATIVE_LIVE (severe under-budgeting + mislocalized placement)"
+        }
+      ],
+      "safe_unique_candidate_available": false
+    },
+    {
+      "site": "GEMSDOE30",
+      "repo": "buffedlizard55-lab/GEMSDOE30",
+      "highest_historical_submission": {
+        "name": "gemsdoe30-d28-poisson300m-offcat-44090-20261003T233156Z-91eae1ca.tif",
+        "sha256_12": "8cf893ead566",
+        "dots": 44090,
+        "score": 0.26,
+        "score_label": "OWNER-REPORTED (no organizer submission-page receipt archived)",
+        "forensic_note": "0 XOR in footprint vs GEMSDOE25 d2.8.",
+        "sha256_full": "8cf893ead5667df21d3288a9968c35fd5385c425b029d82ee71d311715b129fd",
+        "pinned_raster_source_url": "https://github.com/buffedlizard55-lab/GEMSDOE30/blob/760af3005dd40b9f36d8fef97d6dc384fd9f2a2f/docs/downloads/gemsdoe30-d28-poisson300m-offcat-44090-20261003T233156Z-91eae1ca.tif",
+        "integrity": "SHA-256 recomputed from local GitHub-cached raster bytes on 2026-10-26; does not authenticate a submission score."
+      },
+      "latest_2026_10_25_candidates": [
+        {
+          "name": "MSDB-1v2 edge44090 (22850984)",
+          "dots": 44090,
+          "score": 0.1462,
+          "score_label": "OWNER-REPORTED (no organizer submission-page receipt archived) (and marked NOT APPROVED FOR SUBMISSION in latest README)",
+          "forensic_note": "66.6% of dots within 10 px of existing_faults; internal emitter CI straddled 0."
+        }
+      ],
+      "safe_unique_candidate_available": false
+    },
+    {
+      "site": "GEMSDOE31",
+      "repo": "buffedlizard55-lab/GEMSDOE31",
+      "highest_historical_submission": {
+        "name": "gemsdoe31-h27-4-solo-d28-20261004-8acb75e1-nan.tif",
+        "sha256_12": "07b6db440535",
+        "dots": 40199,
+        "score": 0.2708,
+        "score_label": "OWNER-REPORTED (no organizer submission-page receipt archived)",
+        "forensic_note": "0 XOR vs GEMSDOE28 h27-4-r1-solo.",
+        "sha256_full": "07b6db440535404bb41ec8ddc797713e200d308e3da35937393efde5eb84bc40",
+        "pinned_raster_source_url": "https://github.com/buffedlizard55-lab/GEMSDOE31/blob/597b04cd1afb65d1ebbe3e9417fd952be48e3d74/docs/downloads/gemsdoe31-h27-4-solo-d28-20261004-8acb75e1-nan.tif",
+        "integrity": "SHA-256 recomputed from local GitHub-cached raster bytes on 2026-10-26; does not authenticate a submission score."
+      },
+      "latest_2026_10_25_candidates": [
+        {
+          "name": "H31-M (8434ac7c)",
+          "dots": 37654,
+          "score": null,
+          "status": "DO NOT SUBMIT (verdict=negative)"
+        }
+      ],
+      "safe_unique_candidate_available": false
+    },
+    {
+      "site": "GEMSDOE32",
+      "repo": "buffedlizard55-lab/GEMSDOE32",
+      "highest_historical_submission": {
+        "name": "gemsdoe32-h33-h33-2-b2-20261004T220000Z-e5eb6e7e-zeros.tif",
+        "sha256_12": "c55bafc47005",
+        "dots": 37654,
+        "score": 0.2778,
+        "score_label": "OWNER-REPORTED (no organizer submission-page receipt archived)",
+        "forensic_note": "9-site champion, but NOT a new detector: 0-XOR pixel-identical to (d2.8 & d_cat > 2 px), stripping 6,436 0-200 m catalogue-collar false positives off 19GEMSDOE h19-5.",
+        "sha256_full": "c55bafc470054e8271dcb89347a17e07fefe50de6af6e6ba6c4b169ef7ab6fa9",
+        "pinned_raster_source_url": "https://github.com/buffedlizard55-lab/GEMSDOE32/blob/5fc7792c5887735ecd3aa9a612787da588a7bf2c/docs/downloads/gemsdoe32-h33-h33-2-b2-20261004T220000Z-e5eb6e7e-zeros.tif",
+        "integrity": "SHA-256 recomputed from local GitHub-cached raster bytes on 2026-10-26; does not authenticate a submission score."
+      },
+      "latest_2026_10_25_candidates": [
+        {
+          "name": "H-GEO-CONDUIT (2d0d0c5e)",
+          "dots": 37654,
+          "score": null,
+          "status": "DO NOT SUBMIT (verdict=negative; 67.7% of dots <= 10 px of known faults)"
+        }
+      ],
+      "safe_unique_candidate_available": false
+    },
+    {
+      "site": "GEMSDOE33",
+      "repo": "buffedlizard55-lab/GEMSDOE33",
+      "highest_historical_submission": {
+        "name": "GEMSDOE33-h33d-analog-tip-stepover-r30-20261004-cb490425926e.tif",
+        "sha256_12": "87f857d505e2",
+        "dots": 41865,
+        "score": 0.2632,
+        "score_label": "OWNER-REPORTED (no organizer submission-page receipt archived)",
+        "sha256_full": "87f857d505e23247e991ccfab2cbe9f49a04df4f9c8028dce7ea261554690757",
+        "pinned_raster_source_url": "https://github.com/buffedlizard55-lab/GEMSDOE33/blob/f618cc54773bd9b4d6c2b3ebf78103a05cc10cb6/docs/downloads/GEMSDOE33-h33d-analog-tip-stepover-r30-20261004-cb490425926e.tif",
+        "integrity": "SHA-256 recomputed from local GitHub-cached raster bytes on 2026-10-26; does not authenticate a submission score."
+      },
+      "latest_2026_10_25_candidates": [
+        {
+          "name": "A33-L1 (85c94a80)",
+          "dots": 37654,
+          "score": null,
+          "status": "NOT OK TO SUBMIT (verdict=negative)"
+        }
+      ],
+      "safe_unique_candidate_available": false
+    },
+    {
+      "site": "GEMSDOE36",
+      "repo": "buffedlizard55-lab/GEMSDOE36",
+      "highest_historical_submission": {
+        "name": "gemsdoe36-anderson-geothermal-pinn-38854-20261004T230000Z-9b9ea4e6-zeros.tif",
+        "sha256_12": "e15891020b9c",
+        "dots": 38854,
+        "score": 0.275,
+        "score_label": "OWNER-REPORTED (no organizer submission-page receipt archived)",
+        "forensic_note": "Strictly contains all 37,654 GEMSDOE32 B2 dots plus 1,200 broad thermal IDW dots (net -0.0028 dilution vs B2). Legacy H6 (24,881 dots) retired due to circular SGMC blending/evaluation.",
+        "sha256_full": "e15891020b9c57056ac7fa874a5e506fbd6ed9314a4ea8e73af0753887a3708a",
+        "pinned_raster_source_url": "https://github.com/buffedlizard55-lab/GEMSDOE36/blob/c5a8ae7da3bd2fcff5aa5855afd44c7a3346c16f/docs/downloads/gemsdoe36-anderson-geothermal-pinn-38854-20261004T230000Z-9b9ea4e6-zeros.tif",
+        "integrity": "SHA-256 recomputed from local GitHub-cached raster bytes on 2026-10-26; does not authenticate a submission score."
+      },
+      "latest_2026_10_26_candidate": {
+        "name": "gemsdoe36-atvr36-exp-2-20261026 (docs/downloads/gemsdoe36-atvr36-20261026.tif)",
+        "sha256": "54f493f4fa5c74ed3a02f88ca6d47272b0c3cee0cc0bd9bbd9cb94eaf997204a",
+        "dots": 37654,
+        "holdout_dti_3000m": 0.114542,
+        "holdout_ci95_3000m": [
+          0.078547,
+          0.151221
+        ],
+        "holdout_dti_shared_1500m": 0.117925,
+        "holdout_ci95_shared_1500m": [
+          0.101961,
+          0.132998
+        ],
+        "score_label": "HOLDOUT-DTI (gems36-segment-audit-v1 3 km & gems-segment-pooled-v1 1.5 km; 60,988 withheld px, 3,199 segments)",
+        "max_focus_9site_3px_overlap": 0.6328,
+        "overlap_vs_B2_champ": 0.359377,
+        "overlap_vs_H36_CTRB": 0.373639,
+        "max_expanded_201_blanket_overlap": 0.893637,
+        "verdict": "negative",
+        "ok_to_download_research_tif": true,
+        "ok_to_download_and_submit": false
+      },
+      "safe_unique_candidate_available": false
+    }
+  ],
+  "score_provenance_correction_2026_10_26": {
+    "status": "The 9-site competition numbers were supplied by the owner or appear in peer README/pages. No authenticated organizer submission-page receipt for any file is archived here. Do not label these numbers ORGANIZER-CONFIRMED; mathematical inferences that use them are conditional, not ground truth.",
+    "changed_score_labels_count": 17,
+    "source_links": {
+      "official_leaderboard": "https://www.drivendata.org/competitions/306/competition-doe-gems/leaderboard/",
+      "peer_pin_manifest": "registry/priority_source_snapshot.json"
+    },
+    "hash_correction": "Old sha256_12 suffixes in previous ledger did not match any raster! Recomputed all nine from pinned cached bytes; see per-row sha256_full and pinned_raster_source_url."
+  }
+}

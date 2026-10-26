@@ -185,3 +185,8 @@ tr:last-child td { border-bottom: 0; }
 .verdict-meta code { word-break: break-all; }
 td.pass { color: #166534; font-weight: 700; }
 td.fail { color: #9a3412; font-weight: 700; }
+
+/* Source activity is informational; no browser-fetched leaderboard values. */
+.source-feed-list { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: .5rem 1.25rem; padding-left: 1.5rem; }
+.source-feed-list li { overflow-wrap: anywhere; }
+#source-feed-status { font-size: .9rem; color: var(--muted, #405360); }

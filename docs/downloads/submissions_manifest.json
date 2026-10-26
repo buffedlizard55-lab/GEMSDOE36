@@ -56,11 +56,11 @@
     },
     {
       "file": "gemsdoe36-anderson-geothermal-pinn-38854-20261004T230000Z-9b9ea4e6-zeros.tif",
-      "status": "already scored: ORGANIZER-CONFIRMED 0.2750 (< 0.2778; 96.91% overlap with GEMSDOE32); do not resubmit"
+      "status": "already scored: OWNER-REPORTED 0.2750 (no receipt archived) (< 0.2778; 96.91% overlap with GEMSDOE32); do not resubmit"
     },
     {
       "file": "GEMS36_h6_offcatalog_network_prior_20261004T193432.021282Z_3276c04090_3c064db2.tif",
-      "status": "ORGANIZER-CONFIRMED 0.0512; circular SGMC proxy (HOLDOUT-DTI 0.000094); not submit-eligible"
+      "status": "OWNER-REPORTED 0.0512 (no receipt archived); circular SGMC proxy (HOLDOUT-DTI 0.000094); not submit-eligible"
     },
     {
       "file": "GEMS36_FORMAT_TEST_NOT_SUBMISSION.tif",
