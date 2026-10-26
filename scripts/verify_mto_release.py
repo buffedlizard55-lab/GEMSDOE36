@@ -106,8 +106,25 @@ def verify_all(root: Path = ROOT) -> dict[str, Any]:
                 errors.append("Nonzero pixel on known fault/outside footprint or wrong dot count")
 
     cur = json.loads((docs / "current-run.json").read_text())
-    if cur.get("lane_id") != "MTO-36" or cur.get("verdict") != "negative" or cur.get("slot_approved") or cur.get("ok_to_download_and_submit") or cur.get("tif_sha256") != card["raster_sha256"]:
-        errors.append("Current Pages manifest contradicts negative MTO card")
+    # Successor-lane rule (KPL-36, 2026-10-26): current-run.json now leads with the
+    # KPL-36 run card; the MTO-36 negative state must be preserved verbatim under
+    # previous_current_run_MTO36 and the MTO card itself must stay negative.
+    prev_mto = cur.get("previous_current_run_MTO36") or {}
+    kpl_card_path = root / "evidence/kpl36_run_card_20261026.json"
+    kpl_card = json.loads(kpl_card_path.read_text()) if kpl_card_path.is_file() else {}
+    kpl_promote = bool(kpl_card.get("verdict") == "promote" and kpl_card.get("gates") and all(kpl_card["gates"].values()))
+    if (
+        cur.get("lane_id") != "KPL-36"
+        or cur.get("verdict") != kpl_card.get("verdict")
+        or bool(cur.get("ok_to_download_and_submit")) != kpl_promote
+        or cur.get("tif_sha256") != (kpl_card.get("submission") or {}).get("sha256")
+        or prev_mto.get("lane_id") != "MTO-36"
+        or prev_mto.get("verdict") != "negative"
+        or prev_mto.get("slot_approved")
+        or prev_mto.get("ok_to_download_and_submit")
+        or prev_mto.get("tif_sha256") != card["raster_sha256"]
+    ):
+        errors.append("Current Pages manifest contradicts KPL-36 card or preserved negative MTO state")
     for page in ("index.html", "executive-summary.html"):
         text = (docs / page).read_text()
         if not all(term in text for term in (tif.name, card["raster_sha256"], card["submission_note"], "DO NOT SUBMIT")):

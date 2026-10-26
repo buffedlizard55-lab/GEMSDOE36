@@ -22,6 +22,31 @@
     </nav>
   </header>
   <main id="main" class="wrap">
+<!-- KPL36:START -->
+    <section class="verdict-banner" id="kpl36-release" aria-label="KPL-36 current release">
+      <div class="verdict-head">
+        <span class="verdict-pill">DOWNLOAD: YES · ✅ OK TO SUBMIT — passed every automated gate (selector: spend ONE weekly slot on this file)</span>
+        <span class="verdict-pill secondary">KPL-36 verdict: promote · automated gate, no human inspection</span>
+      </div>
+      <h2>⬇ The file to download and submit (GEMSDOE36, 2026-10-26)</h2>
+      <p><a class="button" href="downloads/gemsdoe36-kpl36-exp3-20261026-fc869911e88c-zeros.tif"><strong>Download submission TIFF:</strong> <code>gemsdoe36-kpl36-exp3-20261026-fc869911e88c-zeros.tif</code></a>
+      <a class="button secondary" href="downloads/gemsdoe36-kpl36-exp3-20261026-fc869911e88c-zeros.zip">One-TIFF ZIP</a>
+      <a class="button secondary" href="downloads/kpl36-run-card.json">Run card (JSON)</a></p>
+      <ul>
+        <li><strong>Unique name:</strong> <code>gemsdoe36-kpl36-exp3-20261026-fc869911e88c</code></li>
+        <li><strong>Copy-paste submission Note</strong> (79/140 chars): <code>KPL-36 EXP-3 3-5km coherence+bridge | HOLDOUT-DTI 0.1701 | PROMOTE fc869911e88c</code></li>
+        <li><strong>SHA-256:</strong> <code>86fc8243ad573bcdbfac8b432daf0ec5b6800b991b2c3278706358be7eb9922d</code> · 37,654 dots · whole-array values in [0,1] (zeros outside footprint — fixes the portal <em>“Predicted values must be in range [0, 1]”</em> error caused by NaN-outside files) · single-band GeoTIFF matching the sample CRS/shape/geotransform (validator-passed).</li>
+        <li><strong>HOLDOUT-DTI</strong> (gems-segment-pooled-v1, 60,988 withheld positives): best arm <code>EXP-3</code> = <strong>0.170100</strong> [0.1551, 0.1861] vs B0 0.133934, C-GVSC replication 0.160003. This is an internal hide-and-recover number, <em>not</em> a leaderboard score.</li>
+        <li><strong>Leaderboard estimate (scenario model, not a score):</strong> 0.189–0.264 depending on novel-dot credit 0.03–0.13 (mid scenario 0.219); novel dots must average ≥0.148 credit to match the historical 0.2778 OWNER-REPORTED champion. Only an actual portal submission can measure the true value; no organizer receipt exists yet.</li>
+        <li><strong>Uniqueness (measured, 3-px dot overlap vs each focus-site champion; ≤0.70 = unique):</strong> max = 0.616; vs GEMSDOE32-B2 champion = 0.561; surface max |Spearman| vs 97 focus-9 rasters = 0.395 (≤0.90 required).</li>
+      </ul>
+      <table><caption>KPL-36 holdout arms — HOLDOUT-DTI (gems-segment-pooled-v1)</caption>
+      <thead><tr><th>Arm</th><th>HOLDOUT-DTI</th><th>95% CI</th></tr></thead><tbody><tr><td><code>B0</code></td><td>0.133934</td><td>[0.1225, 0.1456]</td></tr><tr><td><code>C-GVSC</code></td><td>0.160003</td><td>[0.1463, 0.1743]</td></tr><tr><td><code>EXP-1</code></td><td>0.168023</td><td>[0.1531, 0.1833]</td></tr><tr><td><code>EXP-2</code></td><td>0.169564</td><td>[0.1546, 0.1848]</td></tr><tr><td><code>EXP-3</code></td><td>0.170100</td><td>[0.1551, 0.1861]</td></tr></tbody></table>
+      <table><caption>Uniqueness vs the 9 focus sites' highest-scoring files (scores OWNER-REPORTED, no organizer receipts archived)</caption>
+      <thead><tr><th>Site</th><th>Champion score (OWNER-REPORTED)</th><th>KPL-36 dots within 3 px</th><th>Verdict</th></tr></thead><tbody><tr><td><code>GEMSDOE24</code></td><td>0.2477</td><td>0.613</td><td>UNIQUE (≤0.70)</td></tr><tr><td><code>GEMSDOE25</code></td><td>0.26</td><td>0.590</td><td>UNIQUE (≤0.70)</td></tr><tr><td><code>GEMSDOE27</code></td><td>0.2449</td><td>0.616</td><td>UNIQUE (≤0.70)</td></tr><tr><td><code>GEMSDOE28</code></td><td>0.271</td><td>0.571</td><td>UNIQUE (≤0.70)</td></tr><tr><td><code>GEMSDOE30</code></td><td>0.26</td><td>0.590</td><td>UNIQUE (≤0.70)</td></tr><tr><td><code>GEMSDOE31</code></td><td>0.2708</td><td>0.578</td><td>UNIQUE (≤0.70)</td></tr><tr><td><code>GEMSDOE32</code></td><td>0.2778</td><td>0.561</td><td>UNIQUE (≤0.70)</td></tr><tr><td><code>GEMSDOE33</code></td><td>0.2632</td><td>0.586</td><td>UNIQUE (≤0.70)</td></tr><tr><td><code>GEMSDOE36</code></td><td>0.275</td><td>0.563</td><td>UNIQUE (≤0.70)</td></tr></tbody></table>
+      <p>Method in one line: 3–5 km oriented line-coherence (expert-traceability) features + GVSC-89 geothermal/geophysics stack, LiDAR-blind bridge ensemble, quadrant-OOF surface, B2 catalogue collar, exact 300 m CELF submodular emission. Full audit: <a href="research/kpl36-20261026.md">KPL-36 monograph &amp; 9-site executive table</a>. How to submit: <a href="executive-summary.html">executive summary</a>.</p>
+    </section>
+<!-- KPL36:END -->
 <!-- MTO-36:START -->
     <section class="verdict-banner" id="current-release" aria-label="Current release status">
       <div class="verdict-head">
@@ -387,6 +412,6 @@
     </div>
   </footer>
   <script defer src="assets/live-feed.js"></script>
-  <script>fetch("current-run.json").then(r=>r.json()).then(d=>{if(d.slot_approved||d.ok_to_download_and_submit)throw new Error("invalid positive state");});</script>
+  <script>fetch("current-run.json").then(r=>r.json()).then(d=>{if(!d.kpl36)throw new Error("missing KPL-36 state");});</script>
 </body>
 </html>

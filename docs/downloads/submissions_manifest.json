@@ -115,5 +115,23 @@
       "max_literal_overlap_3px": 0.9961757051043714,
       "registry_entries": 206
     }
+  },
+  "current_kpl36": {
+    "file": "gemsdoe36-kpl36-exp3-20261026-fc869911e88c-zeros.tif",
+    "sha256": "86fc8243ad573bcdbfac8b432daf0ec5b6800b991b2c3278706358be7eb9922d",
+    "zip": "gemsdoe36-kpl36-exp3-20261026-fc869911e88c-zeros.zip",
+    "zip_sha256": "9a2ea7e81c13b9447d0c6dae209ef63fb676eae7eff5f3a78f62fc6a1531096c",
+    "submission_name": "gemsdoe36-kpl36-exp3-20261026-fc869911e88c",
+    "note": "KPL-36 EXP-3 3-5km coherence+bridge | HOLDOUT-DTI 0.1701 | PROMOTE fc869911e88c",
+    "verdict": "promote",
+    "status": "PROMOTE_OK_TO_SUBMIT",
+    "ok_to_download": true,
+    "ok_to_submit": true,
+    "holdout_dti_label": "HOLDOUT-DTI",
+    "holdout_dti": 0.17010000946379217,
+    "evaluator_version": "gems-segment-pooled-v1",
+    "withheld_positives": 60988,
+    "leaderboard_estimate_scenario_range": "0.189\u20130.264",
+    "organizer_score": null
   }
 }

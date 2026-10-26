@@ -24,6 +24,7 @@ MTO_CARD = REPO_ROOT / "evidence/mto36_run_card_20261026.json"
 MOE_CARD = REPO_ROOT / "evidence/moe36_run_card_20261026.json"
 WDP_CARD = REPO_ROOT / "evidence/wdp36_run_card_20261026.json"
 HVG_CARD = REPO_ROOT / "evidence/hvg36_run_card_20261026.json"
+KPL_CARD = REPO_ROOT / "evidence/kpl36_run_card_20261026.json"
 CURRENT_RUN = DOCS_ROOT / "current-run.json"
 BOTH_PAGES = ("DO NOT SUBMIT", "Research downloads only", "HOLDOUT-DTI", "ORGANIZER-CONFIRMED")
 REQUIRED_PAGES = ("index.html", "executive-summary.html")
@@ -161,11 +162,21 @@ def main() -> int:
     if len(gps["submission"]["note"]) > 140:
         errors.append("H36-GPS note exceeds 140 characters")
 
+    kpl = json.loads(KPL_CARD.read_text(encoding="utf-8")) if KPL_CARD.is_file() else None
+    if kpl is None:
+        errors.append("missing KPL-36 run card in evidence/")
+        kpl = {"verdict": "negative", "gates": {}, "submission": {"file": "", "sha256": "", "note": "", "zip": "", "zip_sha256": ""}}
+    kpl_promote = bool(
+        kpl.get("verdict") == "promote" and kpl.get("gates") and all(kpl["gates"].values())
+    )
+    if kpl.get("verdict") == "promote" and not kpl_promote:
+        errors.append("KPL-36 verdict=promote but not all preregistered gates are true")
     any_ok = (
         (wdp["verdict"] == "promote")
         or (atvr["verdict"] == "promote")
         or (ctrb["verdict"] == "promote")
         or (gps["verdict"] == "promote")
+        or kpl_promote
     )
     must = [
         wdp["submission_file"],
@@ -185,6 +196,9 @@ def main() -> int:
         gps_zeros.name,
         r["zeros_sha256"],
         gps["submission"]["note"],
+        Path(kpl["submission"]["file"]).name,
+        kpl["submission"]["sha256"],
+        kpl["submission"]["note"],
         "DOWNLOAD: YES",
         "OK TO SUBMIT" if any_ok else "DO NOT SUBMIT",
     ]
@@ -193,9 +207,10 @@ def main() -> int:
             errors.append(f"landing page missing: {phrase[:80]}")
 
     first_screen = landing[: max(1, len(landing) // 4)]
-    current_tif = Path(mto["download"]["tif"]).name
-    if current_tif not in first_screen or "DO NOT SUBMIT" not in first_screen:
-        errors.append(f"current research-only {current_tif} + negative verdict must lead the landing page")
+    current_tif = Path(kpl["submission"]["file"]).name
+    verdict_phrase = "OK TO SUBMIT" if kpl_promote else "DO NOT SUBMIT"
+    if current_tif not in first_screen or verdict_phrase not in first_screen:
+        errors.append(f"current KPL-36 {current_tif} + {verdict_phrase} verdict must lead the landing page")
 
     for phrase in FORBIDDEN_COPY:
         if phrase.lower() in (landing + execp).lower():
@@ -220,11 +235,13 @@ def main() -> int:
     if CURRENT_RUN.exists():
         cur = json.loads(CURRENT_RUN.read_text(encoding="utf-8"))
         if (
-            cur.get("slot_approved") or cur.get("ok_to_download_and_submit")
-            or cur.get("verdict") != "negative" or cur.get("lane_id") != "MTO-36"
-            or cur.get("tif_sha256") != mto["raster_sha256"]
+            cur.get("lane_id") != "KPL-36"
+            or cur.get("verdict") != kpl.get("verdict")
+            or cur.get("tif_sha256") != kpl["submission"]["sha256"]
+            or bool(cur.get("ok_to_download_and_submit")) != kpl_promote
+            or bool(cur.get("slot_approved")) != kpl_promote
         ):
-            errors.append("docs/current-run.json must reflect the MTO-36 negative verdict/hash")
+            errors.append("docs/current-run.json must reflect the KPL-36 run-card verdict/hash")
     else:
         errors.append("missing docs/current-run.json")
 
@@ -314,6 +331,21 @@ def main() -> int:
             and cc["final_dot_uniqueness_passed"]
         )
         any_ok = any_ok or (lc.get("verdict") == "promote" and lc.get("ok_to_submit") and cc_ok)
+
+    # KPL-36 current release: artifacts, mirror, note length, executive presence.
+    kpl_tif = REPO_ROOT / kpl["submission"]["file"]
+    kpl_zip = REPO_ROOT / kpl["submission"]["zip"]
+    for file, expected in ((kpl_tif, kpl["submission"]["sha256"]), (kpl_zip, kpl["submission"]["zip_sha256"])):
+        if not file.is_file() or _sha(file) != expected:
+            errors.append(f"KPL-36 artifact missing / SHA-256 mismatch: {file.name}")
+    if len(kpl["submission"]["note"]) > 140:
+        errors.append("KPL-36 submission note exceeds 140 characters")
+    kpl_mirror = DOCS_ROOT / "downloads/kpl36-run-card.json"
+    if not kpl_mirror.is_file() or (KPL_CARD.is_file() and kpl_mirror.read_bytes() != KPL_CARD.read_bytes()):
+        errors.append("public KPL-36 run-card mirror differs from evidence")
+    for phrase in (kpl_tif.name, kpl["submission"]["sha256"], kpl["submission"]["note"]):
+        if phrase not in execp:
+            errors.append(f"executive summary missing KPL-36: {phrase[:80]}")
 
     if not any_ok and "OK TO SUBMIT" in landing:
         errors.append("landing page shows OK TO SUBMIT although no file is cleared")

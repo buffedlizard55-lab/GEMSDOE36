@@ -1,0 +1,67 @@
+{
+  "lane_id": "KPL-36",
+  "kind": "SCENARIO ESTIMATE - not a score, not HOLDOUT-DTI, not ORGANIZER-CONFIRMED",
+  "candidate_file": "docs/downloads/gemsdoe36-kpl36-exp3-20261026-fc869911e88c-zeros.tif",
+  "candidate_sha256": "86fc8243ad573bcdbfac8b432daf0ec5b6800b991b2c3278706358be7eb9922d",
+  "formula": "DTI ~= (nA*0.130 + nB*0.054 + nC*c) / (0.2*S + 0.8*N'), N'=12541",
+  "measured_partition": {
+    "A_within3px_B2": 21134,
+    "B_within3px_H195_notA": 3323,
+    "C_novel": 13197,
+    "S_total_dots": 37654,
+    "share_A": 0.5613,
+    "share_B": 0.0883,
+    "share_C": 0.3505
+  },
+  "credit_anchors": {
+    "A_0.130": "GEMSDOE32-B2 measured mean credit/dot at OWNER-REPORTED 0.2778 (why-02778.md)",
+    "B_0.054": "H19-5 solid field measured mean credit/px at OWNER-REPORTED 0.1922 (T=DTI*(0.2S+0.8N'))",
+    "C_scenarios": "0.03 = historical independent-detector novel-dot credit; 0.13 = champion-grade novel dots"
+  },
+  "scenarios": {
+    "novel_credit_0.03": {
+      "expected_T": 3322.8,
+      "estimated_DTI_if_credit_assumptions_hold": 0.1892
+    },
+    "novel_credit_0.07": {
+      "expected_T": 3850.7,
+      "estimated_DTI_if_credit_assumptions_hold": 0.2192
+    },
+    "novel_credit_0.10": {
+      "expected_T": 4246.6,
+      "estimated_DTI_if_credit_assumptions_hold": 0.2418
+    },
+    "novel_credit_0.13": {
+      "expected_T": 4642.5,
+      "estimated_DTI_if_credit_assumptions_hold": 0.2643
+    }
+  },
+  "novel_credit_needed_to_match_0.2778": 0.1479,
+  "emission_sensitivity_best_arm": {
+    "arm": "EXP-3",
+    "deployed_37654_B2_holdout_dti": 0.17010000946379217,
+    "44090_B2": {
+      "label": "HOLDOUT-DTI",
+      "dti": 0.1822884460154178,
+      "ci95": [
+        0.16705365000397412,
+        0.1982745442446292
+      ],
+      "n_dots": 44089
+    },
+    "37654_B3": {
+      "label": "HOLDOUT-DTI",
+      "dti": 0.17010000946379217,
+      "ci95": [
+        0.1550890600301938,
+        0.18613752547087836
+      ],
+      "n_dots": 37654
+    }
+  },
+  "caveats": [
+    "A-dots are near but not on champion positions; their true mean credit is likely below 0.130.",
+    "N' assumes hidden truth uniform w.r.t. the calibration lattice and a public/private split folded into N'.",
+    "No organizer receipt exists for this file; only a real submission can measure its score."
+  ]
+}
