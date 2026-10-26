@@ -159,7 +159,7 @@ def test_submission_writer_registry_audit_handles_placeholder_and_lattice(tmp_pa
 
     repo_root = Path(__file__).resolve().parents[1]
     sys.path.insert(0, str(repo_root / "scripts"))
-    from submission_writer import run_registry_audit
+    from atvr36_submission_gate import run_registry_audit
 
     h, w = 24, 24
     foot = np.ones((h, w), dtype=bool)

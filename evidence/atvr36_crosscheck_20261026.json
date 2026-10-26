@@ -1,0 +1,204 @@
+{
+  "file": "docs/downloads/gemsdoe36-atvr36-20261026.tif",
+  "sha256": "54f493f4fa5c74ed3a02f88ca6d47272b0c3cee0cc0bd9bbd9cb94eaf997204a",
+  "n_total_rasters_checked": 201,
+  "owner_scored_107": {
+    "n_competing": 110,
+    "max_abs_surface_spearman": 0.174621,
+    "max_abs_dots_spearman": 0.054078,
+    "max_dot_overlap_3px": 0.893637,
+    "passed": false
+  },
+  "expanded_201_including_parallel_gemsdoe36": {
+    "n_competing": 200,
+    "max_abs_surface_spearman": 0.174621,
+    "max_abs_dots_spearman": 0.054078,
+    "max_dot_overlap_3px": 0.893637,
+    "n_over_0_70": 8,
+    "over_0_70": [
+      {
+        "id": "reg-034",
+        "file": "GEMSDOE67/docs/downloads/gemsdoe67-ovtr-ml-cover-tau3p0-20261012-nan.tif",
+        "source": "owner-scored",
+        "ref_dots": 167597,
+        "rho_surf": 0.075318,
+        "rho_dots": 0.016103,
+        "dot_overlap_3px": 0.893637,
+        "is_calibration_lattice": false
+      },
+      {
+        "id": "reg-037",
+        "file": "12GEMSDOE/docs/downloads/12GEMSDOE_r7-nms3-dem10-scarp_0c9199f14e62.tif",
+        "source": "owner-scored",
+        "ref_dots": 103347,
+        "rho_surf": 0.092208,
+        "rho_dots": 0.0261,
+        "dot_overlap_3px": 0.839459,
+        "is_calibration_lattice": false
+      },
+      {
+        "id": "reg-040",
+        "file": "GEMSDOE3/docs/downloads/pindrop-v4-nodes-20260925T152420Z-f347b70daa.tif",
+        "source": "owner-scored",
+        "ref_dots": 155021,
+        "rho_surf": 0.010926,
+        "rho_dots": 0.0041,
+        "dot_overlap_3px": 0.770569,
+        "is_calibration_lattice": false
+      },
+      {
+        "id": "reg-041",
+        "file": "GEMSDOE37/docs/downloads/gemsdoe37-h6-physics-dotted-80k-20261005T055000Z-0bef9211631c.tif",
+        "source": "owner-scored",
+        "ref_dots": 80000,
+        "rho_surf": 0.07883,
+        "rho_dots": 0.029489,
+        "dot_overlap_3px": 0.760344,
+        "is_calibration_lattice": false
+      },
+      {
+        "id": "reg-046",
+        "file": "GEMSDOE22/docs/downloads/gems22-h23-a-dti-optimal-emission-6pct-20261002-e2ec4b49-nan.tif",
+        "source": "owner-scored",
+        "ref_dots": 335879,
+        "rho_surf": 0.108223,
+        "rho_dots": 0.04127,
+        "dot_overlap_3px": 0.758087,
+        "is_calibration_lattice": false
+      },
+      {
+        "id": "reg-049",
+        "file": "GEMSDOE77/docs/downloads/gems85-h85-edti-collar35-skel-r33-20261021-d97b248e-zeros.tif",
+        "source": "owner-scored",
+        "ref_dots": 201260,
+        "rho_surf": 0.056956,
+        "rho_dots": 0.012377,
+        "dot_overlap_3px": 0.819727,
+        "is_calibration_lattice": false
+      },
+      {
+        "id": "reg-055",
+        "file": "GEMSDOE3/docs/downloads/pindrop-v4-discovery-20260925T152423Z-37f9d5b855.tif",
+        "source": "owner-scored",
+        "ref_dots": 155021,
+        "rho_surf": 0.007169,
+        "rho_dots": 0.002019,
+        "dot_overlap_3px": 0.757423,
+        "is_calibration_lattice": false
+      },
+      {
+        "id": "reg-062",
+        "file": "GEMSDOE22/docs/downloads/gems22-h23-b-dti-optimal-emission-10pct-20261002-86176698-nan.tif",
+        "source": "owner-scored",
+        "ref_dots": 516738,
+        "rho_surf": 0.115952,
+        "rho_dots": 0.038678,
+        "dot_overlap_3px": 0.850932,
+        "is_calibration_lattice": false
+      }
+    ],
+    "passed": false
+  },
+  "top_10_by_overlap": [
+    {
+      "id": "reg-034",
+      "file": "GEMSDOE67/docs/downloads/gemsdoe67-ovtr-ml-cover-tau3p0-20261012-nan.tif",
+      "source": "owner-scored",
+      "ref_dots": 167597,
+      "rho_surf": 0.075318,
+      "rho_dots": 0.016103,
+      "dot_overlap_3px": 0.893637,
+      "is_calibration_lattice": false
+    },
+    {
+      "id": "reg-062",
+      "file": "GEMSDOE22/docs/downloads/gems22-h23-b-dti-optimal-emission-10pct-20261002-86176698-nan.tif",
+      "source": "owner-scored",
+      "ref_dots": 516738,
+      "rho_surf": 0.115952,
+      "rho_dots": 0.038678,
+      "dot_overlap_3px": 0.850932,
+      "is_calibration_lattice": false
+    },
+    {
+      "id": "reg-037",
+      "file": "12GEMSDOE/docs/downloads/12GEMSDOE_r7-nms3-dem10-scarp_0c9199f14e62.tif",
+      "source": "owner-scored",
+      "ref_dots": 103347,
+      "rho_surf": 0.092208,
+      "rho_dots": 0.0261,
+      "dot_overlap_3px": 0.839459,
+      "is_calibration_lattice": false
+    },
+    {
+      "id": "reg-049",
+      "file": "GEMSDOE77/docs/downloads/gems85-h85-edti-collar35-skel-r33-20261021-d97b248e-zeros.tif",
+      "source": "owner-scored",
+      "ref_dots": 201260,
+      "rho_surf": 0.056956,
+      "rho_dots": 0.012377,
+      "dot_overlap_3px": 0.819727,
+      "is_calibration_lattice": false
+    },
+    {
+      "id": "reg-040",
+      "file": "GEMSDOE3/docs/downloads/pindrop-v4-nodes-20260925T152420Z-f347b70daa.tif",
+      "source": "owner-scored",
+      "ref_dots": 155021,
+      "rho_surf": 0.010926,
+      "rho_dots": 0.0041,
+      "dot_overlap_3px": 0.770569,
+      "is_calibration_lattice": false
+    },
+    {
+      "id": "reg-041",
+      "file": "GEMSDOE37/docs/downloads/gemsdoe37-h6-physics-dotted-80k-20261005T055000Z-0bef9211631c.tif",
+      "source": "owner-scored",
+      "ref_dots": 80000,
+      "rho_surf": 0.07883,
+      "rho_dots": 0.029489,
+      "dot_overlap_3px": 0.760344,
+      "is_calibration_lattice": false
+    },
+    {
+      "id": "reg-046",
+      "file": "GEMSDOE22/docs/downloads/gems22-h23-a-dti-optimal-emission-6pct-20261002-e2ec4b49-nan.tif",
+      "source": "owner-scored",
+      "ref_dots": 335879,
+      "rho_surf": 0.108223,
+      "rho_dots": 0.04127,
+      "dot_overlap_3px": 0.758087,
+      "is_calibration_lattice": false
+    },
+    {
+      "id": "reg-055",
+      "file": "GEMSDOE3/docs/downloads/pindrop-v4-discovery-20260925T152423Z-37f9d5b855.tif",
+      "source": "owner-scored",
+      "ref_dots": 155021,
+      "rho_surf": 0.007169,
+      "rho_dots": 0.002019,
+      "dot_overlap_3px": 0.757423,
+      "is_calibration_lattice": false
+    },
+    {
+      "id": "reg-036",
+      "file": "GEMSDOE23/docs/downloads/gemsdoe23-h30-arrangement-matched-habitat-20261002-0d4e02e8-nan.tif",
+      "source": "owner-scored",
+      "ref_dots": 91533,
+      "rho_surf": 0.048247,
+      "rho_dots": 0.011437,
+      "dot_overlap_3px": 0.685585,
+      "is_calibration_lattice": false
+    },
+    {
+      "id": "reg-152",
+      "file": "GEMSDOE28/docs/downloads/gems28-h37-1-probe-union-pool-r1-20261003-52a13184267e-allfinite.tif",
+      "source": "priority-site-download",
+      "ref_dots": 38545,
+      "rho_surf": 0.062948,
+      "rho_dots": 0.027954,
+      "dot_overlap_3px": 0.632815,
+      "is_calibration_lattice": false
+    }
+  ]
+}

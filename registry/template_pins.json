@@ -1,0 +1,75 @@
+{
+ "description": "Shared template vendored BYTE-FOR-BYTE (no private fork). tests/test_template_pins.py fails closed if any byte changes.",
+ "template": "GEMSDOE24 gems package (SegmentHoldout evaluator gems-segment-pooled-v1, strict writer, format validator, registry novelty)",
+ "why_this_template": "GEMSDOE28 evidence/shared_template_contract.json names GEMSDOE24@bddb55fc as the shared template; fc2bc6f is its current HEAD and only ADDS compare_paired() and canary input validation (diff verified 2026-10-25). metric/submission/validator/submission_writer hashes equal the GEMSDOE28 contract pins (c024510d, 380ef4c7, a5176d6e, 552621e4).",
+ "competing_template_irregularity": "GEMSDOE31 registry/shared_template.json pins a different template (57GEMSDOE@822a0ce5). Logged as IR-36-17.",
+ "known_template_issues_reported_not_forked": [
+  "gems.submission.make_note enforces a 200-character limit; the owner protocol requires <= 140. GEMSDOE36 does not call make_note and enforces <= 140 in scripts/build_h36_submission.py.",
+  "gems.submission.write_submission(outside='zero') writes nodata=None (intended: strict [0,1] whole-array variant)."
+ ],
+ "files": [
+  {
+   "local": "src/gems/__init__.py",
+   "upstream_repo": "buffedlizard55-lab/GEMSDOE24",
+   "upstream_commit": "fc2bc6f350bf5c6ce8da5d7a2ab03578ea1259d1",
+   "upstream_path": "src/gems/__init__.py",
+   "sha256": "1a0b12829abd20797161f12c4d4f900f5bfb2af13df35c68435ce647e6fb264a",
+   "bytes": 410,
+   "url": "https://github.com/buffedlizard55-lab/GEMSDOE24/blob/fc2bc6f350bf5c6ce8da5d7a2ab03578ea1259d1/src/gems/__init__.py"
+  },
+  {
+   "local": "src/gems/holdout.py",
+   "upstream_repo": "buffedlizard55-lab/GEMSDOE24",
+   "upstream_commit": "fc2bc6f350bf5c6ce8da5d7a2ab03578ea1259d1",
+   "upstream_path": "src/gems/holdout.py",
+   "sha256": "34fb7f12e849280c8162d5c433aa972f70746ddecf1a289ce3a9c81144b344dc",
+   "bytes": 26813,
+   "url": "https://github.com/buffedlizard55-lab/GEMSDOE24/blob/fc2bc6f350bf5c6ce8da5d7a2ab03578ea1259d1/src/gems/holdout.py"
+  },
+  {
+   "local": "src/gems/metric.py",
+   "upstream_repo": "buffedlizard55-lab/GEMSDOE24",
+   "upstream_commit": "fc2bc6f350bf5c6ce8da5d7a2ab03578ea1259d1",
+   "upstream_path": "src/gems/metric.py",
+   "sha256": "c024510de39746c9390e5bbf5c1d1b639a9ee895017a38fab4b609f0f2c33e48",
+   "bytes": 9544,
+   "url": "https://github.com/buffedlizard55-lab/GEMSDOE24/blob/fc2bc6f350bf5c6ce8da5d7a2ab03578ea1259d1/src/gems/metric.py"
+  },
+  {
+   "local": "src/gems/submission.py",
+   "upstream_repo": "buffedlizard55-lab/GEMSDOE24",
+   "upstream_commit": "fc2bc6f350bf5c6ce8da5d7a2ab03578ea1259d1",
+   "upstream_path": "src/gems/submission.py",
+   "sha256": "380ef4c785680d0c9063f53f9fa6227e8a564314d40df02fa46f02fe37d29711",
+   "bytes": 10463,
+   "url": "https://github.com/buffedlizard55-lab/GEMSDOE24/blob/fc2bc6f350bf5c6ce8da5d7a2ab03578ea1259d1/src/gems/submission.py"
+  },
+  {
+   "local": "src/gems/validator.py",
+   "upstream_repo": "buffedlizard55-lab/GEMSDOE24",
+   "upstream_commit": "fc2bc6f350bf5c6ce8da5d7a2ab03578ea1259d1",
+   "upstream_path": "src/gems/validator.py",
+   "sha256": "a5176d6e13924382f52bfd170a1f91c8beb1f31d413765295e881b65dc79a5e0",
+   "bytes": 396,
+   "url": "https://github.com/buffedlizard55-lab/GEMSDOE24/blob/fc2bc6f350bf5c6ce8da5d7a2ab03578ea1259d1/src/gems/validator.py"
+  },
+  {
+   "local": "src/gems/novelty.py",
+   "upstream_repo": "buffedlizard55-lab/GEMSDOE24",
+   "upstream_commit": "fc2bc6f350bf5c6ce8da5d7a2ab03578ea1259d1",
+   "upstream_path": "src/gems/novelty.py",
+   "sha256": "0bfd40199fb00041446eb70368dbb7023f681a260073b41478629cbdc23d26c9",
+   "bytes": 15388,
+   "url": "https://github.com/buffedlizard55-lab/GEMSDOE24/blob/fc2bc6f350bf5c6ce8da5d7a2ab03578ea1259d1/src/gems/novelty.py"
+  },
+  {
+   "local": "scripts/submission_writer.py",
+   "upstream_repo": "buffedlizard55-lab/GEMSDOE24",
+   "upstream_commit": "fc2bc6f350bf5c6ce8da5d7a2ab03578ea1259d1",
+   "upstream_path": "scripts/submission_writer.py",
+   "sha256": "552621e4f1a8836922cbd0557c56e409b22e98d90d8b091baaa77a2fa0ef0717",
+   "bytes": 1515,
+   "url": "https://github.com/buffedlizard55-lab/GEMSDOE24/blob/fc2bc6f350bf5c6ce8da5d7a2ab03578ea1259d1/scripts/submission_writer.py"
+  }
+ ]
+}

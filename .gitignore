@@ -5,6 +5,8 @@
 /data/external/
 /data/study/
 /data/scored/
+/data/research/
+/data/work/
 /data/raw_parts/
 .cache/
 /outputs/
@@ -17,9 +19,9 @@
 *.npz
 *.tif
 *.tiff
-# Audited submission deliverables in docs/downloads — all tracked:
-# the gate-passed H6 candidate (the unique upload-ready file for both
-# rounds), the QA format fixture, and main's Anderson-PINN outputs.
+# Audited deliverables in docs/downloads — all tracked. The current file and its
+# automatic verdict are listed in evidence/h36_run_card.json; older files are
+# kept for audit and are marked DO NOT SUBMIT on the site.
 !/docs/downloads/*.tif
 !/docs/downloads/*.zip
 !/docs/downloads/*.json
@@ -46,3 +48,6 @@ dist/
 .DS_Store
 .idea/
 .vscode/
+
+# third-party registry rasters (re-downloadable from registry/*.json rows; comparison-only)
+data/registry/

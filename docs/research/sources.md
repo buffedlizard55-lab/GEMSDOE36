@@ -40,3 +40,18 @@
 - Geodetic strain and crustal stress are related but not interchangeable; do not label a strain-derived axis as a direct stress observation.
 - Geophysical contacts, DEM scarps, drainage bends, radar lineaments, geothermal favorability and seismic swarms can all be non-fault signals. Validate with spatial blocks, controls, and geological review.
 - No external data source listed here has yet passed the AOI coverage and usefulness gate; no external file was acquired in this review.
+
+## Re-verified in the 2026-10-25 session
+
+| Source | What was verified | Link |
+|---|---|---|
+| Problem description & metric (page 967) | TPw/FPw/FNw definitions, α = 0.2, β = 0.8, 300 m triangular kernel, worked example 0.60; format EPSG:32611, 100 m, single float32 band in [0, 1], NaN outside; test labels = new expert faults not in the USGS database | https://www.drivendata.org/competitions/306/competition-doe-gems/page/967/ |
+| Public leaderboard (read 2026-10-25) | #1 0.4413 (xiaofanhu), #2 0.3916, #3 0.3904, #4 0.3724, #5 0.3539, #10 0.3379, #20 0.3273, #30 0.3051, #50 0.2818 | https://www.drivendata.org/competitions/306/competition-doe-gems/leaderboard/ |
+| Official rules PDF (NLR 96647, Sept 2026) | labels = USGS Quaternary fault database + new faults labeled by NLR and USGS experts; features = GeoDAWN lidar/magnetic/radiometric + USGS 1 m DEM; three scored submissions per week; one final submission per entity for both rounds; Phase 1 $50k (top 5 equal), Phase 2 $250k on the expert-revised set; generative-AI use must be disclosed | https://docs.nlr.gov/docs/fy26osti/96647.pdf |
+| DrivenData rules page | defers to the HeroX-hosted official rules | https://www.drivendata.org/competitions/306/competition-doe-gems/rules/ |
+| USGS ComCat FDSN event service | HTTP 200 from GitHub Actions; 6,264 M ≥ 2.5 events 2000–2026 in the footprint bbox | https://earthquake.usgs.gov/fdsnws/event/1/ |
+| USGS TNM API (3DEP) | HTTP 200 from GitHub Actions; 1,985 1 m DEM and 106 1/3 arc-second products intersect the bbox | https://tnmaccess.nationalmap.gov/api/v1/products |
+| GDR submission 1391 (INGENIOUS) | HTTP 200 from GitHub Actions | https://gdr.openei.org/submissions/1391 |
+| GeoDAWN data release DOI | HTTP 200 from GitHub Actions | https://doi.org/10.5066/P93LGLVQ |
+
+Evidence: `evidence/external_source_verification.json` (Actions run 40249277516).

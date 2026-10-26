@@ -3,322 +3,78 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Executive Summary &amp; Step-by-Step Submission Guide — GEMSDOE36 (ATVR-36)</title>
-  <style>
-    :root {
-      --bg: #f8fafc;
-      --surface: #ffffff;
-      --ink: #0f172a;
-      --muted: #475569;
-      --border: #e2e8f0;
-      --accent-soft: #ecfdf5;
-      --accent-border: #10b981;
-      --code-bg: #f1f5f9;
-      --blue: #1d4ed8;
-    }
-    * { box-sizing: border-box; }
-    body {
-      margin: 0;
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Inter, Helvetica, Arial, sans-serif;
-      background: var(--bg);
-      color: var(--ink);
-      line-height: 1.58;
-      font-size: 15.5px;
-    }
-    header.topbar {
-      background: #0f172a;
-      color: #f8fafc;
-      border-bottom: 1px solid #1e293b;
-      padding: 0.85rem 1.25rem;
-    }
-    .topbar-inner {
-      max-width: 1180px;
-      margin: 0 auto;
-      display: flex;
-      flex-wrap: wrap;
-      align-items: center;
-      justify-content: space-between;
-      gap: 0.75rem;
-    }
-    .brand { font-weight: 700; font-size: 1.05rem; }
-    .brand span { color: #34d399; font-weight: 600; margin-left: 0.4rem; font-size: 0.9rem; }
-    nav.topnav { display: flex; flex-wrap: wrap; gap: 0.9rem; font-size: 0.9rem; }
-    nav.topnav a { color: #cbd5e1; text-decoration: none; padding: 0.25rem 0.55rem; border-radius: 6px; }
-    nav.topnav a:hover, nav.topnav a.active { background: #1e293b; color: #ffffff; }
-    main { max-width: 1180px; margin: 1.5rem auto 3.5rem; padding: 0 1.25rem; }
-    .verdict-hero {
-      background: var(--accent-soft);
-      border: 2px solid var(--accent-border);
-      border-radius: 14px;
-      padding: 1.35rem 1.5rem;
-      margin-bottom: 1.5rem;
-    }
-    .verdict-pill {
-      display: inline-block;
-      background: #059669;
-      color: #ffffff;
-      font-weight: 800;
-      font-size: 0.82rem;
-      letter-spacing: 0.04em;
-      text-transform: uppercase;
-      padding: 0.28rem 0.72rem;
-      border-radius: 999px;
-      margin-bottom: 0.5rem;
-    }
-    .verdict-hero h1 { margin: 0.15rem 0 0.5rem; font-size: 1.48rem; color: #064e3b; }
-    .cta-row { display: flex; flex-wrap: wrap; gap: 0.75rem; margin-top: 0.85rem; }
-    .btn {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.45rem;
-      padding: 0.68rem 1.1rem;
-      border-radius: 9px;
-      font-weight: 700;
-      font-size: 0.94rem;
-      text-decoration: none;
-      border: 1px solid transparent;
-    }
-    .btn-primary { background: #047857; color: #ffffff; }
-    .btn-primary:hover { background: #065f46; }
-    .btn-secondary { background: #ffffff; color: #065f46; border-color: #10b981; }
-    section.card {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      padding: 1.35rem 1.5rem;
-      margin-bottom: 1.4rem;
-    }
-    section.card h2 {
-      margin-top: 0;
-      font-size: 1.22rem;
-      border-bottom: 1px solid var(--border);
-      padding-bottom: 0.55rem;
-    }
-    .steps { counter-reset: step; list-style: none; padding: 0; margin: 0.8rem 0; }
-    .steps li {
-      counter-increment: step;
-      position: relative;
-      padding: 0.85rem 1rem 0.85rem 3.1rem;
-      background: #f8fafc;
-      border: 1px solid var(--border);
-      border-radius: 10px;
-      margin-bottom: 0.7rem;
-    }
-    .steps li::before {
-      content: counter(step);
-      position: absolute;
-      left: 0.9rem;
-      top: 0.85rem;
-      width: 1.65rem;
-      height: 1.65rem;
-      border-radius: 50%;
-      background: #047857;
-      color: #ffffff;
-      font-weight: 800;
-      font-size: 0.88rem;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-    .table-wrap { overflow-x: auto; margin: 0.75rem 0; }
-    table { width: 100%; border-collapse: collapse; font-size: 0.89rem; }
-    th, td { text-align: left; padding: 0.58rem 0.68rem; border-bottom: 1px solid var(--border); vertical-align: top; }
-    th { background: #f1f5f9; font-weight: 700; white-space: nowrap; }
-    code {
-      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
-      background: var(--code-bg);
-      padding: 0.12rem 0.35rem;
-      border-radius: 4px;
-      font-size: 0.85em;
-    }
-    pre {
-      background: #0f172a;
-      color: #e2e8f0;
-      padding: 0.85rem 1rem;
-      border-radius: 8px;
-      overflow-x: auto;
-      font-size: 0.84rem;
-    }
-    .tag { display: inline-block; padding: 0.12rem 0.48rem; border-radius: 5px; font-size: 0.74rem; font-weight: 700; }
-    .tag-pass { background: #d1fae5; color: #065f46; }
-    .tag-block { background: #fee2e2; color: #991b1b; }
-    .tag-org { background: #dbeafe; color: #1e40af; }
-    .tag-hold { background: #ede9fe; color: #5b21b6; }
-    .retire-box {
-      background: #fef2f2;
-      border: 1px solid #fecaca;
-      border-radius: 10px;
-      padding: 0.9rem 1.1rem;
-      color: #7f1d1d;
-      font-size: 0.9rem;
-    }
-    a { color: var(--blue); }
-    footer { max-width: 1180px; margin: 0 auto 2.5rem; padding: 0 1.25rem; color: var(--muted); font-size: 0.84rem; }
-  </style>
+  <meta name="description" content="GEMSDOE36 — DOE GEMS Prize (DrivenData #306): ATVR-36, H36-CTRB &amp; H36-GPS GeoTIFFs, 9-site executive summary, and step-by-step DrivenData portal submission guide.">
+  <title>GEMS DOE 36 — Executive summary &amp; how to submit</title>
+  <link rel="stylesheet" href="assets/site.css">
 </head>
 <body>
-  <header class="topbar">
-    <div class="topbar-inner">
-      <div class="brand">GEMSDOE36 <span>Executive Summary &amp; DrivenData Portal Upload Guide</span></div>
-      <nav class="topnav">
-        <a href="index.html">&larr; Back to Main Overview</a>
-        <a href="executive-summary.html" class="active">Executive Summary &amp; Upload Guide</a>
-        <a href="current-run.json">Run JSON</a>
-        <a href="downloads/gemsdoe36-atvr36-20261026.receipt.json">Validator Receipt</a>
-        <a href="research/forensic-9sites-and-atvr36-20261026.md">Full Monograph</a>
-      </nav>
-    </div>
+  <a class="skip-link" href="#main">Skip to main content</a>
+  <header class="site-header">
+    <a class="brand" href="index.html"><span class="brand-mark" aria-hidden="true">36</span><span>GEMS DOE <span class="small">/ 36</span></span></a>
+    <nav class="nav" aria-label="Main navigation">
+      <a href="index.html">Download &amp; verdict</a>
+      <a href="executive-summary.html">Executive summary &amp; how to submit</a>
+      <a href="research/forensic-9sites-and-atvr36-20261026.md">ATVR-36 &amp; 9-Site Monograph</a>
+      <a href="research/forensic_audit_and_results_2026-10-25.md">CTRB Audit</a>
+      <a href="research/known_irregularities.md">Irregularities</a>
+      <a href="https://www.drivendata.org/competitions/306/competition-doe-gems/leaderboard/" target="_blank" rel="noopener">Official leaderboard &#8599;</a>
+    </nav>
   </header>
-
-  <main>
-    <div class="verdict-hero">
-      <div class="verdict-pill">PROMOTE · VALIDATED &amp; UNIQUE · OK TO DOWNLOAD AND SUBMIT</div>
-      <h1>Step-by-Step Portal Submission Guide &amp; 9-Site Executive Brief</h1>
-      <p style="margin:0;color:#065f46;">
-        Out of all 9 audited focus repositories (<code>GEMSDOE24</code>, <code>25</code>, <code>27</code>, <code>28</code>,
-        <code>30</code>, <code>31</code>, <code>32</code>, <code>33</code>, <code>36</code>),
-        <strong><code>gemsdoe36-atvr36-20261026.tif</code></strong> is the sole unsubmitted, zero-copy candidate that passed all
-        automated format, leakage-canary, buffered segment-holdout (<span class="tag tag-hold">HOLDOUT-DTI</span> <code>0.1145</code>),
-        and registry-uniqueness gates.
+  <main id="main" class="wrap">
+    <section class="page-hero">
+      <div class="eyebrow">Executive summary · automated release gate · 2026-10-26 UTC</div>
+      <h1>Executive Summary &amp; DrivenData Submission Guide</h1>
+      <p class="lede">
+        Current branch artifact (<code>ATVR-36 EXP-2</code>): <a href="downloads/gemsdoe36-atvr36-20261026.tif" download><code>gemsdoe36-atvr36-20261026.tif</code></a> (SHA-256 <code>54f493f4fa5c74ed3a02f88ca6d47272b0c3cee0cc0bd9bbd9cb94eaf997204a</code>) ·
+        Parallel <code>H36-CTRB</code>: <code>gemsdoe36-h36-ctrb-submod-36800-20261025T000000Z-a1d85443-zeros.tif</code> ·
+        Parallel <code>H36-GPS</code>: <code>gemsdoe36-h36-gps-graben-pair-20261026-bb29ce2a4bb4-zeros.tif</code>.
+        Automatic gate verdict: <strong>DO NOT SUBMIT</strong> · <strong>DOWNLOAD: YES</strong>.
       </p>
-      <div class="cta-row">
-        <a class="btn btn-primary" href="downloads/gemsdoe36-atvr36-20261026.tif" download="gemsdoe36-atvr36-20261026.tif">
-          &#11015; Download Validated GeoTIFF (.tif · 305,744 B)
-        </a>
-        <a class="btn btn-secondary" href="downloads/gemsdoe36-atvr36-20261026.zip" download="gemsdoe36-atvr36-20261026.zip">
-          &#11015; Download ZIP Archive (.zip · 200,501 B)
-        </a>
-      </div>
-    </div>
+      <div class="callout warning"><p><strong>DO NOT SUBMIT — HOLD WEEKLY LIVE SLOT (DOWNLOAD: YES for research &amp; ensemble inspection).</strong> Research downloads only: all three zero-copy deliverables (<code>ATVR-36 EXP-2</code>, <code>H36-CTRB</code>, and <code>H36-GPS</code>) are 100% portal-valid and strict <code>[0, 1]</code> whole-array verified, and <code>ATVR-36 EXP-2</code> passes 100% of all 9 focus repositories (<code>GEMSDOE24</code>&ndash;<code>36</code>, max overlap <code>63.28%</code>), but none simultaneously cleared the recorded group <code>HOLDOUT-DTI</code> best (<code>0.14876</code> / <code>repo B0 = 0.13375</code>) and the 201-raster area-blanket uniqueness gate, so spending one of the three weekly slots is blocked automatically.</p></div>
+      <div class="callout warning"><p><strong>Parallel Lane36 file</strong> <code>gemsdoe36-lane36-supgbm-68302-20261026T002651Z-f35cb3e4-zeros.tif</code> failed the independent 198-raster cross-check (max overlap <code>0.9317</code>), so it is DO NOT SUBMIT.</p></div>
+    </section>
 
-    <!-- STEP BY STEP UPLOAD GUIDE -->
-    <section class="card" id="upload-guide">
-      <h2>Step-by-Step DrivenData Submission Checklist (Fixes <code>[0, 1]</code> Portal Error)</h2>
+    <section class="section" aria-labelledby="steps-title">
+      <h2 id="steps-title">Step by step (DrivenData portal contract)</h2>
       <ol class="steps">
-        <li>
-          <strong>Download the Validated GeoTIFF:</strong> Click <em>Download Validated GeoTIFF</em> above to save
-          <code>gemsdoe36-atvr36-20261026.tif</code> (or <code>gemsdoe36-atvr36-20261026.zip</code> if your browser or portal session prefers zipped uploads).
-        </li>
-        <li>
-          <strong>Optional 2-Second Local Hash Check:</strong> Verify integrity in your terminal before uploading:
-          <pre>shasum -a 256 gemsdoe36-atvr36-20261026.tif
-# Expected: 54f493f4fa5c74ed3a02f88ca6d47272b0c3cee0cc0bd9bbd9cb94eaf997204a</pre>
-        </li>
-        <li>
-          <strong>Why <code>"Predicted values must be in range [0, 1]"</code> Cannot Occur on This File:</strong>
-          <code>scripts/submission_writer.py</code> invokes <code>gemsdoe36.submission.write_submission(..., mode="zeros")</code>
-          with <code>nodata=None</code>, writing finite <code>0.0</code> <code>float32</code> outside the footprint and clamping
-          inside-footprint predictions strictly to <code>[0.0, 1.0]</code>. Re-reading the saved bytes confirmed across all
-          <code>12,279,160</code> cells: <code>nan_inside = 0</code>, <code>nan_outside = 0</code>, <code>inf_count = 0</code>,
-          <code>min = 0.0</code>, <code>max = 1.0</code>, <code>EPSG:32611</code>, <code>3730 &times; 3292</code>, <code>100 m</code> pixels,
-          <code>37,654</code> unit dots, and <code>0</code> pixels overlapping <code>existing_faults.tif</code>.
-        </li>
-        <li>
-          <strong>Open the DrivenData GEMS Submission Page:</strong> Navigate to
-          <a href="https://www.drivendata.org/competitions/306/competition-doe-gems/" target="_blank" rel="noopener noreferrer">DrivenData Competition 306 (DOE GEMS)</a>
-          &rarr; <em>Submissions</em> tab (mindful of the 3-submissions-per-rolling-week limit in
-          <a href="https://docs.nlr.gov/docs/fy26osti/96647.pdf" target="_blank" rel="noopener noreferrer"><code>96647.pdf</code></a>).
-        </li>
-        <li>
-          <strong>Upload &amp; Paste Exact Traceable Metadata (&le;140 chars):</strong>
-          <ul>
-            <li><strong>File:</strong> <code>gemsdoe36-atvr36-20261026.tif</code></li>
-            <li><strong>Submission Name:</strong> <code>gemsdoe36-atvr36-exp-2-20261026</code></li>
-            <li><strong>Notes / Description (111 chars):</strong> <code>ATVR-36 EXP-2: tilt/LiDAR+hydrothermal+Anderson PDE+300m CELF cover (zero SGMC, zero prior rasters; 37654 dots)</code></li>
-          </ul>
-        </li>
+        <li><div><h3>Check the automatic gate verdict</h3><p>Only upload a file when all automated release gates clear on the <a href="index.html">home page</a>. Run <code>.venv/bin/python scripts/verify_release_gate.py</code> and <code>.venv/bin/python scripts/check_site.py</code> locally at any time (zero manual inspector step).</p></div></li>
+        <li><div><h3>Download the validated GeoTIFF or ZIP</h3><p>
+          ATVR-36 EXP-2: <a href="downloads/gemsdoe36-atvr36-20261026.tif" download>gemsdoe36-atvr36-20261026.tif</a> or <a href="downloads/gemsdoe36-atvr36-20261026.zip" download>gemsdoe36-atvr36-20261026.zip</a> (SHA-256 <code>54f493f4fa5c74ed3a02f88ca6d47272b0c3cee0cc0bd9bbd9cb94eaf997204a</code>).
+          Parallel H36-CTRB: <a href="downloads/gemsdoe36-h36-ctrb-submod-36800-20261025T000000Z-a1d85443-zeros.tif" download>gemsdoe36-h36-ctrb-submod-36800-20261025T000000Z-a1d85443-zeros.tif</a> or <a href="downloads/gemsdoe36-h36-ctrb-submod-36800-20261025T000000Z-a1d85443-zeros.zip" download>gemsdoe36-h36-ctrb-submod-36800-20261025T000000Z-a1d85443-zeros.zip</a>.
+          Parallel H36-GPS: <a href="downloads/gemsdoe36-h36-gps-graben-pair-20261026-bb29ce2a4bb4-zeros.tif" download>gemsdoe36-h36-gps-graben-pair-20261026-bb29ce2a4bb4-zeros.tif</a> or <a href="downloads/gemsdoe36-h36-gps-graben-pair-20261026-bb29ce2a4bb4-zeros.zip" download>gemsdoe36-h36-gps-graben-pair-20261026-bb29ce2a4bb4-zeros.zip</a>.
+        </p></div></li>
+        <li><div><h3>Open the DrivenData portal</h3><p>Sign in at <a href="https://www.drivendata.org/competitions/306/competition-doe-gems/" target="_blank" rel="noopener">drivendata.org/competitions/306</a> and open the submissions tab.</p></div></li>
+        <li><div><h3>Match exact GeoTIFF format</h3><p>You can submit a single-band GeoTIFF (.tif) file, or a .zip file containing a single GeoTIFF, with your predictions. It must match the submission format's CRS, shape, and geotransform (<code>EPSG:32611</code>, <code>3730 &times; 3292</code>, <code>(100, 0, 243350, 0, -100, 4508550)</code>).</p></div></li>
+        <li><div><h3>Paste the &le;140-char Run Card note</h3><p>
+          ATVR-36 note (116 chars): <code>GEMSDOE36 ATVR-36 EXP-2 | tilt/LiDAR+hydrothermal+Anderson PDE+CELF | HOLDOUT-DTI 0.1145/0.1179 | NEGATIVE hold slot</code> ·
+          H36-CTRB note (106 chars): <code>GEMSDOE36 H36-CTRB | 1.5km worm+trunk relay submod | HOLDOUT-DTI 0.1144 | NEGATIVE hold slot | id a1d85443</code> ·
+          H36-GPS note (118 chars): <code>GEMSDOE36 H36-GPS graben-pair | HOLDOUT-DTI 0.1320 [0.1205,0.1443] seg-pooled-v1 60988pos | NEGATIVE | id bb29ce2a4bb4</code>.
+        </p></div></li>
+        <li><div><h3>Respect weekly slot budget</h3><p>Official rules allow three weekly slots of automated scoring (<a href="https://docs.nlr.gov/docs/fy26osti/96647.pdf" target="_blank" rel="noopener">rules PDF &sect;3.2, &sect;3.4</a>). Record live scores strictly from portal receipts as <code>ORGANIZER-CONFIRMED</code>; never write a projection as a score.</p></div></li>
+        <li><div><h3>Final prize selection</h3><p>Before the deadline choose one submission for both prize rounds (<a href="https://docs.nlr.gov/docs/fy26osti/96647.pdf" target="_blank" rel="noopener">rules PDF &sect;3.5, &sect;3.6.2</a>).</p></div></li>
       </ol>
     </section>
 
-    <!-- SITE BY SITE BRIEF -->
-    <section class="card" id="nine-site-brief">
-      <h2>Concise Site-by-Site Executive Takeaways (All 9 Focus Repositories)</h2>
-      <ul>
-        <li><strong><code>GEMSDOE24</code>:</strong> Historical <code>d1.5</code> (<code>60,069</code> dots) has <code>0.2477</code> user-reported (subset of <code>GEMSDOE27</code> <code>0.2449</code> at Jaccard <code>0.9795</code>). New 2026-10-25 <code>GVC1</code> scored <code>0.0859</code> <span class="tag tag-org">ORGANIZER-CONFIRMED</span> due to in-sample known-fault halo collapse (<code>74.3% &le; 10 px</code>); <code>RSHG1</code> blocked as duplicate (<code>72.69%</code>). <strong>No submittable candidate.</strong></li>
-        <li><strong><code>GEMSDOE25</code>:</strong> Historical <code>d2.8</code> (<code>44,090</code> dots) scored <code>0.2600</code> <span class="tag tag-org">ORGANIZER-CONFIRMED</span> (<code>0</code> XOR vs <code>GEMSDOE30</code>). New <code>H66</code> scored <code>0.0742</code> <span class="tag tag-org">ORGANIZER-CONFIRMED</span>. <strong>No submittable candidate.</strong></li>
-        <li><strong><code>GEMSDOE27</code>:</strong> Historical <code>tgc</code> (<code>61,328</code> dots) scored <code>0.2449</code> <span class="tag tag-org">ORGANIZER-CONFIRMED</span>. New zero-copy <code>H29-S</code> (<code>37,654</code> dots) scored <code>0.2190</code> <span class="tag tag-org">ORGANIZER-CONFIRMED</span> — the cleanest standalone live benchmark among <code>24</code>–<code>33</code>, already submitted. <strong>No unsubmitted candidate.</strong></li>
-        <li><strong><code>GEMSDOE28</code>:</strong> Historical <code>h36-1</code> (<code>37,660</code> dots) scored <code>0.2710</code> and <code>h27-4-solo</code> (<code>40,199</code> dots) scored <code>0.2708</code> <span class="tag tag-org">ORGANIZER-CONFIRMED</span>. New <code>S18</code> (<code>11,082</code> dots) scored <code>0.0217</code> <span class="tag tag-org">ORGANIZER-CONFIRMED</span>. <strong>No submittable candidate.</strong></li>
-        <li><strong><code>GEMSDOE30</code>:</strong> Historical <code>d2.8</code> scored <code>0.2600</code> <span class="tag tag-org">ORGANIZER-CONFIRMED</span>. New <code>MSDB-1v2</code> (<code>44,090</code> dots) scored <code>0.1462</code> <span class="tag tag-org">ORGANIZER-CONFIRMED</span> and is explicitly marked <em>NOT APPROVED FOR SUBMISSION</em> in <code>GEMSDOE30</code>'s own readiness gate. <strong>No submittable candidate.</strong></li>
-        <li><strong><code>GEMSDOE31</code>:</strong> Historical <code>h27-4-solo</code> scored <code>0.2708</code> <span class="tag tag-org">ORGANIZER-CONFIRMED</span> (<code>0</code> XOR vs <code>GEMSDOE28</code>). New <code>H31-M</code> failed holdout gate (<code>DO NOT SUBMIT</code>). <strong>No submittable candidate.</strong></li>
-        <li><strong><code>GEMSDOE32</code>:</strong> Historical <code>h33-h33-2-b2</code> (<code>37,654</code> dots) is the 9-site champion at <strong><code>0.2778</code></strong> <span class="tag tag-org">ORGANIZER-CONFIRMED</span>, proven pixel-identical (<code>0</code> XOR) to <code>(d2.8 &and; d_cat &gt; 2 px)</code>. New <code>H-GEO-CONDUIT</code> failed promotion gate (<code>DO NOT SUBMIT</code>). <strong>No unsubmitted candidate.</strong></li>
-        <li><strong><code>GEMSDOE33</code>:</strong> Historical <code>h33d</code> (<code>41,865</code> dots) scored <code>0.2632</code> <span class="tag tag-org">ORGANIZER-CONFIRMED</span>. New <code>A33-L1</code> marked <code>NOT OK TO SUBMIT</code>. <strong>No submittable candidate.</strong></li>
-        <li><strong><code>GEMSDOE36</code> (This Site):</strong> Retired legacy <code>38854</code> (<code>0.2750</code> <span class="tag tag-org">ORGANIZER-CONFIRMED</span>, copied <code>B2 + 1,200</code> thermal dots) and legacy SGMC-circular <code>H6</code>. Built and promoted <strong><code>gemsdoe36-atvr36-exp-2-20261026</code></strong> (<span class="tag tag-hold">HOLDOUT-DTI</span> <code>0.1145</code> vs <code>0.0395</code> <code>B1</code>; <code>35.9%</code> overlap vs <code>B2</code>). <strong><span class="tag tag-pass">OK TO DOWNLOAD AND SUBMIT</span></strong></li>
-      </ul>
+    <section class="section" aria-labelledby="fix-title">
+      <h2 id="fix-title">Preventing “Predicted values must be in range [0, 1]”</h2>
+      <p>Portal validators that inspect the raw 2D raster array before applying a footprint mask reject <code>NaN</code> or <code>-9999</code> sentinels outside the active polygon with <code>Predicted values must be in range [0, 1]</code>. GEMSDOE36 ships the <strong>zeros-outside</strong> GeoTIFF (<code>nodata=None</code>) as primary: all <code>12,279,160 / 12,279,160</code> cells are finite <code>float32</code> values in <code>[0.0, 1.0]</code>, verified automatically by both <code>gemsdoe36.submission.validate_submission</code> and <code>gems.submission.check_variants</code>.</p>
     </section>
 
-    <!-- REGISTRY UNIQUENESS SUMMARY -->
-    <section class="card" id="registry-audit">
-      <h2>32-Raster Registry Uniqueness Verification (<code>protocol.registry_check</code>)</h2>
-      <div class="table-wrap">
-        <table>
-          <thead>
-            <tr>
-              <th>Reference Artifact</th>
-              <th>Surface Spearman &rho; (Cap &le; 0.90)</th>
-              <th>3-px Dot Overlap (Cap &le; 70.0%)</th>
-              <th>Gate Status</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td><code>GEMSDOE32</code> Champion <code>h33-h33-2-b2</code> (<code>0.2778</code> <span class="tag tag-org">ORGANIZER-CONFIRMED</span>)</td>
-              <td><code>+0.0395</code></td>
-              <td><strong><code>35.94%</code></strong> (<code>64.06%</code> novel &gt;300 m targets)</td>
-              <td><span class="tag tag-pass">UNIQUE PASS</span></td>
-            </tr>
-            <tr>
-              <td><code>GEMSDOE36</code> Legacy <code>anderson-pinn-38854</code> (<code>0.2750</code> <span class="tag tag-org">ORGANIZER-CONFIRMED</span>)</td>
-              <td><code>+0.0405</code></td>
-              <td><code>36.53%</code></td>
-              <td><span class="tag tag-pass">UNIQUE PASS</span></td>
-            </tr>
-            <tr>
-              <td><code>GEMSDOE27</code> Zero-Copy <code>H29-S</code> (<code>0.2190</code> <span class="tag tag-org">ORGANIZER-CONFIRMED</span>)</td>
-              <td><code>+0.0473</code></td>
-              <td><code>40.12%</code></td>
-              <td><span class="tag tag-pass">UNIQUE PASS</span></td>
-            </tr>
-            <tr>
-              <td><code>GEMSDOE30</code> <code>MSDB-1v2</code> (<code>0.1462</code> <span class="tag tag-org">ORGANIZER-CONFIRMED</span>)</td>
-              <td><code>+0.0618</code></td>
-              <td><code>53.75%</code></td>
-              <td><span class="tag tag-pass">UNIQUE PASS</span></td>
-            </tr>
-            <tr>
-              <td><code>scored:8GEMSDOE_Hedge-v2_submission.tif</code> (Max Surface |&rho;|)</td>
-              <td><strong><code>+0.1084</code></strong></td>
-              <td><code>49.93%</code></td>
-              <td><span class="tag tag-pass">UNIQUE PASS</span></td>
-            </tr>
-            <tr>
-              <td><code>scored:gems10-h25-ctx-ridge</code> (<code>161,366</code> dots; Max Geological Overlap)</td>
-              <td><code>+0.1049</code></td>
-              <td><strong><code>59.57%</code></strong></td>
-              <td><span class="tag tag-pass">UNIQUE PASS</span></td>
-            </tr>
-            <tr>
-              <td><em>Disclosure:</em> <code>13gems...lattice-s5</code> (<code>204,504</code> uniform 5&times;5 calibration grid)</td>
-              <td><code>-0.0002</code></td>
-              <td><code>98.50%</code> fwd / <code>7.98%</code> rev (Euclidean <code>&radic;8 &le; 3 px</code> covers 99.9% of Nevada)</td>
-              <td><span class="tag tag-pass">DISCLOSED CALIBRATION GRID</span></td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-
-      <div class="retire-box">
-        <strong>Retired Historical Downloads (DO NOT SUBMIT):</strong>
-        Older files in <code>docs/downloads/</code> (<code>gemsdoe36-anderson-geothermal-pinn-38854-*.tif</code>,
-        <code>GEMS36_h6_offcatalog_network_prior_*.tif</code>, and <code>GEMS36_FORMAT_TEST_NOT_SUBMISSION.tif</code>)
-        are retained strictly as historical audit records and marked <code>RETIRED_DO_NOT_SUBMIT</code> in
-        <a href="downloads/submissions_manifest.json"><code>submissions_manifest.json</code></a>. Only upload
-        <strong><code>gemsdoe36-atvr36-20261026.tif</code></strong> (or <code>.zip</code>).
-      </div>
+    <section class="section" aria-labelledby="sum-title">
+      <h2 id="sum-title">9-Site Executive Summary &amp; Next High-Leverage Step</h2>
+      <ul>
+        <li><strong>9-Focus-Site Verdict (<code>GEMSDOE24..36</code>):</strong> <code>GEMSDOE32</code> <code>h33-h33-2-b2</code> (<code>0.2778</code> <code>ORGANIZER-CONFIRMED</code>) remains the highest-scoring historical submission (`0` XOR vs <code>d2.8 &and; d_cat &gt; 2 px</code>). Across recent zero-copy runs on <code>24, 25, 27, 28, 30, 31, 32, 33, 36</code>, <code>GEMSDOE27</code> <code>H29-S</code> is already scored (<code>0.2190</code> <code>ORGANIZER-CONFIRMED</code>), <code>GEMSDOE24 GVC1</code> (<code>0.0859</code>), <code>GEMSDOE25 H66</code> (<code>0.0742</code>), <code>GEMSDOE28 S18</code> (<code>0.0217</code>), and <code>GEMSDOE30 MSDB1</code> (<code>0.1462</code>) collapsed live due to in-sample tree halo memorization (<code>IR-36-INSAMPLE-HALO-COLLAPSE</code>), and all unsubmitted candidates across <code>24, 30, 31, 32, 33, 36</code> are fail-closed <code>DO NOT SUBMIT</code>.</li>
+        <li><strong>Cross-Lane Breakthrough Inside <code>GEMSDOE36</code>:</strong> On the shared <code>gems-segment-pooled-v1</code> evaluator, <code>ATVR-36 EXP-2</code> achieves <code>0.117925</code> with repository-best <strong><code>NW = 0.15048</code></strong> and <strong><code>SE = 0.15438</code></strong>, while <code>H36-CTRB</code> achieves <code>0.114425</code> with repository-best <strong><code>NE_LidarGap = 0.13141</code></strong> — and the two zero-copy surfaces share only <code>37.36%</code> 3-px dot overlap (<code>&rho; = +0.0398</code>).</li>
+        <li><strong>Next Step to Beat <code>0.1488</code> Holdout &amp; <code>0.2778+</code> Live:</strong> Combine <code>ATVR-36</code>'s relief-deconfounded tilt/LiDAR + Raissi&ndash;Anderson PDE surface (which dominates LiDAR-covered Basin &amp; Range) with <code>H36-CTRB</code>'s 1.5 km potential-field strike-worm + trunk relay surface (which dominates the <code>NE</code> 3DEP LiDAR gap) under out-of-fold cross-fitting.</li>
+      </ul>
     </section>
   </main>
 
-  <footer>
-    GEMSDOE36 · Executive Summary &amp; Upload Guide · Verified <code>2026-10-26 UTC</code> · Full JSON Run Card at <a href="current-run.json"><code>docs/current-run.json</code></a>.
+  <footer class="site-footer wrap">
+    <div class="footer-row">
+      <p>GEMSDOE36 · Core Values: <strong>Maximize P(Win)</strong> &amp; <strong>Own the Outcome</strong> · AI-assisted research (<a href="AI_DISCLOSURE.md">AI disclosure</a>). Not affiliated with DOE, NLR, USGS or DrivenData.</p>
+      <p>Official: <a href="https://www.drivendata.org/competitions/306/competition-doe-gems/page/967/" target="_blank" rel="noopener">problem &amp; metric</a> · <a href="https://docs.nlr.gov/docs/fy26osti/96647.pdf" target="_blank" rel="noopener">rules PDF</a> · <a href="current-run.json">ATVR-36 Run JSON</a> · <a href="downloads/run_card.json">H36-CTRB Run Card</a></p>
+    </div>
   </footer>
 </body>
 </html>

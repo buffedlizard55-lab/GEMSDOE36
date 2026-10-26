@@ -1,3 +1,5 @@
+> **Superseded on 2026-10-25.** This 2026-10-04 document contains projections (e.g. a projected 0.2798) that were never scores; the Anderson file's owner-reported live score is 0.2750. The verified 2026-10-25 leaderboard top is 0.4413 (0.3195 is stale). Current status: `README.md`, `evidence/h36_run_card.json`, `knowledge/h36_findings_2026-10-25.md`.
+
 # Spatial validation plan and release gates
 
 **State (2026-10-04): gate PASSED, candidate ready.** The 5-fold spatially-blocked holdout has run; the H6 candidate (off-catalogue SGMC prior + broad-coverage emission) beat the incumbent comparator on 5/5 folds and is the **current best local spatial holdout** (mean 0.452 on the off-catalogue SGMC proxy; `docs/research/holdout_results.json`). The upload-ready TIFF is generated and template-validated. A score on another repository or a leaderboard value is still not a substitute for this holdout.

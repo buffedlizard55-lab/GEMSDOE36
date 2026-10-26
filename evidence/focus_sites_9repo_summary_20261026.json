@@ -218,16 +218,20 @@
         "name": "gemsdoe36-atvr36-exp-2-20261026 (docs/downloads/gemsdoe36-atvr36-20261026.tif)",
         "sha256": "54f493f4fa5c74ed3a02f88ca6d47272b0c3cee0cc0bd9bbd9cb94eaf997204a",
         "dots": 37654,
-        "holdout_dti": 0.114542,
-        "holdout_ci95": [0.078547, 0.151221],
-        "score_label": "HOLDOUT-DTI (gems36-segment-audit-v1, 60,988 withheld px, 3,199 segments, buffer_px=30)",
-        "max_abs_spearman_rho": 0.108421,
-        "max_geol_3px_overlap": 0.595687,
-        "overlap_vs_B2_champ": 0.359404,
-        "verdict": "promote",
-        "ok_to_download_and_submit": true
+        "holdout_dti_3000m": 0.114542,
+        "holdout_ci95_3000m": [0.078547, 0.151221],
+        "holdout_dti_shared_1500m": 0.117925,
+        "holdout_ci95_shared_1500m": [0.101961, 0.132998],
+        "score_label": "HOLDOUT-DTI (gems36-segment-audit-v1 3 km & gems-segment-pooled-v1 1.5 km; 60,988 withheld px, 3,199 segments)",
+        "max_focus_9site_3px_overlap": 0.6328,
+        "overlap_vs_B2_champ": 0.359377,
+        "overlap_vs_H36_CTRB": 0.373639,
+        "max_expanded_201_blanket_overlap": 0.893637,
+        "verdict": "negative",
+        "ok_to_download_research_tif": true,
+        "ok_to_download_and_submit": false
       },
-      "safe_unique_candidate_available": true
+      "safe_unique_candidate_available": false
     }
   ]
 }

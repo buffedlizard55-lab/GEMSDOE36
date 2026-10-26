@@ -35,7 +35,7 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "src"))
 sys.path.insert(0, str(ROOT / "scripts"))
 
-from submission_writer import write_and_validate_submission
+from atvr36_submission_gate import write_and_validate_submission
 
 from gemsdoe36.atvr_features import (
     H36A_STATIC_NAMES,
