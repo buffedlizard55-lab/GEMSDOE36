@@ -1,0 +1,297 @@
+{
+  "hypothesis": "Unmapped B&R faults sit on basement-depth steps under positive dilatation.",
+  "mechanism": "Percentile ranks of |grad depth_to_base|, max(dilatation,0), |gravity VG|; geometric-mean EXP-3.",
+  "named_non_fault_mimic": "Lithologic basement contact or basin-fill thickness jump without a through-going fault.",
+  "holdout_dti": 0.012429667987760212,
+  "holdout_ci95": [
+    0.007996933313792457,
+    0.017338944517965686
+  ],
+  "evaluator_version": "gems-segment-pooled-v1",
+  "withheld_positives": 60988,
+  "label": "HOLDOUT-DTI",
+  "correlation_overlap_vs_registry": {
+    "worst_abs_rho": 0.04723677299055725,
+    "worst_overlap": 1.0,
+    "worst_overlap_name": "13gems_20261001_r13-lattice-s5_v2_nan-outside.tif",
+    "any_duplicate": true,
+    "n_compared": 26
+  },
+  "raster_sha256": "4c1b7bdd5868679bcc2f3a3f81682b6074723bbd5cac00deaced070df59a296a",
+  "validator": {
+    "file": "gemsdoe36-bdc36-exp-2-20261026-18000dots-zeros.tif",
+    "bytes": 775838,
+    "sha256": "4c1b7bdd5868679bcc2f3a3f81682b6074723bbd5cac00deaced070df59a296a",
+    "format_valid": true,
+    "ok_to_upload": false,
+    "upload_authorization": "not evaluated by a format validator; separate scientific selector required",
+    "format_acceptable": true,
+    "submission_authorized": false,
+    "scope": "Format only; this does not certify bias audit, holdout promotion or weekly-slot eligibility",
+    "hard_failures": [],
+    "official_format_compliant": false,
+    "in_footprint_positive_pixels": 18000,
+    "in_footprint_mass": 18000.0,
+    "checks": {
+      "official_template_grid_and_footprint": {
+        "pass": true,
+        "detail": "Template must be the pinned organizer grid, not just a self-consistent arbitrary raster",
+        "hard_requirement": true
+      },
+      "single_band": {
+        "pass": true,
+        "detail": "count=1",
+        "hard_requirement": true
+      },
+      "dtype_float32": {
+        "pass": true,
+        "detail": "dtypes=('float32',)",
+        "hard_requirement": true
+      },
+      "crs_epsg_32611": {
+        "pass": true,
+        "detail": "EPSG:32611",
+        "hard_requirement": true
+      },
+      "shape_matches_template": {
+        "pass": true,
+        "detail": "(3730, 3292) vs (3730, 3292)",
+        "hard_requirement": true
+      },
+      "geotransform_matches_template": {
+        "pass": true,
+        "detail": "(100.0, 0.0, 243350.0, 0.0, -100.0, 4508550.0)",
+        "hard_requirement": true
+      },
+      "footprint_all_finite": {
+        "pass": true,
+        "detail": "0 NaN/Inf inside the 5,167,373-pixel footprint",
+        "hard_requirement": true
+      },
+      "footprint_range_0_1": {
+        "pass": true,
+        "detail": "finite=5167373/5167373; range=0.0 to 1.0",
+        "hard_requirement": true
+      },
+      "outside_is_nan_official_text": {
+        "pass": false,
+        "detail": "0 of 7,111,787 outside pixels are NaN",
+        "hard_requirement": false
+      },
+      "nodata_tag_is_nan": {
+        "pass": false,
+        "detail": "nodata=None",
+        "hard_requirement": false
+      },
+      "variant_nan_aware_whole_array": {
+        "pass": true,
+        "detail": "np.nanmin/np.nanmax over the whole array",
+        "hard_requirement": true
+      },
+      "variant_masked_read": {
+        "pass": true,
+        "detail": "rasterio read(masked=True).compressed()",
+        "hard_requirement": true
+      },
+      "variant_strict_whole_array_no_nan_allowed": {
+        "pass": true,
+        "detail": "((a>=0)&(a<=1)).all() over the whole array - fails for ANY NaN, including the official sample's NaN outside",
+        "hard_requirement": false
+      },
+      "profile_matches_official_sample": {
+        "pass": false,
+        "detail": "driver/dtype/nodata/size/crs/transform equal to template; compress=lzw (template lzw)",
+        "hard_requirement": false
+      }
+    }
+  },
+  "submission_name": "gemsdoe36-bdc36-exp-2-20261026-18000dots-zeros.tif",
+  "note": "BDC-36 EXP-2 basement-step x dilatation | HOLDOUT-DTI 0.0124 | negative | 18000 dots",
+  "verdict": "negative",
+  "ok_to_download_and_submit": false,
+  "slot_approved": false,
+  "lane_id": "BDC-36",
+  "best_experiment": "EXP-2",
+  "experiments": {
+    "EXP-1": {
+      "holdout_dti": 0.00978019262519268,
+      "ci95": [
+        0.007043661220870915,
+        0.012870489085910678
+      ],
+      "evaluator_version": "gems-segment-pooled-v1",
+      "withheld_positives": 60988,
+      "folds": [
+        {
+          "fold": "NW",
+          "TP_w": 55.62722361011141,
+          "FP_w": 3967.4394623953413,
+          "FN_w": 10109.372776389888,
+          "n_truth": 10165,
+          "n_emitted": 4022,
+          "dti": 0.0062246425475213805,
+          "coverage": 0.005472427310389711
+        },
+        {
+          "fold": "NE_LidarGapHeavy",
+          "TP_w": 88.57295498910852,
+          "FP_w": 4881.26643005109,
+          "FN_w": 12422.42704501089,
+          "n_truth": 12511,
+          "n_emitted": 4973,
+          "dti": 0.008050061218994741,
+          "coverage": 0.007079606345544603
+        },
+        {
+          "fold": "SW",
+          "TP_w": 128.16490007228612,
+          "FP_w": 4854.595478271938,
+          "FN_w": 20405.835099927714,
+          "n_truth": 20534,
+          "n_emitted": 4976,
+          "dti": 0.007355757790569381,
+          "coverage": 0.006241594432272627
+        },
+        {
+          "fold": "SE",
+          "TP_w": 240.05626273693213,
+          "FP_w": 3801.2185168629144,
+          "FN_w": 17537.943737263067,
+          "n_truth": 17778,
+          "n_emitted": 4028,
+          "dti": 0.015971111268227638,
+          "coverage": 0.013502995991502538
+        }
+      ]
+    },
+    "EXP-2": {
+      "holdout_dti": 0.012429667987760212,
+      "ci95": [
+        0.007996933313792457,
+        0.017338944517965686
+      ],
+      "evaluator_version": "gems-segment-pooled-v1",
+      "withheld_positives": 60988,
+      "folds": [
+        {
+          "fold": "NW",
+          "TP_w": 85.36788042605859,
+          "FP_w": 3933.013245512587,
+          "FN_w": 10079.632119573942,
+          "n_truth": 10165,
+          "n_emitted": 4022,
+          "dti": 0.009553600452136986,
+          "coverage": 0.00839821745460488
+        },
+        {
+          "fold": "NE_LidarGapHeavy",
+          "TP_w": 166.512110259067,
+          "FP_w": 4785.813066913367,
+          "FN_w": 12344.487889740933,
+          "n_truth": 12511,
+          "n_emitted": 4973,
+          "dti": 0.015138476045547496,
+          "coverage": 0.01330925667485149
+        },
+        {
+          "fold": "SW",
+          "TP_w": 162.94270894823387,
+          "FP_w": 4806.6210410756275,
+          "FN_w": 20371.057291051766,
+          "n_truth": 20534,
+          "n_emitted": 4976,
+          "dti": 0.009353174581069967,
+          "coverage": 0.007935263901248362
+        },
+        {
+          "fold": "SE",
+          "TP_w": 236.248285175253,
+          "FP_w": 3773.483166675447,
+          "FN_w": 17541.751714824746,
+          "n_truth": 17778,
+          "n_emitted": 4028,
+          "dti": 0.015724363683304075,
+          "coverage": 0.013288799931108842
+        }
+      ]
+    },
+    "EXP-3": {
+      "holdout_dti": 0.011977130159382884,
+      "ci95": [
+        0.008858623229600774,
+        0.015400533508619682
+      ],
+      "evaluator_version": "gems-segment-pooled-v1",
+      "withheld_positives": 60988,
+      "folds": [
+        {
+          "fold": "NW",
+          "TP_w": 85.19547942266718,
+          "FP_w": 3930.248996119947,
+          "FN_w": 10079.804520577332,
+          "n_truth": 10165,
+          "n_emitted": 4022,
+          "dti": 0.009534933610828827,
+          "coverage": 0.008381257198491606
+        },
+        {
+          "fold": "NE_LidarGapHeavy",
+          "TP_w": 108.74306499594523,
+          "FP_w": 4852.911695044269,
+          "FN_w": 12402.256935004054,
+          "n_truth": 12511,
+          "n_emitted": 4973,
+          "dti": 0.009884716895866766,
+          "coverage": 0.008691796418827051
+        },
+        {
+          "fold": "SW",
+          "TP_w": 133.87414940971462,
+          "FP_w": 4844.266526745018,
+          "FN_w": 20400.125850590284,
+          "n_truth": 20534,
+          "n_emitted": 4976,
+          "dti": 0.007683835733777194,
+          "coverage": 0.0065196332623801805
+        },
+        {
+          "fold": "SE",
+          "TP_w": 299.60365492235206,
+          "FP_w": 3715.812528867017,
+          "FN_w": 17478.396345077646,
+          "n_truth": 17778,
+          "n_emitted": 4028,
+          "dti": 0.019939701785258862,
+          "coverage": 0.016852494933195638
+        }
+      ]
+    }
+  },
+  "canaries": {
+    "grad_z": {
+      "auc": 0.5170872246216507,
+      "two_polarity_auc": 0.5170872246216507,
+      "passed": true
+    },
+    "dil_pos": {
+      "auc": 0.5375368483774252,
+      "two_polarity_auc": 0.5375368483774252,
+      "passed": true
+    },
+    "grav_vg": {
+      "auc": 0.522271273890167,
+      "two_polarity_auc": 0.522271273890167,
+      "passed": true
+    },
+    "s3": {
+      "auc": 0.5266933797935627,
+      "two_polarity_auc": 0.5266933797935627,
+      "passed": true
+    }
+  },
+  "budget_dots": 18000,
+  "wall_s": 75.54906225204468,
+  "utc": "2026-10-26T21:57:31.546623+00:00",
+  "evaluator_pin": "gems-segment-pooled-v1",
+  "zip": "gemsdoe36-bdc36-exp-2-20261026-18000dots-zeros.zip"
+}
