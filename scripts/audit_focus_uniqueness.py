@@ -31,6 +31,8 @@ def audit(root: Path = ROOT) -> dict[str, Any]:
     ledger = json.loads((root / "evidence/focus_sites_9repo_summary_20261026.json").read_text())
     registry = json.loads((root / "registry/scored_registry.json").read_text())["entries"]
     with rasterio.open(root / "data/raw/sample_submission.tif") as ds:
+        if ds.count != 1 or ds.crs is None:
+            raise RuntimeError("Template must have one band and a CRS")
         footprint = np.isfinite(ds.read(1))
         grid = (ds.shape, ds.crs, ds.transform)
 
@@ -106,14 +108,14 @@ def audit(root: Path = ROOT) -> dict[str, Any]:
         }
 
     return {
-        "schema": "gemsdoe36.focus9_pairwise_uniqueness.v1",
+        "schema": "gemsdoe36.focus9_pairwise_uniqueness.v2",
         "date_utc": "2026-10-26",
         "method": {
             "footprint_pixels": int(footprint.sum()),
             "mask_values": [0, 1],
             "spearman_note": "For binary 0/1 surfaces, Spearman rank correlation equals Pearson correlation of the binary masks.",
             "dot_overlap": "Directed fraction of candidate positive pixels at Euclidean distance <= 3 pixels from the reference positives.",
-            "protocol_limits": {"abs_spearman_max_exclusive": 0.90, "dot_overlap_max_exclusive": 0.70},
+            "protocol_limits": {"abs_spearman_fails_strictly_above": 0.90, "dot_overlap_fails_strictly_above": 0.70},
         },
         "all_nine_sites_pass_unique_vs_each_other": all(
             row["unique_under_parallel_protocol_vs_all_eight"] for row in site_summary.values()
@@ -121,7 +123,7 @@ def audit(root: Path = ROOT) -> dict[str, Any]:
         "site_summary": site_summary,
         "directed_pairwise_checks": pair_rows,
         "limitations": [
-            "Historical scores remain OWNER-REPORTED; this measures only raster uniqueness.",
+            "Historical scores remain OWNER- or USER-REPORTED as stated by site; this measures only raster uniqueness.",
             "This pairwise nine-site check does not replace comparison against the expanded registry.",
         ],
     }

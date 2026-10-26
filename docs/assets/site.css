@@ -190,3 +190,11 @@ td.fail { color: #9a3412; font-weight: 700; }
 .source-feed-list { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: .5rem 1.25rem; padding-left: 1.5rem; }
 .source-feed-list li { overflow-wrap: anywhere; }
 #source-feed-status { font-size: .9rem; color: var(--muted, #405360); }
+
+/* Preflight decision: readable long hashes and compact audit cards on small screens. */
+.archive-card code, .table-wrap code { overflow-wrap: anywhere; word-break: break-word; }
+.archive-card a { overflow-wrap: anywhere; }
+.archive-card details { margin-top: 1rem; font-size: .82rem; }
+.archive-card summary { cursor: pointer; font-weight: 700; }
+#source-feed-list { columns: 2 280px; padding-left: 1.2rem; }
+#source-feed-list li { break-inside: avoid; margin-bottom: .35rem; font-size: .9rem; }

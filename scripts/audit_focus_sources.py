@@ -27,9 +27,11 @@ def main() -> int:
     with rasterio.open(ROOT / "data/raw/sample_submission.tif") as template, rasterio.open(
         ROOT / "data/raw/existing_faults.tif"
     ) as faults:
+        grid = (template.shape, template.crs, template.transform)
+        if template.count != 1 or faults.count != 1 or (faults.shape, faults.crs, faults.transform) != grid:
+            raise RuntimeError("Template and visible-fault rasters must share the same single-band grid")
         foot = np.isfinite(template.read(1))
         cat = faults.read(1) == 1
-        grid = (template.shape, template.crs, template.transform)
     if len(ledger["focus_sites"]) != 9 or foot.sum() != 5_167_373 or cat.sum() != 60_988:
         raise RuntimeError("Site count/footprint mismatch")
 
@@ -72,8 +74,12 @@ def main() -> int:
         if sha256_file(p) != entry["sha256"]:
             raise RuntimeError(f"Cached reference hash mismatch: {p}")
         with rasterio.open(p) as f:
+            if (f.shape, f.crs, f.transform) != grid or f.count != 1:
+                raise RuntimeError(f"Matched raster grid mismatch: {p}")
             arr = f.read(1)
-            return foot & np.isfinite(arr) & (arr > 0)
+        if not np.isfinite(arr[foot]).all() or np.any((arr[foot] < 0) | (arr[foot] > 1)):
+            raise RuntimeError(f"Invalid matched predictions inside footprint: {p}")
+        return foot & (arr > 0)
 
     d28 = masks["GEMSDOE25"]
     d30 = masks["GEMSDOE30"]
@@ -102,7 +108,7 @@ def main() -> int:
         raise RuntimeError(f"Inherited byte-forensics disagrees with pinned rasters: {claims}")
     receipt = {
         "schema": "focus9-source-integrity-v2", "checked_date_utc": "2026-10-26",
-        "score_provenance": "OWNER-REPORTED only; none of these nine scores has an authenticated submission-page receipt in this repo",
+        "score_provenance": "OWNER-REPORTED or USER-REPORTED as stated for each site; no authenticated submission-page receipt is archived",
         "source": "registry/scored_registry.json + evidence/focus_sites_9repo_summary_20261026.json",
         "sites": rows,
         "nested_family_crosschecks": claims,

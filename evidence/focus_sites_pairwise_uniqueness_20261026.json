@@ -1,5 +1,5 @@
 {
-  "schema": "gemsdoe36.focus9_pairwise_uniqueness.v1",
+  "schema": "gemsdoe36.focus9_pairwise_uniqueness.v2",
   "date_utc": "2026-10-26",
   "method": {
     "footprint_pixels": 5167373,
@@ -10,8 +10,8 @@
     "spearman_note": "For binary 0/1 surfaces, Spearman rank correlation equals Pearson correlation of the binary masks.",
     "dot_overlap": "Directed fraction of candidate positive pixels at Euclidean distance <= 3 pixels from the reference positives.",
     "protocol_limits": {
-      "abs_spearman_max_exclusive": 0.9,
-      "dot_overlap_max_exclusive": 0.7
+      "abs_spearman_fails_strictly_above": 0.9,
+      "dot_overlap_fails_strictly_above": 0.7
     }
   },
   "all_nine_sites_pass_unique_vs_each_other": false,
@@ -830,7 +830,7 @@
     }
   ],
   "limitations": [
-    "Historical scores remain OWNER-REPORTED; this measures only raster uniqueness.",
+    "Historical scores remain OWNER- or USER-REPORTED as stated by site; this measures only raster uniqueness.",
     "This pairwise nine-site check does not replace comparison against the expanded registry."
   ]
 }

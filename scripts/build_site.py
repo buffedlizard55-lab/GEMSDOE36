@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
-"""Generate docs/index.html, docs/executive-summary.html, submissions_manifest.json, and README status
-directly from the machine-written JSON run cards across all GEMSDOE36 lanes (H36-CTRB, H36-GPS, Lane36).
+"""Build current fail-closed Pages from the registry-preflight run card.
+
+Historical rendering functions below are archived and cannot be invoked as a release.
 """
 
 from __future__ import annotations
@@ -554,22 +555,8 @@ def write_manifest(ctrb: dict, gps: dict) -> None:
 
 
 def legacy_main() -> int:
-    """Historical generator: kept to reproduce the earlier CTRB/GPS snapshot only.
-
-    Do not call this on current Pages; it overwrites newer ATVR/MTO sections.
-    """
-    ctrb = json.loads(CTRB_CARD.read_text())
-    gps = json.loads(GPS_CARD.read_text())
-    write_manifest(ctrb, gps)
-    (DOCS / "index.html").write_text(index_page(ctrb, gps), encoding="utf-8")
-    (DOCS / "executive-summary.html").write_text(exec_page(ctrb, gps), encoding="utf-8")
-    update_readme(ctrb, gps)
-    print(
-        "site + README status written from H36-CTRB & H36-GPS cards | verdicts:",
-        ctrb["verdict"],
-        gps["verdict"],
-    )
-    return 0
+    """The old renderer contains obsolete score claims and must never overwrite current Pages."""
+    raise RuntimeError("Historical site renderer is disabled; use the current build_site.py entrypoint")
 
 
 def main() -> int:
