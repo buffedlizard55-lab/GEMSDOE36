@@ -1,6 +1,6 @@
 # GEMSDOE36 — current decision & reproducible research
 
-**Working branch:** `arena/cee70ea1-gemsdoe36`. **Read this first** before starting work: the decision below is the current branch decision, alongside archived ATVR/CTRB/GPS/Lane36/MOE36 research lanes. Core values: **Maximize P(Win)** and **Own the Outcome**. The [full standing owner brief](#full-standing-owner-brief-historical-wording) is preserved verbatim below; its historical leaderboard claims are not verified observations.
+**Working branch:** `arena/15fd7539-gemsdoe36`. **Read this first** before starting work: the decision below is the current branch decision, alongside archived ATVR/CTRB/GPS/Lane36/MOE36 research lanes. Core values: **Maximize P(Win)** and **Own the Outcome**. The [full standing owner brief](#full-standing-owner-brief-historical-wording) is preserved verbatim below; its historical leaderboard claims are not verified observations. Latest pass-by-pass repository review: [review results, nine-site uniqueness audit, blockers, and next steps](docs/research/repo-review-20261026.md).
 
 <!-- STATUS:START -->
 > ## CURRENT DECISION · `DOWNLOAD: YES (research)` · `DO NOT SUBMIT` · `verdict: negative`

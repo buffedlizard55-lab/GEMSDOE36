@@ -11,6 +11,7 @@ from __future__ import annotations
 import html
 import json
 import re
+import subprocess
 from pathlib import Path
 from shutil import copyfile
 
@@ -18,6 +19,7 @@ ROOT = Path(__file__).resolve().parents[1]
 DOCS = ROOT / "docs"
 CARD = ROOT / "evidence/mto36_run_card_20261026.json"
 LEDGER = ROOT / "evidence/focus_sites_9repo_summary_20261026.json"
+UNIQUENESS = ROOT / "evidence/focus_sites_pairwise_uniqueness_20261026.json"
 README = ROOT / "README.md"
 INDEX = DOCS / "index.html"
 SUMMARY = DOCS / "executive-summary.html"
@@ -130,31 +132,42 @@ def executive_card(card: dict) -> str:
       <p><strong>Name:</strong> <code>{e(card['submission_name'])}</code><br>
         <strong>Note ({len(card['submission_note'])} / 140 chars; not for use while negative):</strong> <code>{e(card['submission_note'])}</code><br>
         <strong>TIF SHA-256:</strong> <code>{e(card['raster_sha256'])}</code></p>
+      <div class="table-wrap verdict-meta"><table>
+        <tr><th>Current research TIFF</th><td><a href="downloads/{e(tif)}" download>{e(tif)}</a></td></tr>
+        <tr><th>Score evidence (not a leaderboard estimate)</th><td><strong>HOLDOUT-DTI {card['holdout_dti']['pooled_candidate']:.6f}</strong>, 95% CI <code>[{card['holdout_dti']['ci95_candidate'][0]:.6f}, {card['holdout_dti']['ci95_candidate'][1]:.6f}]</code>, <code>{e(card['holdout_dti']['evaluator_version'])}</code>, {card['holdout_dti']['withheld_positives']:,} withheld positives.</td></tr>
+        <tr><th>Unique under registry rule?</th><td><strong>NO</strong> — final 3-px overlap {card['registry']['final_dots']['max_dot_overlap_3px_all']:.2%} &gt; 70% ceiling. Research download only.</td></tr>
+        <tr><th>Decision</th><td><strong>DOWNLOAD: YES (research) · DO NOT SUBMIT</strong></td></tr>
+      </table></div>
       <p><a href="research/mto36-evidence-and-nine-sites.md">Read audited nine-site summary, current hypothesis and all limitations</a>. <code>ORGANIZER-CONFIRMED</code> requires a submission-page receipt; the user-supplied older scores do not satisfy this.</p>
     </section>
-{END}"""
+{END}
+{site_table(json.loads(LEDGER.read_text(encoding="utf-8")))}"""
 
 
-def site_table(ledger: dict) -> str:
+def site_table(ledger: dict, uniqueness: dict | None = None) -> str:
+    if uniqueness is None:
+        uniqueness = json.loads(UNIQUENESS.read_text(encoding="utf-8"))
+    summaries = uniqueness["site_summary"]
     rows = []
     for item in ledger["focus_sites"]:
         h = item["highest_historical_submission"]
+        novelty = summaries[item["site"]]
         rows.append(
             "<tr><td><code>{site}</code></td><td><a href=\"{link}\" target=\"_blank\" rel=\"noopener\"><code>{name}</code></a> "
             "<small>SHA-256 {sha}</small></td><td>{dots:,} dots</td><td><strong>{score:.4f} OWNER-REPORTED</strong> "
-            "(receipt missing)</td><td>NO · historical/reused or negative</td></tr>".format(
+            "(receipt missing)</td><td><strong>NO</strong> · at least {min_overlap:.2%} of its dots are within 3 px of each of the other 8</td></tr>".format(
                 site=e(item["site"]), link=e(h["pinned_raster_source_url"]),
                 name=e(h["name"]), sha=e(h["sha256_full"][:12]), dots=h["dots"],
-                score=h["score"],
+                score=h["score"], min_overlap=novelty["min_overlap_vs_other_eight"],
             )
         )
     return """    <section class="section" aria-labelledby="focus-sites-title">
       <div class="section-head"><div><div class="eyebrow">Pinned byte-forensics, not live receipts</div><h2 id="focus-sites-title">Nine Focus Sites — best historical owner-reported results</h2></div>
-      <p>All nine historical TIFF hashes, dots and grids were rechecked from pinned GitHub snapshots. No organizer submission-page receipt was available. Do not choose an old file to resubmit.</p></div>
-      <div class="table-wrap"><table><tr><th>Site</th><th>Exact pinned file for audit</th><th>Measured</th><th>Reported score (unverified)</th><th>Safe now?</th></tr>
+      <p>All nine historical TIFF hashes, dots and grids were rechecked from pinned GitHub snapshots. No organizer submission-page receipt was available. All nine also fail the stated 3-px uniqueness rule against each other. Do not choose an old file to resubmit.</p></div>
+      <div class="table-wrap"><table><tr><th>Site</th><th>Exact pinned file for audit</th><th>Measured</th><th>Reported score (unverified)</th><th>Unique vs other 8?</th></tr>
 """ + "\n".join(rows) + """
       </table></div>
-      <p>Highest reported in this set: GEMSDOE32 <code>0.2778</code>, but <code>0</code> XOR from the GEMSDOE25 dotted family after pruning the 200 m known-fault collar. This is byte-verified lineage, <strong>not</strong> proof that collar removal caused the blind score change. <a href="research/mto36-evidence-and-nine-sites.md">Method, data provenance and next steps</a>.</p>
+      <p>Highest reported in this set: GEMSDOE32 <code>0.2778 OWNER-REPORTED</code>, but its mask is an exact D2.8 subset after removing the 200 m known-fault collar. All nine historical files fail the 70% 3-px overlap uniqueness ceiling; see the <a href="downloads/focus-sites-pairwise-uniqueness.json">72-pair audit JSON</a>. This is mask lineage, <strong>not</strong> proof that collar removal caused the blind score change. <a href="research/mto36-evidence-and-nine-sites.md">Method, data provenance and next steps</a>.</p>
     </section>"""
 
 
@@ -173,6 +186,21 @@ def readme_status(card: dict) -> str:
 > - Prior/parallel lanes: [ATVR-36](evidence/atvr36_run_card_20261026.json), [H36-CTRB](evidence/h36_ctrb_run_card_20261025.json), [H36-GPS](evidence/h36_run_card.json), [Lane36](evidence/lane36_crosscheck.json), [MOE36](evidence/moe36_run_card_20261026.json) (HOLDOUT-DTI 0.124900, strict 198-raster duplicate-flag; [report](docs/research/moe36-20261026.md)); **all negative**. [Nine-site SHA/dot crosscheck](evidence/mto36_ninesite_forensics.json) · [manual-review sources and next steps](docs/research/mto36-evidence-and-nine-sites.md).
 > - Historical competition results are **OWNER-REPORTED**, not `ORGANIZER-CONFIRMED`: no submission-page receipts are archived. User-supplied public maxima `0.3195` and `0.4413` are inconsistent in date and not refreshed here. Live board: [DrivenData leaderboard](https://www.drivendata.org/competitions/306/competition-doe-gems/leaderboard/).
 <!-- STATUS:END -->"""
+
+
+def current_branch() -> str:
+    """Report the checked-out branch, not the historical lane's run-card branch."""
+    try:
+        result = subprocess.run(
+            ["git", "branch", "--show-current"],
+            cwd=ROOT,
+            check=True,
+            capture_output=True,
+            text=True,
+        )
+    except (OSError, subprocess.CalledProcessError):
+        return "unknown (detached checkout)"
+    return result.stdout.strip() or "unknown (detached checkout)"
 
 
 def main() -> int:
@@ -199,7 +227,14 @@ def main() -> int:
     if s.count("<!-- STATUS:START -->") != 1 or s.count("<!-- STATUS:END -->") != 1:
         raise RuntimeError("README status markers missing/duplicated")
     s = re.sub(r'<!-- STATUS:START -->.*?<!-- STATUS:END -->', readme_status(card), s, count=1, flags=re.S)
-    s = re.sub(r'^\*\*Working Branch:\*\*.*$', '**Working Branch:** `arena/cee70ea1-gemsdoe36`', s, count=1, flags=re.M)
+    branch = current_branch().replace("`", "")
+    s = re.sub(
+        r'^(\*\*Working branch:\*\* `)[^`]*(`.*)$',
+        lambda match: f"{match.group(1)}{branch}{match.group(2)}",
+        s,
+        count=1,
+        flags=re.M,
+    )
     README.write_text(s, encoding="utf-8")
 
     current = {
@@ -224,6 +259,7 @@ def main() -> int:
         (CARD, "mto36-run-card.json"),
         (LEDGER, "focus9-verified-source-ledger.json"),
         (ROOT / "evidence/mto36_ninesite_forensics.json", "focus9-source-integrity.json"),
+        (UNIQUENESS, "focus-sites-pairwise-uniqueness.json"),
     ):
         copyfile(source, DOCS / "downloads" / name)
     print(f"Refreshed site & README from negative MTO-36 card: {card['raster_sha256']}")
