@@ -1,32 +1,70 @@
-# GEMSDOE36 — Lane36 supervised-GBM submission (2026-10-26) ✅ OK TO DOWNLOAD AND SUBMIT
+# Lane36 gate-passed candidate (parallel lane session, 2026-10-26)
 
-> **Download (the one file):** [`docs/downloads/gemsdoe36-lane36-supgbm-68302-20261026T002651Z-f35cb3e4-zeros.tif`](docs/downloads/gemsdoe36-lane36-supgbm-68302-20261026T002651Z-f35cb3e4-zeros.tif) (354 KB)
-> **Submission name:** `GEMSDOE36-Lane36-SupGBM-20261026T002651Z` · **Note (97 ch):** `Lane36 supervised GBM lineament surf, seg-holdout DTI 0.178 vs champ-analog 0.162; s2.0 b68302 B2`
-> **SHA-256:** `45e626c01f9dc6e8aed59875d2758467c39f008c87543f566b3ae9d26a2234e7` · 68,302 dots · 0 within 200 m of catalogue · float32 · EPSG:32611 · 100 m · **all 12,279,160 cells finite in [0,1], nodata=None** (the historic portal “[0,1]” rejection cannot recur) · validator PASS (template match).
-> **Evidence:** HOLDOUT-DTI **0.1777** (95% CI 0.164–0.191; hide-and-recover, 60,988 withheld positives, organizer metric `gemsdoe36.metric`) vs fair champion-analog **0.1615**. Uniqueness gates pass: rank-corr 0.13 vs h19-5 surface (≤0.90), max dot-overlap ≤3 px 43.7% vs any registry raster (≤70%; champion 33.8%). Run card: [`docs/downloads/lane36_run_card.json`](docs/downloads/lane36_run_card.json). Method/forensics: [`docs/research/lane36_20261025.md`](docs/research/lane36_20261025.md). **No organizer score exists for this file; all leaderboard numbers cited anywhere in this repo are owner-reported without receipts.**
-> ⚠️ Older TIFs in `docs/downloads/` are **archive/audit only — DO NOT SUBMIT as the unique entry**: Anderson-PINN = 0.2778-champion core + additions (~97% overlap, duplicate lane; owner-reported 0.2750); H6's “5/5 gate” was circular (SGMC feature+truth; honest hide-and-recover ≈0.0001).
-
-## Standing brief update (2026-10-25, reread every session)
-
-Focus sites: GEMSDOE24/25/27/28/30/31/32/33/36 highest scorers. Parallel-run protocol:
-(1) one lane per session — rank-corr ≤0.90 and ≤70% dots within 3 px vs every registry
-raster or log duplicate & stop; (2) reuse cached stacks/metric/writer, fix shared tools
-in place; (3) label every number HOLDOUT-DTI (evaluator, N withheld, 95% CI) or
-ORGANIZER-CONFIRMED (receipt) — projections never written as scores; (4) leakage canary:
-single-feature AUC >0.90 = leakage until proven otherwise; (5) end with one JSON run
-card (hypothesis, mechanism, named mimic, holdout+CI, registry correlation/overlap,
-sha256, validator output, name+≤140 ch note, verdict promote/negative); (6) ≤3
-experiments / ≤2 h; slot promotion is a separate selector step. Generate a UNIQUE TIF;
-make submit/no-submit obvious on the site; validate without human intervention.
-Core values: **Maximize P(Win)** · **Own the Outcome**. Why 0.2778 won and how to beat
-it: `docs/research/lane36_20261025.md` (thinning + B=2 on an exhausted h19-5 surface;
-beating it needs a better-ranked surface — this lane — and honest budget choice).
-Irregularities found 2026-10-25: IR-A `live_mirror.official_dti` ≠ organizer metric
-(prior “LM/projected 0.2798” numbers invalid as organizer-metric claims); IR-B
-Anderson-PINN duplicate lane + H6 circular gate; IR-C final-round expanded-label
-ambiguity re catalogue pixels (B=2 kept, risk flagged).
+> **Download:** [`docs/downloads/gemsdoe36-lane36-supgbm-68302-20261026T002651Z-f35cb3e4-zeros.tif`](docs/downloads/gemsdoe36-lane36-supgbm-68302-20261026T002651Z-f35cb3e4-zeros.tif) — unique supervised-GBM TIF, 68,302 dots, all cells finite in [0,1], validator PASS, SHA-256 `45e626c01f9dc6e8aed59875d2758467c39f008c87543f566b3ae9d26a2234e7`.
+> **Name:** `GEMSDOE36-Lane36-SupGBM-20261026T002651Z` · **Note:** `Lane36 supervised GBM lineament surf, seg-holdout DTI 0.178 vs champ-analog 0.162; s2.0 b68302 B2`
+> HOLDOUT-DTI **0.1777 [0.164, 0.191]** (hide-and-recover, 60,988 withheld, organizer metric) vs champion-analog 0.1615; canary ≤0.603 AUC; uniqueness ρ=0.13 / overlap ≤43.7%. Run card: `docs/downloads/lane36_run_card.json`; forensics: `docs/research/lane36_20261025.md`. This resolves the blockers listed below *for this lane* (data restored, shared metric/writer reused, evaluator run); **slot promotion remains the separate selector step (§6)** and no organizer score exists yet. Legacy-file DO-NOT-SUBMIT status below is unchanged.
 
 ---
+
+# Current submission status — 2026-10-26: NOT APPROVED
+
+**Read this section and [the current review](docs/research/review-20261026.md) every session.** The [2026-10-25 safety review](docs/research/review-20261025.md) remains the protocol/source audit. This 2026-10-26 review includes the nine-site historical shortlist; current-session test reruns and PR status are recorded in its verification section.
+This notice supersedes the historical README below. No new unique submission has
+passed the current protocol. Old TIFFs are educational downloads only. Existing
+mirror scores, live projections and H6 gate claims do not establish promotion.
+The primary pipeline copied historical prediction pixels; the H6 proxy gate used
+evaluation truth for placement. Both legacy entry points now stop explicitly.
+
+## Current owner mandate (operational update, not a verbatim transcript)
+
+Maximize P(Win); Own the Outcome. Generate original predictions, never copied
+submissions. Review GEMSDOE24/25/27/28/30/31/32/33/36 for learning only.
+Stay within the assigned single method lane (not supplied this turn). Reuse the
+shared cached stack, evaluate_holdout.py and submission_writer.py; do not fork.
+Use buffered whole-fault-segment hide-and-recover, visible-only catalogue features,
+pixel-exact masking of visible faults, pooled DTI with alpha .2, beta .8 and
+300 m triangular kernel. Test individual-feature leakage canaries; AUC above .90
+blocks use until explained. Stop on registry surface rank-correlation above .90
+or directed dot-overlap above .70 within 3 px, checking before and after placement.
+Limit to three experiments or two hours. Rank 3–5 geological hypotheses before
+implementation. Beat a comparable current holdout incumbent before promotion;
+never spend a weekly slot here. Label measurements with evaluator version,
+withheld-positive count and CI; organizer scores require a receipt. Never call a
+projection a score. Publish format/novelty/promotion status clearly beside the
+one-click download, a unique name and a note at most 140 characters. End with a
+JSON run card; negative/blocked results are deliverables. Verify in three passes,
+record sources, limitations and irregularities; PR and merge when requested.
+
+The older claim that data placement is the **single** blocker is incorrect:
+shared evaluator, lane assignment, complete registry and a valid incumbent gate
+are also missing. Official reference README supports CPU training.
+
+---
+
+## Current-session findings (2026-10-26)
+
+The requested nine-site comparison and ranked research shortlist are recorded in
+[the 2026-10-26 review](docs/research/review-20261026.md). Site scores are copied
+from the owner-supplied prompt, not organizer receipts. No new TIFF is approved or
+generated: the exact shared hide-and-recover evaluator, assigned lane, feature
+cache, and complete novelty registry are unavailable. The review includes the
+three-pass audit, source links, blockers, and required JSON negative run card.
+
+## Integrated parallel work
+
+The concurrent clean status/guide pages and tested `protocol.py` audit primitives
+are preserved. These primitives are **not** the missing official shared evaluator
+or a completed scientific holdout. See the [parallel protocol review](docs/research/parallel-protocol-review-20261025.md).
+
+## Parallel review records
+
+Concurrent reviews are preserved in [session review](docs/research/session-review-2026-10-25.md)
+and [orientation-prior review](docs/research/review-2026-10-25.md).
+Their environment/test-availability statements describe those sessions, not this
+session's restored template and completed tests. No lane is adopted from their
+proposals without an explicit assignment.
+
+## Historical README (not current approval)
 
 # GEMSDOE36: Two Independent Candidate Lines (Anderson-PINN + Off-Catalogue H6 Prior)
 

@@ -1,0 +1,206 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Submit · 27GEMSDOE</title><meta name="description" content="27GEMSDOE: topology-first research lab for DrivenData #306 (DOE GEMS). No current TIFF is approved for submission.">
+<link rel="stylesheet" href="assets/style.css"></head><body>
+<header class="top"><div class="in"><a class="brand" href="index.html">27GEMSDOE · DOE GEMS</a><nav><a href="index.html" class=on>Research status</a><a href="executive-summary.html">Executive summary</a><a href="topology.html">Topology candidates</a><a href="research.html">Research</a><a href="sources.html">Sources &amp; feed</a></nav></div></header>
+<main><div class="card"><b>Automatic submission evidence audit:</b>
+<a href="data/submission_readiness_audit.json">Read byte-bound gate decisions and blockers</a>.
+Format PASS is not permission to submit; negative and duplicate files remain research-only.
+</div>
+<h1>Submission status: automated fail-closed gate &amp; unique GeoTIFF check</h1>
+<p class="lead">27GEMSDOE · DrivenData #306 DOE GEMS. Machine validation runs automatically without human intervention across technical GeoTIFF bounds, 24-raster uniqueness (12 peers + 12 in-house), and spatially blocked holdouts.
+<span class="badge bad">NO TIFF IS APPROVED TO SUBMIT</span> <span class="badge warn">WEEKLY SLOT HELD (H29-S #1 POOLED HOLDOUT 0.0422 &amp; 24-RASTER UNIQUE; SE CI PENDING)</span> <span class="badge bad">DO NOT SUBMIT H28-3</span></p>
+
+<div class="card hero" style="border-left:4px solid #b00">
+ <h2 style="margin-top:0">Newest unique TIF (Lane L-H30, 2026-10-25): dip-advection / gap-flanking / soft emission &mdash; NEGATIVE</h2>
+ <p><span class="badge bad" style="font-size:1.05rem">&#9940; DO NOT SUBMIT &mdash; frozen holdout selection gate FAILED (negative research artifact)</span></p>
+ <p>One new unique GeoTIFF was generated this session (the GAP arm below). Whether it may be submitted is decided
+ <b>only</b> by the machine gates in its run card &mdash; no human-inspection step. It <b>failed</b> the frozen
+ efficacy gate, so the answer is <b>NOT OK TO SUBMIT</b>, even though its bytes are format-valid and unique.</p>
+ 
+ <p>Three preregistered contenders (<a href="https://github.com/buffedlizard55-lab/GEMSDOE27/blob/main/knowledge/20_lane_h30_preregistration_2026-10-25.md">knowledge/20</a>,
+ frozen before any run) were gated against the strongest in-repo control (Arm D = 32-band + 15 subsurface transforms)
+ on fresh seeds 240&ndash;244 (20 cells, 59,372 withheld positives, gems27.metric v1 (alpha=0.2, beta=0.8, R=3px triangular)).
+ Pooled <b>HOLDOUT-DTI</b>: D control <b>0.1023</b> &middot; GAP (gap-flanking) <b>0.1018</b>
+ &middot; SOFT (soft rank-taper) <b>0.0994</b> &middot; DIP (dip-advection) <b>0.0989</b>.
+ No contender beat the control (GAP paired &Delta; -0.0007, 95% CI
+ [-0.0029, +0.0016]); confirmation did not run and
+ no tuning followed. Leakage canary max AUC 0.561 (clean). Catalogue-internal evidence only; no live score.</p>
+ <ul class="tight">
+ <li><b>The generated file (research only):</b> <code>gems27-h30-gapflank-b2-38k-20261025-3107a3007b77-allfinite.tif</code>, 38,000 dots,
+ sha256 deb8b4f10eda333b&hellip;, in <a href="downloads/research/gems27-h30-gapflank-b2-38k-20261025-3107a3007b77-allfinite.tif">downloads/research/</a> &mdash; not a submission download.</li>
+ <li><b>Format PASS:</b> single-band float32, all-finite, every cell in [0,1] (the portal-error fix), EPSG:32611
+ 3730&times;3292; 0 dots on catalogue; min catalogue distance 2.24&nbsp;px (B2).</li>
+ <li><b>Unique vs scored peers PASS:</b> max &le;3&nbsp;px dot overlap <b>45.7%</b>
+ vs the 12 pinned registry rasters (limit 70&nbsp;%); max surface Spearman 0.433 (limit 0.90).
+ Extended overlaps vs this repo's own unsubmitted research files (up to
+ 84.7%) are reported in the run card.</li>
+ <li>Full result: <a href="https://github.com/buffedlizard55-lab/GEMSDOE27/blob/main/knowledge/21_h30_result_2026-10-25.md">knowledge/21</a> &middot;
+ run card: <a href="https://github.com/buffedlizard55-lab/GEMSDOE27/blob/main/evidence/h30_dipgap_run_card.json">evidence/h30_dipgap_run_card.json</a> &middot;
+ automatic audit: <a href="data/submission_readiness_audit.json">submission readiness audit</a>.</li>
+ </ul>
+</div>
+
+
+<div class="card hero" style="border:2px solid #cf222e">
+ <h2 style="margin-top:0">Session 7 Automated Gate &amp; Unique Candidate GeoTIFF (<code>27GEMSDOE-H29S-20261025-511898747886</code>)</h2>
+ <div class="row"><span class="badge bad" style="font-size:1rem">&#9940; HOLD WEEKLY SLOT — NO TIFF IS APPROVED TO SUBMIT (DO NOT SPEND 5/WEEK LIVE SLOT YET)</span></div>
+ <div class="row"><span class="badge ok">&#9989; FORMAT &amp; [0,1] RANGE VALIDATED: float32 &middot; 0 NaN &middot; EPSG:32611 &middot; 3730&times;3292</span><span class="badge ok">&#9989; UNIQUE VS 12 PEERS: max 3px overlap 64.2% &le; 70% (56.1% vs GEMSDOE32) &middot; Spearman 0.0472 &le; 0.90</span><span class="badge warn">&#9888;&#65039; NEW #1 BLIND POOLED HOLDOUT-DTI (0.0422), BEATS B0 &amp; H28-1 10/10 SEEDS, STRICT CI95 VS D0 HOLDS SLOT (3/6)</span></div>
+ <p><b>Automated machine verdict (zero human intervention):</b> Primary all-finite zeros-outside GeoTIFF (<code>nodata=None</code>, exact <code>{0.0, 1.0}</code> across all <code>12,279,160</code> cells &mdash; fixing the <code>&ldquo;Predicted values must be in range [0, 1]&rdquo;</code> portal error per official reference notebook Cell 19) is built, SHA-256 pinned, and verified across <b>162 automated checks</b>. On frozen unused spatial holdout seeds <code>210&ndash;219</code> (<code>118,673</code> withheld positive occurrences, <code>gems27.metric v1 + holdout-blind-buffered-v2 (alpha=0.2, beta=0.8, R=3px triangular, buffer_px=6.0)</code>), <b>H29-S</b> sets a <b>new repository #1 blind pooled HOLDOUT-DTI = 0.0422</b> (unbuffered <code>0.1039</code>), beating <code>B0</code> by <b>+0.0058</b> (<code>10/10</code> seeds, <code>4/4</code> folds, 95% CI <code>[+0.0044, +0.0074]</code>), beating prior promoted champion <code>H28-1</code> by <b>+0.0046</b> (<code>10/10</code> seeds, <code>3/4</code> folds), proving probability-weighted 300&nbsp;m CELF cover beats Poisson <code>d=2.8</code> by <b>+0.0025</b> (<code>8/10</code> seeds), and edging Session-6 internal control <code>D0</code> by <b>+0.0013</b> (<code>3/4</code> folds: NW, NE_LidarGap, SW). Because the strict 6-clause composite gate requires the 95% CI vs <code>D0</code> (<code>[-0.0010, +0.0037]</code>, SE Walker Lane <code>-0.0025</code>) to clear zero, <b>do not spend a scarce 5/week live submission slot yet</b>; the unique GeoTIFF is provided below for one-click audit/inspection while <code>H29-6</code> closes SE on fresh seeds <code>220&ndash;229</code>.</p>
+ <div class="row">
+  <a class="btn alt" href="downloads/gems27-h29-hydrothermal-piedmont-celf-20261025-511898747886-allfinite.tif">One-click GeoTIFF (805 KB &middot; gems27-h29-hydrothermal-piedmont-celf-20261025-511898747886-allfinite.tif)</a>
+  <a class="btn alt" href="downloads/gems27-h29-hydrothermal-piedmont-celf-20261025-511898747886-allfinite.zip">Single-TIFF ZIP (170 KB)</a>
+  <a class="btn alt" href="downloads/checks-gems27-h29-hydrothermal-piedmont-celf-20261025-511898747886-allfinite.json">Automated Validator JSON</a>
+  <a class="btn alt" href="research.html#h29-1">Full Run Card &amp; 0.2778 Analysis</a>
+ </div>
+ <p class="small" style="margin:.5rem 0 .2rem"><b>Unique submission name:</b> <code>27GEMSDOE-H29S-20261025-511898747886</code> &nbsp;&middot;&nbsp; <b>Content ID:</b> <code>511898747886</code> &nbsp;&middot;&nbsp; <b>SHA-256:</b> <code>8585c5e870f197f84fda5bac&hellip;</code> &nbsp;&middot;&nbsp; <b>Emitted dots:</b> <code>37,654</code> (strict <code>B2 &gt; 200 m</code>, <code>0</code> collar overlap)</p>
+ <label for="note" class="small"><b>Copyable short note (110 / 140 chars; portal limit &le; 200):</b></label>
+ <textarea id="note" class="note" readonly>27GEMSDOE H29-S | stitchedOOF hydro+piedmont+Frangi+CELF300m B2 37654px | id 511898747886 | unscored hold-slot</textarea>
+ <div class="row"><button class="btn copy" type="button" data-copy="#note">Copy note</button><span id="notecount" class="small">110 / 200 characters</span></div>
+</div>
+
+<div class="card hero" style="border-left:4px solid #b00">
+ <h2 style="margin-top:0">&#128269; Unique submission TIF &mdash; ready to download</h2>
+ <p><span class="badge bad" style="font-size:1.05rem">&#9940; FORMAT-VALID + UNIQUE &mdash; NOT CERTIFIED FOR SUBMISSION (holdout DTI not measurable by design; owner selector decision required)</span></p>
+ <div class="row">
+  <span class="badge ok">format: single-band float32 GeoTIFF, EPSG:32611, 3730&times;3292</span>
+  <span class="badge ok">values: exactly 0.0/1.0 inside footprint, all in [0,1]</span>
+  <span class="badge ok">unique: 0% dot overlap within 3&nbsp;px vs all 6 registry rasters (limit 70&nbsp;%)</span>
+  <span class="badge bad">holdout: not measurable &mdash; far-field truth absent from catalogue proxy</span>
+ </div>
+ <p><b>File:</b> <code>gems27-unique-scatter-farfield-20261025-98e59bf8e3ce-allfinite.tif</code> &nbsp;(801,574 bytes) &nbsp;
+ <b>ZIP:</b> <code>gems27-unique-scatter-farfield-20261025-98e59bf8e3ce-allfinite.zip</code> &nbsp;(129,579 bytes) &nbsp;
+ <b>SHA-256:</b> <code>8a73f01776d0c53ff99ab05bac8612768f186476846708412096ef927ea0b983</code></p>
+ <p><b>One-click download:</b>
+ <a href="downloads/gems27-unique-scatter-farfield-20261025-98e59bf8e3ce-allfinite.tif" class="btn">Download .tif</a>
+ <a href="downloads/gems27-unique-scatter-farfield-20261025-98e59bf8e3ce-allfinite.zip" class="btn">Download .zip (single GeoTIFF)</a></p>
+ <p><b>Short note to paste into the DrivenData submission form (&le;200 chars):</b></p>
+ <p style="background:#f5f5f5;padding:0.5rem;border-radius:4px;font-family:monospace;font-size:0.9rem;">
+ 27GEMSDOE unique scatter-smoothed far-field | UNIQUE submission (not copied from any GEMSDOE site): scatter-smoothed (sigma=1.85 px) off-catalogue far-field emi | id 98e59bf8e3ce | not yet live-scored
+ </p>
+ <p><b>Hypothesis:</b> scatter-smoothed off-catalogue far-field emission</p>
+ <p><b>Verdict:</b> negative. Holdout DTI not measurable by design (far-field truth absent from catalogue-internal proxy). Format-valid and unique (0% overlap with all 6 registry rasters, Spearman <= 0.008), but not holdout-promoted. NOT CERTIFIED FOR SUBMISSION — submission eligibility is the owner's separate selector decision. No live score claimed; no DrivenData upload performed.</p>
+ <p class="small"><b>Submission steps:</b> 1) Download the .tif (do not open/re-save in GIS software). 2) Sign in at
+ <a href="https://www.drivendata.org/competitions/306/competition-doe-gems/">DrivenData #306</a>. 3) Upload the .tif (or .zip with exactly one GeoTIFF).
+ 4) Paste the note above. 5) Submit and record the organiser receipt. This project never contacts drivendata.org (Terms of Use).</p>
+ <p class="small"><b>Why not certified:</b> the catalogue-internal component-hidden holdout has 100% of its truth at d=0 from the published
+ catalogue and 99.6% of credit within 200 m; this emission is entirely at d_cat &ge; 3 px (far field), so holdout DTI = 0 by design
+ (knowledge/10). Support: GEMSDOE32 truth model (+0.0247, 12/12 draws) and convergence with GEMSDOE36 PINN (0.2750) on the B2 + ~38k optimum.
+ Full run card: <a href="https://github.com/buffedlizard55-lab/GEMSDOE27/blob/main/evidence/run_card_unique_scatter_farfield_20261025.json">evidence/run_card_unique_scatter_farfield_20261025.json</a> · 
+ Format receipt: <a href="downloads/checks-gems27-unique-scatter-farfield-20261025-98e59bf8e3ce-allfinite.json">checks JSON</a></p>
+</div>
+
+<div class="card">
+ <h3 style="margin-top:0">Session 6 archive: there is no one-click submission download for this run (H28-3).</h3>
+ <p>There is no one-click submission download for this run. <b>Why:</b> Session 6 H28-3 dilatational-strain × conductivity corridors reduced pooled HOLDOUT-DTI relative to the H28-1 baseline. A TIFF that is merely valid GeoTIFF syntax is not an eligible competition candidate.</p>
+ <div class="row"><span class="badge ok">research TIFF format verified: float32 · single band · values [0,1]</span><span class="badge ok">unique versus 12 pinned peer rasters</span><span class="badge bad">predictive gate failed</span></div>
+ <p class="small">The exact gate, 95% CI, validation receipt and duplicate report are on the <a href="research.html#h28-3"><b>Research page</b></a>. The executive summary explains the rule used to decide when a future TIFF is actually okay to submit.</p>
+</div>
+
+<div class="card hero" style="border-left:4px solid #b00">
+ <h2 style="margin-top:0">Session 9 &middot; H30: the unique-TIF demand, answered with a measurement</h2>
+ <p><span class="badge bad" style="font-size:1.05rem">&#9940; NOT CERTIFIED &mdash; DO NOT SUBMIT (efficacy gate FAILED: holdout DTI below control; unique and format-valid are not enough)</span></p>
+ <p>A genuinely new TIFF was generated this session (new detector content: measured well/spring temperatures as a bounded re-ranker of the
+ twice-confirmed subsurface detector, plus deconflicted placement). It is <b>unique against every screened raster at once</b> &mdash; max dot
+ overlap within 3&nbsp;px <b>32.0%</b> vs all 12 pinned focus-site peers (limit 70&nbsp;%) and
+ <b>64.8%</b> vs every repo-shipped raster including H28-1, the D-family and the parallel session's
+ H29-S (re-screened post-merge at 30.2&nbsp;%); surface Spearman max <b>0.465</b> (limit 0.90). Bytes (research
+ directory, intentionally not a submission download): <a href="downloads/research/gems27-h30-chem-deconf-b2-38k-20261025-ad5a68bb0535-allfinite.tif">gems27-h30-chem-deconf-b2-38k-20261025-ad5a68bb0535-allfinite.tif</a>,
+ sha256 047f383d9f764fb3&hellip;, validator hard-PASS, <a href="downloads/research/checks-gems27-h30-chem-deconf-b2-38k-20261025-ad5a68bb0535-allfinite.json">re-read receipt</a>.</p>
+ <p><b>Why it is NOT certified:</b> HOLDOUT-DTI (gems27.metric v1 (alpha=0.2, beta=0.8, R=3px triangular); fresh seeds 240&ndash;244; 59,372 withheld
+ positives): lane <b>0.0961</b> vs full-32 control <b>0.1003</b> (paired
+ -0.0044, 95&nbsp;% CI [-0.0080, -0.0011], 7/20 cells) and vs
+ the subsurface-augmented control <b>0.1023</b> (paired -0.0066, CI
+ [-0.0084, -0.0046]). <b>The deconfliction that buys strict uniqueness costs more than the confirmed detector
+ gain</b> &mdash; the uniqueness/efficacy conflict flagged in IR-2026-10-25-06 is now a measured number, not a suspicion.</p>
+ <p><b>The decision this forces (selector-owned):</b> if the <b>12-peer parallel registry governs</b> (the operative reading of the current owner
+ prompt), the previously holdout-passed D-refill family (H29-1: +0.0086 [+0.0051, +0.0125], 18/20 cells, canary clean, &le;46.2&nbsp;% vs all peers)
+ is eligible and its badge flip touches no bytes; if the <b>strict self-registry governs</b>, no arm-D-family file can be both unique and
+ efficacious (measured), and the next certifiable file needs a ridge-decorrelated detector (H28-6 is the cheapest untried lane). This session
+ flipped nothing by itself. Full run card:
+ <a href="https://github.com/buffedlizard55-lab/GEMSDOE27/blob/main/evidence/h30_run_card.json">evidence/h30_run_card.json</a>; analysis
+ <a href="https://github.com/buffedlizard55-lab/GEMSDOE27/blob/main/knowledge/22_h30_result.md">knowledge/22</a>; preregistration
+ <a href="https://github.com/buffedlizard55-lab/GEMSDOE27/blob/main/knowledge/20_preregistration_H30.md">knowledge/20</a>.</p>
+</div>
+
+
+<div class="card" style="border-left:4px solid #b00">
+ <h3 style="margin-top:0">H29-1 D-refill (2026-10-25): best-validated detector &mdash; NOT certified unique</h3>
+ <p><span class="badge bad" style="font-size:1.05rem">&#9940; NOT CERTIFIED UNIQUE &mdash; DO NOT SUBMIT AS THE UNIQUE LANE FILE (extended duplicate screen failed; see run card)</span></p>
+ <p>Full 32-band stack + 15 subsurface transforms at B2/38k, preregistered (<a href="https://github.com/buffedlizard55-lab/GEMSDOE27/blob/main/knowledge/15_preregistration_H29-1.md">knowledge/15</a>) and confirmed on <b>fresh seeds 210&ndash;214</b>: pooled HOLDOUT-DTI <b>0.1088</b> vs full-32 control <b>0.1002</b> (paired &Delta; +0.0086, 95% CI [+0.0051, +0.0125], 18/20 cells, 59,362 withheld positives, gems27.metric v1 (alpha=0.2, beta=0.8, R=3px triangular); leakage canary max AUC 0.557). Efficacy and format gates <b>PASS</b>.</p>
+ <ul class="tight">
+ <li><b>Unique vs every scored rival (measured):</b> max &le;3&nbsp;px dot overlap vs the 12 pinned peer rasters <b>46.2%</b> (limit 70&nbsp;%); vs the 0.2778 file specifically <b>40.9%</b> (exact shared pixels 1,649 of 38,000); surface Spearman max <b>0.446</b> (limit 0.90).</li>
+ <li><b>Why it is still NOT certified:</b> the frozen screen also covered this repo's own <i>unscored</i> H28-1 research file (59,075 px): overlap <b>85.4%</b> &gt; 70&nbsp;% (exact-pixel Jaccard 0.116 &mdash; same ridges, different dots). Frozen gates are not relaxed after the fact.</li>
+ <li><b>Deconflicted variant H29-1b:</b> minimal-swap vs H28-1 was geometrically infeasible on the ridge candidate pool &mdash; final max overlap still <b>82.6%</b> &rarr; also <b>negative</b>. No further tuning (experiment budget exhausted).</li>
+ <li><b>Format:</b> all-finite primary, nodata=None, every cell in [0,1], EPSG:32611 3730&times;3292 (re-read receipt beside the bytes in downloads/research/; sha256 40dc48a9f512c6b9&hellip;). Run cards: <a href="https://github.com/buffedlizard55-lab/GEMSDOE27/blob/main/evidence/h29_1_run_card.json">H29-1</a> &middot; <a href="https://github.com/buffedlizard55-lab/GEMSDOE27/blob/main/evidence/h29_1b_run_card.json">H29-1b</a>. <b>No live score exists; none is claimed.</b> Spending a weekly slot on a non-certified file is the owner's separate selector decision and must be recorded first.</li>
+ </ul>
+</div>
+
+
+<div class="card" style="border-left:4px solid #1565c0">
+ <h3 style="margin-top:0">Lane L-DCONFIRM (parallel session B): disjoint-seed confirmation of the same D detector</h3>
+ <p><span class="badge bad" style="font-size:1.05rem">&#9940; DO NOT SUBMIT &mdash; duplicate of the H29-1 lane family (selector treats both as one candidate)</span></p>
+ <p>An independent parallel session preregistered the same hybrid idea (full 32-band stack + 15 subsurface transforms,
+ B2/38k; plus 8 new dip-offset / radiometric-front / polarity transforms that <b>failed selection</b> and were dropped).
+ On <b>disjoint confirmation seeds 215&ndash;224</b> (40 cells, 121,404 withheld positives) arm D again beat
+ the full-32 control: pooled <b>HOLDOUT-DTI 0.1066 vs 0.0992</b>
+ (paired &Delta; +0.0076, 95% CI [+0.0049, +0.0104],
+ 4/4 folds, 10/10 seeds). Catalogue-internal evidence only; no live score.</p>
+ <ul class="tight">
+ <li><b>Cross-session duplicate (measured post-merge):</b> 87.5% of this file&rsquo;s dots lie within 3&nbsp;px of H29-1&rsquo;s dots (87.8% reverse) &mdash; the two parallel lanes converged. <b>Do not spend two slots on this family.</b> Evidence: <a href="https://github.com/buffedlizard55-lab/GEMSDOE27/blob/main/evidence/dconfirm_cross_session_overlap.json">cross-session overlap</a>.</li>
+ <li><b>Vs scored rivals:</b> max 46.6% within 3&nbsp;px of any of the 12 pinned peer rasters; surface Spearman max 0.446. Vs audit-only H28-1: 85.2% (same failure as H29-1).</li>
+ <li><b>Format:</b> all-finite, nodata=None, every cell in [0,1], EPSG:32611 3730&times;3292 (<a href="downloads/research/checks-gems27-dconfirm-hybrid-armd-b2-38k-20261025-5ea0385b7e70-allfinite.json">re-read receipt</a>); research bytes in <a href="downloads/research/gems27-dconfirm-hybrid-armd-b2-38k-20261025-5ea0385b7e70-allfinite.tif">downloads/research/</a> (sha256 40b88a6477b1914a&hellip;). Run card: <a href="https://github.com/buffedlizard55-lab/GEMSDOE27/blob/main/evidence/dconfirm_run_card_2026-10-25.json">evidence/dconfirm_run_card_2026-10-25.json</a>; analysis <a href="https://github.com/buffedlizard55-lab/GEMSDOE27/blob/main/knowledge/16_dconfirm_result.md">knowledge/16 (L-DCONFIRM)</a>.</li>
+ </ul>
+</div>
+
+
+<div class="warnbox"><b>Session 6 H28-3 strain × conductivity result — FAILED; NO NEW SUBMISSION IS APPROVED.</b>
+<b>HOLDOUT-DTI (H28-3-holdout-v1):</b> baseline 0.105946; candidate 0.103352; paired Δ -0.002594; 95% bootstrap CI [-0.004240, -0.000907] across the 10 seed-level differences; withheld-positive occurrences 123,150. It improved only 2/10 seeds and 1/4 folds. Canary passed; the frozen gate failed.
+The 59,243-dot all-finite research TIFF is format-valid and cleared the duplicate screen against 12 pinned peer rasters, but is explicitly <b>NOT APPROVED FOR SUBMISSION</b>; format validity and novelty do not override a negative holdout. See <a href="downloads/research/h28_3_negative_research_manifest.json">negative-artifact receipt</a> ·
+<a href="https://github.com/buffedlizard55-lab/GEMSDOE27/blob/main/evidence/h28_3_strain_holdout.json">cell-level evidence</a> ·
+<a href="https://github.com/buffedlizard55-lab/GEMSDOE27/blob/main/evidence/h28_3_negative_uniqueness.json">duplicate check</a> ·
+<a href="https://github.com/buffedlizard55-lab/GEMSDOE27/blob/main/knowledge/13_preregistration_H28-3.md">frozen protocol</a>.</div>
+
+<div class="card" style="border-left:4px solid #b00">
+ <h3 style="margin-top:0">Parallel lane L-2026-10-25: subsurface-only buried-fault detector &mdash; also NEGATIVE</h3>
+ <p><span class="badge bad" style="font-size:1.05rem">&#9940; RESEARCH ONLY &mdash; DO NOT SUBMIT (holdout gate failed; see run card)</span></p>
+ <p>A second parallel run tested a lidar-free detector (potential-field edges, strain, conductivity, seismicity fabric) at B2/38k. Pooled HOLDOUT-DTI 0.0752 vs full-32 control 0.1001 (&Delta; -0.0262, 95% CI [-0.0368, -0.0163], 60,423 withheld positives, gems27.metric v1 (alpha=0.2, beta=0.8, R=3px triangular)). The same 15 transforms ON TOP of the full stack gained +0.0045 [+0.0003, +0.0090] &mdash; recorded as the next preregistered lane, not shipped.</p>
+ <ul class="tight">
+ <li><b>Unique (measured):</b> max dot overlap within 3&nbsp;px vs any registry raster <b>51.0%</b> (limit 70&nbsp;%); surface Spearman max <b>0.100</b> (limit 0.90). Why the family best 0.2778 won, reconstructed pixel-exactly: <a href="https://github.com/buffedlizard55-lab/GEMSDOE27/blob/main/knowledge/12_why_02778_won.md">knowledge/12</a>.</li>
+ <li><b>Format:</b> all-finite, nodata=None, every cell in [0,1] (<a href="downloads/research/checks-gems27-lane-subsurface-buried-fault-20261025-fc6d8c3acf6c-allfinite.json">re-read receipt</a>); research bytes in <a href="downloads/research/gems27-lane-subsurface-buried-fault-20261025-fc6d8c3acf6c-allfinite.tif">downloads/research/</a> (sha256 d648a3cc02713612&hellip;), intentionally not a submission download. Full run card: <a href="https://github.com/buffedlizard55-lab/GEMSDOE27/blob/main/evidence/lane_run_card_2026-10-25.json">evidence/lane_run_card_2026-10-25.json</a>. No live score exists; none is claimed.</li>
+ </ul>
+</div>
+
+<p><b>Legacy files below are retained only for audit and must not be submitted as a new unique candidate:</b> peer repositories now contain overlapping copies and no organizer receipt verifies their score/file pairing. The next action is a new pre-registered, data-ready hypothesis—not a renamed legacy raster.</p>
+<div class="grid">
+ <div class="stat"><b>61,328</b><span>emitted pixels = 60,069 (the 0.2477 emission, nothing removed) + 1,259</span></div>
+ <div class="stat"><b>345</b><span>aligned gap links (median 1.8 km), each with NBMG/USGS vector fault attribution &amp; written argument</span></div>
+ <div class="stat"><b>0.28 / 0.10</b><span>holdout efficiency on 8-conn components / whole NBMG FID vector polylines vs break-even 0.052</span></div>
+ <div class="stat"><b>+0.0115 / +0.0141</b><span>paired DTI gain on honest 4-fold spatial-CV OOF detector (T-v2 solo / T-v2 + H27-4 in Slot 3)</span></div>
+</div>
+<div class="card"><h3 style="margin-top:0">New this session: the live scores were inverted</h3><p>All <b>20</b> of the owner's scored rasters were recovered from the sibling repositories and authenticated by <b>SHA-256</b>, then inverted against the official metric. Two instruments came out of it, and both reproduce the live anchors exactly.</p><div class="grid"><div class="stat"><b>12,226</b><span>hidden-truth pixels |G|, from a blind spacing-5 lattice whose credit is pure geometry. The sibling's independent estimate: 12,503 &mdash; <b>2.2&nbsp;% apart</b></span></div><div class="stat"><b>&minus;0.1&nbsp;% / +4.0&nbsp;%</b><span>error of the retention rule on two independent live solid&rarr;dotted pairs (H19-5&rarr;d1.5, H25-ctx&rarr;h28)</span></div><div class="stat"><b>0.2550</b><span>ceiling of the emission-geometry lever (d=2.25&ndash;2.8, 44,090 px). The sibling's independent fit: 0.2553</span></div><div class="stat"><b>5.67</b><span>concentration of the 0.2477 file &mdash; 5.67&times; better than a blind lattice at finding truth. The whole H19-5 family plateaus at 5.3&ndash;5.7</span></div></div><p class="small">No submission in the group&#39;s history has ever earned more than <b>0.508&#124;G&#124;</b> of credit. 0.3195 at 60,069&nbsp;px needs <b>0.570&#124;G&#124;</b>. That is now an arithmetic statement, not an opinion &mdash; see <a href="research.html#inversion">the inversion</a>.</p></div>
+<div class="card" style="border-left:4px solid #b00">
+ <h3 style="margin-top:0">Session 4: three results that change what is worth doing</h3>
+ <ol style="margin:.4rem 0 .4rem 1.2rem">
+  <li><b>The far-field / bedrock-map habitat is live-refuted.</b> The group's own h18-4 file (57,783 px of USGS State Geologic Map Compilation faults, all &ge;300&nbsp;m from the catalogue, owner-reported <b>0.0360</b>) was hash-authenticated and inverted: concentration <b>1.62&times; blind</b> (exact bracket 0.76&ndash;1.65&times;) against 5.3&ndash;6.0&times; for the family that produced 0.2477, and its 1-px lines cover <i>less</i> DTI kernel mass than a uniform spray of the same size (c&nbsp;=&nbsp;0.0384 vs 0.1050). Never emit on an &ldquo;independent second catalogue&rdquo;. <a href="research.html#inversion">details</a></li>
+  <li><b>The holdout can no longer see what matters.</b> 100% of hidden truth in every gate here lies at distance 0 from the published catalogue and <b>99.6% of credit is earned within 200&nbsp;m of it</b>, while the live 0.2477 emission puts <b>81.4% of its dots &ge;300&nbsp;m away</b>. Two Addendum-D arms passed both registered criteria on that proxy (+SGMC features: out-of-fold PR-AUC 0.0246&rarr;0.0428, paired DTI +0.0285 in 4/4 folds) and are <b>not promoted</b>: their whole gain is catalogue proximity, and their far-field behaviour is the habitat measured at 1.62&times; blind above. Slot 5 exists to settle it live.</li>
+  <li><b>Graph value is documentation, not a ranking signal.</b> Closing all 345 candidates moves the network's Berkowitz connectivity parameter from <b>P&nbsp;=&nbsp;5.784 to 6.124</b> &mdash; from inside the paper's critical range (Pc 5.6&ndash;6.0) to above it &mdash; and 339 of 345 links are bridges. But ranking by |dP| does <i>not</i> beat the shipped z&ge;3 rule (0.2914 vs 0.2889, inside the random-half spread up to 0.3117); overlapping en-echelon step-overs &mdash; a class the forward-cone rule cannot generate at all &mdash; reach only 0.0605, below break-even 0.0638; and 24 oriented 0.5&ndash;2&nbsp;km lineament bands move PR-AUC by +0.0010. All three refuted, all recorded.</li>
+ </ol>
+</div>
+<div class="card">
+ <h3 style="margin-top:0">Historic slot artifacts — audit only</h3>
+ <p>Five older rasters (four slot variants and one measurement probe) remain in the repository as evidence of prior work. They pre-date the pinned parallel registry, and peer-family overlap means they are not presented as fresh unique candidates. Direct TIFF and ZIP links have deliberately been removed from the public decision page.</p>
+ <p class="small">Audit IDs: Slot 1 <code>5512495c6bd1</code>; Slot 2 <code>3ebd51534bb1</code>; Slot 3 <code>d466b251f309</code>; Slot 4 <code>23ad46a4d7ba</code>; probe <code>a34b0799df59</code>. Historical manifests are versioned with the repository.</p>
+</div>
+
+<div class="warnbox"><b>H28-1 historical research artifact — audit only; not approved for a new submission.</b>
+Frozen seeds 140–149: mean paired ΔDTI +0.00295; 3/4 folds and 9/10 seeds improved. Negative fold(s): NE_LidarGapHeavy; negative seed(s): 149. Catalogue-internal validation, not a leaderboard score. The archived full-map item has content id <code>1113fba5f6cb</code> and
+59,075 binary cells with no known-label overlap. Its historical manifest remains in the repository for audit, but no direct download is offered on this site because the current parallel protocol requires a fresh uniqueness review before any submission recommendation.
+The organizer-created test labels remain unobserved; this is not a fifth weekly slot or a score.</div>
+<div class="warnbox"><b>Honest status.</b> We validated T-v2 across three holdout tiers (8-connected components: 0.280, whole NBMG FID vector polylines: 0.100 / H27-5b 0.178) and on a strictly out-of-fold 4-quadrant spatial-CV detector (ΔDTI +0.0115 solo, +0.0141 stacked with H27-4). Only a live score tests the organisers' newly created expert labels.
+Reaching the owner-stated leader (0.3195) is not possible with verified/modelled increments on H19-5 alone (they reach ≈0.262–0.270) – see <a href="research.html">research</a>.
+The agent never uploads anything; you press the button.</div>
+<p class="small">Reference (owner-reported 0.2477): <a href="https://github.com/buffedlizard55-lab/GEMSDOE24/blob/07345ea0604953d7efb858d9cfbc21e20c7aca0b/docs/downloads/gems24-h25-1-dotted-h19-5-d1-5-20261002-989f59505db1-nan.tif">24GEMSDOE audit record</a> (sha256 68d0e2e4fcc594f9…). It is historical comparison evidence, not a current download recommendation.</p>
+</main>
+<footer>Built 2026-10-25 23:30 UTC from <a href="https://github.com/buffedlizard55-lab/GEMSDOE27">the repository</a>. No current TIFF is approved for submission. No leaderboard score is claimed anywhere on this site.
+Historical scores shown are owner-reported. This site never contacts drivendata.org.</footer>
+<script src="assets/app.js"></script></body></html>

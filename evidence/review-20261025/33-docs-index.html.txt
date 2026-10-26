@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="GEMSDOE33: Evidence-led geothermal fault discovery research, holdout results, provenance and submission guidance. No candidate is currently slot-approved.">
+<title>GEMSDOE33 · Evidence-led fault discovery</title><link rel="stylesheet" href="assets/site.css"></head>
+<body><header><div class="wrap"><h1>GEMSDOE33 · DOE GEMS fault discovery</h1>
+<p>DrivenData #306 · evidence-led research · review status 2026-10-25</p><nav class="nav" aria-label="Primary"><a href="index.html" aria-current=page>Overview</a><a href="executive-summary.html">How to submit</a><a href="results.html">Results &amp; Score Provenance</a><a href="hypotheses.html">Hypotheses</a><a href="data-sources.html">Domain Adaptation</a><a href="research.html">Research</a><a href="sources.html">Sources</a><a href="irregularities.html">Irregularities</a><a href="standing-prompt.html">Standing brief</a></nav></div></header>
+<main class="wrap"><div class="hero-download" id="unique-submission">
+<h2>Unique GeoTIFF available — research only, NOT approved for competition upload</h2>
+<p>This is a distinct, reproducible research artifact from the preregistered H33-6 experiment. Its blocked catalogue-proxy gate failed and its upstream baseline is not fold-independent. Do not submit or spend a competition slot on it. No candidate is slot-cleared.</p>
+<p><a class="btn alt" href="downloads/research/GEMSDOE33-H33-6-edge-consensus-research-20261004-6c888d2ce0f7-nan.tif">Download unique research GeoTIFF</a></p>
+<table><tbody>
+<tr><th>Artifact name</th><td><code>GEMSDOE33-H33-6-edge-consensus-research-20261004</code></td></tr>
+<tr><th>Suggested note (under 140 characters)</th><td><pre>H33-6 edge-normal research artifact; holdout gate failed; not approved for competition upload. id 6c888d2ce0f7</pre></td></tr>
+<tr><th>Scientific status</th><td><span class="badge bad">FAILED HOLDOUT · NOT FOR UPLOAD</span> P1 mean delta −0.002737 DTI; 2/4 spatial folds positive. Conditional proxy result only.</td></tr>
+<tr><th>Local format audit</th><td>Single-band float32, EPSG:32611, 3730 × 3292, 100 m; finite in-footprint values in [0,1]; NaN outside footprint. Local format check only; portal acceptance not tested.</td></tr>
+<tr><th>SHA-256</th><td><code>18604d71f11db269a3f70007433d1dd74e4f09eb195861dc2aeda4d98aa8efe7</code></td></tr>
+</tbody></table>
+<p>Historical score claims and leaderboard status are unverified here. See <a href="hypotheses.html">the ranked hypothesis slate</a>, <a href="research.html">holdout evidence</a>, and <a href="executive-summary.html">submission requirements and current gate status</a>.</p>
+</div>
+<h2>Project decision</h2>
+<div class="panel bad"><b>No real competition submission is approved.</b> The top-ranked candidate H33-6 failed the recorded spatial proxy gate (P1 mean ΔDTI −0.00273732; 2/4 folds positive). The evidence is conditional because the fixed H19-5 baseline surface was not regenerated per fold; private expert labels were not available. No upload was made and no score is predicted.</div>
+<h2>What can be concluded about the cited scores?</h2>
+<p>The values supplied in the project brief—including the claimed H27-4 0.2708 and the 0.3195 target—are not organizer-confirmed by a submission receipt in this checkout. The GEMSDOE28 owner page was previously recorded as calling H27-4 unscored/research-only. Therefore this repo cannot explain why H27-4 received that score as an established fact, pair a local raster with a score, or claim a new candidate beats it. Historical owner-site values are prior-art leads, not independent validation.</p>
+<p>Do not refresh or copy the official leaderboard without the permission/API described in the project's terms review. See <a href="results.html">score provenance</a> for the evidence boundary and <a href="irregularities.html">irregularities</a> for known conflicts.</p>
+<h2>Hypothesis and experiment status</h2>
+<p>The five-item preregistered slate and prior-art review are documented in <a href="hypotheses.html">Ranked hypotheses</a>. H33-6 was tested as the top runnable candidate; it failed. Other candidate concepts are blocked or unvalidated and should not be treated as results. The run card and a negative result are recorded in the repository.</p>
+<h2>Our operating values</h2>
+<div class="grid-2"><div class="panel accent"><h3>Maximize P(Win)</h3><p>Prefer evidence that predicts useful hidden-fault detection, not a download or a hopeful score projection. No slot until a fresh, leakage-audited holdout improves over a matched baseline.</p></div><div class="panel accent"><h3>Own the Outcome</h3><p>Make failures visible, preserve provenance, correct misleading pages, and distinguish local format validation from scientific validity and organizer acceptance.</p></div></div>
+<h2>Use the artifact safely</h2>
+<p>The unique H33-6 TIFF is downloadable for inspection/reproducibility only. <b>It is not okay to upload.</b> The historical D2.8 mirror artifacts are educational references only and are not a new strategy or verified score-file pairing. Read <a href="executive-summary.html">the executive summary</a> before using any artifact.</p>
+</main>
+<footer><div class="wrap">Generated from repository evidence by <code>scripts/build_site.py</code>. No candidate is slot-approved and no DrivenData upload was made from this workspace. A local format audit is not scientific validation or organizer acceptance. Owner reports, measured diagnostics, model outputs and official sources are distinguished in the evidence.</div></footer>
+</body></html>

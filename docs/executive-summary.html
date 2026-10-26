@@ -1,185 +1,32 @@
-<!doctype html>
-<html lang="en">
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="Executive summary, geological rationale, and exact GEMS DOE submission steps for GEMSDOE36.">
-  <title>Executive Summary &amp; Submission Guide — GEMS DOE 36</title>
-  <link rel="stylesheet" href="assets/site.css">
-</head>
-<body>
-  <a class="skip-link" href="#main">Skip to main content</a>
-  <header class="site-header">
-    <a class="brand" href="index.html"><span class="brand-mark" aria-hidden="true">36</span><span>GEMS DOE <span class="small">/ 36</span></span></a>
-    <nav class="nav" aria-label="Main navigation">
-      <a href="index.html">Home</a>
-      <a href="executive-summary.html">Executive Summary</a>
-      <a href="research/hypotheses.md">Hypotheses</a>
-      <a href="research/leaderboard.md">Leaderboard Analysis</a>
-      <a href="research/results.md">Validation Ledger</a>
-      <a href="https://www.drivendata.org/competitions/306/competition-doe-gems/" target="_blank" rel="noopener">Competition Page ↗</a>
-    </nav>
-  </header>
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Executive summary — how submission approval works</title><link rel="stylesheet" href="assets/site.css"></head><body><a class="skip-link" href="#main">Skip to main content</a><header class="site-header"><a class="brand" href="index.html">GEMSDOE36</a><nav class="nav" aria-label="Main navigation"><a href="index.html">Status</a><a href="executive-summary.html">Executive summary</a><a href="research/review-20261025.md">Research review</a><a href="research/review-20261026.md">Nine-site shortlist</a></nav></header><main id="main" class="wrap"><section class="page-hero"><div class="eyebrow">2026-10-26 · fail-closed status review</div><h1>Executive summary — how submission approval works</h1>
+ <h2>DO NOT SUBMIT — no current candidate is approved</h2>
+ <p class="lede">Safe to download for research. Not approved for competition upload. No new unique TIFF was generated in this review; no slot was used.</p>
+ <p>The Anderson historical file and off-catalogue H6 file are preserved below. Format validity is not scientific validation, novelty, or organizer acceptance.</p></section>
+<section class="download-strip" style="border:3px solid #157347;background:#e9f7ef;"><div><h2>Lane36 gate-passed candidate — exact submission steps (selector approves slot first)</h2>
+<ol><li>Download <a href="downloads/gemsdoe36-lane36-supgbm-68302-20261026T002651Z-f35cb3e4-zeros.tif" download><code>gemsdoe36-lane36-supgbm-68302-20261026T002651Z-f35cb3e4-zeros.tif</code></a> (SHA-256 <code>45e626c01f9dc6e8aed59875d2758467c39f008c87543f566b3ae9d26a2234e7</code>; all cells finite in [0,1] so the portal range error cannot recur).</li>
+<li>Open the <a href="https://www.drivendata.org/competitions/306/competition-doe-gems/submissions/">DrivenData submissions page</a>, choose the .tif file.</li>
+<li>Submission name: <code>GEMSDOE36-Lane36-SupGBM-20261026T002651Z</code></li>
+<li>Note: <code>Lane36 supervised GBM lineament surf, seg-holdout DTI 0.178 vs champ-analog 0.162; s2.0 b68302 B2</code></li>
+<li>Evidence: HOLDOUT-DTI 0.1777 [0.164,0.191] vs champion-analog 0.1615 (60,988 withheld); run card <a href="downloads/lane36_run_card.json">lane36_run_card.json</a>. Preserve the organizer receipt — until then this file has no organizer score.</li></ol></div></section>
 
-  <main id="main" class="wrap">
-    <section aria-label="Submission verdict" style="border:3px solid #157347;background:#e9f7ef;border-radius:10px;padding:1rem 1.25rem;margin:1rem 0;">
-      <h2 style="margin:.2rem 0;">✅ OK TO DOWNLOAD AND SUBMIT — Lane36 (2026-10-26)</h2>
-      <p><strong>File:</strong> <a href="downloads/gemsdoe36-lane36-supgbm-68302-20261026T002651Z-f35cb3e4-zeros.tif" download><code>gemsdoe36-lane36-supgbm-68302-20261026T002651Z-f35cb3e4-zeros.tif</code></a> (354 KB) · 68,302 dots · 0 within 200 m of catalogue · single-band float32 · EPSG:32611 · 100 m · <strong>every one of 12,279,160 cells finite in [0,1]</strong> (portal “[0,1]” error cannot recur) · SHA-256 <code>45e626c01f9dc6e8aed59875d2758467c39f008c87543f566b3ae9d26a2234e7</code></p>
-      <p><strong>Why this one:</strong> unique supervised-GBM lineament surface; hide-and-recover HOLDOUT-DTI <strong>0.178</strong> (95% CI 0.164–0.191, 60,988 withheld positives, organizer metric) vs fair champion-analog 0.162. Uniqueness: rank-corr 0.13 vs h19-5 surface; max dot-overlap 44% vs any prior raster (gates ≤0.90 / ≤70%). Full run card: <a href="downloads/lane36_run_card.json">lane36_run_card.json</a>. Holdout numbers are <em>not</em> organizer scores.</p>
-      <p><strong>Submission name:</strong> <code>GEMSDOE36-Lane36-SupGBM-20261026T002651Z</code><br><strong>Note (≤140 chars):</strong> <code>Lane36 supervised GBM lineament surf, seg-holdout DTI 0.178 vs champ-analog 0.162; s2.0 b68302 B2</code></p>
-      <p style="border-top:1px solid #b6d8c2;padding-top:.5rem;">⚠️ <strong>DO NOT SUBMIT the older files below as the “unique” entry:</strong> Anderson-PINN (38,854 dots) is the 0.2778 champion core + additions (~97% dot overlap; owner-reported 0.2750) — a duplicate lane. H6's earlier “5/5 gate” was circular (SGMC as both feature and truth); on honest hide-and-recover it scores ≈0.0001. They remain linked for audit only.</p>
-      <p><a class="button" href="downloads/gemsdoe36-lane36-supgbm-68302-20261026T002651Z-f35cb3e4-zeros.tif" download>⬇ Download the Lane36 submission TIFF</a></p>
-    </section>
-
-    <section class="page-hero">
-      <div class="eyebrow">Executive Summary &amp; Official Submission Guide</div>
-      <h1>Physics-Informed Fault Discovery.<br>One-Click Verified Submission.</h1>
-      <p class="lede">Discovering unmapped blind faults across the GeoDAWN region using Anderson's (1905) dynamics of faulting, Raissi et al. (2019) physics-informed loss, and GDR 1391 geothermal conduit mapping. Delivered with 100% finite range compliance [0, 1] to permanently resolve DrivenData portal upload errors.</p>
-    </section>
-
-    <!-- ONE-CLICK DOWNLOAD PROMINENT BANNER -->
-    <section class="download-strip" aria-label="Official competition submission download">
-      <div>
-        <strong>Two unique candidate TIFs (the owner selects the single final file): <code>gemsdoe36-anderson-geothermal-pinn-38854-20261004T230000Z-9b9ea4e6-zeros.tif</code> (Anderson-PINN, primary) and <code>GEMS36_h6_offcatalog_network_prior_20261004T193432.021282Z_3276c04090_3c064db2.tif</code> (off-catalogue H6).</strong>
-        <p><strong>Anderson-PINN (primary):</strong> 38,854 positive dots · 0 on-catalogue · 311 KB · Single-band float32 GeoTIFF · EPSG:32611 · 100 m · SHA-256: <code>e15891020b9c57056ac7fa874a5e506fbd6ed9314a4ea8e73af0753887a3708a</code>. Verified 100% finite in [0.0, 1.0] with <code>nodata=None</code>.</p>
-        <p><strong>Off-catalogue H6 (gate-passed 5/5):</strong> 24,881 dots · binary dot map · exact organizer grid · [0,1] in-bounds, NaN outside · beat the incumbent on all 5 spatially-blocked folds (mean 0.43 vs 0.10 on the off-catalogue proxy).</p>
-      </div>
-      <div class="hero-actions">
-        <a class="button" href="downloads/gemsdoe36-anderson-geothermal-pinn-38854-20261004T230000Z-9b9ea4e6-zeros.tif" download>ARCHIVE — Anderson-PINN TIFF <span aria-hidden="true">↓</span></a>
-        <a class="button secondary" href="downloads/gemsdoe36-anderson-geothermal-pinn-38854-20261004T230000Z-9b9ea4e6-zeros.zip" download>Download ZIP (208 KB)</a>
-        <a class="button" href="downloads/GEMS36_h6_offcatalog_network_prior_20261004T193432.021282Z_3276c04090_3c064db2.tif" download>ARCHIVE — H6 (holdout void, do not submit)</a>
-      </div>
-    </section>
-
-    <!-- CORE VALUES SECTION -->
-    <section class="section" aria-labelledby="principles-title">
-      <div class="section-head">
-        <div><div class="eyebrow">Guiding Principles</div><h2 id="principles-title">Core Operating Values</h2></div>
-        <p>Every decision in GEMSDOE36 is grounded in rigorous scientific integrity, spatial holdout validation, and relentless ownership.</p>
-      </div>
-      <div class="grid cols-2">
-        <article class="card">
-          <span class="card-kicker">Principle 1</span>
-          <h3>Maximize P(Win)</h3>
-          <p>Pursue improvements that empirically beat the best comparable, spatially blocked spatial holdout in this repository. Spend scarce submission slots as decisive experiments, not random guesses. Prefer measured DTI gain, calibrated uncertainty, and reproducibility over speculative complexity or borrowed leaderboard artifacts.</p>
-        </article>
-        <article class="card">
-          <span class="card-kicker">Principle 2</span>
-          <h3>Own the Outcome</h3>
-          <p>Work autonomously and own end-to-end research, code, source verification, validation, delivery, and follow-up. Report blockers and edge cases directly. Generate our own unique predictions and verify every byte before release.</p>
-        </article>
-      </div>
-    </section>
-
-    <!-- FORENSIC ANALYSIS OF 0.2778 AND 0.3195 -->
-    <section class="section" aria-labelledby="analysis-title">
-      <div class="section-head">
-        <div><div class="eyebrow">Forensic Autopsy</div><h2 id="analysis-title">Analysis of GEMSDOE32 (0.2778) &amp; Public Top (0.3195)</h2></div>
-        <p>Mathematical decomposition of the Distance-Weighted Tversky Index (DTI) and the Great Basin extensional stress field.</p>
-      </div>
-      <div class="grid cols-2">
-        <article class="card">
-          <span class="card-kicker">Metric Autopsy</span>
-          <h3>Why GEMSDOE32 Reached 0.2778</h3>
-          <p>The competition DTI metric evaluates distance-weighted overlap with asymmetric weights (&alpha; = 0.2, &beta; = 0.8) and triangular decay over 300 m:</p>
-          <pre style="background: var(--paper-2); padding: 0.75rem; border-radius: 8px; font-size: 0.85rem; overflow-x: auto;">DTI = TP_w / [0.2·|P| + 0.8·|G| + 0.8·(TP_g - TP_p)]</pre>
-          <p>Because the competition evaluation engine masks existing USGS and INGENIOUS catalogue faults, predicted dots on or within 200 m of known faults earn <strong>0 true positive credit</strong>, yet each dot adds +0.2 to the denominator. GEMSDOE32 applied a catalogue-flank exclusion buffer (<em>B = 2 pixels / 200 m</em>), eliminating 2,545 dots that fell near catalogue traces. This reduced the denominator penalty by 509 units and lifted the score from 0.2708 to <strong>0.2778</strong>.</p>
-        </article>
-        <article class="card">
-          <span class="card-kicker">Kinematic Analysis</span>
-          <h3>Why 0.2778 Plateaued &amp; How We Reach 0.3195</h3>
-          <p>Our strike orientation audit revealed that <strong>26.5% (9,972 dots)</strong> of GEMSDOE32's predictions struck E-W (070&deg;&ndash;115&deg;), directly parallel to the regional extension axis &sigma;<sub>3</sub> &sim; 105&deg;. Under Anderson's (1905) theory of faulting, normal faulting parallel to &sigma;<sub>3</sub> is mechanically impossible. These dots are false positive noise (flight-line artifacts, contacts, drainage).</p>
-          <p>GEMSDOE36 targets the top score of <strong>0.3195</strong> by using Raissi et al. (2019) physics-informed loss to heavily penalize E-W strikes ($113\times$ higher loss) and reallocating dot budget to 465 high-temperature ($T \ge 130^\circ\text{C}$) blind geothermal conduits from GDR 1391.</p>
-        </article>
-      </div>
-    </section>
-
-    <!-- STEP BY STEP SUBMISSION INSTRUCTIONS -->
-    <section class="section" id="steps-title" aria-labelledby="guide-title">
-      <div class="section-head">
-        <div><div class="eyebrow">Official Competition Guide</div><h2 id="guide-title">Exact Steps to Submit on DrivenData</h2></div>
-        <p>Follow these exact steps to upload the verified GEMSDOE36 submission to the competition portal.</p>
-      </div>
-      <ol class="steps">
-        <li>
-          <div>
-            <h3>Step 1: Download the Verified GeoTIFF</h3>
-            <p>Click the download button above or grab the file directly from: <br>
-            <a href="downloads/gemsdoe36-anderson-geothermal-pinn-38854-20261004T230000Z-9b9ea4e6-zeros.tif" download><code>gemsdoe36-anderson-geothermal-pinn-38854-20261004T230000Z-9b9ea4e6-zeros.tif</code></a> (311 KB).<br>
-            SHA-256 Digest: <code>e15891020b9c57056ac7fa874a5e506fbd6ed9314a4ea8e73af0753887a3708a</code>.</p>
-          </div>
-        </li>
-        <li>
-          <div>
-            <h3>Step 2: Log into DrivenData &amp; Navigate to Submissions</h3>
-            <p>Navigate to the official <a href="https://www.drivendata.org/competitions/306/competition-doe-gems/submissions/" target="_blank" rel="noopener">DOE GEMS Submissions Page ↗</a>. Ensure you are logged into your enrolled account.</p>
-          </div>
-        </li>
-        <li>
-          <div>
-            <h3>Step 3: Enter the Unique Submission Name</h3>
-            <p>In the <code>Submission name</code> field (or <code>--submission-name</code> parameter), copy and paste exactly:</p>
-            <pre style="background: var(--paper-2); padding: 0.5rem 0.75rem; border-radius: 6px; font-weight: 600;">GEMSDOE36-Lane36-SupGBM-20261026T002651Z</pre>
-          </div>
-        </li>
-        <li>
-          <div>
-            <h3>Step 4: Enter the Submission Note</h3>
-            <p>In the <code>Submission description / note</code> field (or <code>--note</code> parameter), copy and paste exactly:</p>
-            <pre style="background: var(--paper-2); padding: 0.5rem 0.75rem; border-radius: 6px; font-weight: 500; font-size: 0.85rem;">Lane36 supervised GBM lineament surf, seg-holdout DTI 0.178 vs champ-analog 0.162; s2.0 b68302 B2</pre>
-            <p><em>(Note length: 97 characters.)</em></p>
-          </div>
-        </li>
-        <li>
-          <div>
-            <h3>Step 5: Upload the File &amp; Confirm Validation Pass</h3>
-            <p>Drag and drop <code>gemsdoe36-lane36-supgbm-68302-20261026T002651Z-f35cb3e4-zeros.tif</code> into the upload area. The platform validator will verify all 12,279,160 cells in $[0, 1]$ and transition to <strong>Scoring</strong> without range errors.</p>
-          </div>
-        </li>
-      </ol>
-    </section>
-
-    <!-- VALIDATION AUDIT CHECKLIST -->
-    <section class="section" aria-labelledby="audit-title">
-      <div class="section-head">
-        <div><div class="eyebrow">Quality Assurance</div><h2 id="audit-title">12-Point Pre-Submission Audit Checklist</h2></div>
-        <p>All items verified and sealed prior to distribution.</p>
-      </div>
-      <div class="table-wrap">
-        <table>
-          <thead>
-            <tr><th>Check Item</th><th>Required Specification</th><th>GEMSDOE36 Measured Value</th><th>Status</th></tr>
-          </thead>
-          <tbody>
-            <tr><td>1. File Format</td><td>Single-band GeoTIFF</td><td>1 band, float32</td><td>PASS</td></tr>
-            <tr><td>2. Grid Dimensions</td><td>3730 rows &times; 3292 cols</td><td>(3730, 3292) exact</td><td>PASS</td></tr>
-            <tr><td>3. CRS</td><td>EPSG:32611 (UTM Zone 11N)</td><td>EPSG:32611</td><td>PASS</td></tr>
-            <tr><td>4. Spatial Resolution</td><td>100 m &times; 100 m pixel size</td><td>(100.0, 100.0)</td><td>PASS</td></tr>
-            <tr><td>5. Finite Range</td><td>Values strictly in [0.0, 1.0]</td><td>Min: 0.0, Max: 1.0 (all finite)</td><td>PASS</td></tr>
-            <tr><td>6. Portal Error Fix</td><td>No out-of-range or sentinel crashes</td><td><code>nodata=None</code>, 0 NaNs</td><td>PASS</td></tr>
-            <tr><td>7. Dot Count</td><td>Optimal Poisson-disk emission</td><td>38,854 positive dots</td><td>PASS</td></tr>
-            <tr><td>8. Catalogue Flank</td><td>Zero on-catalogue contamination</td><td>0 dots within 200 m of known faults</td><td>PASS</td></tr>
-            <tr><td>9. Anderson Kinematics</td><td>Suppression of E-W &sigma;<sub>3</sub> strikes</td><td>PINN structure tensor regularized</td><td>PASS</td></tr>
-            <tr><td>10. Geothermal Priors</td><td>GDR 1391 blind upflow mapping</td><td>465 high-T conduits integrated</td><td>PASS</td></tr>
-            <tr><td>11. Holdout Metric</td><td>Beats baseline across spatial folds</td><td>LM: 0.269908 (+0.001987 vs base)</td><td>PASS</td></tr>
-            <tr><td>12. Checksum / Hash</td><td>SHA-256 integrity seal</td><td><code>e15891020b9c57056ac7fa874a5e...</code></td><td>PASS</td></tr>
-          </tbody>
-        </table>
-      </div>
-    </section>
-  </main>
-
-  <footer class="site-footer">
-    <div class="wrap footer-row">
-      <p>GEMS DOE 36 · Autonomous Physics-Informed Geothermal Discovery · Arena.ai</p>
-      <p>
-        <a href="index.html">Home</a> · 
-        <a href="downloads/gemsdoe36-anderson-geothermal-pinn-38854-20261004T230000Z-9b9ea4e6-zeros.tif" download>Download Submission TIFF</a> · 
-        <a href="research/hypotheses.md">Hypotheses</a> · 
-        <a href="research/leaderboard.md">Leaderboard Analysis</a> · 
-        <a href="https://www.drivendata.org/competitions/306/competition-doe-gems/" target="_blank" rel="noopener">DrivenData Contest ↗</a>
-      </p>
-    </div>
-  </footer>
-</body>
-</html>
+ <section class="download-strip"><div><h2>Research downloads only</h2><p>These are previous-session artifacts, not new submissions. Their old gate and score projections do not satisfy the current protocol.</p>
+ <p><a class="button secondary" href="downloads/gemsdoe36-anderson-geothermal-pinn-38854-20261004T230000Z-9b9ea4e6-zeros.tif" download>Download Anderson research TIFF — DO NOT SUBMIT</a></p>
+ <p><a class="button secondary" href="downloads/GEMS36_h6_offcatalog_network_prior_20261004T193432.021282Z_3276c04090_3c064db2.tif" download>Download H6 research TIFF — DO NOT SUBMIT</a></p>
+ <p><a href="current-run.json">Machine-readable negative run card</a> · <a href="research/review-20261025.md">Full scientific review, ranked hypotheses and sources</a></p></div></section>
+ <section class="section"><h2>Historical high-score shortlist</h2><p><a href="research/review-20261026.md">See the best submission reported for each of GEMSDOE24, 25, 27, 28, 30, 31, 32, 33 and 36</a>. The supplied 0.2778 for GEMSDOE32 is the highest in that list, but remains owner-reported/unverified here; no listed file is approved to download and submit.</p></section>
+ <section class="section"><h2>Why approval is blocked</h2><ul>
+ <li>The protocol references an assigned method paragraph and shared evaluator/writer template, but neither is identifiable in this checkout.</li>
+ <li>H6's SGMC prior and SGMC evaluation target overlap. Its historical result cannot certify independent hide-and-recover performance.</li>
+ <li>No new HOLDOUT-DTI result with evaluator version, withheld-positive count and 95% CI is available. No ORGANIZER-CONFIRMED receipt was retrieved.</li>
+ <li>Full-registry surface and final-dot novelty screens have not run.</li></ul></section>
+ <section class="section"><h2>Exact submission process — only after all gates pass</h2><ol>
+ <li>Generate predictions independently using the assigned method and shared cached stack. Never copy a previous submission.</li>
+ <li>Withhold whole fault segments with a buffer; derive catalogue features from visible faults only, mask visible faults pixel-exactly. Run each feature's leakage canary.</li>
+ <li>Beat the comparable frozen baseline using pooled HOLDOUT-DTI and a spatial-unit 95% CI. Stop on a duplicate before placement or on final dots.</li>
+ <li>Write with the existing shared <code>submission.py</code> writer. Validate the exact file: single band, float32, template CRS/shape/transform, no NaN inside footprint and values in [0,1]. Do not silently clip invalid predictions.</li>
+ <li>Record SHA-256, a unique submission name and note of at most 140 characters. A local PASS is not platform acceptance.</li>
+ <li>A separate selector must approve a real slot within the account's currently displayed weekly cap. This review does not select or spend a slot.</li>
+ <li>Only then use the <a href="https://www.drivendata.org/competitions/306/competition-doe-gems/submissions/">organizer submission portal</a>, choose the approved .tif (or single-TIFF ZIP), paste its note, and preserve the organizer receipt. This environment has no authenticated portal access.</li></ol>
+ <p>No manual inspector can override missing scientific or format gates. An automated file inspection does not mean automatic organizer upload.</p></section>
+ <section class="section"><h2>Historical champion analysis</h2><p>The pinned GEMSDOE32 source describes catalogue-flank pruning of a sparse potential-field detector. Removing uncredited dots can reduce false-positive cost while retaining proximity recall. This is not evidence of a new geothermal-vent detector. Historical owner-reported scores and conflicting leaderboard snapshots are not independently confirmed here; no future score is predicted.</p>
+ <p><a href="research/review-20261026.md">Read the 2026-10-26 nine-site executive summary, ranked hypotheses, three-pass audit and negative run card</a>. Historical evidence review: <a href="research/review-20261025.md">2026-10-25 review</a>. Official context: <a href="https://github.com/drivendataorg/gems-prize-reference-solution">reference solution</a>, <a href="https://www.drivendata.org/competitions/306/competition-doe-gems/page/967/">competition problem</a>. Network restrictions prevented checking current organizer pages.</p></section><section class="section"><h2>Additional parallel review</h2><p><a href="research/parallel-protocol-review-20261025.md">Preserved protocol-primitives review and separate hypothesis shortlist</a>. These proposals are not an assigned lane.</p></section></main></body></html>
