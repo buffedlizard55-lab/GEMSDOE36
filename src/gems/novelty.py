@@ -299,7 +299,6 @@ def compare_registry(
 
 SYNTHETIC_CALIBRATION_CONTROL_FILES = {
     "inputs/calibration/13gems_20261001_r13-lattice-s5_v2_nan-outside.tif": "synthetic_spacing5_calibration_lattice",
-    "data/raw/scored/13gems_20261001_r13-lattice-s5_v2_nan-outside.tif": "synthetic_spacing5_calibration_lattice",
 }
 
 

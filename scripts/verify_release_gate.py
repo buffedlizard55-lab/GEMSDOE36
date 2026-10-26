@@ -46,7 +46,7 @@ def verify_all(root: Path = ROOT) -> dict[str, Any]:
     if not rc["leakage_canary"]["passed"] or rc["leakage_canary"]["max_symmetric_auc"] > 0.90:
         errors.append("Single-feature leakage canary failed (> 0.90 AUC)")
 
-    # 3. Uniqueness gate (both surface before placement and final dots)
+    # 3. Uniqueness checks (both 107 owner-scored rasters and 198 expanded registry)
     surf_u = rc["registry_uniqueness"]["surface_before_placement"]
     dots_u = rc["registry_uniqueness"]["final_dots"]
     if not surf_u["passed"] or float(surf_u["max_abs_rank_correlation"]) > 0.90:
@@ -56,11 +56,22 @@ def verify_all(root: Path = ROOT) -> dict[str, Any]:
         or float(dots_u["max_abs_rank_correlation"]) > 0.90
         or float(dots_u["max_competing_dot_overlap"]) > 0.70
     ):
-        errors.append("Final dots registry novelty check failed (|rho| > 0.90 or overlap > 0.70)")
+        errors.append("107-raster scored registry novelty check unexpectedly failed")
+
+    gates = rc.get("gates", {})
+    all_gates_pass = bool(gates) and all(bool(v) for v in gates.values())
+    expected_verdict = "promote" if all_gates_pass else "negative"
+    if rc["verdict"] != expected_verdict:
+        errors.append(
+            f"Fail-closed verdict mismatch: gates={gates} implies '{expected_verdict}', got '{rc['verdict']}'"
+        )
+    if rc["validator_output"]["safe_to_download_and_submit"] != (expected_verdict == "promote"):
+        errors.append("validator_output.safe_to_download_and_submit out of sync with gate verdict")
 
     # 4. GeoTIFF & ZIP integrity + Dual Validators
     dl_dir = root / "docs" / "downloads"
-    zeros_p = dl_dir / rc["submission"]["submission_name"]
+    zeros_fname = rc["submission"].get("zeros_filename") or rc["submission"]["submission_name"]
+    zeros_p = dl_dir / zeros_fname
     nan_p = dl_dir / rc["submission"]["companion_nan_name"]
     zip_p = dl_dir / rc["submission"]["zip_archive_name"]
 
@@ -104,7 +115,7 @@ def verify_all(root: Path = ROOT) -> dict[str, Any]:
             if int(((arr > 0.5) & (d_cat <= 2.0)).sum()) != 0:
                 errors.append("Primary -zeros.tif has dots within 200 m of catalogue")
 
-    # 5. HTML & Markdown link + anti-projection checks
+    # 5. HTML & Markdown link, banner visibility, and anti-projection checks
     banned_phrases = ("projected live score", "live projection:", "projected 0.2798")
     for doc_rel in ("README.md", "docs/index.html", "docs/executive-summary.html"):
         doc_p = root / doc_rel
@@ -117,6 +128,10 @@ def verify_all(root: Path = ROOT) -> dict[str, Any]:
             if bp in low:
                 errors.append(f"Banned unverified score projection phrase '{bp}' in {doc_rel}")
         if doc_p.suffix == ".html":
+            if expected_verdict == "negative" and "DO NOT SUBMIT" not in txt:
+                errors.append(f"Fail-closed HTML missing 'DO NOT SUBMIT' in {doc_rel}")
+            if "DOWNLOAD: YES" not in txt:
+                errors.append(f"HTML missing explicit 'DOWNLOAD: YES' status in {doc_rel}")
             for m in re.finditer(r'(?:href|src)="([^"]+)"', txt):
                 ref = m.group(1)
                 if ref.startswith(("http://", "https://", "#", "mailto:")):
@@ -131,7 +146,10 @@ def verify_all(root: Path = ROOT) -> dict[str, Any]:
     return {
         "passed": len(errors) == 0,
         "verdict": rc["verdict"],
+        "ok_to_download_research_tif": rc["validator_output"]["ok_to_download_research_tif"],
+        "safe_to_download_and_submit": rc["validator_output"]["safe_to_download_and_submit"],
         "submission_name": rc["submission"]["submission_name"],
+        "zeros_filename": zeros_fname,
         "raster_sha256": rc["submission"]["raster_sha256"],
         "errors": errors,
     }

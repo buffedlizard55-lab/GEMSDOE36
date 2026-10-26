@@ -3,7 +3,7 @@
   "updated_utc": "2026-10-26T01:29:52.990068+00:00",
   "recommended_primary_download": {
     "candidate_id": "GEMSDOE36-H36-CTRB-Submod",
-    "verdict": "promote",
+    "verdict": "negative",
     "automated_validation_passed": true,
     "uniqueness_verified_against_107_rasters": true,
     "zeros_tif": {
@@ -34,7 +34,7 @@
       "bytes": 199478,
       "sha256": "4f7f7eae2f41a33f69de264e01722152b2cae3dbede37153dae9fa6f0e7eed7f"
     },
-    "note": "GEMSDOE36 H36-CTRB | 1.5km strike-worm+trunk relay+NSQ-PCC submod | 36800px d_cat>2 | HOLDOUT-DTI 0.1144",
+    "note": "GEMSDOE36 H36-CTRB | 1.5km worm+trunk relay submod | HOLDOUT-DTI 0.1144 | NEGATIVE hold slot | id a1d85443",
     "holdout_dti": {
       "label": "HOLDOUT-DTI",
       "evaluator_version": "gems-segment-pooled-v1",
@@ -95,8 +95,13 @@
     "registry_uniqueness_summary": {
       "surface_max_abs_spearman": 0.32968,
       "dots_max_abs_spearman": 0.20327,
-      "dots_max_competing_3px_overlap": 0.51005
-    }
+      "dots_max_competing_3px_overlap": 0.51005,
+      "expanded_198_max_competing_3px_overlap": 0.8388
+    },
+    "ok_to_download": true,
+    "ok_to_submit": false,
+    "uniqueness_verified_against_107_scored_rasters": true,
+    "uniqueness_expanded_198_rasters_passed": false
   },
   "historical_archived_artifacts_do_not_submit": [
     {

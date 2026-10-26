@@ -17,4 +17,6 @@ def test_automated_release_and_submission_gate() -> None:
     spec.loader.exec_module(mod)
     report = mod.verify_all(ROOT)
     assert report["passed"], f"Automated release gate failed: {report['errors']}"
-    assert report["verdict"] == "promote"
+    assert report["ok_to_download_research_tif"] is True
+    assert report["verdict"] in ("promote", "negative")
+    assert report["safe_to_download_and_submit"] == (report["verdict"] == "promote")

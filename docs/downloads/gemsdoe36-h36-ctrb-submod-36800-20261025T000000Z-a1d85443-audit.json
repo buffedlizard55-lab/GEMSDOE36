@@ -4,7 +4,7 @@
   "content_digest8": "a1d85443",
   "timestamp_tag": "20261025T000000Z",
   "emitted_positive_pixels": 36800,
-  "note": "GEMSDOE36 H36-CTRB | 1.5km strike-worm+trunk relay+NSQ-PCC submod | 36800px d_cat>2 | HOLDOUT-DTI 0.1144",
+  "note": "GEMSDOE36 H36-CTRB | 1.5km worm+trunk relay submod | HOLDOUT-DTI 0.1144 | NEGATIVE hold slot | id a1d85443",
   "zeros_tif": {
     "filename": "gemsdoe36-h36-ctrb-submod-36800-20261025T000000Z-a1d85443-zeros.tif",
     "path": "/home/user/GEMSDOE36/docs/downloads/gemsdoe36-h36-ctrb-submod-36800-20261025T000000Z-a1d85443-zeros.tif",
@@ -40,5 +40,9 @@
       0.10379483612241487,
       0.12575588550870148
     ]
-  }
+  },
+  "note_length": 106,
+  "verdict": "negative",
+  "ok_to_download": true,
+  "ok_to_submit": false
 }

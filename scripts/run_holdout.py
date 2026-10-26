@@ -85,6 +85,8 @@ def dots_to_map(dots: np.ndarray) -> np.ndarray:
 
 
 def main() -> int:
+    raise SystemExit('Legacy H6 evaluator exposes SGMC evaluation truth to placement. Not a valid promotion gate; requires shared hide-and-recover evaluator.')
+    # Historical implementation retained below for audit only.
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--folds", type=int, default=5)
     parser.add_argument("--data-dir", type=Path, default=ROOT / "data")

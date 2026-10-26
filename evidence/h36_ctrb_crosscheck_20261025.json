@@ -1,0 +1,48 @@
+{
+ "file": "docs/downloads/gemsdoe36-h36-ctrb-submod-36800-20261025T000000Z-a1d85443-zeros.tif",
+ "sha256": "2bb4513d6307e2394d5de7e7e7649e28eff067b602b805a0215e82aa5ff89907",
+ "template_format_valid": true,
+ "template_hard_failures": [],
+ "strict_whole_array_0_1": true,
+ "dots": 36800,
+ "unique_values_in_footprint": [
+  0.0,
+  1.0
+ ],
+ "dot_spacing_px": {
+  "min": 1.0,
+  "median": 4.47213595499958
+ },
+ "distance_to_catalogue_px": {
+  "min": 2.23606797749979,
+  "share_le_2px": 0.0,
+  "share_le_3px": 0.09578804347826086
+ },
+ "registry_rasters_compared": 198,
+ "max_abs_rank_correlation": 0.25003934037868997,
+ "max_competing_dot_overlap": 0.8388043478260869,
+ "final_dot_uniqueness_passed": false,
+ "competing_rasters_over_0.70": [
+  {
+   "file": "GEMSDOE22/docs/downloads/gems22-h23-b-dti-optimal-emission-10pct-20261002-86176698-nan.tif",
+   "overlap": 0.8388043478260869,
+   "footprint_3px_coverage": 0.5343281779736048
+  },
+  {
+   "file": "GEMSDOE67/docs/downloads/gemsdoe67-ovtr-ml-cover-tau3p0-20261012-nan.tif",
+   "overlap": 0.7945108695652174,
+   "footprint_3px_coverage": 0.5481466114406682
+  },
+  {
+   "file": "GEMSDOE77/docs/downloads/gems85-h85-edti-collar35-skel-r33-20261021-d97b248e-zeros.tif",
+   "overlap": 0.7264402173913044,
+   "footprint_3px_coverage": 0.5536799840073476
+  },
+  {
+   "file": "GEMSDOE22/docs/downloads/gems22-h23-a-dti-optimal-emission-6pct-20261002-e2ec4b49-nan.tif",
+   "overlap": 0.7170652173913044,
+   "footprint_3px_coverage": 0.41313429473738394
+  }
+ ],
+ "scope": "Format + final-dot uniqueness only; holdout claims of the candidate's own lane are not re-run (a final full-catalogue model cannot be scored on a hide-and-recover holdout without leakage)."
+}

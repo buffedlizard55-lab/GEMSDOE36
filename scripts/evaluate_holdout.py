@@ -424,7 +424,10 @@ def main() -> None:
         f"[6/7] Running Gate 2: 107-raster registry novelty check on pre-placement surface AND {n_emitted_full:,} final dots..."
     )
     reg_data = json.loads(reg_file.read_text())
-    reg_entries = reg_data["unique_rasters"]
+    reg_entries = [
+        {**r, "file_sha256": r.get("file_sha256") or r["sha256"]}
+        for r in reg_data["unique_rasters"]
+    ]
 
     nov_surface = compare_registry(
         oof_surface_2d,
@@ -442,11 +445,23 @@ def main() -> None:
         dots=(full_pred_2d > 0.5),
         separate_calibration_controls=True,
     )
+    expanded_reg_file = ROOT / "registry" / "uniqueness_registry.json"
+    nov_dots_expanded198 = None
+    if expanded_reg_file.is_file() and (ROOT / "data" / "registry").is_dir():
+        exp_entries = json.loads(expanded_reg_file.read_text())["entries"]
+        nov_dots_expanded198 = compare_registry(
+            full_pred_2d,
+            footprint,
+            exp_entries,
+            ROOT,
+            dots=(full_pred_2d > 0.5),
+            separate_calibration_controls=True,
+        )
     print(
         f"      Surface novelty passed={nov_surface['passed']}, max |rho|={nov_surface['max_abs_rank_correlation']:.4f} (limit <= 0.90)"
     )
     print(
-        f"      Dots novelty competing_method_passed={nov_dots['competing_method_passed']}, "
+        f"      Dots novelty (107 scored) competing_method_passed={nov_dots['competing_method_passed']}, "
         f"max |rho|={nov_dots['max_abs_rank_correlation']:.4f} (limit <= 0.90), "
         f"max competing 3-px overlap={nov_dots['max_competing_dot_overlap']:.4f} (limit <= 0.70)"
     )
@@ -454,9 +469,23 @@ def main() -> None:
     # Gate 3: Emit submission bundle & run dual independent validators
     print("[7/7] Emitting paired GeoTIFF submission bundle and running automated validators...")
     timestamp_tag = "20261025T000000Z"
+    recorded_group_best_dti = 0.14876
+    repo_b0_dti = 0.13375
+    expanded_pass = True if nov_dots_expanded198 is None else bool(nov_dots_expanded198["competing_method_passed"])
+    novelty_gate_pass = bool(nov_surface["passed"] and nov_dots["competing_method_passed"] and expanded_pass)
+    local_dti_gate_pass = bool(
+        exp3["summary"]["dti"] > ctrl1["summary"]["dti"]
+        and exp3["summary"]["dti"] > ctrl2["summary"]["dti"]
+        and exp3["summary"]["dti"] > exp1["summary"]["dti"]
+        and paired_vs_ctrl2["ci95_strictly_positive"]
+        and paired_vs_ctrl2["fold_wins"] >= 3
+    )
+    beats_group_best = bool(exp3["summary"]["dti"] > max(repo_b0_dti, recorded_group_best_dti))
+    preliminary_promote = bool(canary_report["passed"] and novelty_gate_pass and local_dti_gate_pass and beats_group_best)
+    verdict_tag = "PROMOTE" if preliminary_promote else "NEGATIVE hold slot"
     submission_note = (
-        f"GEMSDOE36 H36-CTRB | 1.5km strike-worm+trunk relay+NSQ-PCC submod | "
-        f"{n_emitted_full}px d_cat>2 | HOLDOUT-DTI {exp3['summary']['dti']:.4f}"
+        f"GEMSDOE36 H36-CTRB | 1.5km worm+trunk relay submod | "
+        f"HOLDOUT-DTI {exp3['summary']['dti']:.4f} | {verdict_tag} | id a1d85443"
     )
     assert len(submission_note) <= 140, f"Note too long ({len(submission_note)} > 140)"
 
@@ -502,14 +531,7 @@ def main() -> None:
         and on_cat_full == 0
         and near_cat_le2 == 0
     )
-    novelty_gate_pass = bool(nov_surface["passed"] and nov_dots["competing_method_passed"])
-    dti_gate_pass = bool(
-        exp3["summary"]["dti"] > ctrl1["summary"]["dti"]
-        and exp3["summary"]["dti"] > ctrl2["summary"]["dti"]
-        and exp3["summary"]["dti"] > exp1["summary"]["dti"]
-        and paired_vs_ctrl2["ci95_strictly_positive"]
-        and paired_vs_ctrl2["fold_wins"] >= 3
-    )
+    dti_gate_pass = bool(local_dti_gate_pass and beats_group_best)
     verdict = (
         "promote"
         if (canary_report["passed"] and novelty_gate_pass and format_gate_pass and dti_gate_pass)
@@ -564,6 +586,20 @@ def main() -> None:
                 "ci95": [0.11565, 0.14396],
                 "source": "GEMSDOE24/evidence/rshg1_run_card_20261025.json",
             },
+            "repo_b0_59feat_oof_hgb_reference": {
+                "label": "HOLDOUT-DTI",
+                "evaluator_version": "gems-segment-pooled-v1",
+                "dti": repo_b0_dti,
+                "ci95": [0.12224, 0.14604],
+                "source": "evidence/h36_run_card.json",
+            },
+            "recorded_group_best_gemsdoe24_h24_gvc1": {
+                "label": "HOLDOUT-DTI",
+                "evaluator_version": "gems-segment-pooled-v1",
+                "dti": recorded_group_best_dti,
+                "ci95": [0.13413, 0.16370],
+                "source": "GEMSDOE24@fc2bc6f README.md (recorded, not re-run)",
+            },
             "exp_1_unsupervised_concordance": exp1["summary"],
             "exp_2_local17_nsqpcc": exp2["summary"],
             "exp_3_full25_h36_ctrb": exp3["summary"],
@@ -592,10 +628,27 @@ def main() -> None:
             "unique_registry_rasters_checked": len(reg_entries),
             "surface_before_placement": summarize_novelty_compact(nov_surface),
             "final_dots": summarize_novelty_compact(nov_dots),
+            "scored_107_passed": bool(nov_surface["passed"] and nov_dots["competing_method_passed"]),
+            "expanded_198_final_dots": (
+                summarize_novelty_compact(nov_dots_expanded198)
+                if nov_dots_expanded198 is not None
+                else None
+            ),
+            "expanded_198_passed": expanded_pass,
             "passed": novelty_gate_pass,
         },
+        "gates": {
+            "G1_beats_matched_local_controls": local_dti_gate_pass,
+            "G2_beats_group_holdout_best": beats_group_best,
+            "G3_leakage_canary": bool(canary_report["passed"]),
+            "G4a_unique_surface": bool(nov_surface["passed"]),
+            "G4b_unique_final_dots_scored_107": bool(nov_dots["competing_method_passed"]),
+            "G4c_unique_final_dots_expanded_198": expanded_pass,
+            "G5_format_and_strict_range": format_gate_pass,
+        },
         "submission": {
-            "submission_name": bundle["zeros_tif"]["filename"],
+            "submission_name": "GEMSDOE36-H36-CTRB-Submod",
+            "zeros_filename": bundle["zeros_tif"]["filename"],
             "companion_nan_name": bundle["nan_tif"]["filename"],
             "zip_archive_name": bundle["zip_archive"]["filename"],
             "note": submission_note,
@@ -609,9 +662,8 @@ def main() -> None:
         },
         "validator_output": {
             "automated_gate_passed": format_gate_pass,
-            "safe_to_download_and_submit": bool(
-                format_gate_pass and novelty_gate_pass and canary_report["passed"]
-            ),
+            "ok_to_download_research_tif": format_gate_pass,
+            "safe_to_download_and_submit": bool(verdict == "promote"),
             "zeros_outside_primary": {
                 "repo_validator": val_zeros_repo,
                 "shared_gems_validator": {

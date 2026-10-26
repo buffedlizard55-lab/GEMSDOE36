@@ -1,0 +1,30 @@
+{
+ "n_catalogue_pixels_tested": 40310,
+ "random_expectation": {
+  "median_axial_diff_deg": 45.0,
+  "frac_within_22.5deg": 0.25
+ },
+ "conventions": {
+  "strike": {
+   "median_axial_diff_deg": 44.677024841308594,
+   "frac_within_22.5deg": 0.2525676010915406
+  },
+  "strike+90": {
+   "median_axial_diff_deg": 45.322975158691406,
+   "frac_within_22.5deg": 0.2480029769288018
+  },
+  "180-strike": {
+   "median_axial_diff_deg": 45.413604736328125,
+   "frac_within_22.5deg": 0.24321508310592904
+  },
+  "90-strike": {
+   "median_axial_diff_deg": 44.58639907836914,
+   "frac_within_22.5deg": 0.24921855618953112
+  },
+  "270-strike": {
+   "median_axial_diff_deg": 44.58639907836914,
+   "frac_within_22.5deg": 0.24921855618953112
+  }
+ },
+ "conclusion": "No convention aligns the strike band with catalogue orientation better than chance; lane geometry uses det_elev regional slope instead."
+}

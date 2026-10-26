@@ -234,7 +234,7 @@ def oriented_worm_persistence(
         ty = -float(np.cos(az_rad))
         tx = float(np.sin(az_rad))
         kern = np.zeros((ksize, ksize), dtype=np.float64)
-        for st, wt in zip(steps, taper):
+        for st, wt in zip(steps, taper, strict=True):
             fy = half_len_px + st * ty
             fx = half_len_px + st * tx
             y0 = int(np.floor(fy))
@@ -337,7 +337,7 @@ def extract_geophysical_trunk_topology(
     if len(tips_yx) > 0:
         trunk_comp_ids = comp[tips_yx[:, 0], tips_yx[:, 1]]
         rad = 26
-        for (ty, tx), cid in zip(tips_yx, trunk_comp_ids):
+        for (ty, tx), cid in zip(tips_yx, trunk_comp_ids, strict=True):
             r0, r1 = max(0, int(ty) - rad), min(H, int(ty) + rad + 1)
             c0, c1 = max(0, int(tx) - rad), min(W, int(tx) + rad + 1)
             sr0, sr1 = max(0, int(ty) - 7), min(H, int(ty) + 8)
@@ -1057,7 +1057,7 @@ def submodular_dti_emit(
 
     init_tp = np.zeros((H, W), dtype=np.float32)
     q_nb = np.zeros((H, W), dtype=np.float32)
-    for oy, ox, kv in zip(dy_list, dx_list, kw_list):
+    for oy, ox, kv in zip(dy_list, dx_list, kw_list, strict=True):
         sub = q_pad[pad + oy : pad + oy + H, pad + ox : pad + ox + W]
         init_tp += np.float32(kv) * sub
         np.maximum(q_nb, np.float32(kv) * sub, out=q_nb)

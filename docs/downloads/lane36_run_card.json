@@ -1,0 +1,53 @@
+{
+ "lane": "supervised GBM on label-free lineament transforms; Poisson emission B=2; no catalogue-derived feature, no SGMC prior, no prior raster",
+ "hypothesis": "A supervised ranker of catalogue-fault geophysical expression ranks hidden-fault pixels better than the hand-weighted h19-5 corroboration surface behind the 0.2778 champion, whose margin is exhausted (champion+1200 adds scored 0.2750)",
+ "mechanism": "66 label-free features (multi-scale gradients/Laplacians/ridges of RTP/TMI/gravity/elevation/basement/conductivity, structure-tensor coherence + Anderson deviation, LiDAR scarp, radiometrics); HistGBM catalogue-vs-background; priority Poisson thinning; B=2 flank exclusion",
+ "non_fault_mimic": "lithologic contacts, GeoDAWN flight-line stripes, roads in LiDAR bands, playa terraces",
+ "holdout": {
+  "protocol": "hide-and-recover, whole segments in 5 spatial strips, 500m buffer, visible masked pixel-exact, pooled organizer DTI a0.2 b0.8 R300m (gemsdoe36.metric v1)",
+  "withheld_positives": 60988,
+  "lane_dti": 0.17772317335367582,
+  "ci95_segment_bootstrap_fp_fixed": [
+   0.16391692615769438,
+   0.1914447620407449
+  ],
+  "champion_analog_dti": 0.16148448428712303,
+  "champion_as_submitted_dti_handicapped": 0.006638524745093094,
+  "h6_dti": 0.0001009704760098494,
+  "prevalence_calibrated_lane": 0.0947695904088868,
+  "prevalence_calibrated_champion_analog": 0.10785230182106272,
+  "leakage_canary_max_feature_auc": [
+   "gmag1_lidar_step_max",
+   0.60333940875
+  ],
+  "label": "HOLDOUT-DTI (not an organizer score; all leaderboard numbers owner-reported, no receipts in repo)"
+ },
+ "uniqueness": {
+  "spearman_vs_h19_5_surface": 0.12600640546593114,
+  "dot_overlap_le3px": {
+   "champion_h33-2-b2": 0.3379842464349507,
+   "solo_h27-4": 0.3729173377060701,
+   "h33d": 0.3864308512195836,
+   "d28poisson": 0.40464408070041874,
+   "anderson_pinn36": 0.34202512371526456,
+   "h6": 0.033835026792773275,
+   "gems27": 0.4371760709788879
+  },
+  "gates": "rank-corr<=0.90 and overlap<=0.70 vs every registry raster"
+ },
+ "emission": {
+  "spacing_px": 2.0,
+  "budget_target": 80000,
+  "dots": 68302
+ },
+ "raster": {
+  "file": "gemsdoe36-lane36-supgbm-68302-20261026T002651Z-f35cb3e4-zeros.tif",
+  "sha256": "45e626c01f9dc6e8aed59875d2758467c39f008c87543f566b3ae9d26a2234e7",
+  "validator_passed": true,
+  "mode": "zeros (all 12,279,160 cells finite in [0,1], nodata None) - portal-safe vs historic [0,1] rejection"
+ },
+ "submission_name": "GEMSDOE36-Lane36-SupGBM-20261026T002651Z",
+ "note_140": "Lane36 supervised GBM lineament surf, seg-holdout DTI 0.178 vs champ-analog 0.162; s2.0 b68302 B2",
+ "verdict": "promote",
+ "ok_to_submit": true
+}

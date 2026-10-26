@@ -20,7 +20,8 @@ ROOT = Path(__file__).resolve().parents[1]
 def main() -> None:
     rc_path = ROOT / "evidence" / "h36_ctrb_run_card_20261025.json"
     rc = json.loads(rc_path.read_text())
-    tif_path = ROOT / "docs" / "downloads" / rc["submission"]["submission_name"]
+    fname = rc["submission"].get("zeros_filename") or rc["submission"]["submission_name"]
+    tif_path = ROOT / "docs" / "downloads" / fname
     tmpl_path = ROOT / "data" / "raw" / "sample_submission.tif"
     lbl_path = ROOT / "data" / "raw" / "labels.tif"
 
@@ -83,7 +84,7 @@ def main() -> None:
     colors = ["#94a3b8", "#64748b", "#0284c7", "#0d9488", "#d97706"]
     x = np.arange(len(labels))
     bars = ax1.bar(x, vals, yerr=[err_lo, err_hi], capsize=4, color=colors, width=0.62, edgecolor="#1e293b", linewidth=0.7)
-    for rect, v in zip(bars, vals):
+    for rect, v in zip(bars, vals, strict=True):
         ax1.text(
             rect.get_x() + rect.get_width() / 2.0,
             v + 0.014,
@@ -122,9 +123,10 @@ def main() -> None:
     ax2.set_xticklabels(f_names, fontsize=8.2)
     ax2.set_ylabel("Fold HOLDOUT-DTI", fontsize=8.5)
     max_ov = float(rc["registry_uniqueness"]["final_dots"]["max_competing_dot_overlap"]) * 100.0
+    exp_ov = float(rc["registry_uniqueness"]["expanded_198_final_dots"]["max_competing_dot_overlap"]) * 100.0
     ax2.set_title(
-        f"C. 4-Quadrant Fold Wins (4/4 vs CTRL-2)\nMax Registry Overlap: {max_ov:.2f}% (Gate <= 70%)",
-        fontsize=9.2,
+        f"C. 4-Quadrant Fold Wins (SW=0.1102 Walker Lane)\n107-Scored Overlap: {max_ov:.1f}% | 198-Reg: {exp_ov:.1f}%",
+        fontsize=9.0,
         fontweight="bold",
         pad=8,
     )

@@ -20,12 +20,7 @@ def main():
     ap = argparse.ArgumentParser(description=__doc__)
     ap.add_argument("prediction", type=Path, help="2D .npy or aligned single-band .tif")
     ap.add_argument("output", type=Path)
-    default_tmpl = (
-        ROOT / "data/raw/sample_submission.tif"
-        if (ROOT / "data/raw/sample_submission.tif").is_file()
-        else ROOT / "data/bridge/sample_submission.tif"
-    )
-    ap.add_argument("--template", type=Path, default=default_tmpl)
+    ap.add_argument("--template", type=Path, default=ROOT / "data/bridge/sample_submission.tif")
     ap.add_argument("--outside", choices=("nan", "zero"), default="nan")
     args = ap.parse_args()
     if args.prediction.suffix == ".npy":
