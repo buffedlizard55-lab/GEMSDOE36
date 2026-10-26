@@ -1,0 +1,12 @@
+{
+  "lane_id": "GVSC-36",
+  "preregistration_started_utc": "2026-10-26T16:26:08.847971+00:00",
+  "run_card_completed_utc": "2026-10-26T18:23:13.103450+00:00",
+  "elapsed_wall_seconds": 7024.255479,
+  "budget_max_seconds": 7200,
+  "budget_passed": true,
+  "experiments_planned": 3,
+  "candidate_experiments_completed": 3,
+  "experiment_scope": "EXP-1, EXP-2, EXP-3; B0 is the matched control, not a candidate experiment.",
+  "accounting_note": "Clock interval is conservative end-to-end elapsed wall time from preregistration lock to final card. It includes implementation, tests, feature cache construction, canary, holdout runs and checkpoint recovery, emission, formatting, and registry validation. No further model experiment was run."
+}

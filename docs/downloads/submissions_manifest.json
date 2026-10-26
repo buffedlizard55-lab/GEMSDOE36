@@ -5,7 +5,9 @@
     "evidence/h36_ctrb_run_card_20261025.json",
     "evidence/h36_run_card.json",
     "docs/downloads/lane36_run_card.json",
-    "evidence/wdp36_run_card_20261026.json"
+    "evidence/wdp36_run_card_20261026.json",
+    "evidence/gvsc36_run_card_20261026.json",
+    "evidence/gvsc36_crosscheck_20261026.json"
   ],
   "current_atvr36": {
     "file": "gemsdoe36-atvr36-20261026.tif",
@@ -85,5 +87,33 @@
     "organizer_score": null,
     "nan_twin": null,
     "nan_twin_note": "Intentionally zeros-only: no NaN twin, eliminating the portal [0,1] upload error path."
+  },
+  "latest_gvsc36_research_only": {
+    "file": "gemsdoe36-gvsc36-exp3-20261026-5fb822bdfb60-zeros.tif",
+    "sha256": "ad809c2b0919d4b71afee80f0b4827aa9ad4ecd8c66507109a3d3f7292cac1a1",
+    "zip": "gemsdoe36-gvsc36-exp3-20261026-5fb822bdfb60-zeros.zip",
+    "zip_sha256": "94932fbced69cfb1c5f4197d2022413e9b574cddca8edb8a9733253332e7861a",
+    "submission_name": "gemsdoe36-gvsc36-exp3-20261026-5fb822bdfb60-zeros",
+    "note": "GEMSDOE36 GVSC-36 EXP-3 | vent+F2mDAB backproj+submod | HOLDOUT-DTI 0.1589 | NEGATIVE research only | 5fb822bdfb60",
+    "holdout_dti_label": "HOLDOUT-DTI",
+    "holdout_dti": 0.158855,
+    "evaluator_version": "gems-segment-pooled-v1",
+    "withheld_positives": 60988,
+    "ci95": [
+      0.14545552598247008,
+      0.17308352228043178
+    ],
+    "verdict": "negative",
+    "status": "DO_NOT_SUBMIT",
+    "ok_to_download_for_research": true,
+    "ok_to_submit": false,
+    "leaderboard_score_estimate": null,
+    "leaderboard_estimate_note": "Unavailable; HOLDOUT-DTI is not a leaderboard score and no calibrated mapping or organizer receipt exists.",
+    "organizer_score": null,
+    "strict_novelty_failure": {
+      "max_competing_overlap_3px": 0.9460349498061295,
+      "max_literal_overlap_3px": 0.9961757051043714,
+      "registry_entries": 206
+    }
   }
 }

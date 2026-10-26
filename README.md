@@ -1,6 +1,6 @@
 # GEMSDOE36 — current decision & reproducible research
 
-**Working branch:** `arena/d98aabea-gemsdoe36`. **Read this first** before starting work: the decision below is the current branch decision, alongside archived HVG-36/MTO-36/WDP-36/MOE36/ATVR/CTRB/GPS/Lane36 research lanes. Core values: **Maximize P(Win)** and **Own the Outcome**. The [full standing owner brief](#full-standing-owner-brief-historical-wording) is preserved verbatim below; its historical leaderboard claims are not verified observations. Latest pass-by-pass repository review: [HVG-36 three-pass review](evidence/hvg36_review_passes_20261026.md) and [nine-site uniqueness audit](docs/research/repo-review-20261026.md). Earlier review retained for context: [2026-10-26 review](evidence/review_c54ee17a_20261026.md).
+**Working branch:** `arena/20b1a132-gemsdoe36`. **Read this first** before starting work: the decision below is the current branch decision, alongside archived GVSC-36/HVG-36/MTO-36/WDP-36/MOE36/ATVR/CTRB/GPS/Lane36 research lanes. Core values: **Maximize P(Win)** and **Own the Outcome**. The [full standing owner brief](#full-standing-owner-brief-historical-wording) is preserved verbatim below; its historical leaderboard claims are not verified observations. Latest pass-by-pass repository reviews: [HVG-36](evidence/hvg36_review_passes_20261026.md), [GVSC-36](evidence/gvsc36_review_passes_20261026.md), and [nine-site uniqueness audit](docs/research/repo-review-20261026.md).
 
 <!-- STATUS:START -->
 > ## CURRENT DECISION · `DOWNLOAD: YES (research)` · `DO NOT SUBMIT` · `verdict: negative`
@@ -17,6 +17,10 @@
 > - **Archived prior negative lanes:** [`gemsdoe36-wdp36-exp1-20261026-zeros.tif`](docs/downloads/gemsdoe36-wdp36-exp1-20261026-zeros.tif) (`0.093269` **HOLDOUT-DTI**), [`gemsdoe36-moe36-exp1-20261026-zeros.tif`](docs/downloads/gemsdoe36-moe36-exp1-20261026-zeros.tif) (`0.128246` **HOLDOUT-DTI**), [`gemsdoe36-atvr36-20261026.tif`](docs/downloads/gemsdoe36-atvr36-20261026.tif) (`0.129224` **HOLDOUT-DTI**), [`gemsdoe36-h36-ctrb-submod-36800-20261025T000000Z-a1d85443-zeros.tif`](docs/downloads/gemsdoe36-h36-ctrb-submod-36800-20261025T000000Z-a1d85443-zeros.tif) (`0.131910` **HOLDOUT-DTI**), and [`gemsdoe36-h36-gps-graben-pair-20261026-bb29ce2a4bb4-zeros.tif`](docs/downloads/gemsdoe36-h36-gps-graben-pair-20261026-bb29ce2a4bb4-zeros.tif) (`0.133011` **HOLDOUT-DTI**).
 > - **Historical scores:** Nine focus-site TIFFs (`0.2449`–`0.2778`) were re-audited by byte hash and XOR algebra ([ledger](evidence/focus_sites_9repo_summary_20261026.json)); because no portal screenshot/HTML receipt is archived, they are labeled **OWNER-REPORTED**, not `ORGANIZER-CONFIRMED`.
 <!-- STATUS:END -->
+
+## Additional completed lane — GVSC-36 (research-only; negative)
+
+The [GVSC-36 research TIFF](docs/downloads/gemsdoe36-gvsc36-exp3-20261026-5fb822bdfb60-zeros.tif) and [single-TIFF ZIP](docs/downloads/gemsdoe36-gvsc36-exp3-20261026-5fb822bdfb60-zeros.zip) are available for audit, **not upload**. Its **HOLDOUT-DTI** is `0.158855` (95% CI `[0.145456, 0.173084]`; `gems-segment-pooled-v1`, `60,988` withheld positives), but its 3 px dot overlap is `94.60%` vs GEMSDOE22 H23-B and `99.62%` maximum literal overlap across 206 comparators. Local format/range validation passes; the strict novelty and protocol audit fails. It was not submitted; there is no leaderboard estimate. See the [full report](docs/research/gvsc36-20261026.md), [run card](evidence/gvsc36_run_card_20261026.json) and [protocol caveats](docs/research/known_irregularities.md#gvsc-36-review-flags-2026-10-26-latest-lane-negative).
 
 ## Nine-site executive summary (pinned bytes, unverified scores)
 

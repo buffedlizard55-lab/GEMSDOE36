@@ -3,6 +3,19 @@
 > **Current MTO-36 correction (2026-10-26):** No historical focus-site score has a saved organizer submission-page receipt. All earlier “ORGANIZER-CONFIRMED” score statements in this historical register must be read as **OWNER-REPORTED**; the MTO-36 result is **HOLDOUT-DTI** only. See [new six-item irregularity review, SHA correction and strict duplicate gate](mto36-evidence-and-nine-sites.md#irregularities-and-inference-boundaries). Owner-supplied 0.3195/0.4413 are unverified and conflicting.
 
 
+Updated **2026-10-26 UTC** on branch `arena/62b9a92c-gemsdoe36` (reconciled across earlier `ATVR-36`, `H36-CTRB`, `H36-GPS`, and `Lane36` lanes). The active `arena/20b1a132-gemsdoe36` session adds four GVSC-36 flags below; the branch label in these archived historical sections is provenance, not the current working branch.
+
+## GVSC-36 review flags (2026-10-26; latest lane, negative)
+
+| ID | Finding | Resolution / effect |
+|---|---|---|
+| **IR-GVSC36-01** | Conceptual overlap with prior GEMSDOE24 H24-GVC1 geothermal vent/probe/geothermometer/upflow + lineament lane; not established as a wholly untried geological hypothesis. | Keep GVSC-36 research-only; future selector must decide whether engineering differences suffice. No weekly slot. |
+| **IR-GVSC36-02** | Tufa downweight used band 12 `det_elev <= -60 m` as a Lake Lahontan highstand proxy; band 12 is detrended, not absolute elevation. | Do not claim a valid shoreline mask; future lane requires absolute-elevation/shoreline source. Current artifact negative. |
+| **IR-GVSC36-03** | The completed run's registry surface check was executed after the dots were emitted, not before. No post-check tuning occurred, but order requirement failed. | Record as protocol-blocking and negative. Code order was fixed for future execution; this does not cure the completed run. |
+| **IR-GVSC36-04** | Frozen plan says 73 LiDAR-blind features; executable partition has 74. | Preregistration remains immutable; resolve count before a new run. |
+
+See [GVSC-36 research report](gvsc36-20261026.md), [run card](../../evidence/gvsc36_run_card_20261026.json), and [walltime record](../../evidence/gvsc36_walltime_accounting_20261026.json).
+
 Updated **2026-10-26 UTC** on branch `arena/62b9a92c-gemsdoe36` (reconciled across `ATVR-36`, `H36-CTRB`, `H36-GPS`, and `Lane36`). Every irregularity encountered across repository history, sibling-lane forensics, raw competition rasters, and pass-by-pass QA is documented below without omission.
 
 ## `WDP-36` Audit Discoveries (`arena/b8f55e32-gemsdoe36` / PR #19, `2026-10-26`)

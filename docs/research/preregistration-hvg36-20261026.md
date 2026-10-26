@@ -1,7 +1,8 @@
 # Preregistration — Lane HVG-36: Hydrothermal-Vent Structural-Conduit & Cross-Scale Phase-Dipole Out-of-Fold Discovery (2026-10-26)
 
-**Branch:** `arena/d98aabea-gemsdoe36`  
-**Locked before any HVG-36 experiment or holdout evaluation:** `2026-10-26 UTC`  
+**Branch when preregistered:** `arena/d98aabea-gemsdoe36`
+
+**Locked before any HVG-36 experiment or holdout evaluation:** `2026-10-26 UTC`
 **Shared Evaluator:** `gems.holdout.SegmentHoldout` (`evaluator_version = "gems-segment-pooled-v1"`, `buffer_px = 15` [1,500 m], `3,199` whole 8-connected fault components, `60,988` withheld positive pixels, `alpha = 0.2`, `beta = 0.8`, 300 m Euclidean triangular kernel, 10 km spatial-block bootstrap `draws = 1999`, `seed = 20261025`).
 
 ---
