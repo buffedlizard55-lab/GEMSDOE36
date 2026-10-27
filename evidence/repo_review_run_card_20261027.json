@@ -1,0 +1,32 @@
+{
+  "hypothesis": "A newly authorized detector of previously uncatalogued faults can exceed the 0.2778 owner-reported B2 result only if it contributes genuine, off-catalogue hidden-fault coverage rather than merely thinning the existing D2.8 family.",
+  "mechanism": "Not tested in this session: no single method paragraph assigned the lane. The recorded B2 gain is consistent with pruning predictions near known-fault masking, which reduces false-positive mass; the available analysis does not establish hidden-label causality.",
+  "named_non_fault_process_that_could_mimic_it": "Long roads and railways, shoreline benches, erosional range-front facets, lithologic contacts, and DEM/acquisition artifacts.",
+  "holdout_dti": {
+    "label": "HOLDOUT-DTI (historical S2D-36 EXP-2; not rerun this session)",
+    "evaluator_version": "gems-segment-pooled-v1",
+    "withheld_positives": 60988,
+    "dti": 0.200766,
+    "ci95": [
+      0.186488,
+      0.215333
+    ]
+  },
+  "correlation_overlap_vs_registry": {
+    "candidate_surface_rank_correlation": null,
+    "candidate_surface_status": "NOT RUN: no candidate surface generated",
+    "prior_KPL_final_dot_overlap_3px_vs_reg_052": 0.991687,
+    "prior_KPL_status": "FAIL; prior artifact only",
+    "37,654_dot_geometric_lower_bound_overlap_3px": 0.823418
+  },
+  "raster_sha256": null,
+  "validator_output": {
+    "no_nan_inside_footprint": null,
+    "values_in_0_1": null,
+    "crs_shape_transform_match": null,
+    "status": "NOT APPLICABLE: no new raster generated"
+  },
+  "submission_name": null,
+  "submission_note": "No new TIFF generated; no slot authorized.",
+  "verdict": "negative"
+}
