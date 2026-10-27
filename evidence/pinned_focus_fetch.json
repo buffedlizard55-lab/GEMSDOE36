@@ -1,0 +1,86 @@
+{
+  "fetched_utc": "2026-10-27T17:34:45.891357+00:00",
+  "items": [
+    {
+      "site": "GEMSDOE24",
+      "file": "gems24-h25-1-dotted-h19-5-d1-5-20261002-989f59505db1-nan.tif",
+      "path": "/home/user/GEMSDOE36/.cache/focus_registry/GEMSDOE24__gems24-h25-1-dotted-h19-5-d1-5-20261002-989f59505db1-nan.tif",
+      "status": "fetched",
+      "sha256": "68d0e2e4fcc594f9a23f56c44b885fee733d026d39be55e18ad2a07289525310",
+      "prefix_match": true,
+      "commit": "fc2bc6f350bf5c6ce8da5d7a2ab03578ea1259d1"
+    },
+    {
+      "site": "GEMSDOE25",
+      "file": "gems25-dotted-h19-5-d2-8-20261002-e56ea318af89-nan.tif",
+      "path": "/home/user/GEMSDOE36/.cache/focus_registry/GEMSDOE25__gems25-dotted-h19-5-d2-8-20261002-e56ea318af89-nan.tif",
+      "status": "fetched",
+      "sha256": "91eae1ca42ec845eaa8c2ba32da49806e24751743459b8a10017c479bbe639b8",
+      "prefix_match": true,
+      "commit": "e40b9b5e3871cb34d138f586bde97f5099658d01"
+    },
+    {
+      "site": "GEMSDOE27",
+      "file": "gems27-topo-gap-closure-t-v2-on-d1-5-20261002-5512495c6bd1-nan.tif",
+      "path": "/home/user/GEMSDOE36/.cache/focus_registry/GEMSDOE27__gems27-topo-gap-closure-t-v2-on-d1-5-20261002-5512495c6bd1-nan.tif",
+      "status": "fetched",
+      "sha256": "33003374335d84bf885f2d8f5e9dd4c57044c8ec58fa6a0d7fa581e8bc41c11d",
+      "prefix_match": true,
+      "commit": "927322eadbde56be42ae129ccdfb9b37540d8e60"
+    },
+    {
+      "site": "GEMSDOE28",
+      "file": "gems28-h36-1-rung30-blind-r1-20261003-b531dae0a36f-nan.tif",
+      "path": "/home/user/GEMSDOE36/.cache/focus_registry/GEMSDOE28__gems28-h36-1-rung30-blind-r1-20261003-b531dae0a36f-nan.tif",
+      "status": "fetched",
+      "sha256": "5556aa1438fd67376b60d5ffc99228ec09dcc11a8408298a743ccb88d6163641",
+      "prefix_match": true,
+      "commit": "e6321461066f89080e3b1bb670d3951ab20d3638"
+    },
+    {
+      "site": "GEMSDOE30",
+      "file": "gemsdoe30-d28-poisson300m-offcat-44090-20261003T233156Z-91eae1ca.tif",
+      "path": "/home/user/GEMSDOE36/.cache/focus_registry/GEMSDOE30__gemsdoe30-d28-poisson300m-offcat-44090-20261003T233156Z-91eae1ca.tif",
+      "status": "fetched",
+      "sha256": "8cf893ead5667df21d3288a9968c35fd5385c425b029d82ee71d311715b129fd",
+      "prefix_match": true,
+      "commit": "760af3005dd40b9f36d8fef97d6dc384fd9f2a2f"
+    },
+    {
+      "site": "GEMSDOE31",
+      "file": "gemsdoe31-h27-4-solo-d28-20261004-8acb75e1-nan.tif",
+      "path": "/home/user/GEMSDOE36/.cache/focus_registry/GEMSDOE31__gemsdoe31-h27-4-solo-d28-20261004-8acb75e1-nan.tif",
+      "status": "fetched",
+      "sha256": "07b6db440535404bb41ec8ddc797713e200d308e3da35937393efde5eb84bc40",
+      "prefix_match": true,
+      "commit": "597b04cd1afb65d1ebbe3e9417fd952be48e3d74"
+    },
+    {
+      "site": "GEMSDOE32",
+      "file": "gemsdoe32-h33-h33-2-b2-20261004T220000Z-e5eb6e7e-zeros.tif",
+      "path": "/home/user/GEMSDOE36/.cache/focus_registry/GEMSDOE32__gemsdoe32-h33-h33-2-b2-20261004T220000Z-e5eb6e7e-zeros.tif",
+      "status": "fetched",
+      "sha256": "c55bafc470054e8271dcb89347a17e07fefe50de6af6e6ba6c4b169ef7ab6fa9",
+      "prefix_match": true,
+      "commit": "5fc7792c5887735ecd3aa9a612787da588a7bf2c"
+    },
+    {
+      "site": "GEMSDOE33",
+      "file": "GEMSDOE33-h33d-analog-tip-stepover-r30-20261004-cb490425926e.tif",
+      "path": "/home/user/GEMSDOE36/.cache/focus_registry/GEMSDOE33__GEMSDOE33-h33d-analog-tip-stepover-r30-20261004-cb490425926e.tif",
+      "status": "fetched",
+      "sha256": "87f857d505e23247e991ccfab2cbe9f49a04df4f9c8028dce7ea261554690757",
+      "prefix_match": true,
+      "commit": "f618cc54773bd9b4d6c2b3ebf78103a05cc10cb6"
+    },
+    {
+      "site": "GEMSDOE36",
+      "file": "gemsdoe36-anderson-geothermal-pinn-38854-20261004T230000Z-9b9ea4e6-zeros.tif",
+      "path": "/home/user/GEMSDOE36/.cache/focus_registry/GEMSDOE36__gemsdoe36-anderson-geothermal-pinn-38854-20261004T230000Z-9b9ea4e6-zeros.tif",
+      "status": "fetched",
+      "sha256": "e15891020b9c57056ac7fa874a5e506fbd6ed9314a4ea8e73af0753887a3708a",
+      "prefix_match": true,
+      "commit": "c5a8ae7da3bd2fcff5aa5855afd44c7a3346c16f"
+    }
+  ]
+}

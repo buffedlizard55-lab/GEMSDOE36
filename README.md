@@ -889,3 +889,51 @@ Do not stop after the first pass. Each pass must build on the previous one. Befo
 Go ahead and create a pull request and then merge the pull request onto the main. Make suggestions for what work still needs to be done and any limitations that is in the way of a successful project. It should be worked on in this next session or the next session. Work line by line verify everything no hallucinations.
 
 </details>
+
+# Standing mission brief — session 2026-10-27 (read at the start of every session)
+
+Core values carried forward: **Maximize P(Win)** and **Own the Outcome**. Work line by line, verify from official/trusted sources, provide links for manual review, no hallucinations, flag irregularities.
+
+## What this session is for
+Focus sites: GEMSDOE24, GEMSDOE25, GEMSDOE27, GEMSDOE28, GEMSDOE30, GEMSDOE31, GEMSDOE32, GEMSDOE33, GEMSDOE36.
+Goal: an executive summary on every site that makes it obvious which submission gives the best shot at a high leaderboard score, plus a table listing per site: what file to download, the estimate score, and whether it is unique vs the other sites.
+
+## Hard requirement — unique TIF submission
+MUST generate a unique TIF submission for the competition. Do not copy a previous submission (except for learning). The generated TIF must make it obvious whether it is OK to download and submit. There must be an easy-to-download submission TIF. Inspection/validation must be done through the project, not by a human inspector, and the file must validate for submission without human intervention.
+
+## Format rule (verified this session)
+DrivenData returned "Predicted values must be in range [0, 1]" on a NaN-outside file. Fix: write single-band float32 GeoTIFF on the organizer grid (EPSG:32611, 3730x3292, 100 m), finite values in [0,1] inside the footprint, **zeros outside the footprint** (never NaN). Verified locally for `docs/downloads/gemsdoe36-kpl36-exp3-20261026-fc869911e88c-zeros.tif` vs `data/raw/sample_submission.tif`: PASS (no NaN inside footprint, max 1.0, min 0.0, template match).
+Each submission needs a unique name and a Note of at most 140 characters.
+
+## Scoring reality (no projections written as scores)
+- Historical anchor: GEMSDOE32 `h33-h33-2-b2-20261004T220000Z-e5eb6e7e-zeros` reported 0.2778 (owner-reported; no organizer receipt; not unique — 100% directed overlap vs another pinned site). Mechanism: d2.8 dotted ridge with catalogue-flank pruning (dots ≤200 m from known faults removed because the organizer masks known faults pixel-exactly — those dots earn zero TP credit yet consume budget).
+- Current leaderboard reads conflict: 0.3195 (this session's read) vs 0.4437 (manual read 2026-10-26 recorded in the repo). Neither is a receipt; reconcile against the official leaderboard before spending a slot.
+- Best validated file on this site: KPL-36 EXP-3 (`gemsdoe36-kpl36-exp3-20261026-fc869911e88c-zeros.tif`), HOLDOUT-DTI 0.1701 [0.1551, 0.1861] (internal, not a leaderboard score), registry gate passed (max |rho| 0.0567 vs cap 0.90; max 3-px dot overlap 0.6674 vs cap 0.70 across 20 rasters), format-verified, verdict promote, OK TO SUBMIT.
+
+## New hypotheses (registered, not yet validated except N1)
+Full register: docs/research/new-hypotheses-20261027.md.
+- N2 (top): hydrothermal alteration halo (GeoDAWN radiometric K/Th + RTP magnetite-destruction trough) gated by DOE GDR 1391 / INGENIOUS 2 m temperature-probe anomalies — blind concealed faults. Cost medium; expected +0.008–0.018 HOLDOUT-DTI (estimate).
+- N4: strike-independent TMI analytic-signal envelope. Cost low; +0.003–0.010.
+- N5: drainage convergence / stream-power on detrended elevation. Cost medium; +0.004–0.012.
+- N3: USGS ComCat seismicity cluster edges — conditional on ComCat being obtainable from this sandbox.
+- N1 (TESTED NEGATIVE): shear/dilation structure-tensor coherence — HOLDOUT-DTI 0.0170 vs baseline 0.0217; card at evidence/n1_holdout_run_card.json; do not promote.
+Rule: validate the top candidate on the spatially-blocked holdout (hide whole segments, buffer 30 px; pooled DTI alpha 0.2 / beta 0.8, 300 m triangular kernel; leakage canary AUC ≤ 0.90; uniqueness gate vs registry) BEFORE spending any weekly submission slot. A projection is never written as a score.
+
+## Deliverables produced this session
+- docs/executive-summary.html — nine-site table + how-to-submit guide + KPL-36 release hero (download at top of page).
+- docs/index.html — decision aligned: only KPL-36 is OK TO SUBMIT; everything else DO NOT SUBMIT.
+- evidence/kpl36_registry_audit.json — uniqueness audit vs 20 local scored + 9 SHA-256-verified pinned focus rasters: PASS.
+- evidence/kpl36_run_card_20261026.json — KPL-36 run card (promote).
+- Local format validation of KPL-36 TIF vs data/raw/sample_submission.tif: PASS ([0,1], zeros outside, grid/CRS match).
+- evidence/n1_holdout_run_card.json — N1 negative holdout result.
+- data/raw/ — competition data restored and SHA-256 verified (25 files) via scripts/download_competition_data.sh + scripts/prepare_data.py.
+
+## Site
+GitHub Pages from /docs: clean UI, download buttons at the top of both pages, executive-summary subpage with the how-to-submit guide, official links (DrivenData competition 306 pages 967/968/leaderboard, rules PDF docs.nlr.gov/docs/fy26osti/96647.pdf, USGS GeoDAWN, DOE GDR 1391, EPSG:32611, Tversky index).
+
+## Remaining work (next session)
+1. Validate N2 on holdout; require HOLDOUT-DTI > 0.1701 with CI separation before any slot.
+2. If promoted: emit TIF via scripts/submission_writer.py (mode "zeros"), validate, registry audit, run card (≤140-char note, SHA-256), selector spends one weekly slot, archive the organizer receipt.
+3. Refresh the pinned nine-site table (public refs changed 2026-10-26).
+4. Reconcile 0.4437 vs 0.3195 leaderboard reads.
+5. Limitations: no DrivenData auth (cannot auto-download organizer data or auto-submit); no organizer receipt exists for any historical score; uniqueness is scoped to rasters available to this project.
