@@ -75,6 +75,21 @@
     }
   ],
   "research_candidate": {
+    "lane": "TCD-36",
+    "file": "gemsdoe36-tcd36-exp2-20261027-9970b80c6585-zeros.tif",
+    "sha256": "513a7378a96452fa31e524a002f467457c58fabcb0da896fa75830d0973f4037",
+    "zip": "gemsdoe36-tcd36-exp2-20261027-9970b80c6585-zeros.zip",
+    "zip_sha256": "1a6b74d6a8444c53905113d2512dcdd9ca7cad82602beac19d3f3ea16bba9733",
+    "companion_nan_file": "gemsdoe36-tcd36-exp2-20261027-9970b80c6585-nan.tif",
+    "companion_nan_sha256": "03387511a5cbc1d76c984f2e4d54a70b03368088b885147a723585db2c140e10",
+    "card": "tcd36-run-card.json",
+    "submit_ok": false,
+    "note": "TCD-36 EXP-2 10m3DEP+Chi+Stage2 | HOLDOUT-DTI 0.1942 | DO NOT SUBMIT literal gate 9970b80c6585",
+    "holdout_dti_LABEL": "HOLDOUT-DTI",
+    "holdout_dti": 0.19416399564770398,
+    "organizer_score": null
+  },
+  "superseded_kpl36_research_candidate": {
     "lane": "KPL-36",
     "file": "gemsdoe36-kpl36-exp3-20261026-fc869911e88c-zeros.tif",
     "sha256": "86fc8243ad573bcdbfac8b432daf0ec5b6800b991b2c3278706358be7eb9922d",
@@ -86,5 +101,6 @@
     "holdout_dti_LABEL": "HOLDOUT-DTI",
     "holdout_dti": 0.17010000946379217,
     "organizer_score": null
-  }
+  },
+  "latest_run_card": "tcd36-run-card.json"
 }

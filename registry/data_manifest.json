@@ -152,6 +152,61 @@
       "provenance": "DOE OpenEI GDR 1391 INGENIOUS 2-Meter Temperature Probe Survey Compilation (DOI 10.15121/1881483, CC BY 4.0; Coolbaugh et al., GBCGE/UNR): 3,800 shallow 2 m probe stations (2,782 inside GEMS footprint across 34 blind geothermal survey areas, F2mDAB degrees above background); zero fault-distance/label columns"
     },
     {
+      "id": "ext_topo_10m_derived_100m_u8",
+      "repo": "buffedlizard55-lab/60GEMSDOE",
+      "ref": "156e7486b5b22c34bf9d7b8d90a714545d63f15a",
+      "path": "data/external/topo_10m_derived_100m_u8.tif",
+      "dest": "external/topo_10m_derived_100m_u8.tif",
+      "group": "external",
+      "sha256": "a6398d9950965dec6aae6ccecdaa6ced48645d133eab222cbdd11def9bdabfa4",
+      "bytes": 32523329,
+      "provenance": "derived from USGS 3DEP 1/3 arc-second (10 m) seamless DEM across 100% of the GEMS footprint (public domain USGS, https://www.usgs.gov/3d-elevation-program): 9 uint8 bands (slope_p90, slope_max, steep_frac, slope_std, relief_local, curv_prof_absmax, aspect_coherence, hs_lineament, dem_mean); zero fault-catalogue inputs"
+    },
+    {
+      "id": "ext_dem10_chi_100m_i16",
+      "repo": "buffedlizard55-lab/60GEMSDOE",
+      "ref": "156e7486b5b22c34bf9d7b8d90a714545d63f15a",
+      "path": "data/external/dem10_chi_100m_i16.tif",
+      "dest": "external/dem10_chi_100m_i16.tif",
+      "group": "external",
+      "sha256": "8897ba9c30ef1cd7ad5f23c16c6dfd7bb070e7e757f36fd9486eb45edfd973a5",
+      "bytes": 12777098,
+      "provenance": "derived from USGS 3DEP 10 m seamless DEM via Perron-Royden (2013) fluvial chi drainage integration (theta_ref = 0.45, public domain USGS): 5 int16 bands (step_max_x1000, step_min_x1000, ksn_max_m0.9, log10_area_m2_x1000, zmean_m integer elevation m ASL); zero fault-catalogue inputs"
+    },
+    {
+      "id": "ext_dem10_chi_100m_u8",
+      "repo": "buffedlizard55-lab/60GEMSDOE",
+      "ref": "156e7486b5b22c34bf9d7b8d90a714545d63f15a",
+      "path": "data/external/dem10_chi_100m_u8.tif",
+      "dest": "external/dem10_chi_100m_u8.tif",
+      "group": "external",
+      "sha256": "e8830ba6f0bb99f525266b1b3a483b0722d25cd4758c2bbccc6e7f54eb6b1b6a",
+      "bytes": 2061484,
+      "provenance": "derived from USGS 3DEP 10 m seamless DEM channel/knickpoint hydrology (public domain USGS): 4 uint8 bands (chan_n, knick_n, raised_n endorheic pit fill, valid_n); zero fault-catalogue inputs"
+    },
+    {
+      "id": "ext_tiger_road_distance_m",
+      "repo": "buffedlizard55-lab/GEMSDOE24",
+      "ref": "07345ea0604953d7efb858d9cfbc21e20c7aca0b",
+      "path": "data/external/audit_sources/tiger_road_distance_m.tif",
+      "dest": "external/tiger_road_distance_m.tif",
+      "group": "external",
+      "sha256": "e5350423508968fa2d32b0a6ae0d3fb4ae3ea645e3b8736f0c8e7ad9ff2f2988",
+      "bytes": 10492276,
+      "provenance": "derived from US Census Bureau TIGER/Line roads and railroads (public domain, 17 U.S.C. 105, https://www.census.gov/geographies/mapping-files/time-series/geo/tiger-line-file.html): float32 Euclidean distance in meters to nearest road/highway/railroad across EPSG:32611 grid; zero fault-catalogue inputs"
+    },
+    {
+      "id": "ext_dem1m_high_prior_openness_lrm",
+      "repo": "buffedlizard55-lab/19GEMSDOE",
+      "ref": "a3aca62fdb2be428f4245e22570cbc54082b2c15",
+      "path": "evidence/ci/dem1m_high_prior_openness_lrm.npz",
+      "dest": "external/dem1m_high_prior_openness_lrm.npz",
+      "group": "external",
+      "sha256": "62f27929747ad3c35be4dd3e0257b0bde7d7bea8566474956e1711269ad451fe",
+      "bytes": 610575,
+      "provenance": "derived from USGS 3DEP 1 m DEM openness dipole and local relief model (public domain USGS); zero fault-catalogue inputs"
+    },
+    {
       "id": "scored_h19_5",
       "repo": "buffedlizard55-lab/GEMSDOE24",
       "ref": "07345ea0604953d7efb858d9cfbc21e20c7aca0b",

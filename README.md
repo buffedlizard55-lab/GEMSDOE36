@@ -3,6 +3,16 @@
 <!-- LITERAL_REVIEW:START -->
 > **27 October 2026 superseding decision: DO NOT SUBMIT.** KPL is a literal-protocol duplicate: 99.17% 3-px overlap with reg-052. The owner reports KPL **0.1647 USER-REPORTED**, not organizer-confirmed. The prior forecast is uncalibrated and withdrawn. No new TIFF, training experiment or submission slot was authorized. See [executive review](docs/research/review-20261027.md) and [reproduced run card](evidence/literal_release_review_20261027.json). The method paragraph assigning this session's lane is absent. Historical cards and reported scores are preserved, not promoted.
 <!-- LITERAL_REVIEW:END -->
+<!-- TCD36_README:START -->
+> ## LATEST RESEARCH CANDIDATE (2026-10-27) · `TCD-36` (`EXP-2`) · DOWNLOAD: YES · DO NOT SUBMIT AUTOMATICALLY (`verdict: negative`)
+>
+> - **Validated `[0, 1]` GeoTIFF:** [`gemsdoe36-tcd36-exp2-20261027-9970b80c6585-zeros.tif`](docs/downloads/gemsdoe36-tcd36-exp2-20261027-9970b80c6585-zeros.tif) ([Single-TIFF ZIP](docs/downloads/gemsdoe36-tcd36-exp2-20261027-9970b80c6585-zeros.zip), [Companion `-nan.tif`](docs/downloads/gemsdoe36-tcd36-exp2-20261027-9970b80c6585-nan.tif), [Run Card JSON](evidence/tcd36_run_card_20261027.json), [Monograph & PhD `0.2778` Synthesis](docs/research/tcd36-20261027.md), [Frozen Preregistration](docs/research/tcd36-preregistration-20261027.md)).
+> - **SHA-256 (`-zeros.tif`):** `513a7378a96452fa31e524a002f467457c58fabcb0da896fa75830d0973f4037` · **Dots:** `37,654` · **Grid:** `EPSG:32611`, `3730×3292` at `100 m`, all `12,279,160` cells finite in `[0.0, 1.0]` (`0` NaN/Inf, `0` dots within `200 m` of `labels.tif`).
+> - **Unique Name:** `gemsdoe36-tcd36-exp2-20261027-9970b80c6585` · **Copy-Paste Note (`94/140` chars):** `TCD-36 EXP-2 10m3DEP+Chi+Stage2 | HOLDOUT-DTI 0.1942 | DO NOT SUBMIT literal gate 9970b80c6585`
+> - **Spatially-Blocked Holdout (`gems-segment-pooled-v1`, `60,988` withheld positives):** **`HOLDOUT-DTI = 0.194164`** (95% CI `[0.180342, 0.208343]`), beating `KPL-36 EXP-3` (`0.170100`) by **`+0.024064`** across **all 4/4 spatial folds** (`NW 0.19700`, `NE_LidarGapHeavy 0.25694`, `SW 0.13911`, `SE 0.20817`) and `B0` (`0.134184`) by **`+0.059980`** (`EXP-1 = 0.185269`, `EXP-3 = 0.192469`). Internal hide-and-recover metric — not a live leaderboard forecast.
+> - **Crowding Collapse Fixed:** Cuts `KPL-36`'s `>=3`-neighbor 300 m blob crowding from **`42.57%`** (`0.1647 USER-REPORTED`) to **`4.54%`** (`9.4×` reduction) and expands blind 300 m kernel coverage by **`+23.3%`** (`0.05193` vs `0.04210`).
+> - **Leakage Canary & Multi-Regime Uniqueness:** Stage-1 canary max AUC `0.6470 <= 0.90` (**PASS**); Stage-2 OOF canary max AUC `0.8039 <= 0.90` (**PASS**); pre-placement continuous surface `|Spearman rho| = 0.4254 <= 0.90` (**PASS**); 9-focus-site competing `<100k`-dot 3-px overlap max `0.6682 <= 0.70` (vs `GEMSDOE32 B2` = `0.5699`, vs `KPL-36` = `0.5672`, **PASS**); all-215 mutual 3-px overlap max `0.5672 <= 0.70` (**PASS**); literal unseparated `a > 0` overlap vs `reg-052` 5-px calibration lattice = `0.9935 > 0.70` (**FAIL — automatic slot promotion remains closed per `PR #31` and Protocol Rule 6**).
+<!-- TCD36_README:END -->
 
 **Read this decision and the [standing owner brief](#full-standing-owner-brief-historical-wording) at the start of every session.** Core values: **Maximize P(Win)** and **Own the Outcome**.
 
@@ -896,12 +906,32 @@ Go ahead and create a pull request and then merge the pull request onto the main
 
 ## Standing brief update — 27 October 2026
 
-Read the full standing owner brief above on every session. The latest request
-reiterates the same unique-TIFF, nine-site audit, official-source research,
-three-pass review, at-most-three-experiment/two-hour parallel-run protocol and
-PR/merge requirements. It additionally reports KPL-36 at **0.1647 USER-REPORTED**
-and reiterates that a real weekly slot is a separate selector decision. No
-organizer receipt accompanies that report. The supplied text does not identify
-the single method paragraph assigning this lane. We must not infer permission to
-remove registry controls. See the superseding review before interpreting older
-promotion language. Repeated historical leaderboard numbers are not live data.
+Read the full standing owner brief above on every session. The latest user
+baseline prompt (2026-10-27) reiterates the same unique-TIFF, nine-site audit
+(`GEMSDOE24`, `GEMSDOE25`, `GEMSDOE27`, `GEMSDOE28`, `GEMSDOE30`, `GEMSDOE31`,
+`GEMSDOE32`, `GEMSDOE33`, `GEMSDOE36`), PhD explanation of why `GEMSDOE32`'s
+`h33-h33-2-b2-20261004T220000Z-e5eb6e7e-zeros` achieved `0.2778 OWNER-REPORTED`
+vs public leaderboard highs (`0.3195` prior / `0.4413` prompt-quoted / `0.4437`
+2026-10-26 manual read), official-source research, 3–5 novel preregistered
+geological hypotheses ranked by expected DTI gain and cost, three-pass review
+(Pass 1, Pass 2, Pass 3), at-most-three-experiment / two-hour Parallel-Run
+Protocol, automated `[0, 1]` GeoTIFF validation without human-inspector-only
+gating, JSON Run Card, and PR creation + merge onto `main`.
+
+Newly supplied user-reported scores from the 2026-10-27 prompt (preserved with
+strict `USER-REPORTED` provenance because no DrivenData submission-page receipt
+is archived in `evidence/`):
+- `GEMSDOE36`: `gemsdoe36-kpl36-exp3-20261026-fc869911e88c`: **0.1647 USER-REPORTED**
+- `GEMSDOE27`: `gemsdoe27-h31-1-pruned-scarp-20261026-6620edce`: **0.2250 USER-REPORTED**
+- `GEMSDOE70`: `gems70-h70c-alldata-s2-20261025T225750Z-77274569-zeros`: **0.2478 USER-REPORTED**
+- `GEMSDOE73`: `gemsdoe73-h73-2-twostage-20261025-8353ca04`: **0.2054 USER-REPORTED**
+- `GEMSDOE76`: `gems76-h76c-tridomain-s2-celf-20261025-f47302d5-zeros`: **0.2343 USER-REPORTED**
+- `KANLERGEMSDOE1..3`: `0.0085` / `0.2709` / `0.0680 USER-REPORTED`; `EUGGEMSDOE1..3`: `0.1538` / `0.2747` / `0.1753 USER-REPORTED`; `WBGGEMSDOE1..3`: `0.2686` / `0.0641` / `0.1932 USER-REPORTED`; `GINNYGEMSDOE1..3`: `0.2586` / `0.2602` / `0.2633 USER-REPORTED`.
+
+Per Protocol Rule 6 and `PR #31`, promotion to a real weekly slot remains a
+separate human selector decision; we do not remove registry calibration controls
+unilaterally, and `TCD-36` (`HOLDOUT-DTI = 0.194164`, `+0.0241` over `KPL-36`,
+`4.54%` 300 m crowding vs `42.57%`) fails closed on automatic slot spend solely
+due to `reg-052`'s 5-px calibration lattice while publishing the validated
+`[0, 1]` research GeoTIFF (`DOWNLOAD: YES · DO NOT SUBMIT automatically`).
+
