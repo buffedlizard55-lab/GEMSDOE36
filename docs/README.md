@@ -1,6 +1,6 @@
 # GitHub Pages — current decision
 
-**No new candidate TIFF was generated. DO NOT SUBMIT.** The current outcome is a mathematical registry preflight stop; earlier TIFFs are available only for research. See the [landing page](index.html), [executive guide](executive-summary.html), [run card](downloads/registry-preflight-run-card.json), and [proof and hypothesis ranking](research/registry-preflight-20261026.md).
+**No new candidate TIFF was generated. DO NOT SUBMIT.** The current outcome is a mathematical registry preflight stop; earlier TIFFs are available only for research. See the [landing page](index.html), [executive guide](executive-summary.html), [run card](downloads/registry-preflight-run-card.json), [proof and hypothesis ranking](research/registry-preflight-20261026.md), and [27 October repository review](research/repo-review-20261027-session.md) with its [session run card](downloads/repo-review-run-card-20261027.json).
 
 The nine-site table links pinned historical bytes, **not organizer receipts** or a current complete inventory. The optional `assets/live-feed.js` checks public GitHub commit freshness only. It does not scrape or monitor the competition leaderboard; use its official link manually. The tracked mirrors are integrity-pinned owner sources, not authenticated organizer downloads.
 
