@@ -3,7 +3,7 @@
   "lane_id": "KPL-36",
   "best_arm": "EXP-3",
   "generated_utc": "2026-10-26T23:15:40.323790+00:00",
-  "verdict": "promote",
+  "verdict": "negative",
   "hypothesis": "H-KPL-A: hidden expert-mapped faults are long-but-faint traces; 3-5 km oriented line coherence (structure tensor sigma=15px, line integrals half=15/25px, topographic-magnetic orientation agreement) raises their SNR above pixelwise-GBM threshold while suppressing short erosional/cultural segments. EXP-3 adds H-KPL-B PU-spy decontamination.",
   "mechanism": "101 label-free features (GVSC-89 + 12 KPL) -> 2-seed HGB experts with Prentice-Pyke calibration -> LiDAR-blind bridge fusion (EXP-2/3) -> assembled quadrant-OOF surface -> B2 collar (d_cat>2px) -> exact 300 m CELF submodular emission of 37,654 binary dots.",
   "named_non_fault_mimic": "Long straight roads/railways/pipelines, Lahontan shoreline benches, range-front erosional facets; PU arm risk: basin-biased reliable negatives over-firing on range fronts.",
@@ -245,9 +245,12 @@
     "G1_canary": true,
     "G2_holdout_beats_recorded_gvsc_and_paired_B0": true,
     "G3_focus9_uniqueness": true,
-    "G4_format": true
+    "G4_format": true,
+    "G5_literal_full_registry_overlap": false
   },
   "organizer_score": null,
   "leaderboard_estimate": "See docs/research/kpl36-20261026.md score-estimate model (range with stated assumptions); HOLDOUT-DTI is not a leaderboard score.",
-  "elapsed_seconds": 305.4
+  "elapsed_seconds": 305.4,
+  "historical_verdict_before_literal_review": "promote",
+  "superseding_review": "evidence/literal_release_review_20261027.json"
 }
