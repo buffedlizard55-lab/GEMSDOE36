@@ -3,7 +3,7 @@
   "lane_id": "SFD-36",
   "best_arm": "EXP-2",
   "generated_utc": "2026-10-27T19:05:07.834714+00:00",
-  "verdict": "promote",
+  "verdict": "negative",
   "hypothesis": "H-SFD-A: uncatalogued buried normal faults show a signed transverse step dipole |f(+2/4px)-f(-2/4px)| sustained along strike in elevation/RTP/gravity/LiDAR-step, even with no ridge crest; EXP-3 (H-SFD-B) rank-fuses a dipole-only expert.",
   "mechanism": "101 label-free features (GVSC-89 + 12 SFD dipole) -> 2-seed HGB experts, Prentice-Pyke -> LiDAR-blind bridge (EXP-2); EXP-3 rank-fuses dipole-only expert 0.7/0.3 -> OOF surface -> B2 collar -> CELF 37,654 dots.",
   "named_non_fault_mimic": "Lithologic contacts, Lahontan shoreline scarps, canal/road embankments (also transverse dipoles).",
@@ -120,7 +120,7 @@
     "zip": "docs/downloads/gemsdoe36-sfd36-exp2-20261027-d65acb3011d5-zeros.zip",
     "zip_sha256": "cf2364512377356a5fbea2be1c00fe2254153a0350ed06131cc278b1fd8bfa02",
     "name": "gemsdoe36-sfd36-exp2-20261027-d65acb3011d5",
-    "note": "SFD-36 EXP-2 signed step-dipole+bridge | HOLDOUT-DTI 0.1784 | PROMOTE d65acb3011d5",
+    "note": "SFD-36 EXP-2 step-dipole HOLDOUT-DTI 0.1784 NEGATIVE literal-duplicate do not submit d65acb3011d5",
     "note_characters": 82,
     "dots": 37654
   },
@@ -245,9 +245,11 @@
     "G1_canary": true,
     "G2_holdout_beats_recorded_gvsc_and_paired_B0": true,
     "G3_focus9_uniqueness": true,
-    "G4_format": true
+    "G4_format": true,
+    "G3_literal_any_registry": false
   },
   "organizer_score": null,
   "leaderboard_estimate": "See docs/research/sfd36-20261027.md; HOLDOUT-DTI is not a leaderboard score.",
-  "elapsed_seconds": 328.1
+  "elapsed_seconds": 328.1,
+  "literal_amendment": "evidence/sfd36_literal_amendment_20261027.json"
 }

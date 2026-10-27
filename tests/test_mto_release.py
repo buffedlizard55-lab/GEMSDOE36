@@ -113,25 +113,23 @@ def test_negative_preflight_cannot_be_forged_to_promote():
 
 
 def test_current_manifest_binds_negative_card_and_rejects_positive_mutations():
-    """Successor (SFD-36 v6): current manifest is hash-bound to the SFD-36 run
-    card; the superseded KPL-36 v5 (and nested negative BDC-36 v4) manifests
-    must survive nested, and mutations that break either binding are rejected."""
+    """Successor (KPL-36 v5): current manifest is hash-bound to the KPL-36 run
+    card; the superseded negative BDC-36 v4 manifest must survive nested, and
+    mutations that break either binding are rejected."""
     stop_path = ROOT / "evidence/registry_preflight_run_card_20261026.json"
     stop = json.loads(stop_path.read_text())
     current = load("docs/current-run.json")
-    assert current["schema"] == "gemsdoe36.current-run.v6"
+    assert current["schema"] == "gemsdoe36.current-run.v5"
     assert validate_current(current, stop, sha(stop_path)) == []
-    prev = current["previous_current_run_v5_KPL36"]["previous_current_run_v4_BDC36"]
+    prev = current["previous_current_run_v4_BDC36"]
     assert prev["lane_id"] == "BDC-36" and prev["verdict"] == "negative"
-    for key, value in (("slot_approved", False), ("tif_sha256", "invented"),
-                       ("ok_to_download_and_submit", False), ("run_card_sha256", "bad")):
+    for key, value in (("slot_approved", not current["slot_approved"]), ("tif_sha256", "invented"),
+                       ("ok_to_download_and_submit", not current["ok_to_download_and_submit"]), ("run_card_sha256", "bad")):
         fake = deepcopy(current)
         fake[key] = value
         assert validate_current(fake, stop, sha(stop_path))
     fake = deepcopy(current)
-    fake["previous_current_run_v5_KPL36"]["previous_current_run_v4_BDC36"]["slot_approved"] = True
-    # mutation must be detected via nested-manifest tampering
-    fake["previous_current_run_v5_KPL36"] = {"lane_id": "KPL-36"}
+    fake["previous_current_run_v4_BDC36"]["slot_approved"] = True
     assert validate_current(fake, stop, sha(stop_path))
 
 
@@ -178,9 +176,9 @@ def test_parallel_dw_remains_negative_and_separate_from_preflight():
     ensure_parallel_dw(dw)
     current = load("docs/current-run.json")
     assert current["parallel_experiments"] == [parallel_dw_projection(dw)]
-    # v6 lead lane is SFD-36 (its own holdout); DW36 stays a separate parallel entry.
-    assert current["previous_current_run_v5_KPL36"]["previous_current_run_v4_BDC36"]["lane_id"] == "BDC-36"
-    assert current["holdout_dti"] == pytest.approx(0.17839382995499448)
+    # v5 lead lane is KPL-36 (its own holdout); DW36 stays a separate parallel entry.
+    assert current["previous_current_run_v4_BDC36"]["lane_id"] == "BDC-36"
+    assert current["holdout_dti"] == pytest.approx(0.17010000946379217)
     assert dw["holdout_dti"]["pooled_candidate"] == pytest.approx(0.06605205634872657)
     fake = deepcopy(dw)
     fake["submit_ok"] = True

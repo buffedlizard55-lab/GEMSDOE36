@@ -1,0 +1,10 @@
+{
+  "lane_id": "SFD-36",
+  "date": "2026-10-27",
+  "superseding_verdict": "negative",
+  "reason": "Literal parallel-run protocol: 99.3945% of SFD-36 dots within 3px of registry reg-052 blind lattice (13GEMSDOE r13-lattice-s5); also 0.7261 max vs all 97 focus-9 rasters (GEMSDOE32 hcvf2). Champion-only gate (0.6429) is insufficient under the literal any-registry rule, consistent with origin/main PR#32 revoking KPL-36 (99.17% vs reg-052; KPL actual 0.1647 USER-REPORTED per main).",
+  "holdout_dti_exp2": 0.17839382995499448,
+  "label": "HOLDOUT-DTI (gems-segment-pooled-v1, 60988 withheld)",
+  "ok_to_submit": false,
+  "note": "Research only. Do not spend a slot unless the owner explicitly relaxes the literal lattice rule in writing."
+}

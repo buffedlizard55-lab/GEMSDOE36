@@ -18,7 +18,6 @@ ROOT = Path(__file__).resolve().parents[1]
 DOCS = ROOT / "docs"
 STOP = ROOT / "evidence/registry_preflight_run_card_20261026.json"
 KPL_CARD_PATH = ROOT / "evidence/kpl36_run_card_20261026.json"
-SFD_CARD_PATH = ROOT / "evidence/sfd36_run_card_20261027.json"
 
 
 def sha(path: Path) -> str:
@@ -85,14 +84,6 @@ def kpl_promote() -> tuple[bool, dict]:
     return bool(card.get("verdict") == "promote" and card.get("gates") and all(card["gates"].values())), card
 
 
-def sfd_promote():
-    try:
-        card = json.loads(SFD_CARD_PATH.read_text())
-    except (OSError, ValueError):
-        return False, {}
-    return bool(card.get("verdict") == "promote" and card.get("gates") and all(card["gates"].values())), card
-
-
 def validate_current(current: dict, stop: dict, stop_sha: str) -> list[str]:
     """A missing or fabricated candidate cannot be made submit-ready by Pages.
 
@@ -102,27 +93,6 @@ def validate_current(current: dict, stop: dict, stop_sha: str) -> list[str]:
     preregistered gates all pass, and must preserve the superseded BDC-36
     manifest verbatim under ``previous_current_run_v4_BDC36`` (itself negative).
     """
-    if current.get("schema") == "gemsdoe36.current-run.v6":
-        errors = []
-        promote, card = sfd_promote()
-        sub = card.get("submission") or {}
-        if (current.get("lane_id") != "SFD-36"
-                or current.get("verdict") != card.get("verdict")
-                or current.get("slot_approved") is not promote
-                or current.get("ok_to_download_and_submit") is not promote
-                or current.get("tif_path") != str(sub.get("file", "")).removeprefix("docs/")
-                or current.get("tif_sha256") != sub.get("sha256")
-                or current.get("run_card") != "downloads/sfd36-run-card.json"
-                or current.get("run_card_sha256") != sha(ROOT / "docs/downloads/sfd36-run-card.json")
-                or not isinstance(current.get("holdout_dti"), float)):
-            errors.append("v6 current manifest is not bound to the SFD-36 run card / gates")
-        prev = current.get("previous_current_run_v5_KPL36")
-        if not isinstance(prev, dict) or prev.get("lane_id") != "KPL-36":
-            errors.append("v6 current manifest must preserve the superseded KPL-36 v5 manifest")
-        prev4 = (prev or {}).get("previous_current_run_v4_BDC36")
-        if not isinstance(prev4, dict) or prev4.get("lane_id") != "BDC-36" or prev4.get("verdict") != "negative":
-            errors.append("v6 manifest must preserve the negative BDC-36 v4 manifest (nested)")
-        return errors
     if current.get("schema") != "gemsdoe36.current-run.v5":
         return _validate_current_v3(current, stop, stop_sha)
     errors = []
@@ -208,7 +178,7 @@ def main() -> int:
             errors.append(f"docs/{page}: negative verdict must lead the page")
         if site_table(ledger) not in path.read_text():
             errors.append(f"docs/{page}: pinned nine-site table differs from source")
-        _kpl_ok, _kpl_card = sfd_promote()
+        _kpl_ok, _kpl_card = kpl_promote()
         forbidden_phrases = ("New GEMSDOE36 Holdout Record", "Highest Recorded Holdout across 9 repos",
                              "Estimated Score: HOLDOUT-DTI", "Projected live score")
         if not _kpl_ok:
@@ -220,7 +190,7 @@ def main() -> int:
             for phrase in ("OK TO SUBMIT", _kpl_card["submission"]["sha256"],
                            Path(_kpl_card["submission"]["file"]).name, _kpl_card["submission"]["note"]):
                 if phrase not in text:
-                    errors.append(f"docs/{page}: missing SFD-36 current candidate identity: {phrase[:60]}")
+                    errors.append(f"docs/{page}: missing KPL-36 current candidate identity: {phrase[:60]}")
         if re.search(r"(?:0\.\d{3,4}).{0,25}ORGANIZER-CONFIRMED", text, re.I):
             errors.append(f"docs/{page}: numeric score incorrectly called organizer-confirmed")
         for fname, checksum in (
@@ -261,7 +231,6 @@ def main() -> int:
         (ROOT / "evidence/moe36_run_card_20261026.json", DOCS / "downloads/moe36-run-card.json"),
         (ROOT / "evidence/atvr36_run_card_20261026.json", DOCS / "downloads/atvr36-run-card.json"),
         (KPL_CARD_PATH, DOCS / "downloads/kpl36-run-card.json"),
-        (SFD_CARD_PATH, DOCS / "downloads/sfd36-run-card.json"),
     ):
         if not copy.is_file() or original.read_bytes() != copy.read_bytes():
             errors.append(f"Pages JSON mirror differs from evidence: {copy}")
