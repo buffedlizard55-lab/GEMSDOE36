@@ -1,0 +1,130 @@
+{
+  "schema": "gemsdoe36.preregistration.v1",
+  "lane_id": "S2D-36",
+  "lane_title": "Seamless-Scarp, Survey-Deconfounded, Two-Stage Corridor & Dual-Population Geothermal Fault Detector",
+  "frozen_utc": "2026-10-27T17:45:00Z",
+  "repository": "buffedlizard55-lab/GEMSDOE36",
+  "branch": "arena/4d7c2fe0-gemsdoe36",
+  "protocol_budget": {
+    "max_holdout_experiments": 3,
+    "planned_experiments": [
+      "EXP-1",
+      "EXP-2",
+      "EXP-3"
+    ],
+    "controls": [
+      "B0",
+      "C-KPL"
+    ],
+    "max_walltime_seconds": 7200,
+    "evaluator": "gems-segment-pooled-v1",
+    "buffer_px": 15,
+    "buffer_m": 1500,
+    "withheld_positives_expected": 60988,
+    "fold_budgets": [
+      8414,
+      10404,
+      10410,
+      8426
+    ],
+    "deploy_budget": 37654,
+    "catalogue_collar_rule": "d_cat > 2.0 px (strictly exclude zero-credit 200 m collar around existing_faults.tif)"
+  },
+  "ranked_untried_hypotheses": [
+    {
+      "rank": 1,
+      "id": "H-S2D-1",
+      "experiment_arm": "EXP-1",
+      "title": "Seamless 10 m USGS 3DEP Asymmetric Scarp Continuation + Census TIGER Road-Cut & GeoDAWN Survey-Seam Deconfounding",
+      "layers_used": [
+        "USGS 3DEP 1/3 arc-second (~10 m) seamless DEM (ScienceBase 4f70aa9fe4b058caae3f8de5, 100.0% footprint coverage)",
+        "U.S. Census Bureau TIGER/Line 2024 Roads across 32 CA/NV counties (tiger_road_distance_m.tif)",
+        "USGS GeoDAWN Four Acquisition Blocks (Winnemucca, Fallon, Hawthorne, Tonopah; DOI 10.5066/P93LGLVQ)",
+        "Competition training_features.tif + 1 m 3DEP LiDAR + GDR 1391 hydrothermal stack (101 KPL-36 features)"
+      ],
+      "physical_signature_and_transform": "Computes 16 seamless 10 m scarp & piedmont descriptors (30 m one-sided normal-fault throw asymmetry dem10_onesided3, 20 m-vs-200 m scarp sharpness ratio, 8-azimuth 3.1 km directional line-integral persistence of dem10_onesided3, and G8-G2 range-front piedmont slope inflection) across 100% of the 5,167,373-pixel footprint, closing the 24.63% (1,272,894 px) 1 m LiDAR void where KPL-36 fell back to coarse 100 m topography. Simultaneously deconfounds anthropogenic road/railroad/bunker embankment cuts via exp(-d_road/120 m)*dem10_hgm20_max and removes inter-block airborne survey tie-line steps via within-block MAD normalization of magnetic horizontal gradient and potassium radiometrics plus seam distance.",
+      "why_missed_by_catalogue": "USGS Qfaults/existing_faults.tif systematically under-maps degraded 1-4 m Quaternary fault scarps inside the 24.63% NE/central 1 m LiDAR gap and thin-alluvium range-front piedmont hinges, while pixelwise LiDAR detectors waste precision budget on highway cuts and Hawthorne Army Depot berms in the SW Walker Lane.",
+      "named_non_fault_mimics": [
+        "I-80 / US-95 / US-395 / US-50 highway road-cuts, railroad grades, and Hawthorne Army Depot earthen bunker berms",
+        "Inter-survey tie-line & spectrometer calibration seams between Winnemucca, Fallon, Hawthorne, and Tonopah GeoDAWN blocks"
+      ],
+      "difference_from_existing_implementations": "No prior GEMSDOE36 lane (HVG-36, GVSC-36, CSDL-36, KPL-36, BDC-36) ingested seamless 10 m 3DEP DEM channels, Census TIGER road distance, or GeoDAWN 4-block seam normalization.",
+      "expected_holdout_dti_delta_vs_kpl36": "+0.004 to +0.012",
+      "implementation_cost": "Low (~35 s feature build, 21 float32 columns)"
+    },
+    {
+      "rank": 2,
+      "id": "H-S2D-2",
+      "experiment_arm": "EXP-2",
+      "title": "Two-Stage Multi-Azimuth Corridor U-GBDT Stacker + Local-vs-District (800 m vs 2.4 km) Piedmont Halo Sharpening",
+      "layers_used": [
+        "Out-of-subquadrant Stage-1 calibrated probability field P1 from H-S2D-1",
+        "GeoDAWN basement gravity/magnetic worm & GDR 1391 hydrothermal upflow corroboration channels"
+      ],
+      "physical_signature_and_transform": "Constructs 14 spatial structural-corridor features on strictly out-of-fold Stage-1 probabilities: domain-normalized multi-scale Gaussian context (150 m, 400 m, 800 m, 1.6 km), ridge-vs-apron sharpness (G_1.5 - G_8), 8-azimuth directional line integrals at 900 m and 1.7 km (along-strike persistence minus orthogonal cross-strike width), 2D Hessian ridge crest eigenvalue max(0, -lambda_min), and geometric corroboration sqrt(G_2(P1) * subsurface_support). Fits a regularized Stage-2 Corridor HGB (0.28 * P1 + 0.72 * P2) followed by province-preserving 800 m halo sharpening.",
+      "why_missed_by_catalogue": "Blind geothermal transfer zones and en-echelon relay ramps bridge 0.5-2 km alluvial gaps where pixelwise surface expression drops below single-cell threshold, while true fault corridors maintain narrow (<300 m) linear continuity backed by basement density/magnetic gradients.",
+      "named_non_fault_mimics": [
+        "1-2 km wide range-front alluvial-fan slope aprons (high isotropic G_8 halo, low ridge sharpness, causing double-ring FP dots outboard of range fronts)",
+        "Equidimensional volcanic/intrusive stocks, playettes, and isolated thermal spring travertine mounds (low along-vs-cross strike contrast)"
+      ],
+      "difference_from_existing_implementations": "All prior GEMSDOE36 lanes were strictly single-stage pixelwise tree models; none learned a second-stage spatial probability-topology U-GBDT or applied province-preserving halo subtraction prior to 300 m CELF.",
+      "expected_holdout_dti_delta_vs_kpl36": "+0.008 to +0.020 cumulative",
+      "implementation_cost": "Medium (~5 min inner sub-quadrant OOF + Stage-2 training across 4 folds)"
+    },
+    {
+      "rank": 3,
+      "id": "H-S2D-3",
+      "experiment_arm": "EXP-3",
+      "title": "Dual-Population Quaternary + Fold-Safe Pre-2022 Bedrock Conduit Auxiliary Representation (Zero SGMC Input Features)",
+      "layers_used": [
+        "USGS SGMC State Geologic Map Compilation pre-2022 bedrock faults (DOI 10.3133/ds1052, derived_sgmc_faults_100m_u8.tif) used STRICTLY inside fold['train'] & (d_vis >= 3 px) as auxiliary training supervision (0 SGMC input features)",
+        "122-feature label-free S2D Stage-1 stack + 14 Stage-2 corridor descriptors"
+      ],
+      "physical_signature_and_transform": "Trains an out-of-fold Dual-Population Stage-1 expert inside each training fold (Quaternary labels weight 1.0 + off-catalogue pre-2022 bedrock fault targets weight 0.25 on S2D_BLIND sensor features, zero SGMC features at any stage) and passes 4 OOF dual-population corridor descriptors (dual_prob, dual_g4, dual_line13_max, sqrt(G_2(P1)*G_2(P_dual))) into Stage-2 calibrated strictly to competition Bayes odds.",
+      "why_missed_by_catalogue": "Quaternary scarp compilations suffer survivorship bias against range-front bedrock contact faults, thin-veneered horst blocks, and accommodation zones where unconsolidated Holocene fan cover is absent or eroded.",
+      "named_non_fault_mimics": [
+        "Inactive sealed pre-Cenozoic thrust faults in range interiors (downweighted in Stage-2 because Stage-2 calibrates strictly against active competition fault targets and requires scarp/hydrothermal/gravity corridor agreement)"
+      ],
+      "difference_from_existing_implementations": "Prior GEMSDOE36 lanes supervised exclusively on single-population Quaternary labels; unlike naive label-mixing, S2D-36 isolates bedrock supervision in an OOF auxiliary expert calibrated in Stage-2 to prevent precision loss on inactive thrusts.",
+      "expected_holdout_dti_delta_vs_kpl36": "+0.010 to +0.024 cumulative",
+      "implementation_cost": "Medium (+3 min over EXP-2)"
+    },
+    {
+      "rank": 4,
+      "id": "H-S2D-4",
+      "experiment_arm": "DEFERRED-NEXT-ITERATION",
+      "title": "Multi-Temporal Sentinel-1 InSAR Phase-Gradient / Coherence-Drop Lineaments + Raw 1-D GeoDAWN Flight-Line Wavelet Singularity Picking",
+      "layers_used": [
+        "Copernicus Sentinel-1A/B ascending/descending interferometric coherence & LOS velocity gradients (ASF Vertex)",
+        "USGS ScienceBase 657e1d85d34e23d3533209f7 raw 1-D flight-line aeromagnetic profiles (pre-gridding)"
+      ],
+      "physical_signature_and_transform": "Sharp cross-fault step in stacked InSAR LOS phase gradient + seasonal coherence decorrelation boundary across blind playettes, paired with 1-D continuous wavelet modulus maxima along raw 200 m-spaced east-west flight lines prior to minimum-curvature gridding.",
+      "why_missed_by_catalogue": "Aseismic creep, geothermal reservoir pore-pressure breathing (e.g., Bradys, San Emidio, Dixie Valley), and clay-gouge groundwater barriers create sharp InSAR phase steps across zero-relief playas with zero topographic scarp.",
+      "named_non_fault_mimics": [
+        "Agricultural pivot-irrigation subsidence bowls and playa evaporite moisture rings"
+      ],
+      "difference_from_existing_implementations": "Untried across all GEMSDOE focus repos.",
+      "expected_holdout_dti_delta_vs_kpl36": "+0.006 to +0.015",
+      "implementation_cost": "High / Deferred — direct outbound egress to asf.alaska.edu and sciencebase.gov is blocked by sandbox allowlist and multi-GB SLC processing exceeds 2-CPU / 3.8 GiB RAM / 3-experiment budget."
+    }
+  ],
+  "excluded_on_audit": [
+    {
+      "artifact": "19GEMSDOE dem1m_high_prior_openness_lrm.npz",
+      "reason": "Forensic audit of dem1m_tile_audit.json showed its 8 EarthMRI tiles (1.39% of footprint) were ranked using tips_in_tile from existing_faults.tif (== labels.tif). Excluded from S2D-36 features to preserve 100% strict zero-catalogue, zero-selection-bias purity across held-out quadrants."
+    }
+  ],
+  "frozen_gates": {
+    "G1_leakage_canary_max_sym_auc": 0.9,
+    "G2_holdout_must_beat": {
+      "B0": 0.133934,
+      "KPL36_EXP3": 0.1701,
+      "require_paired_ci95_lower_gt_0_vs_B0_and_CKPL": true
+    },
+    "G3a_pre_placement_surface_max_abs_spearman": 0.9,
+    "G3b_focus9_and_detector_3px_dot_overlap_max": 0.7,
+    "G3c_literal_all_198_registry_3px_dot_overlap_max": 0.7,
+    "G4_portal_geotiff_valid_0_1_zeros_outside": true,
+    "fail_closed_policy": "Automatic verdict is 'promote' ONLY if G1 AND G2 AND G3a AND G3b AND G3c AND G4 all pass. Under the unamended literal all-198-entry rule (G3c), reg-052 (5x5 lattice, covering radius sqrt(8)=2.83<=3.0 px on 99.87% of footprint) forces G3c=False for any interior geological submission, so automatic release verdict MUST fail closed ('negative', DO NOT SUBMIT without human selector sign-off per Rule 6)."
+  }
+}

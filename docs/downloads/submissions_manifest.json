@@ -2,7 +2,7 @@
   "schema": "gemsdoe36.research-downloads.v3",
   "slot_approved": false,
   "current_candidate": null,
-  "run_card": "kpl36-run-card.json",
+  "run_card": "s2d36-run-card.json",
   "archived_research_only": [
     {
       "file": "gemsdoe36-gvsc36-exp3-20261026-5fb822bdfb60-zeros.tif",
@@ -75,16 +75,31 @@
     }
   ],
   "research_candidate": {
-    "lane": "KPL-36",
-    "file": "gemsdoe36-kpl36-exp3-20261026-fc869911e88c-zeros.tif",
-    "sha256": "86fc8243ad573bcdbfac8b432daf0ec5b6800b991b2c3278706358be7eb9922d",
-    "zip": "gemsdoe36-kpl36-exp3-20261026-fc869911e88c-zeros.zip",
-    "zip_sha256": "9a2ea7e81c13b9447d0c6dae209ef63fb676eae7eff5f3a78f62fc6a1531096c",
-    "card": "kpl36-run-card.json",
+    "lane": "S2D-36",
+    "file": "gemsdoe36-s2d36-exp2-20261027-31189d084a83-zeros.tif",
+    "sha256": "d3ba2fdb987bec34fc0c61148829032a431a95b8921b1bd66d61ddd047f56b72",
+    "zip": "gemsdoe36-s2d36-exp2-20261027-31189d084a83-zeros.zip",
+    "zip_sha256": "1c6cd50db6639445314602bd2f01cfa164c6b67dbb3438dc7593b278ed03b949",
+    "card": "s2d36-run-card.json",
     "submit_ok": false,
-    "note": "KPL-36 EXP-3 3-5km coherence+bridge | HOLDOUT-DTI 0.1701 | PROMOTE fc869911e88c",
+    "note": "S2D-36 EXP-2 10m3DEP+2stage+deconf | HOLDOUT-DTI 0.2008 | NEGATIVE reg052 gate 31189d084a83",
     "holdout_dti_LABEL": "HOLDOUT-DTI",
-    "holdout_dti": 0.17010000946379217,
+    "holdout_dti": 0.2007657135656901,
     "organizer_score": null
-  }
+  },
+  "previous_research_candidates": [
+    {
+      "lane": "KPL-36",
+      "file": "gemsdoe36-kpl36-exp3-20261026-fc869911e88c-zeros.tif",
+      "sha256": "86fc8243ad573bcdbfac8b432daf0ec5b6800b991b2c3278706358be7eb9922d",
+      "zip": "gemsdoe36-kpl36-exp3-20261026-fc869911e88c-zeros.zip",
+      "zip_sha256": "9a2ea7e81c13b9447d0c6dae209ef63fb676eae7eff5f3a78f62fc6a1531096c",
+      "card": "kpl36-run-card.json",
+      "submit_ok": false,
+      "holdout_dti_LABEL": "HOLDOUT-DTI",
+      "holdout_dti": 0.17010000946379217,
+      "user_reported_score_no_receipt": 0.1647,
+      "organizer_score": null
+    }
+  ]
 }

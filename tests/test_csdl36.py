@@ -47,6 +47,8 @@ def test_csdl36_feature_list_invariants_ir04() -> None:
 
 
 def test_csdl36_mineralogical_deconfounding_no_det_elev_ir02() -> None:
+    if not (ROOT / "data/raw/sample_submission.tif").is_file():
+        pytest.skip("requires restored data/raw (run scripts/restore_data.py)")
     src_lines = [
         line for line in inspect.getsource(rasterize_deconfounded_geothermal_layers).splitlines()
         if not line.strip().startswith(("#", '"""'))
@@ -63,6 +65,8 @@ def test_csdl36_mineralogical_deconfounding_no_det_elev_ir02() -> None:
 
 
 def test_csdl36_release_verification_passes() -> None:
+    if not (ROOT / "data/raw/sample_submission.tif").is_file():
+        pytest.skip("requires restored data/raw (run scripts/restore_data.py)")
     res = verify_csdl36()
     assert res["lane_id"] == "CSDL-36"
     assert res["verdict"] == "negative"

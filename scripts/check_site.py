@@ -18,6 +18,7 @@ ROOT = Path(__file__).resolve().parents[1]
 DOCS = ROOT / "docs"
 STOP = ROOT / "evidence/registry_preflight_run_card_20261026.json"
 KPL_CARD_PATH = ROOT / "evidence/kpl36_run_card_20261026.json"
+S2D_CARD_PATH = ROOT / "evidence/s2d36_run_card_20261027.json"
 
 
 def sha(path: Path) -> str:
@@ -84,31 +85,59 @@ def kpl_promote() -> tuple[bool, dict]:
     return bool(card.get("verdict") == "promote" and card.get("gates") and all(card["gates"].values())), card
 
 
+def s2d_promote() -> tuple[bool, dict]:
+    """S2D-36 promote iff its evidence run card says so and every gate is true."""
+    try:
+        card = json.loads(S2D_CARD_PATH.read_text())
+    except (OSError, ValueError):
+        return False, {}
+    return bool(card.get("verdict") == "promote" and card.get("gates") and all(card["gates"].values())), card
+
+
+def active_promote() -> tuple[bool, dict]:
+    if S2D_CARD_PATH.is_file():
+        return s2d_promote()
+    return kpl_promote()
+
+
 def validate_current(current: dict, stop: dict, stop_sha: str) -> list[str]:
     """A missing or fabricated candidate cannot be made submit-ready by Pages.
 
-    Schema v3 = the negative registry-preflight manifest. Schema v5 (KPL-36
-    successor; BDC-36 already used the v4 tag on main) must be hash-bound to
-    the KPL-36 evidence run card, may approve a slot only when that card's
-    preregistered gates all pass, and must preserve the superseded BDC-36
-    manifest verbatim under ``previous_current_run_v4_BDC36`` (itself negative).
+    Schema v3 = the negative registry-preflight manifest. Schema v5 binds to the
+    active evidence run card (S2D-36 when present, otherwise KPL-36), may approve
+    a slot only when that card's preregistered gates all pass, and must preserve
+    the superseded BDC-36 manifest verbatim under ``previous_current_run_v4_BDC36``
+    (itself negative).
     """
     if current.get("schema") != "gemsdoe36.current-run.v5":
         return _validate_current_v3(current, stop, stop_sha)
     errors = []
-    promote, card = kpl_promote()
+    lane = current.get("lane_id")
+    if lane == "S2D-36" and S2D_CARD_PATH.is_file():
+        promote, card = s2d_promote()
+        expected_card_rel = "downloads/s2d36-run-card.json"
+        expected_card_sha = sha(S2D_CARD_PATH)
+        kpl_card = current.get("kpl36_run_card")
+        if not isinstance(kpl_card, dict) or kpl_card.get("verdict") != "negative":
+            errors.append("S2D-36 v5 current manifest must preserve negative kpl36_run_card")
+    elif lane == "KPL-36":
+        promote, card = kpl_promote()
+        expected_card_rel = "downloads/kpl36-run-card.json"
+        expected_card_sha = sha(KPL_CARD_PATH)
+    else:
+        return ["v5 current manifest has unrecognized lane_id"]
+
     sub = card.get("submission") or {}
-    if (current.get("lane_id") != "KPL-36"
-            or current.get("verdict") != card.get("verdict")
+    if (current.get("verdict") != card.get("verdict")
             or current.get("slot_approved") is not promote
             or current.get("ok_to_download_and_submit") is not promote
             or current.get("research_downloads_only") is not (not promote)
             or current.get("tif_path") != str(sub.get("file", "")).removeprefix("docs/")
             or current.get("tif_sha256") != sub.get("sha256")
-            or current.get("run_card") != "downloads/kpl36-run-card.json"
-            or current.get("run_card_sha256") != sha(KPL_CARD_PATH)
+            or current.get("run_card") != expected_card_rel
+            or current.get("run_card_sha256") != expected_card_sha
             or not isinstance(current.get("holdout_dti"), float)):
-        errors.append("v5 current manifest is not bound to the KPL-36 run card / gates")
+        errors.append(f"v5 current manifest is not bound to the {lane} run card / gates")
     prev = current.get("previous_current_run_v4_BDC36")
     if (not isinstance(prev, dict) or prev.get("lane_id") != "BDC-36"
             or prev.get("verdict") != "negative" or prev.get("slot_approved")
@@ -178,19 +207,19 @@ def main() -> int:
             errors.append(f"docs/{page}: negative verdict must lead the page")
         if site_table(ledger) not in path.read_text():
             errors.append(f"docs/{page}: pinned nine-site table differs from source")
-        _kpl_ok, _kpl_card = kpl_promote()
+        _act_ok, _act_card = active_promote()
         forbidden_phrases = ("New GEMSDOE36 Holdout Record", "Highest Recorded Holdout across 9 repos",
                              "Estimated Score: HOLDOUT-DTI", "Projected live score")
-        if not _kpl_ok:
+        if not _act_ok:
             forbidden_phrases += ("OK TO SUBMIT",)
         for forbidden in forbidden_phrases:
             if forbidden.lower() in text.lower():
                 errors.append(f"docs/{page}: stale or unsafe claim: {forbidden}")
-        if _kpl_ok:
-            for phrase in ("OK TO SUBMIT", _kpl_card["submission"]["sha256"],
-                           Path(_kpl_card["submission"]["file"]).name, _kpl_card["submission"]["note"]):
+        if _act_ok:
+            for phrase in ("OK TO SUBMIT", _act_card["submission"]["sha256"],
+                           Path(_act_card["submission"]["file"]).name, _act_card["submission"]["note"]):
                 if phrase not in text:
-                    errors.append(f"docs/{page}: missing KPL-36 current candidate identity: {phrase[:60]}")
+                    errors.append(f"docs/{page}: missing active candidate identity: {phrase[:60]}")
         if re.search(r"(?:0\.\d{3,4}).{0,25}ORGANIZER-CONFIRMED", text, re.I):
             errors.append(f"docs/{page}: numeric score incorrectly called organizer-confirmed")
         for fname, checksum in (
@@ -231,17 +260,18 @@ def main() -> int:
         (ROOT / "evidence/moe36_run_card_20261026.json", DOCS / "downloads/moe36-run-card.json"),
         (ROOT / "evidence/atvr36_run_card_20261026.json", DOCS / "downloads/atvr36-run-card.json"),
         (KPL_CARD_PATH, DOCS / "downloads/kpl36-run-card.json"),
+        *(([(S2D_CARD_PATH, DOCS / "downloads/s2d36-run-card.json")]) if S2D_CARD_PATH.is_file() else []),
     ):
         if not copy.is_file() or original.read_bytes() != copy.read_bytes():
             errors.append(f"Pages JSON mirror differs from evidence: {copy}")
 
     manifest = json.loads((DOCS / "downloads/submissions_manifest.json").read_text())
-    _kpl_ok, _kpl_card = kpl_promote()
+    _act_ok, _act_card = active_promote()
     cand = manifest.get("current_candidate")
-    if _kpl_ok:
+    if _act_ok:
         cand_ok = bool(
             isinstance(cand, dict)
-            and cand.get("sha256") == _kpl_card["submission"]["sha256"]
+            and cand.get("sha256") == _act_card["submission"]["sha256"]
             and cand.get("submit_ok") is True
             and manifest.get("slot_approved") is True
         )
@@ -250,7 +280,7 @@ def main() -> int:
     if (not cand_ok
             or len(manifest.get("archived_research_only", [])) != 9
             or any(x.get("submit_ok") is not False for x in manifest["archived_research_only"])):
-        errors.append("Downloads manifest current/archive split inconsistent with KPL-36 gates")
+        errors.append("Downloads manifest current/archive split inconsistent with active run-card gates")
 
     try:
         older = additional_archives()  # verifies all legacy TIFF/ZIP/NaN hashes and Lane36 conflict
@@ -274,6 +304,13 @@ def main() -> int:
         (ROOT / hvg["artifact"]["tif_path"], ROOT / hvg["artifact"]["zip_path"], hvg["artifact"]["tif_sha256"]),
         (ROOT / mto["download"]["tif"], ROOT / mto["download"]["zip"], mto["raster_sha256"]),
     ]
+    if S2D_CARD_PATH.is_file():
+        s2d_card = json.loads(S2D_CARD_PATH.read_text())
+        artifacts.append(
+            (ROOT / s2d_card["submission"]["file"],
+             ROOT / s2d_card["submission"]["zip"],
+             s2d_card["submission"]["sha256"])
+        )
     for tif, archive, expected in artifacts:
         if not tif.is_file() or sha(tif) != expected or not archive.is_file():
             errors.append(f"Missing/mismatched research bundle: {tif.name}")
