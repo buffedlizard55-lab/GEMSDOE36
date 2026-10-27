@@ -46,6 +46,10 @@ def test_csdl36_feature_list_invariants_ir04() -> None:
     assert set(EXP3_BLIND_FEATURES) | set(LIDAR_FEATURE_SET) == set(EXP2_FEATURES)
 
 
+@pytest.mark.skipif(
+    not (ROOT / "data/raw/sample_submission.tif").is_file(),
+    reason="data/raw not restored",
+)
 def test_csdl36_mineralogical_deconfounding_no_det_elev_ir02() -> None:
     if not (ROOT / "data/raw/sample_submission.tif").is_file():
         pytest.skip("requires restored data/raw (run scripts/restore_data.py)")
@@ -64,6 +68,10 @@ def test_csdl36_mineralogical_deconfounding_no_det_elev_ir02() -> None:
     assert inv.volcanic_vents_in_footprint == 21
 
 
+@pytest.mark.skipif(
+    not (ROOT / "data/raw/sample_submission.tif").is_file(),
+    reason="data/raw not restored",
+)
 def test_csdl36_release_verification_passes() -> None:
     if not (ROOT / "data/raw/sample_submission.tif").is_file():
         pytest.skip("requires restored data/raw (run scripts/restore_data.py)")

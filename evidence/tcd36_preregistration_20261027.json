@@ -1,0 +1,41 @@
+{
+  "lane_id": "TCD-36",
+  "preregistered_utc": "2026-10-27T17:50:53.712022+00:00",
+  "markdown_path": "docs/research/tcd36-preregistration-20261027.md",
+  "markdown_sha256": "416a8d00bc3880eb7fab112b3cf2e0dfbebe27dc1c92c3b51484c616f51bd364",
+  "standing_holdout_benchmarks": {
+    "B0_holdout_dti": 0.133749,
+    "KPL36_holdout_dti": 0.17010000946379217,
+    "evaluator_version": "gems-segment-pooled-v1",
+    "withheld_positives": 60988
+  },
+  "max_experiments": 3,
+  "max_walltime_seconds": 7200,
+  "arms": [
+    {
+      "id": "EXP-1",
+      "hypothesis": "H-TCD-1",
+      "description": "Stage-1 123-feature PU-calibrated HGB + 10m-3DEP/Fluvial-Chi/Lahontan-ASL/TIGER-Road deconfounded LiDAR-blind bridge (min_spacing_px=2.50, gamma=1.20)"
+    },
+    {
+      "id": "EXP-2",
+      "hypothesis": "H-TCD-1 + H-TCD-2",
+      "description": "Two-Stage Multi-Domain Corroborated Out-of-Fold Spatial-Context Ridge Consolidation (Stage-2 U-GBDT, 18 OOF topology features, min_spacing_px=2.50, gamma=1.20)"
+    },
+    {
+      "id": "EXP-3",
+      "hypothesis": "H-TCD-1 + H-TCD-2 + H-TCD-3",
+      "description": "Stage-2 U-GBDT surface with un-crowded axial-spine 300 m CELF submodular emission (min_spacing_px=2.85, gamma=1.35, smooth near-catalogue echo taper)"
+    }
+  ],
+  "deferred_hypotheses": [
+    {
+      "id": "H-TCD-4",
+      "description": "ASTER GED v3 TIR siliceous-sinter/clay-cap emissivity + ARIA Sentinel-1 InSAR phase coherence (deferred: sandbox egress restricted to GitHub/PyPI/npm)"
+    }
+  ],
+  "canary_auc_max": 0.9,
+  "pre_placement_spearman_max": 0.9,
+  "post_placement_dot_overlap_max": 0.7,
+  "literal_reg052_fail_closed": true
+}

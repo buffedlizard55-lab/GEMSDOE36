@@ -138,11 +138,15 @@ def test_s2d_geotiff_portal_range_and_fail_closed_release_invariants() -> None:
     assert int((arr > 0).sum()) == 37654
 
     # Manifest & current-run bindings
-    assert current["lane_id"] == "S2D-36"
     assert current["verdict"] == "negative"
     assert current["slot_approved"] is False
     assert current["ok_to_download_and_submit"] is False
-    assert current["tif_sha256"] == sub["sha256"]
+    s2d_entry = current["latest_research_lane_s2d36"]
+    assert s2d_entry["lane_id"] == "S2D-36"
+    assert s2d_entry["verdict"] == "negative"
+    assert s2d_entry["slot_approved"] is False
+    assert s2d_entry["ok_to_download_and_submit"] is False
+    assert s2d_entry["tif_sha256"] == sub["sha256"]
     assert manifest["slot_approved"] is False
     assert manifest["current_candidate"] is None
     assert manifest["research_candidate"]["lane"] == "S2D-36"

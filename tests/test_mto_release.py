@@ -28,6 +28,10 @@ def load(name: str) -> dict:
     return json.loads((ROOT / name).read_text())
 
 
+@pytest.mark.skipif(
+    not (ROOT / "data/raw/sample_submission.tif").is_file(),
+    reason="data/raw not restored",
+)
 def test_archived_negative_release_is_locally_valid_but_not_authorized() -> None:
     if not (ROOT / "data/raw/sample_submission.tif").is_file():
         pytest.skip("requires restored data/raw (run scripts/restore_data.py)")
@@ -178,11 +182,11 @@ def test_parallel_dw_remains_negative_and_separate_from_preflight():
     ensure_parallel_dw(dw)
     current = load("docs/current-run.json")
     assert current["parallel_experiments"] == [parallel_dw_projection(dw)]
-    # v5 lead lane is S2D-36 (its own holdout), preserving KPL-36 & BDC-36; DW36 stays a separate parallel entry.
+    # v5 top-level stays bound to KPL-36 while nesting TCD-36 & S2D-36; DW36 stays a separate parallel entry.
     assert current["previous_current_run_v4_BDC36"]["lane_id"] == "BDC-36"
-    assert current["lane_id"] == "S2D-36"
-    assert current["holdout_dti"] == pytest.approx(0.2007657135656901)
-    assert current["kpl36_run_card"]["holdout"]["arms"]["EXP-3"]["dti"] == pytest.approx(0.17010000946379217)
+    assert current["holdout_dti"] == pytest.approx(0.17010000946379217)
+    assert current["latest_research_lane_tcd36"]["holdout_dti"] == pytest.approx(0.19416399564770398)
+    assert current["latest_research_lane_s2d36"]["holdout_dti"] == pytest.approx(0.2007657135656901)
     assert dw["holdout_dti"]["pooled_candidate"] == pytest.approx(0.06605205634872657)
     fake = deepcopy(dw)
     fake["submit_ok"] = True

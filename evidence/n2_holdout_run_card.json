@@ -1,0 +1,73 @@
+{
+  "schema": "gemsdoe36.hypothesis-n2.v1",
+  "created_utc": "2026-10-27T17:47:10.443061+00:00",
+  "lane": "GEMSDOE36",
+  "hypothesis_id": "N2",
+  "hypothesis": "Hydrothermal alteration (RTP magnetite-destruction trough x GeoDAWN K/Th radiometric ratio) modulated by the INGENIOUS 2 m temperature-probe blind-conduit halo (F2mDAB warm-anomaly kernel density) as an off-catalogue concealed-fault prior.",
+  "layers": [
+    "02_rtp",
+    "geodawn_rad_u8 (K/Th)",
+    "INGENIOUS 2 m probe F2mDAB"
+  ],
+  "physical_signature": "Hydrothermal alteration concentrated within ~1 km kernel halo of warm 2 m temperature probes, at concealed faults with no mapped scarp.",
+  "why_off_catalogue": "INGENIOUS 2 m probe anomalies with no catalogue fault and no continuous surface scarp are blind conduits; dots on them are off-catalogue mass.",
+  "differs_from_repo": "No repo arm multiplies alteration by a temperature-probe halo; H36-B uses GDR thermal-spring IDW, not the INGENIOUS 2 m network (n=3800 stations).",
+  "named_non_fault_mimic": "Shallow groundwater/near-surface moisture warming 2 m probes, and alluvial-fan evaporative anomalies; controlled by d_cat > 2 px off-catalogue eligibility, 300 m kernel DTI and catalogue masking.",
+  "implementation_cost": "low \u2014 deterministic transforms, no training",
+  "probe_source": "/home/user/GEMSDOE36/data/raw/external/2m_temperature_probe_INGENIOUS_regional_data/2m_temperature_probe_n83geo/2m_temperature_probe_n83geo.dbf",
+  "holdout": {
+    "label": "HOLDOUT-DTI",
+    "evaluator_version": "gems36-segment-audit-v1",
+    "design": "whole-segment withholding, buffer 30 px, 4 folds x 4 spatial cells, pooled DTI alpha=0.2 beta=0.8, 300 m triangular kernel, bootstrap 2000 over cells",
+    "n_withheld_segments": 3199,
+    "n_withheld_positives_px": 60988,
+    "budget_dots": 37654,
+    "collar_px": 2.0
+  },
+  "leakage_canary": {
+    "auc": 0.509963,
+    "two_polarity_auc": 0.509963,
+    "cap": 0.9,
+    "passed": true
+  },
+  "results": [
+    {
+      "arm": "BASELINE_det_elev_slope",
+      "dots_emitted": 37654,
+      "dots_on_catalogue": 237,
+      "pooled_16block_dti": 0.021746,
+      "pooled_16block_ci95": [
+        0.018991,
+        0.024228
+      ],
+      "withheld_positives_px": 60988,
+      "independent_cells": 4,
+      "unsplit_pooled_dti": 0.021845,
+      "unsplit_tp_w": 1231.61,
+      "unsplit_fp_w": 36708.56,
+      "unsplit_fn_w": 59756.39,
+      "elapsed_sec": 7.6
+    },
+    {
+      "arm": "N2_hydrothermal_x_probe_halo",
+      "dots_emitted": 37654,
+      "dots_on_catalogue": 421,
+      "pooled_16block_dti": 0.010285,
+      "pooled_16block_ci95": [
+        0.007327,
+        0.013786
+      ],
+      "withheld_positives_px": 60988,
+      "independent_cells": 4,
+      "unsplit_pooled_dti": 0.010344,
+      "unsplit_tp_w": 580.92,
+      "unsplit_fp_w": 36276.68,
+      "unsplit_fn_w": 60407.08,
+      "elapsed_sec": 7.7
+    }
+  ],
+  "delta_n2_vs_baseline": -0.011461,
+  "delta_n2_vs_kpl36_exp3": -0.159815,
+  "raster_sha256_pending": true,
+  "total_runtime_sec": 22.0
+}

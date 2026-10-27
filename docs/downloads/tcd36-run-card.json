@@ -1,0 +1,399 @@
+{
+  "schema": "gems.parallel_run_card.v1",
+  "lane_id": "TCD-36",
+  "best_arm": "EXP-2",
+  "generated_utc": "2026-10-27T19:23:19.565617+00:00",
+  "verdict": "negative",
+  "verdict_reason": "All scientific, canary (Stage-1 max 0.6470, Stage-2 OOF max 0.8039 <= 0.90), holdout (HOLDOUT-DTI 0.194164, beating KPL-36 0.170100 by +0.024064 across all 4 folds), strict [0, 1] GeoTIFF format, pre-placement surface Spearman (0.4254 <= 0.90), focus-9 competing (<100k dots 0.6682 <= 0.70), local-36 (0.5718 <= 0.70), and all-215 mutual 3-px overlap (0.5672 <= 0.70) gates PASSED, and 300 m >=3-neighbor crowding dropped from 42.57% (KPL-36) to 4.54%. Automatic weekly slot approval fails closed ('negative') under literal unseparated a>0 directional overlap (reg-052 5-px calibration lattice = 99.35%, mathematical lower bound 82.3418% for 37,654 dots; reg-062 GEMSDOE22 516,737-pixel 10%-emission continuous map = 95.36% forward / <7% reverse). DOWNLOAD: YES (valid [0, 1] research GeoTIFF); DO NOT SUBMIT automatically without human selector review under Protocol Rule 6.",
+  "hypothesis": "H-TCD-1 + H-TCD-2 (+ H-TCD-3): Seamless 10 m USGS 3DEP sub-cell scarp & piedmont-toe concavity worms + Perron-Royden (2013) 10 m fluvial chi/ksn/knickpoint strike worms + true ASL Pleistocene Lake Lahontan (~1,330 m) contour-obliquity & US Census TIGER road embankment deconfounding, consolidated via strictly out-of-fold Multi-Domain Corroborated Stage-2 Spatial-Context U-GBDT and un-crowded 300 m submodular axial-spine emission.",
+  "mechanism": "123 label-free Stage-1 features (GVSC-89 + KPL-12 + TCD-22) -> PU-spy calibrated Joint HGB + 102-feature 10m-3DEP/Chi LiDAR-blind bridge + 3 orthogonal domain experts (Morpho-50, Geophys-37, HydroFluvSeis-36) -> strict inner 3-quadrant OOF Stage-2 spatial-context U-GBDT (18 topology features: second_best_domain, DoG crest, Hessian ridge, 800m/1800m worms, strand length) -> CELF 300 m submodular cover (gamma=1.2, min_spacing_px=2.5, d_cat>2) -> 37,654 [0, 1] dots.",
+  "named_non_fault_mimic": "Pleistocene Lake Lahontan ~1,330 m ASL Sehoo & ~1,235 m recessional wave-cut shoreline benches, US Census TIGER highway/railroad embankments, erosional triangular range-front facets, and lithologic dike/sill contacts lacking hydrothermal or neotectonic displacement.",
+  "preregistration": {
+    "path": "evidence/tcd36_preregistration_20261027.json",
+    "sha256": "5998729df6c9e88bd979ea562d388ccee6cbe490cc51e9a4ac9c59811b1563c9",
+    "markdown_path": "docs/research/tcd36-preregistration-20261027.md"
+  },
+  "experiments_executed": 3,
+  "leakage_canary": {
+    "passed": true,
+    "stage1_max_symmetric_auc": 0.646959,
+    "stage1_feature": "tcd_t10_dem_lap_toe",
+    "stage2_max_symmetric_auc": 0.803879,
+    "stage2_feature": "s2_p_g1",
+    "max_symmetric_auc": 0.803879,
+    "feature": "s2_p_g1",
+    "evidence": "evidence/tcd36_leakage_canary_20261027.json"
+  },
+  "holdout": {
+    "label": "HOLDOUT-DTI",
+    "evaluator_version": "gems-segment-pooled-v1",
+    "n_withheld_positive_pixels": 60988,
+    "standing_kpl36_benchmark": 0.17010000946379217,
+    "arms": {
+      "B0": {
+        "dti": 0.1341844715345707,
+        "ci95": [
+          0.12228786222591993,
+          0.14641203164368521
+        ]
+      },
+      "EXP-1": {
+        "dti": 0.18526906852622918,
+        "ci95": [
+          0.17009388160657674,
+          0.20088693207354508
+        ]
+      },
+      "EXP-2": {
+        "dti": 0.19416399564770398,
+        "ci95": [
+          0.18034221043880366,
+          0.20834334518799855
+        ]
+      },
+      "EXP-3": {
+        "dti": 0.19246928624275575,
+        "ci95": [
+          0.1789541792112118,
+          0.2065684298678766
+        ]
+      }
+    },
+    "best_arm": "EXP-2",
+    "delta_vs_kpl36_exp3": 0.024064,
+    "paired_vs_B0": {
+      "evaluator_version": "gems-segment-pooled-v1",
+      "candidate_dti": 0.19416399564770398,
+      "baseline_dti": 0.1341844715345707,
+      "paired_delta_dti": 0.05997952411313329,
+      "paired_delta_ci95": [
+        0.047830363215767314,
+        0.0719428209998712
+      ],
+      "ci95_strictly_positive": true,
+      "fold_wins": 4,
+      "n_folds": 4,
+      "min_fold_delta": 0.047074702602461826,
+      "folds": [
+        {
+          "fold": "NW",
+          "candidate_dti": 0.19699610856912736,
+          "baseline_dti": 0.14992140596666553,
+          "delta_dti": 0.047074702602461826,
+          "candidate_wins": true
+        },
+        {
+          "fold": "NE_LidarGapHeavy",
+          "candidate_dti": 0.2569349800822551,
+          "baseline_dti": 0.1701352468531627,
+          "delta_dti": 0.08679973322909243,
+          "candidate_wins": true
+        },
+        {
+          "fold": "SW",
+          "candidate_dti": 0.1391076924667317,
+          "baseline_dti": 0.08607160927520444,
+          "delta_dti": 0.05303608319152728,
+          "candidate_wins": true
+        },
+        {
+          "fold": "SE",
+          "candidate_dti": 0.2081665310838996,
+          "baseline_dti": 0.1526408633185958,
+          "delta_dti": 0.05552566776530379,
+          "candidate_wins": true
+        }
+      ]
+    },
+    "evidence": "evidence/tcd36_holdout_experiments_20261027.json"
+  },
+  "registry_uniqueness": {
+    "registry_rasters_checked": 198,
+    "local_prior_rasters_checked": 18,
+    "surface_before_placement": {
+      "passed": true,
+      "max_abs_rank_correlation": 0.42544517872402765
+    },
+    "focus9_and_mutual_uniqueness": {
+      "passed": true,
+      "focus9_max_competing_3px_dot_overlap": 0.668242,
+      "local_prior_max_competing_3px_dot_overlap": 0.5718383173102459,
+      "max_mutual_3px_dot_overlap": 0.567164,
+      "max_directional_lt100k_dots_3px_overlap": 0.700085,
+      "max_competing_including_500k_continuous_maps": 0.9536038667870611
+    },
+    "literal_unseparated_a_gt_0": {
+      "passed": false,
+      "max_3px_dot_overlap": 0.993493387156743,
+      "blocking_entries": [
+        "reg-052 (13GEMSDOE 5-px calibration lattice, 206,895 dots, 99.871% footprint 3-px coverage)",
+        "reg-062 (GEMSDOE22 10%-emission continuous map, 516,737 a>0 pixels, 53.43% footprint 3-px coverage)"
+      ]
+    },
+    "evidence": "evidence/tcd36_crosscheck_20261027.json"
+  },
+  "crowding_forensics": {
+    "n_dots": 37654,
+    "nn1_min_px": 2.828,
+    "nn1_median_px": 2.828,
+    "frac_ge3_neighbors_within_300m": 0.04539,
+    "frac_ge2_neighbors_within_300m": 0.31306,
+    "blind_mean_300m_kernel_credit": 0.05193,
+    "blind_frac_within_300m": 0.10721
+  },
+  "submission": {
+    "slot_approved": false,
+    "ok_to_download_research_tif": true,
+    "ok_to_download_and_submit": false,
+    "file": "docs/downloads/gemsdoe36-tcd36-exp2-20261027-9970b80c6585-zeros.tif",
+    "sha256": "513a7378a96452fa31e524a002f467457c58fabcb0da896fa75830d0973f4037",
+    "bytes": 825986,
+    "companion_nan_file": "docs/downloads/gemsdoe36-tcd36-exp2-20261027-9970b80c6585-nan.tif",
+    "companion_nan_sha256": "03387511a5cbc1d76c984f2e4d54a70b03368088b885147a723585db2c140e10",
+    "zip": "docs/downloads/gemsdoe36-tcd36-exp2-20261027-9970b80c6585-zeros.zip",
+    "zip_sha256": "1a6b74d6a8444c53905113d2512dcdd9ca7cad82602beac19d3f3ea16bba9733",
+    "name": "gemsdoe36-tcd36-exp2-20261027-9970b80c6585",
+    "note": "TCD-36 EXP-2 10m3DEP+Chi+Stage2 | HOLDOUT-DTI 0.1942 | DO NOT SUBMIT literal gate 9970b80c6585",
+    "note_characters": 94,
+    "dots": 37654
+  },
+  "validator": {
+    "no_nan_inside_footprint": true,
+    "values_strictly_in_0_1": true,
+    "crs_shape_transform_match": true,
+    "repo_validate_submission_zeros": {
+      "path": "/home/user/GEMSDOE36/docs/downloads/gemsdoe36-tcd36-exp2-20261027-9970b80c6585-zeros.tif",
+      "width": 3292,
+      "height": 3730,
+      "count": 1,
+      "dtype": "float32",
+      "crs": "EPSG:32611",
+      "resolution_m": [
+        100.0,
+        100.0
+      ],
+      "finite_in_bounds": 5167373,
+      "invalid_in_bounds": 0,
+      "finite_outside_bounds": 7111787,
+      "infinite_outside_bounds": 0,
+      "minimum": 0.0,
+      "maximum": 1.0,
+      "nodata": null,
+      "template_match": true,
+      "passed": true,
+      "errors": []
+    },
+    "repo_validate_submission_nan": {
+      "path": "/home/user/GEMSDOE36/docs/downloads/gemsdoe36-tcd36-exp2-20261027-9970b80c6585-nan.tif",
+      "width": 3292,
+      "height": 3730,
+      "count": 1,
+      "dtype": "float32",
+      "crs": "EPSG:32611",
+      "resolution_m": [
+        100.0,
+        100.0
+      ],
+      "finite_in_bounds": 5167373,
+      "invalid_in_bounds": 0,
+      "finite_outside_bounds": 0,
+      "infinite_outside_bounds": 0,
+      "minimum": 0.0,
+      "maximum": 1.0,
+      "nodata": "NaN",
+      "template_match": true,
+      "passed": true,
+      "errors": []
+    },
+    "gems_check_variants_zeros": {
+      "file": "gemsdoe36-tcd36-exp2-20261027-9970b80c6585-zeros.tif",
+      "bytes": 825986,
+      "sha256": "513a7378a96452fa31e524a002f467457c58fabcb0da896fa75830d0973f4037",
+      "format_valid": true,
+      "ok_to_upload": false,
+      "upload_authorization": "not evaluated by a format validator; separate scientific selector required",
+      "format_acceptable": true,
+      "submission_authorized": false,
+      "scope": "Format only; this does not certify bias audit, holdout promotion or weekly-slot eligibility",
+      "hard_failures": [],
+      "official_format_compliant": false,
+      "in_footprint_positive_pixels": 37654,
+      "in_footprint_mass": 37654.0,
+      "checks": {
+        "official_template_grid_and_footprint": {
+          "pass": true,
+          "detail": "Template must be the pinned organizer grid, not just a self-consistent arbitrary raster",
+          "hard_requirement": true
+        },
+        "single_band": {
+          "pass": true,
+          "detail": "count=1",
+          "hard_requirement": true
+        },
+        "dtype_float32": {
+          "pass": true,
+          "detail": "dtypes=('float32',)",
+          "hard_requirement": true
+        },
+        "crs_epsg_32611": {
+          "pass": true,
+          "detail": "EPSG:32611",
+          "hard_requirement": true
+        },
+        "shape_matches_template": {
+          "pass": true,
+          "detail": "(3730, 3292) vs (3730, 3292)",
+          "hard_requirement": true
+        },
+        "geotransform_matches_template": {
+          "pass": true,
+          "detail": "(100.0, 0.0, 243350.0, 0.0, -100.0, 4508550.0)",
+          "hard_requirement": true
+        },
+        "footprint_all_finite": {
+          "pass": true,
+          "detail": "0 NaN/Inf inside the 5,167,373-pixel footprint",
+          "hard_requirement": true
+        },
+        "footprint_range_0_1": {
+          "pass": true,
+          "detail": "finite=5167373/5167373; range=0.0 to 1.0",
+          "hard_requirement": true
+        },
+        "outside_is_nan_official_text": {
+          "pass": false,
+          "detail": "0 of 7,111,787 outside pixels are NaN",
+          "hard_requirement": false
+        },
+        "nodata_tag_is_nan": {
+          "pass": false,
+          "detail": "nodata=None",
+          "hard_requirement": false
+        },
+        "variant_nan_aware_whole_array": {
+          "pass": true,
+          "detail": "np.nanmin/np.nanmax over the whole array",
+          "hard_requirement": true
+        },
+        "variant_masked_read": {
+          "pass": true,
+          "detail": "rasterio read(masked=True).compressed()",
+          "hard_requirement": true
+        },
+        "variant_strict_whole_array_no_nan_allowed": {
+          "pass": true,
+          "detail": "((a>=0)&(a<=1)).all() over the whole array - fails for ANY NaN, including the official sample's NaN outside",
+          "hard_requirement": false
+        },
+        "profile_matches_official_sample": {
+          "pass": false,
+          "detail": "driver/dtype/nodata/size/crs/transform equal to template; compress=lzw (template lzw)",
+          "hard_requirement": false
+        }
+      }
+    },
+    "gems_check_variants_nan": {
+      "file": "gemsdoe36-tcd36-exp2-20261027-9970b80c6585-nan.tif",
+      "bytes": 1590664,
+      "sha256": "03387511a5cbc1d76c984f2e4d54a70b03368088b885147a723585db2c140e10",
+      "format_valid": true,
+      "ok_to_upload": false,
+      "upload_authorization": "not evaluated by a format validator; separate scientific selector required",
+      "format_acceptable": true,
+      "submission_authorized": false,
+      "scope": "Format only; this does not certify bias audit, holdout promotion or weekly-slot eligibility",
+      "hard_failures": [],
+      "official_format_compliant": true,
+      "in_footprint_positive_pixels": 37654,
+      "in_footprint_mass": 37654.0,
+      "checks": {
+        "official_template_grid_and_footprint": {
+          "pass": true,
+          "detail": "Template must be the pinned organizer grid, not just a self-consistent arbitrary raster",
+          "hard_requirement": true
+        },
+        "single_band": {
+          "pass": true,
+          "detail": "count=1",
+          "hard_requirement": true
+        },
+        "dtype_float32": {
+          "pass": true,
+          "detail": "dtypes=('float32',)",
+          "hard_requirement": true
+        },
+        "crs_epsg_32611": {
+          "pass": true,
+          "detail": "EPSG:32611",
+          "hard_requirement": true
+        },
+        "shape_matches_template": {
+          "pass": true,
+          "detail": "(3730, 3292) vs (3730, 3292)",
+          "hard_requirement": true
+        },
+        "geotransform_matches_template": {
+          "pass": true,
+          "detail": "(100.0, 0.0, 243350.0, 0.0, -100.0, 4508550.0)",
+          "hard_requirement": true
+        },
+        "footprint_all_finite": {
+          "pass": true,
+          "detail": "0 NaN/Inf inside the 5,167,373-pixel footprint",
+          "hard_requirement": true
+        },
+        "footprint_range_0_1": {
+          "pass": true,
+          "detail": "finite=5167373/5167373; range=0.0 to 1.0",
+          "hard_requirement": true
+        },
+        "outside_is_nan_official_text": {
+          "pass": true,
+          "detail": "7,111,787 of 7,111,787 outside pixels are NaN",
+          "hard_requirement": false
+        },
+        "nodata_tag_is_nan": {
+          "pass": true,
+          "detail": "nodata=nan",
+          "hard_requirement": false
+        },
+        "variant_nan_aware_whole_array": {
+          "pass": true,
+          "detail": "np.nanmin/np.nanmax over the whole array",
+          "hard_requirement": true
+        },
+        "variant_masked_read": {
+          "pass": true,
+          "detail": "rasterio read(masked=True).compressed()",
+          "hard_requirement": true
+        },
+        "variant_strict_whole_array_no_nan_allowed": {
+          "pass": false,
+          "detail": "((a>=0)&(a<=1)).all() over the whole array - fails for ANY NaN, including the official sample's NaN outside",
+          "hard_requirement": false
+        },
+        "profile_matches_official_sample": {
+          "pass": true,
+          "detail": "driver/dtype/nodata/size/crs/transform equal to template; compress=lzw (template lzw)",
+          "hard_requirement": false
+        }
+      }
+    },
+    "d_catalogue": {
+      "n_dots": 37654,
+      "min_d_cat_px": 2.236,
+      "median_d_cat_px": 16.12,
+      "share_le_2px": 0.0
+    }
+  },
+  "gates": {
+    "G1_leakage_canary_le_0_90": true,
+    "G2_holdout_beats_kpl36_0_1701_and_paired_B0": true,
+    "G3a_pre_placement_surface_spearman_le_0_90": true,
+    "G3b_focus9_and_local36_and_mutual_3px_overlap_le_0_70": true,
+    "G3c_literal_unseparated_a_gt_0_all_198_rasters_le_0_70": false,
+    "G4_strict_0_1_geotiff_and_collar_valid": true
+  },
+  "organizer_score": null,
+  "elapsed_seconds": 2761.8
+}
