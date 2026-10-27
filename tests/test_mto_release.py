@@ -123,8 +123,8 @@ def test_current_manifest_binds_negative_card_and_rejects_positive_mutations():
     assert validate_current(current, stop, sha(stop_path)) == []
     prev = current["previous_current_run_v4_BDC36"]
     assert prev["lane_id"] == "BDC-36" and prev["verdict"] == "negative"
-    for key, value in (("slot_approved", False), ("tif_sha256", "invented"),
-                       ("ok_to_download_and_submit", False), ("run_card_sha256", "bad")):
+    for key, value in (("slot_approved", not current["slot_approved"]), ("tif_sha256", "invented"),
+                       ("ok_to_download_and_submit", not current["ok_to_download_and_submit"]), ("run_card_sha256", "bad")):
         fake = deepcopy(current)
         fake[key] = value
         assert validate_current(fake, stop, sha(stop_path))

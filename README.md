@@ -1,12 +1,16 @@
 # GEMSDOE36 — current decision & reproducible research
 
+<!-- LITERAL_REVIEW:START -->
+> **27 October 2026 superseding decision: DO NOT SUBMIT.** KPL is a literal-protocol duplicate: 99.17% 3-px overlap with reg-052. The owner reports KPL **0.1647 USER-REPORTED**, not organizer-confirmed. The prior forecast is uncalibrated and withdrawn. No new TIFF, training experiment or submission slot was authorized. See [executive review](docs/research/review-20261027.md) and [reproduced run card](evidence/literal_release_review_20261027.json). The method paragraph assigning this session's lane is absent. Historical cards and reported scores are preserved, not promoted.
+<!-- LITERAL_REVIEW:END -->
+
 **Read this decision and the [standing owner brief](#full-standing-owner-brief-historical-wording) at the start of every session.** Core values: **Maximize P(Win)** and **Own the Outcome**.
 
-> ## CURRENT DECISION · KPL-36 · DOWNLOAD: YES · OK TO SUBMIT · verdict: promote
+> ## CURRENT DECISION · KPL-36 · DOWNLOAD: YES · DO NOT SUBMIT · verdict: negative
 >
-> **The file to submit:** [`gemsdoe36-kpl36-exp3-20261026-fc869911e88c-zeros.tif`](docs/downloads/gemsdoe36-kpl36-exp3-20261026-fc869911e88c-zeros.tif) ([ZIP](docs/downloads/gemsdoe36-kpl36-exp3-20261026-fc869911e88c-zeros.zip), [run card](evidence/kpl36_run_card_20261026.json), [monograph + 9-site executive audit](docs/research/kpl36-20261026.md), [preregistration](docs/research/preregistration-kpl36-20261026.md)). Name `gemsdoe36-kpl36-exp3-20261026-fc869911e88c`; Note (79/140): `KPL-36 EXP-3 3-5km coherence+bridge | HOLDOUT-DTI 0.1701 | PROMOTE fc869911e88c`; SHA-256 `86fc8243ad573bcdbfac8b432daf0ec5b6800b991b2c3278706358be7eb9922d`; 37,654 dots; whole-array [0,1] zeros-outside (portal-safe).
+> **Research artifact (not submission authorization):** [`gemsdoe36-kpl36-exp3-20261026-fc869911e88c-zeros.tif`](docs/downloads/gemsdoe36-kpl36-exp3-20261026-fc869911e88c-zeros.tif) ([ZIP](docs/downloads/gemsdoe36-kpl36-exp3-20261026-fc869911e88c-zeros.zip), [run card](evidence/kpl36_run_card_20261026.json), [monograph + 9-site executive audit](docs/research/kpl36-20261026.md), [preregistration](docs/research/preregistration-kpl36-20261026.md)). Name `gemsdoe36-kpl36-exp3-20261026-fc869911e88c`; Note (79/140): `KPL-36 EXP-3 3-5km coherence+bridge | HOLDOUT-DTI 0.1701 | PROMOTE fc869911e88c`; SHA-256 `86fc8243ad573bcdbfac8b432daf0ec5b6800b991b2c3278706358be7eb9922d`; 37,654 dots; whole-array [0,1] zeros-outside (portal-safe).
 > - **HOLDOUT-DTI 0.170100** [0.1551, 0.1861] (`gems-segment-pooled-v1`, 60,988 withheld px); EXP-2 beat the in-run GVSC replication (0.160003) with paired Δ +0.0096 [0.0035, 0.0159], 4/4 folds. Internal validation, not a leaderboard score. (Point comparison only: above GVSC 0.158855 and the externally reviewed GEMSDOE24 0.1637924.)
-> - **Leaderboard scenario estimate 0.189–0.264** (assumptions in monograph §5; needs novel credit ≥0.148 to match the historical champion; no organizer receipt yet).
+> - **Historical uncalibrated scenario 0.189–0.264 — withdrawn as a forecast** (assumptions in monograph §5; needs novel credit ≥0.148 to match the historical champion; no organizer receipt yet).
 > - **Uniqueness:** champion 3-px dot overlap max 0.616 (vs GEMSDOE32-B2 0.561); surface |ρ| 0.395 vs 97 focus-9 rasters; vs post-merge local candidates ≤0.058. Blind-lattice overlap is mathematically forced (~0.99 at any 37,654-dot budget; calibration control, disclosed in monograph).
 > - Archived, **DO NOT SUBMIT**: [CSDL-36 EXP-2](docs/downloads/gemsdoe36-csdl36-exp2-20261026-12962cc72ae1-zeros.tif) ([ZIP](docs/downloads/gemsdoe36-csdl36-exp2-20261026-12962cc72ae1-zeros.zip), [card](evidence/csdl36_run_card_20261026.json), [monograph](docs/research/csdl36-20261026.md); HOLDOUT-DTI 0.155970 [0.141880, 0.170267], EXP-1 0.155206, EXP-3 0.152541; fixes IR-GVSC36-01..04 and passes 9-site ≤70% overlap at 68.69%), 505-dot lattice-avoiding candidate (no computable holdout in its session), BDC-36, DW36 (0.066052), GVSC-36 (0.158855), HVG-36 (0.135759), MTO-36, H36-CTRB, ATVR-36, Lane36, registry-preflight stop — cards preserved in `evidence/`. Historical best remains GEMSDOE32-B2 **0.2778 OWNER-REPORTED** (already submitted; exact family subset). Verified live leaderboard #1 = **0.4437** (2026-10-26 read).
 
@@ -889,3 +893,15 @@ Do not stop after the first pass. Each pass must build on the previous one. Befo
 Go ahead and create a pull request and then merge the pull request onto the main. Make suggestions for what work still needs to be done and any limitations that is in the way of a successful project. It should be worked on in this next session or the next session. Work line by line verify everything no hallucinations.
 
 </details>
+
+## Standing brief update — 27 October 2026
+
+Read the full standing owner brief above on every session. The latest request
+reiterates the same unique-TIFF, nine-site audit, official-source research,
+three-pass review, at-most-three-experiment/two-hour parallel-run protocol and
+PR/merge requirements. It additionally reports KPL-36 at **0.1647 USER-REPORTED**
+and reiterates that a real weekly slot is a separate selector decision. No
+organizer receipt accompanies that report. The supplied text does not identify
+the single method paragraph assigning this lane. We must not infer permission to
+remove registry controls. See the superseding review before interpreting older
+promotion language. Repeated historical leaderboard numbers are not live data.
