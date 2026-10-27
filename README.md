@@ -3,6 +3,8 @@
 <!-- LITERAL_REVIEW:START -->
 > **27 October 2026 superseding decision: DO NOT SUBMIT.** KPL is a literal-protocol duplicate: 99.17% 3-px overlap with reg-052. The owner reports KPL **0.1647 USER-REPORTED**, not organizer-confirmed. The prior forecast is uncalibrated and withdrawn. No new TIFF, training experiment or submission slot was authorized. See [executive review](docs/research/review-20261027.md) and [reproduced run card](evidence/literal_release_review_20261027.json). The method paragraph assigning this session's lane is absent. Historical cards and reported scores are preserved, not promoted.
 <!-- LITERAL_REVIEW:END -->
+
+> **Continuation review (27 October 2026):** no new experiment, TIFF, or slot was authorized. The request's assigned method paragraph is missing; previously advertised analytic-signal, drainage, seismicity, and contact ideas are already represented in this repository. The three external-data candidates are blocked pending official AOI/rights checks. See [continuation review](docs/research/session-review-20261027-continuation.md) and [its run card](evidence/session_review_20261027_continuation_run_card.json).
 <!-- S2D36_README:START -->
 > ## NEWEST RESEARCH CANDIDATE (2026-10-27) · `S2D-36` (`EXP-2`) · `HOLDOUT-DTI 0.200766` · DOWNLOAD: YES · DO NOT SUBMIT (`verdict: negative`)
 >
@@ -936,14 +938,12 @@ Each submission needs a unique name and a Note of at most 140 characters.
 - Current leaderboard reads conflict: 0.3195 (this session's read) vs 0.4437 (manual read 2026-10-26 recorded in the repo). Neither is a receipt; reconcile against the official leaderboard before spending a slot.
 - **KPL-36 is NOT OK TO SUBMIT (superseded).** Its GeoTIFF passes the local format/range check (zeros outside footprint, [0,1], EPSG:32611, 3730x3292, 100 m) and its holdout read was HOLDOUT-DTI 0.1701 [0.1551, 0.1861] (internal, not a leaderboard score), but the literal registry recheck found dot overlap with the reg-052 5-px lattice of **0.9917 > 0.70** (≥82.34% forced at 37,654 dots) → guaranteed duplicate → verdict **negative**, `submit_ok: false`, no weekly slot authorized. Older "promote" language is superseded by `evidence/literal_release_review_20261027.json`. Owner prompt reports KPL-36 at 0.1647 USER-REPORTED with no organizer receipt — not live data.
 
-## New hypotheses (registered; N1 and N2 now tested negative)
-Full register: docs/research/new-hypotheses-20261027.md.
-- N2 (top, TESTED NEGATIVE 2026-10-27): hydrothermal alteration halo (GeoDAWN radiometric K/Th + RTP magnetite-destruction trough) × INGENIOUS 2 m temperature-probe blind-conduit halo — HOLDOUT-DTI 0.0103 [0.0073, 0.0138] vs baseline 0.0217 [0.0190, 0.0242] (delta -0.0115); leakage canary 0.5100 passed; card `evidence/n2_holdout_run_card.json`. Do not promote.
-- N4: strike-independent TMI analytic-signal envelope. Cost low; expected +0.003–0.010 (estimate; unvalidated).
-- N5: drainage convergence / stream-power on detrended elevation. Cost medium; expected +0.004–0.012 (estimate; unvalidated).
-- N3: USGS ComCat seismicity cluster edges — conditional on ComCat being obtainable from this sandbox.
-- N1 (TESTED NEGATIVE earlier): shear/dilation structure-tensor coherence — HOLDOUT-DTI 0.0170 vs baseline 0.0217; card `evidence/n1_holdout_run_card.json`; do not promote.
-Rule: validate the top candidate on the spatially-blocked holdout (hide whole segments, buffer 30 px; pooled DTI alpha 0.2 / beta 0.8, 300 m triangular kernel; leakage canary AUC ≤ 0.90; uniqueness gate vs registry) BEFORE spending any weekly submission slot. A projection is never written as a score. Any new emission must also clear the literal lattice gate: at ≥6,650 distinct dots the reg-052 bound forces ≥70% 3-px overlap (guaranteed duplicate), so a sub-lattice design (<6,649 dots) must be spec'd first.
+## Hypotheses and novelty audit (read before proposing a new lane)
+The original N1/N2 results are preserved in `evidence/n1_holdout_run_card.json` and `evidence/n2_holdout_run_card.json`; both were negative. N2 recorded HOLDOUT-DTI 0.010285 [0.007327, 0.013786] versus baseline HOLDOUT-DTI 0.021746 [0.018991, 0.024228], evaluator `gems36-segment-audit-v1`, 60,988 withheld positives; its canary AUC was 0.509963. These are internal holdout values, not leaderboard scores.
+
+Do not describe analytic-signal, drainage/chi, seismicity, or contact-crosscut approaches as untried: analytic-signal features occur in `src/gemsdoe36/ctrb.py`; drainage/chi was tested in TCD-36; seismicity features occur in WDP/GVSC; contact/crosscut approaches were explored in MTO and related lanes. The continuation candidate screen, caveats, external source gates, and review record are in `docs/research/session-review-20261027-continuation.md`. Three external-data hypotheses there are **blocked**, not viable, until official source coverage, licensing/sharing rights, and local data quality are checked.
+
+Rule: only run a candidate after the session's method paragraph assigns its lane. Reuse the shared feature stack, evaluator, and writer; withhold buffered whole fault segments; run a feature-alone leakage canary; check registry correlation on the surface before placement and overlap on final dots; and use no more than three experiments or two hours. Stop on any literal registry duplicate. A projection is never a score, and a separate selector owns weekly-slot decisions.
 
 ## Deliverables produced this session
 - docs/executive-summary.html — nine-site table + how-to-submit guide; KPL-36 shown as research download only, DO NOT SUBMIT (literal gate failed).
