@@ -213,7 +213,8 @@ def _rank01(a, mask):
     out = np.zeros(a.shape, np.float32)
     v = a[mask].astype(np.float64)
     order = np.argsort(v, kind="mergesort")
-    r = np.empty(len(v), np.float64); r[order] = np.arange(len(v))
+    r = np.empty(len(v), np.float64)
+    r[order] = np.arange(len(v))
     out[mask] = (r / max(len(v) - 1, 1)).astype(np.float32)
     return out
 

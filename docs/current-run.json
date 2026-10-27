@@ -345,5 +345,38 @@
     "raster_sha256": "d840ce6aa03c8fc6c44d6ab761b7be1590859a00c711d623e4c9eb5479cfc778",
     "run_card": "downloads/csdl36-run-card.json"
   },
-  "superseding_review": "downloads/literal-release-review.json"
+  "superseding_review": "downloads/literal-release-review.json",
+  "latest_research_lane_tcd36": {
+    "lane_id": "TCD-36",
+    "best_arm": "EXP-2",
+    "verdict": "negative",
+    "slot_approved": false,
+    "ok_to_download_and_submit": false,
+    "ok_to_download_for_research": true,
+    "tif_path": "downloads/gemsdoe36-tcd36-exp2-20261027-9970b80c6585-zeros.tif",
+    "tif_sha256": "513a7378a96452fa31e524a002f467457c58fabcb0da896fa75830d0973f4037",
+    "zip_path": "downloads/gemsdoe36-tcd36-exp2-20261027-9970b80c6585-zeros.zip",
+    "zip_sha256": "1a6b74d6a8444c53905113d2512dcdd9ca7cad82602beac19d3f3ea16bba9733",
+    "holdout_label": "HOLDOUT-DTI",
+    "holdout_dti": 0.19416399564770398,
+    "ci95": [
+      0.18034221043880366,
+      0.20834334518799855
+    ],
+    "delta_vs_kpl36_exp3": 0.024064,
+    "evaluator_version": "gems-segment-pooled-v1",
+    "withheld_positives": 60988,
+    "run_card": "downloads/tcd36-run-card.json",
+    "run_card_sha256": "62b8c2f9cf2dec701840a55a5c1ef04f812e54ba8563fe732ad2fbb23e7fc6cc",
+    "submission_name": "gemsdoe36-tcd36-exp2-20261027-9970b80c6585",
+    "note": "TCD-36 EXP-2 10m3DEP+Chi+Stage2 | HOLDOUT-DTI 0.1942 | DO NOT SUBMIT literal gate 9970b80c6585",
+    "gates": {
+      "G1_leakage_canary_le_0_90": true,
+      "G2_holdout_beats_kpl36_0_1701_and_paired_B0": true,
+      "G3a_pre_placement_surface_spearman_le_0_90": true,
+      "G3b_focus9_and_local36_and_mutual_3px_overlap_le_0_70": true,
+      "G3c_literal_unseparated_a_gt_0_all_198_rasters_le_0_70": false,
+      "G4_strict_0_1_geotiff_and_collar_valid": true
+    }
+  }
 }

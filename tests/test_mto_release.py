@@ -28,6 +28,10 @@ def load(name: str) -> dict:
     return json.loads((ROOT / name).read_text())
 
 
+@pytest.mark.skipif(
+    not (ROOT / "data/raw/sample_submission.tif").is_file(),
+    reason="data/raw not restored",
+)
 def test_archived_negative_release_is_locally_valid_but_not_authorized() -> None:
     result = verify_all(ROOT)
     assert result["passed"], result["errors"]

@@ -42,6 +42,7 @@ sys.path.insert(0, str(ROOT / "src"))
 sys.path.insert(0, str(ROOT / "scripts"))
 
 import rasterio  # noqa: E402 (template transform)
+
 from gemsdoe36.atvr_features import build_or_load_static_feature_cache
 from gemsdoe36.metric import distance_weighted_tversky
 from gemsdoe36.paths import data_dir, work_dir
@@ -49,7 +50,6 @@ from gemsdoe36.protocol import (
     EVALUATOR_VERSION,
     feature_canary,
     pooled_holdout,
-    registry_check,
 )
 
 TOTAL_DOT_BUDGET = 37_654
@@ -115,8 +115,8 @@ def _parse_probe_dbf(dbf: Path) -> dict[str, np.ndarray]:
             if len(rec) < rec_len:
                 break
 
-            def num(field: str) -> str:
-                return rec[offsets[field] : offsets[field] + {
+            def num(field: str, _rec: bytes = rec) -> str:
+                return _rec[offsets[field] : offsets[field] + {
                     "OBJECTID": 10, "UTM_E": 10, "UTM_N": 10, "F2mDAB": 19,
                 }[field]].decode("ascii", "ignore").strip()
 
@@ -256,8 +256,6 @@ def main() -> int:
         f"positive px, {plan.n_folds} folds / 16 cells"
     )
 
-    d_known = distance_transform_edt(~truth).astype(np.float32)
-
     def run_arm(surface2d, arm_name):
         dots = np.zeros(foot.shape, dtype=bool)
         elig_masks = []
@@ -269,7 +267,6 @@ def main() -> int:
         budgets = _allocate_budgets(elig_masks, TOTAL_DOT_BUDGET)
         for k in range(plan.n_folds):
             elig_k = elig_masks[k]
-            q_mask = (plan.fold_owner == k) & foot
             rc = np.argwhere(elig_k)
             vals = surface2d[rc[:, 0], rc[:, 1]]
             budget = budgets[k]

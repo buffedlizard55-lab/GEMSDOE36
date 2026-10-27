@@ -52,7 +52,6 @@ def main() -> int:
     cand[~foot] = 0.0
     cdots = (cand > 0.5) & foot
 
-    registry = {}
     items = []
     for p in sorted(SCORED_DIR.glob("*.tif")):
         items.append(("local-scored:" + p.name, p))
@@ -105,9 +104,11 @@ def main() -> int:
             "duplicate": bool(row["duplicate"]),
         })
         if abs(row["surface_rank_correlation"]) > max_rho:
-            max_rho = abs(row["surface_rank_correlation"]); max_rho_ref = label
+            max_rho = abs(row["surface_rank_correlation"])
+            max_rho_ref = label
         if row["dot_overlap_within_3px"] > max_ov:
-            max_ov = row["dot_overlap_within_3px"]; max_ov_ref = label
+            max_ov = row["dot_overlap_within_3px"]
+            max_ov_ref = label
 
     comparisons.sort(key=lambda r: -r["dot_overlap_within_3px"])
     any_dup = any(c["duplicate"] for c in comparisons)

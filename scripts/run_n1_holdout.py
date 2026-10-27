@@ -43,7 +43,7 @@ from datetime import datetime, timezone
 from pathlib import Path
 
 import numpy as np
-from scipy.ndimage import distance_transform_edt, gaussian_filter, label
+from scipy.ndimage import distance_transform_edt, gaussian_filter
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "src"))
@@ -52,11 +52,10 @@ sys.path.insert(0, str(ROOT / "scripts"))
 from gemsdoe36.atvr_features import build_or_load_static_feature_cache
 from gemsdoe36.field import FieldConfig, build_belief_field  # noqa: F401 (shared stack)
 from gemsdoe36.metric import distance_weighted_tversky
-from gemsdoe36.paths import data_dir, work_dir
+from gemsdoe36.paths import work_dir
 from gemsdoe36.protocol import (
     EVALUATOR_VERSION,
     feature_canary,
-    hide_segments,
     pooled_holdout,
 )
 
@@ -168,8 +167,6 @@ def main() -> int:
         f"[n1] holdout plan: {plan.n_segments:,} segments, {int(plan.truth.sum()):,} "
         f"positive px, {plan.n_folds} folds / 16 cells"
     )
-
-    d_known = distance_transform_edt(~known_bool).astype(np.float32)
 
     def run_arm(surface2d: np.ndarray, arm_name: str) -> dict:
         dots = np.zeros(foot.shape, dtype=bool)

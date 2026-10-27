@@ -3,8 +3,18 @@
 <!-- LITERAL_REVIEW:START -->
 > **27 October 2026 superseding decision: DO NOT SUBMIT.** KPL is a literal-protocol duplicate: 99.17% 3-px overlap with reg-052. The owner reports KPL **0.1647 USER-REPORTED**, not organizer-confirmed. The prior forecast is uncalibrated and withdrawn. No new TIFF, training experiment or submission slot was authorized. See [executive review](docs/research/review-20261027.md) and [reproduced run card](evidence/literal_release_review_20261027.json). The method paragraph assigning this session's lane is absent. Historical cards and reported scores are preserved, not promoted.
 <!-- LITERAL_REVIEW:END -->
-> **SFD-36 (2026-10-27): HOLDOUT-DTI 0.178394 [0.1640, 0.1946] — best validated detector in repo — but 99.39% literal 3-px overlap vs reg-052 blind lattice: DO NOT SUBMIT, research only.** See [SFD monograph + 9-site executive summary](docs/research/sfd36-20261027.md), [run card](evidence/sfd36_run_card_20261027.json), [literal amendment](evidence/sfd36_literal_amendment_20261027.json). File: `docs/downloads/gemsdoe36-sfd36-exp2-20261027-d65acb3011d5-zeros.tif`, SHA-256 `89db5e348baa6420d52583a2fe050f1a807bff8d8d74dfaf8b43f627b9ced52a`, validator PASS, scenario estimate withdrawn as uncalibrated.
+<!-- TCD36_README:START -->
+> ## LATEST RESEARCH CANDIDATE (2026-10-27) · `TCD-36` (`EXP-2`) · DOWNLOAD: YES · DO NOT SUBMIT AUTOMATICALLY (`verdict: negative`)
+>
+> - **Validated `[0, 1]` GeoTIFF:** [`gemsdoe36-tcd36-exp2-20261027-9970b80c6585-zeros.tif`](docs/downloads/gemsdoe36-tcd36-exp2-20261027-9970b80c6585-zeros.tif) ([Single-TIFF ZIP](docs/downloads/gemsdoe36-tcd36-exp2-20261027-9970b80c6585-zeros.zip), [Companion `-nan.tif`](docs/downloads/gemsdoe36-tcd36-exp2-20261027-9970b80c6585-nan.tif), [Run Card JSON](evidence/tcd36_run_card_20261027.json), [Monograph & PhD `0.2778` Synthesis](docs/research/tcd36-20261027.md), [Frozen Preregistration](docs/research/tcd36-preregistration-20261027.md)).
+> - **SHA-256 (`-zeros.tif`):** `513a7378a96452fa31e524a002f467457c58fabcb0da896fa75830d0973f4037` · **Dots:** `37,654` · **Grid:** `EPSG:32611`, `3730×3292` at `100 m`, all `12,279,160` cells finite in `[0.0, 1.0]` (`0` NaN/Inf, `0` dots within `200 m` of `labels.tif`).
+> - **Unique Name:** `gemsdoe36-tcd36-exp2-20261027-9970b80c6585` · **Copy-Paste Note (`94/140` chars):** `TCD-36 EXP-2 10m3DEP+Chi+Stage2 | HOLDOUT-DTI 0.1942 | DO NOT SUBMIT literal gate 9970b80c6585`
+> - **Spatially-Blocked Holdout (`gems-segment-pooled-v1`, `60,988` withheld positives):** **`HOLDOUT-DTI = 0.194164`** (95% CI `[0.180342, 0.208343]`), highest validated detector in repo — beating `SFD-36 EXP-2` (`0.178394`) by **`+0.015770`**, `KPL-36 EXP-3` (`0.170100`) by **`+0.024064`** across **all 4/4 spatial folds** (`NW 0.19700`, `NE_LidarGapHeavy 0.25694`, `SW 0.13911`, `SE 0.20817`), and `B0` (`0.134184`) by **`+0.059980`** (`EXP-1 = 0.185269`, `EXP-3 = 0.192469`). Internal hide-and-recover metric — not a live leaderboard forecast.
+> - **Crowding Collapse Fixed:** Cuts `KPL-36`'s `>=3`-neighbor 300 m blob crowding from **`42.57%`** (`0.1647 USER-REPORTED`) to **`4.54%`** (`9.4×` reduction) and expands blind 300 m kernel coverage by **`+23.3%`** (`0.05193` vs `0.04210`).
+> - **Leakage Canary & Multi-Regime Uniqueness:** Stage-1 canary max AUC `0.6470 <= 0.90` (**PASS**); Stage-2 OOF canary max AUC `0.8039 <= 0.90` (**PASS**); pre-placement continuous surface `|Spearman rho| = 0.4254 <= 0.90` (**PASS**); 9-focus-site competing `<100k`-dot 3-px overlap max `0.6682 <= 0.70` (vs `GEMSDOE32 B2` = `0.5699`, vs `KPL-36` = `0.5672`, vs `SFD-36` = `0.5142`, **PASS**); all-216 mutual 3-px overlap max `0.5672 <= 0.70` (**PASS**); literal unseparated `a > 0` overlap vs `reg-052` 5-px calibration lattice = `0.9935 > 0.70` (**FAIL — automatic slot promotion remains closed per `PR #31` and Protocol Rule 6**).
+<!-- TCD36_README:END -->
 
+> **Prior parallel lane SFD-36 (2026-10-27): HOLDOUT-DTI 0.178394 [0.1640, 0.1946] — superseded on holdout by `TCD-36` (`0.194164`, `+0.015770`, 3-px overlap `51.4% <= 70%`) — 99.39% literal 3-px overlap vs reg-052 blind lattice: DO NOT SUBMIT, research only.** See [SFD monograph + 9-site executive summary](docs/research/sfd36-20261027.md), [run card](evidence/sfd36_run_card_20261027.json), [literal amendment](evidence/sfd36_literal_amendment_20261027.json). File: `docs/downloads/gemsdoe36-sfd36-exp2-20261027-d65acb3011d5-zeros.tif`, SHA-256 `89db5e348baa6420d52583a2fe050f1a807bff8d8d74dfaf8b43f627b9ced52a`, validator PASS, scenario estimate withdrawn as uncalibrated.
 
 **Read this decision and the [standing owner brief](#full-standing-owner-brief-historical-wording) at the start of every session.** Core values: **Maximize P(Win)** and **Own the Outcome**.
 
@@ -948,3 +958,20 @@ Read the full standing owner brief above on every session. The latest request re
 3. Reconcile 0.4437 vs 0.3195 leaderboard reads against the official leaderboard (no organizer receipts exist for any historical score).
 4. Limitations: no DrivenData auth (cannot auto-download organizer data or auto-submit); uniqueness is scoped to rasters available to this project; portal acceptance of zeros-outside is locally verified but not organizer-verified.
 
+### Additional 27 October 2026 baseline prompt updates (`TCD-36`)
+Newly supplied user-reported scores from the 2026-10-27 prompt (preserved with
+strict `USER-REPORTED` provenance because no DrivenData submission-page receipt
+is archived in `evidence/`):
+- `GEMSDOE36`: `gemsdoe36-kpl36-exp3-20261026-fc869911e88c`: **0.1647 USER-REPORTED**
+- `GEMSDOE27`: `gemsdoe27-h31-1-pruned-scarp-20261026-6620edce`: **0.2250 USER-REPORTED**
+- `GEMSDOE70`: `gems70-h70c-alldata-s2-20261025T225750Z-77274569-zeros`: **0.2478 USER-REPORTED**
+- `GEMSDOE73`: `gemsdoe73-h73-2-twostage-20261025-8353ca04`: **0.2054 USER-REPORTED**
+- `GEMSDOE76`: `gems76-h76c-tridomain-s2-celf-20261025-f47302d5-zeros`: **0.2343 USER-REPORTED**
+- `KANLERGEMSDOE1..3`: `0.0085` / `0.2709` / `0.0680 USER-REPORTED`; `EUGGEMSDOE1..3`: `0.1538` / `0.2747` / `0.1753 USER-REPORTED`; `WBGGEMSDOE1..3`: `0.2686` / `0.0641` / `0.1932 USER-REPORTED`; `GINNYGEMSDOE1..3`: `0.2586` / `0.2602` / `0.2633 USER-REPORTED`.
+
+Per Protocol Rule 6 and `PR #31`, promotion to a real weekly slot remains a
+separate human selector decision; we do not remove registry calibration controls
+unilaterally, and `TCD-36` (`HOLDOUT-DTI = 0.194164`, `+0.0158` over `SFD-36`,
+`+0.0241` over `KPL-36`, `4.54%` 300 m crowding vs `42.57%`) fails closed on
+automatic slot spend solely due to `reg-052`'s 5-px calibration lattice while
+publishing the validated `[0, 1]` research GeoTIFF (`DOWNLOAD: YES · DO NOT SUBMIT automatically`).
