@@ -1,0 +1,41 @@
+{
+  "schema": "gemsdoe36.parallel_run_card.v1",
+  "review_date_utc": "2026-10-27",
+  "hypothesis": "No experiment selected: the user-specified single method paragraph assigning the lane is absent, and the external-data candidates have not passed acquisition/coverage/rights checks.",
+  "mechanism": "No mechanism was implemented or tested in this review. Three research leads (persistent groundwater-head barrier, seasonal satellite thermal phase-lag, mapped-unit displacement consensus) are documented as blocked proposals in docs/research/session-review-20261027-continuation.md.",
+  "named_non_fault_process_that_could_mimic_it": "Not applicable to an unrun hypothesis; candidate-specific mimics are documented in the research review.",
+  "holdout": {
+    "label": "HOLDOUT-DTI",
+    "status": "No holdout run in this review",
+    "evaluator_version": null,
+    "withheld_positive_pixels": null,
+    "dti": null,
+    "ci95": null,
+    "prior_reference": {
+      "label": "HOLDOUT-DTI (historical evidence; not rerun this review)",
+      "arm": "S2D-36 EXP-2",
+      "evaluator_version": "gems-segment-pooled-v1",
+      "withheld_positive_pixels": 60988,
+      "dti": 0.2007657135656901,
+      "ci95": [0.18648773519590356, 0.21533340056778932]
+    }
+  },
+  "registry": {
+    "new_surface_rank_correlation": null,
+    "new_candidate_final_dot_overlap": null,
+    "status": "Not evaluated: no new surface or final dots were produced. Historical S2D-36 EXP-2 overlap with reg-052 was 0.994795 within 3 px; historical geometric lower bound at 37,654 dots was 0.823418. These are overlap diagnostics, not scores."
+  },
+  "raster_sha256": null,
+  "validator_output": {
+    "new_raster_generated": false,
+    "no_nan_inside_footprint": null,
+    "values_in_0_1": null,
+    "crs_shape_transform_match": null,
+    "status": "Not applicable: no new raster. Prior S2D-36 local validation is historical evidence only and was not rerun here."
+  },
+  "submission_name": null,
+  "submission_note": null,
+  "verdict": "negative",
+  "slot_approved": false,
+  "reason": "No assigned lane paragraph; no fresh holdout; literal registry gate remains binding; external source candidates are unverified; no submission slot selected or spent."
+}
