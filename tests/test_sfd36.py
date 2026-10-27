@@ -23,10 +23,10 @@ def test_sfd_features_shape_and_finite_on_fp():
 
 def test_sfd_run_card_gates():
     card = json.loads((ROOT / "evidence/sfd36_run_card_20261027.json").read_text())
-    assert card["verdict"] == "promote" and all(card["gates"].values())
+    assert card["verdict"] == "negative" and card["gates"]["G3_literal_any_registry"] is False  # literal registry rule (amendment)
     assert card["holdout"]["best_arm"] == "EXP-2"
     assert card["holdout"]["arms"]["EXP-2"]["dti"] > 0.170100  # beats KPL-36
     assert card["leakage_canary"]["max_symmetric_auc"] <= 0.90
-    assert card["uniqueness_vs_focus9"]["max_champion_3px_dot_overlap"] <= 0.70
+    assert card["uniqueness_vs_focus9"]["max_champion_3px_dot_overlap"] <= 0.70  # champions only; literal gate fails vs reg-052
     assert len(card["submission"]["note"]) <= 140
     assert card["submission"]["dots"] == 37654
