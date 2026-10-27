@@ -95,7 +95,7 @@ def main() -> int:
 <div>
 <span class="eyebrow">GEMS DOE 36 · KPL-36 current decision · 26 October 2026 · verdict: {verdict} · DOWNLOAD: YES</span>
 <h1>{'Download &amp; submit this unique TIF' if promote else 'KPL-36 research result — not for submission'}</h1>
-<p class="lede"><strong>{banner}.</strong> File <code>{html.escape(Path(sub['file']).name)}</code> · {sub['dots']:,} dots · single-band float32 GeoTIFF, EPSG:32611, grid identical to the sample submission, whole-array values in [0,1] with zeros outside the footprint (cannot trigger the portal <em>“Predicted values must be in range [0, 1]”</em> error) · SHA-256 <code>{sub['sha256']}</code>. Every other file on this site: <strong>DO NOT SUBMIT</strong>.</p>
+<p class="lede"><strong>{banner}.</strong> File <code>{html.escape(Path(sub['file']).name)}</code> · {sub['dots']:,} dots · single-band float32 GeoTIFF, EPSG:32611, grid identical to the sample submission, whole-array values in [0,1] with zeros outside the footprint (passes the local finite/range check; portal acceptance is not verified) · SHA-256 <code>{sub['sha256']}</code>. Every other file on this site: <strong>DO NOT SUBMIT</strong>.</p>
 <div class="hero-actions">
 <a class="button" href="{html.escape(tif_rel)}" download>⬇ Download submission GeoTIFF</a>
 <a class="button secondary" href="{html.escape(zip_rel)}" download>ZIP (single GeoTIFF)</a>
@@ -231,9 +231,9 @@ def main() -> int:
     readme = README.read_text()
     decision = f"""> ## CURRENT DECISION · KPL-36 · DOWNLOAD: YES · {'OK TO SUBMIT' if promote else 'DO NOT SUBMIT'} · verdict: {verdict}
 >
-> **The file to submit:** [`{Path(sub['file']).name}`]({sub['file']}) ([ZIP]({sub['zip']}), [run card](evidence/kpl36_run_card_20261026.json), [monograph + 9-site executive audit](docs/research/kpl36-20261026.md), [preregistration](docs/research/preregistration-kpl36-20261026.md)). Name `{sub['name']}`; Note ({sub['note_characters']}/140): `{sub['note']}`; SHA-256 `{sub['sha256']}`; {sub['dots']:,} dots; whole-array [0,1] zeros-outside (portal-safe).
+> **Research artifact (not submission authorization):** [`{Path(sub['file']).name}`]({sub['file']}) ([ZIP]({sub['zip']}), [run card](evidence/kpl36_run_card_20261026.json), [monograph + 9-site executive audit](docs/research/kpl36-20261026.md), [preregistration](docs/research/preregistration-kpl36-20261026.md)). Name `{sub['name']}`; Note ({sub['note_characters']}/140): `{sub['note']}`; SHA-256 `{sub['sha256']}`; {sub['dots']:,} dots; whole-array [0,1] zeros-outside (portal-safe).
 > - **HOLDOUT-DTI {h['arms'][best]['dti']:.6f}** [{h['arms'][best]['ci95'][0]:.4f}, {h['arms'][best]['ci95'][1]:.4f}] (`gems-segment-pooled-v1`, {h['n_withheld_positive_pixels']:,} withheld px); EXP-2 beat the in-run GVSC replication (0.160003) with paired Δ +0.0096 [0.0035, 0.0159], 4/4 folds. Internal validation, not a leaderboard score. (Point comparison only: above GVSC 0.158855 and the externally reviewed GEMSDOE24 0.1637924.)
-> - **Leaderboard scenario estimate {est_range}** (assumptions in monograph §5; needs novel credit ≥{est['novel_credit_needed_to_match_0.2778']:.3f} to match the historical champion; no organizer receipt yet).
+> - **Historical uncalibrated scenario {est_range} — withdrawn as a forecast** (assumptions in monograph §5; needs novel credit ≥{est['novel_credit_needed_to_match_0.2778']:.3f} to match the historical champion; no organizer receipt yet).
 > - **Uniqueness:** champion 3-px dot overlap max {cross['final_dots']['max_champion_3px_overlap']:.3f} (vs GEMSDOE32-B2 {cross['final_dots']['overlap_vs_GEMSDOE32_B2_3px']:.3f}); surface |ρ| {cross['surface_before_placement']['max_abs_rank_correlation']:.3f} vs {cross['focus9_entries_checked']} focus-9 rasters; vs post-merge local candidates ≤0.058. Blind-lattice overlap is mathematically forced (~0.99 at any 37,654-dot budget; calibration control, disclosed in monograph).
 > - Archived, **DO NOT SUBMIT**: [CSDL-36 EXP-2](docs/downloads/{csdl['submission']['zeros_filename']}) ([ZIP](docs/downloads/{csdl['submission']['zip_archive_name']}), [card](evidence/csdl36_run_card_20261026.json), [monograph](docs/research/csdl36-20261026.md); HOLDOUT-DTI 0.155970 [0.141880, 0.170267], EXP-1 0.155206, EXP-3 0.152541; fixes IR-GVSC36-01..04 and passes 9-site ≤70% overlap at 68.69%), 505-dot lattice-avoiding candidate (no computable holdout in its session), BDC-36, DW36 (0.066052), GVSC-36 (0.158855), HVG-36 (0.135759), MTO-36, H36-CTRB, ATVR-36, Lane36, registry-preflight stop — cards preserved in `evidence/`. Historical best remains GEMSDOE32-B2 **0.2778 OWNER-REPORTED** (already submitted; exact family subset). Verified live leaderboard #1 = **0.4437** (2026-10-26 read).
 """
@@ -243,6 +243,8 @@ def main() -> int:
     else:
         readme = decision + "\n" + readme
     README.write_text(readme)
+    from publish_literal_review import publish
+    publish(ROOT)
     print(f"[site] KPL-36 v5 verdict={verdict} promote={promote} -> pages/current-run/manifest/README updated")
     return 0
 
