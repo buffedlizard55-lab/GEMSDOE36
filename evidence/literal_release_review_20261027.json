@@ -1,0 +1,67 @@
+{
+  "schema": "gemsdoe36.literal-release-review.v1",
+  "hypothesis": "H-KPL-A: hidden expert-mapped faults are long-but-faint traces; 3-5 km oriented line coherence (structure tensor sigma=15px, line integrals half=15/25px, topographic-magnetic orientation agreement) raises their SNR above pixelwise-GBM threshold while suppressing short erosional/cultural segments. EXP-3 adds H-KPL-B PU-spy decontamination.",
+  "mechanism": "101 label-free features (GVSC-89 + 12 KPL) -> 2-seed HGB experts with Prentice-Pyke calibration -> LiDAR-blind bridge fusion (EXP-2/3) -> assembled quadrant-OOF surface -> B2 collar (d_cat>2px) -> exact 300 m CELF submodular emission of 37,654 binary dots.",
+  "named_non_fault_mimic": "Long straight roads/railways/pipelines, Lahontan shoreline benches, range-front erosional facets; PU arm risk: basin-biased reliable negatives over-firing on range fronts.",
+  "verdict": "negative",
+  "submit_ok": false,
+  "slot_selected": false,
+  "experiments_run_this_session": 0,
+  "reason": "Literal registry overlap exceeds 70%; stop. No new method paragraph was specified.",
+  "holdout": {
+    "label": "HOLDOUT-DTI (prior KPL run, not rerun)",
+    "evaluator_version": "gems-segment-pooled-v1",
+    "withheld_positives": 60988,
+    "dti": 0.17010000946379217,
+    "ci95": [
+      0.1550890600301938,
+      0.18613752547087836
+    ]
+  },
+  "registry": {
+    "reference_id": "reg-052",
+    "dot_overlap_3px": 0.9916874701226961,
+    "surface_rank_correlation": null,
+    "surface_status": "Not rerun: no new surface; final-dot failure is decisive",
+    "literal_bound": {
+      "schema_version": "gemsdoe36.literal-registry-feasibility.v1",
+      "reference_id": "reg-052",
+      "reference_registry_path": "13GEMSDOE/docs/downloads/13gems_20261001_r13-lattice-s5_v2_nan-outside.tif",
+      "reference_sha256": "b4570b406efec198eb2f4d142ad8d0d6184b14b66f2f52b5c4d697f0647dc9b2",
+      "reference_footprint_sha256": "15bc7e7d4e21d284c42e4183bb7c63d087f67635818bd7b963d58f6beed44817",
+      "reference_dots": 206895,
+      "template_sha256": "2176d08e485aa2cd2860ce8df539db4faf4d76163b38a4dd8c30a40454d35cbc",
+      "provenance": "SHA-pinned owner mirrors, not independently authenticated organizer data",
+      "radius_pixels": 3,
+      "bound": {
+        "footprint_pixels": 5167373,
+        "covered_pixels": 5160724,
+        "uncovered_pixels": 6649,
+        "candidate_distinct_dots": 37654,
+        "minimum_overlapping_dots": 31005,
+        "minimum_overlap_fraction": 0.8234184947150369,
+        "threshold_fraction": 0.7,
+        "guaranteed_duplicate": true,
+        "first_dot_count_forced_over_threshold": 22164
+      },
+      "conclusion": "STOP: guaranteed to exceed the literal 70% overlap gate"
+    }
+  },
+  "raster_sha256": "86fc8243ad573bcdbfac8b432daf0ec5b6800b991b2c3278706358be7eb9922d",
+  "validator": {
+    "single_band": true,
+    "no_nan_inside": true,
+    "whole_grid_finite": true,
+    "range_0_1": true,
+    "crs_shape_transform_match": true
+  },
+  "submission_name": "gemsdoe36-kpl36-exp3-20261026-fc869911e88c",
+  "note": "Research only: literal registry overlap fails; no slot authorized.",
+  "reported_result": {
+    "value": 0.1647,
+    "label": "USER-REPORTED, not ORGANIZER-CONFIRMED",
+    "source": "Owner prompt received 2026-10-27",
+    "receipt": null
+  },
+  "calibrated_leaderboard_estimate": null
+}

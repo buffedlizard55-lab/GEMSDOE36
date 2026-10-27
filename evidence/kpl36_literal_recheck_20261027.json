@@ -1,0 +1,15 @@
+{
+  "candidate_sha256": "86fc8243ad573bcdbfac8b432daf0ec5b6800b991b2c3278706358be7eb9922d",
+  "dots": 37654,
+  "registry_id": "reg-052",
+  "dot_overlap_3px": 0.9916874701226961,
+  "validator": {
+    "single_band": true,
+    "no_nan_inside": true,
+    "whole_grid_finite": true,
+    "range_0_1": true,
+    "crs_match": true,
+    "shape_match": true,
+    "transform_match": true
+  }
+}

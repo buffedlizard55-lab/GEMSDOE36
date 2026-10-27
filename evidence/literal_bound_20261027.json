@@ -1,0 +1,23 @@
+{
+  "schema_version": "gemsdoe36.literal-registry-feasibility.v1",
+  "reference_id": "reg-052",
+  "reference_registry_path": "13GEMSDOE/docs/downloads/13gems_20261001_r13-lattice-s5_v2_nan-outside.tif",
+  "reference_sha256": "b4570b406efec198eb2f4d142ad8d0d6184b14b66f2f52b5c4d697f0647dc9b2",
+  "reference_footprint_sha256": "15bc7e7d4e21d284c42e4183bb7c63d087f67635818bd7b963d58f6beed44817",
+  "reference_dots": 206895,
+  "template_sha256": "2176d08e485aa2cd2860ce8df539db4faf4d76163b38a4dd8c30a40454d35cbc",
+  "provenance": "SHA-pinned owner mirrors, not independently authenticated organizer data",
+  "radius_pixels": 3,
+  "bound": {
+    "footprint_pixels": 5167373,
+    "covered_pixels": 5160724,
+    "uncovered_pixels": 6649,
+    "candidate_distinct_dots": 37654,
+    "minimum_overlapping_dots": 31005,
+    "minimum_overlap_fraction": 0.8234184947150369,
+    "threshold_fraction": 0.7,
+    "guaranteed_duplicate": true,
+    "first_dot_count_forced_over_threshold": 22164
+  },
+  "conclusion": "STOP: guaranteed to exceed the literal 70% overlap gate"
+}
