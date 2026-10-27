@@ -1,0 +1,118 @@
+{
+  "schema": "gems36.sfd36.preregistration.v1",
+  "lane_id": "SFD-36",
+  "date": "2026-10-27",
+  "hypotheses_ranked": [
+    {
+      "rank": 1,
+      "id": "H-SFD-A",
+      "implemented_in": [
+        "EXP-1",
+        "EXP-2"
+      ],
+      "title": "Signed transverse fault-step dipole: |f(+2/4px)-f(-2/4px)| integrated along 8 strikes (half 7/15px) on detrended elevation, RTP magnetics, isostatic gravity, slope, LiDAR step; cross-channel min(elev,mag) dipole",
+      "layers": [
+        "org_det_elev",
+        "org_rtp",
+        "org_iso_grav_anom",
+        "org_det_elev_slope",
+        "lid_step_max"
+      ],
+      "signature": "antisymmetric transverse step (dipole), unlike all prior monopole ridge/coherence/worm integrals",
+      "why_uncatalogued": "buried/blind normal faults juxtapose basement with no surface crest, so crest/coherence detectors and catalogue-adjacent mapping miss them; a sustained cross-strike level change is their remaining surface expression",
+      "named_non_fault_mimic": "lithologic contacts, Lahontan shoreline scarps, canal/road embankments"
+    },
+    {
+      "rank": 2,
+      "id": "H-SFD-B",
+      "implemented_in": [
+        "EXP-3"
+      ],
+      "title": "Dipole-only expert fused with bridge expert (rank fusion 0.7 bridge / 0.3 dipole-only) - tests whether dipole signal alone adds orthogonal ranking",
+      "layers": [
+        "12 SFD features only for the dipole expert"
+      ],
+      "named_non_fault_mimic": "contact-dominated dipole expert over-firing on range-front lithologic boundaries"
+    },
+    {
+      "rank": 3,
+      "id": "H-CURV",
+      "implemented_in": [],
+      "title": "Multi-scale Hessian eigenvalue anisotropy (curvature) on RTP/gravity - deferred, cost similar to SFD but closer to existing tilt/gradient features",
+      "layers": [
+        "org_rtp",
+        "org_iso_grav_anom"
+      ],
+      "named_non_fault_mimic": "fold hinges and volcanic centres"
+    },
+    {
+      "rank": 4,
+      "id": "H-RAD",
+      "implemented_in": [],
+      "title": "Radiometric ternary (K-Th-U) fault-parallel alteration lineaments - deferred; GeoDAWN radiometrics already in base stack as levels, lineament transform untested but lower expected gain",
+      "layers": [
+        "gd_K",
+        "gd_Th",
+        "gd_U"
+      ],
+      "named_non_fault_mimic": "playa clay/salt radiometric lineaments"
+    },
+    {
+      "rank": 5,
+      "id": "H-DRAIN",
+      "implemented_in": [],
+      "title": "Drainage-deflection/knickpoint alignment - NOT viable without raw USGS 3DEP DEM (https://apps.nationalmap.gov/downloader/, egress-blocked); detrended elevation only in organizer stack",
+      "layers": [
+        "USGS 3DEP DEM (not obtained)"
+      ],
+      "named_non_fault_mimic": "lithologic knickpoints"
+    }
+  ],
+  "evaluator_version": "gems-segment-pooled-v1",
+  "buffer_px": 15,
+  "withheld_positives_expected": 60988,
+  "total_budget_dots": 37654,
+  "collar_px_exclusive": 2.0,
+  "experiments": [
+    {
+      "id": "EXP-1",
+      "name": "SFD-Single-101",
+      "features": "GVSC89+SFD12",
+      "model": "2-seed HGB + Prentice-Pyke (GVSC recipe)"
+    },
+    {
+      "id": "EXP-2",
+      "name": "SFD-Bridge-101",
+      "features": "EXP-1 + LiDAR-blind expert",
+      "model": "GVSC frozen bridge fusion"
+    },
+    {
+      "id": "EXP-3",
+      "name": "SFD-Bridge-DipoleExpert",
+      "features": "EXP-2 surface rank-fused 0.7/0.3 with SFD12-only expert",
+      "model": "rank fusion, no new training recipe"
+    }
+  ],
+  "controls": [
+    {
+      "id": "B0"
+    },
+    {
+      "id": "C-GVSC"
+    }
+  ],
+  "gates": {
+    "G1_canary_max_two_polarity_auc": 0.9,
+    "G2_must_exceed_recorded_gvsc_exp3": 0.158855,
+    "G2b_must_exceed_kpl36_best": 0.1701,
+    "G2_paired_vs_B0_ci95_strictly_positive": true,
+    "G3_surface_max_abs_spearman_focus9": 0.9,
+    "G3_final_dots_max_3px_overlap_vs_each_focus9_champion": 0.7,
+    "G4_strict_whole_array_0_1_and_template_match": true
+  },
+  "budget": {
+    "max_experiments": 3,
+    "max_walltime_seconds": 7200
+  },
+  "deploy": "best EXP arm only if it beats KPL-36 0.170100 on HOLDOUT-DTI; assembled OOF surface; d_cat>2px; CELF 37654; zeros outside"
+}
