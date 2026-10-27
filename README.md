@@ -3,6 +3,8 @@
 <!-- LITERAL_REVIEW:START -->
 > **27 October 2026 superseding decision: DO NOT SUBMIT.** KPL is a literal-protocol duplicate: 99.17% 3-px overlap with reg-052. The owner reports KPL **0.1647 USER-REPORTED**, not organizer-confirmed. The prior forecast is uncalibrated and withdrawn. No new TIFF, training experiment or submission slot was authorized. See [executive review](docs/research/review-20261027.md) and [reproduced run card](evidence/literal_release_review_20261027.json). The method paragraph assigning this session's lane is absent. Historical cards and reported scores are preserved, not promoted.
 <!-- LITERAL_REVIEW:END -->
+> **SFD-36 (2026-10-27): HOLDOUT-DTI 0.178394 [0.1640, 0.1946] — best validated detector in repo — but 99.39% literal 3-px overlap vs reg-052 blind lattice: DO NOT SUBMIT, research only.** See [SFD monograph + 9-site executive summary](docs/research/sfd36-20261027.md), [run card](evidence/sfd36_run_card_20261027.json), [literal amendment](evidence/sfd36_literal_amendment_20261027.json). File: `docs/downloads/gemsdoe36-sfd36-exp2-20261027-d65acb3011d5-zeros.tif`, SHA-256 `89db5e348baa6420d52583a2fe050f1a807bff8d8d74dfaf8b43f627b9ced52a`, validator PASS, scenario estimate withdrawn as uncalibrated.
+
 
 **Read this decision and the [standing owner brief](#full-standing-owner-brief-historical-wording) at the start of every session.** Core values: **Maximize P(Win)** and **Own the Outcome**.
 
