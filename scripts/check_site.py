@@ -232,6 +232,7 @@ def main() -> int:
         (ROOT / "evidence/atvr36_run_card_20261026.json", DOCS / "downloads/atvr36-run-card.json"),
         (KPL_CARD_PATH, DOCS / "downloads/kpl36-run-card.json"),
         (ROOT / "evidence/tcd36_run_card_20261027.json", DOCS / "downloads/tcd36-run-card.json"),
+        (ROOT / "evidence/s2d36_run_card_20261027.json", DOCS / "downloads/s2d36-run-card.json"),
     ):
         if not copy.is_file() or original.read_bytes() != copy.read_bytes():
             errors.append(f"Pages JSON mirror differs from evidence: {copy}")
@@ -268,7 +269,9 @@ def main() -> int:
 
     # Preserve hash/ZIP integrity checks for the displayed research bundles.
     tcd = json.loads((ROOT / "evidence/tcd36_run_card_20261027.json").read_text())
+    s2d = json.loads((ROOT / "evidence/s2d36_run_card_20261027.json").read_text())
     artifacts = [
+        (ROOT / s2d["submission"]["file"], ROOT / s2d["submission"]["zip"], s2d["submission"]["sha256"]),
         (ROOT / tcd["submission"]["file"], ROOT / tcd["submission"]["zip"], tcd["submission"]["sha256"]),
         (DOCS / "downloads" / csdl["submission"]["zeros_filename"],
          DOCS / "downloads" / csdl["submission"]["zip_archive_name"], csdl["submission"]["raster_sha256"]),

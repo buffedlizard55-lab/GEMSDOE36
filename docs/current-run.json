@@ -378,5 +378,65 @@
       "G3c_literal_unseparated_a_gt_0_all_198_rasters_le_0_70": false,
       "G4_strict_0_1_geotiff_and_collar_valid": true
     }
+  },
+  "latest_research_lane_s2d36": {
+    "lane_id": "S2D-36",
+    "best_arm": "EXP-2",
+    "verdict": "negative",
+    "slot_approved": false,
+    "ok_to_download_and_submit": false,
+    "ok_to_download_for_research": true,
+    "tif_path": "downloads/gemsdoe36-s2d36-exp2-20261027-31189d084a83-zeros.tif",
+    "tif_sha256": "d3ba2fdb987bec34fc0c61148829032a431a95b8921b1bd66d61ddd047f56b72",
+    "zip_path": "downloads/gemsdoe36-s2d36-exp2-20261027-31189d084a83-zeros.zip",
+    "zip_sha256": "1c6cd50db6639445314602bd2f01cfa164c6b67dbb3438dc7593b278ed03b949",
+    "holdout_label": "HOLDOUT-DTI",
+    "holdout_dti": 0.2007657135656901,
+    "ci95": [
+      0.18648773519590356,
+      0.21533340056778932
+    ],
+    "delta_vs_kpl36_exp3": 0.030666,
+    "delta_vs_tcd36_exp2": 0.006602,
+    "evaluator_version": "gems-segment-pooled-v1",
+    "withheld_positives": 60988,
+    "run_card": "downloads/s2d36-run-card.json",
+    "run_card_sha256": "5df79bfe5d1da5c04bac8e57d78333385105a31f5777eabfe452441ba2f2114c",
+    "submission_name": "gemsdoe36-s2d36-exp2-20261027-31189d084a83",
+    "note": "S2D-36 EXP-2 10m3DEP+2stage+deconf | HOLDOUT-DTI 0.2008 | NEGATIVE reg052 gate 31189d084a83",
+    "gates": {
+      "G1_canary": true,
+      "G2_holdout_beats_CKPL_and_B0_with_CI": true,
+      "G3a_pre_placement_surface_spearman_all_198": true,
+      "G3b_focus9_and_competing_detector_uniqueness": false,
+      "G3c_literal_all_198_registry_including_reg052": false,
+      "G4_portal_format_and_0_1_range": true
+    },
+    "scenario_projection_not_a_score": {
+      "label": "SCENARIO-PROJECTION (NOT A SCORE; NO ORGANIZER RECEIPT EXISTS)",
+      "organizer_score": null,
+      "receipt": null,
+      "conservative_kpl_ratio_projection": 0.1944,
+      "peer_mechanism_matched_scenario_range": [
+        0.205,
+        0.238
+      ],
+      "anchors_user_reported_no_receipt": {
+        "GEMSDOE36_KPL36_EXP3": {
+          "holdout_dti": 0.1701,
+          "user_reported_portal": 0.1647
+        },
+        "GEMSDOE27_H31": {
+          "user_reported_portal": 0.225
+        },
+        "GEMSDOE76_ptcf_submod39k": {
+          "user_reported_portal": 0.2343
+        },
+        "GEMSDOE70_p5_dual_oof38k": {
+          "user_reported_portal": 0.2478
+        }
+      },
+      "monograph": "docs/research/s2d36-20261027.md"
+    }
   }
 }

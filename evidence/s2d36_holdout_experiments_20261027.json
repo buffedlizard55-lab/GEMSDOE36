@@ -1,0 +1,1169 @@
+{
+  "lane_id": "S2D-36",
+  "label": "HOLDOUT-DTI",
+  "generated_utc": "2026-10-27T21:10:30.220550+00:00",
+  "preregistration_path": "evidence/s2d36_preregistration_20261027.json",
+  "preregistration_sha256": "0cb39811a8caf986cd503b3e194923745e6819bfe3f3fc155c049462c91c9ac1",
+  "evaluator_version": "gems-segment-pooled-v1",
+  "buffer_px": 15,
+  "withheld_positives": 60988,
+  "fold_budgets": [
+    8414,
+    10404,
+    10410,
+    8426
+  ],
+  "total_budget": 37654,
+  "experiments_executed": 3,
+  "controls": [
+    "B0",
+    "C-KPL"
+  ],
+  "recorded_kpl36_exp3_for_reference": 0.1701,
+  "best_candidate_arm": "EXP-2",
+  "summaries": {
+    "B0": {
+      "label": "HOLDOUT-DTI",
+      "evaluator_version": "gems-segment-pooled-v1",
+      "TP_w": 7593.715221434422,
+      "FP_w": 34449.39235223034,
+      "FN_w": 53394.284778565576,
+      "n_truth": 60988.0,
+      "n_emitted": 37654.0,
+      "dti": 0.13275953015149403,
+      "n_withheld_positive_pixels": 60988,
+      "n_unique_withheld_components": 3199,
+      "ci95": {
+        "level": 0.95,
+        "interval": [
+          0.12053287425249139,
+          0.14485297657154236
+        ],
+        "method": "percentile spatial-block bootstrap of pooled TPw/FPw/FNw",
+        "block_pixels": 100,
+        "block_size_m": 10000,
+        "n_blocks": 583,
+        "resamples": 1999,
+        "seed": 20261025,
+        "limitation": "Internal-validation uncertainty; geologic structures may cross blocks. Not a hidden-score interval."
+      },
+      "folds": [
+        {
+          "fold": "NW",
+          "TP_w": 1413.595728776724,
+          "FP_w": 7783.823783663094,
+          "FN_w": 8751.404271223277,
+          "n_truth": 10165,
+          "n_emitted": 8414,
+          "dti": 0.14176382799052045,
+          "coverage": 0.13906500037154196
+        },
+        {
+          "fold": "NE_LidarGapHeavy",
+          "TP_w": 2097.520754691057,
+          "FP_w": 9501.225045194085,
+          "FN_w": 10413.479245308943,
+          "n_truth": 12511,
+          "n_emitted": 10404,
+          "dti": 0.1701352468531627,
+          "coverage": 0.1676541247455085
+        },
+        {
+          "fold": "SW",
+          "TP_w": 1608.980452772093,
+          "FP_w": 9722.567459510385,
+          "FN_w": 18925.01954722791,
+          "n_truth": 20534,
+          "n_emitted": 10410,
+          "dti": 0.08607160927520444,
+          "coverage": 0.07835689358001817
+        },
+        {
+          "fold": "SE",
+          "TP_w": 2473.618285194548,
+          "FP_w": 7441.776063862777,
+          "FN_w": 15304.381714805451,
+          "n_truth": 17778,
+          "n_emitted": 8426,
+          "dti": 0.1526408633185958,
+          "coverage": 0.13913928930107708
+        }
+      ],
+      "protocol": {
+        "aggregation": "pooled TPw/FPw/FNw, not mean fold DTI",
+        "buffer_m": 1500,
+        "whole_components_hidden_everywhere": true,
+        "visible_fault_mask": "pixel-exact, applied before credit and FP calculation",
+        "catalogue_features": "must be constructed from fold.visible only",
+        "alpha": 0.2,
+        "beta": 0.8,
+        "triangular_kernel_radius_m": 300
+      }
+    },
+    "C-KPL": {
+      "label": "HOLDOUT-DTI",
+      "evaluator_version": "gems-segment-pooled-v1",
+      "TP_w": 9741.403168053519,
+      "FP_w": 33001.3921633801,
+      "FN_w": 51246.596831946474,
+      "n_truth": 60988.0,
+      "n_emitted": 37654.0,
+      "dti": 0.1698915244829432,
+      "n_withheld_positive_pixels": 60988,
+      "n_unique_withheld_components": 3199,
+      "ci95": {
+        "level": 0.95,
+        "interval": [
+          0.15531893816240824,
+          0.18495539371165828
+        ],
+        "method": "percentile spatial-block bootstrap of pooled TPw/FPw/FNw",
+        "block_pixels": 100,
+        "block_size_m": 10000,
+        "n_blocks": 583,
+        "resamples": 1999,
+        "seed": 20261025,
+        "limitation": "Internal-validation uncertainty; geologic structures may cross blocks. Not a hidden-score interval."
+      },
+      "folds": [
+        {
+          "fold": "NW",
+          "TP_w": 1904.452681928603,
+          "FP_w": 7464.597821583975,
+          "FN_w": 8260.547318071396,
+          "n_truth": 10165,
+          "n_emitted": 8414,
+          "dti": 0.19033468182409902,
+          "coverage": 0.1873539283746781
+        },
+        {
+          "fold": "NE_LidarGapHeavy",
+          "TP_w": 2920.7211777624216,
+          "FP_w": 8874.107596468039,
+          "FN_w": 9590.278822237578,
+          "n_truth": 12511,
+          "n_emitted": 10404,
+          "dti": 0.2361559262710302,
+          "coverage": 0.23345225623550647
+        },
+        {
+          "fold": "SW",
+          "TP_w": 2062.027651616155,
+          "FP_w": 9427.47569757031,
+          "FN_w": 18471.972348383846,
+          "n_truth": 20534,
+          "n_emitted": 10410,
+          "dti": 0.11012104489919733,
+          "coverage": 0.1004201641967544
+        },
+        {
+          "fold": "SE",
+          "TP_w": 2854.201656746339,
+          "FP_w": 7235.211047757776,
+          "FN_w": 14923.79834325366,
+          "n_truth": 17778,
+          "n_emitted": 8426,
+          "dti": 0.175748275902252,
+          "coverage": 0.1605468363565271
+        }
+      ],
+      "protocol": {
+        "aggregation": "pooled TPw/FPw/FNw, not mean fold DTI",
+        "buffer_m": 1500,
+        "whole_components_hidden_everywhere": true,
+        "visible_fault_mask": "pixel-exact, applied before credit and FP calculation",
+        "catalogue_features": "must be constructed from fold.visible only",
+        "alpha": 0.2,
+        "beta": 0.8,
+        "triangular_kernel_radius_m": 300
+      }
+    },
+    "EXP-1": {
+      "label": "HOLDOUT-DTI",
+      "evaluator_version": "gems-segment-pooled-v1",
+      "TP_w": 10607.946012426019,
+      "FP_w": 32499.30235806934,
+      "FN_w": 50380.05398757398,
+      "n_truth": 60988.0,
+      "n_emitted": 37654.0,
+      "dti": 0.18476927799093776,
+      "n_withheld_positive_pixels": 60988,
+      "n_unique_withheld_components": 3199,
+      "ci95": {
+        "level": 0.95,
+        "interval": [
+          0.17023292006655358,
+          0.20015515357591057
+        ],
+        "method": "percentile spatial-block bootstrap of pooled TPw/FPw/FNw",
+        "block_pixels": 100,
+        "block_size_m": 10000,
+        "n_blocks": 583,
+        "resamples": 1999,
+        "seed": 20261025,
+        "limitation": "Internal-validation uncertainty; geologic structures may cross blocks. Not a hidden-score interval."
+      },
+      "folds": [
+        {
+          "fold": "NW",
+          "TP_w": 2017.2800875373537,
+          "FP_w": 7384.400461829402,
+          "FN_w": 8147.719912462646,
+          "n_truth": 10165,
+          "n_emitted": 8414,
+          "dti": 0.20147946147432347,
+          "coverage": 0.19845352558163834
+        },
+        {
+          "fold": "NE_LidarGapHeavy",
+          "TP_w": 3205.4718608729154,
+          "FP_w": 8686.735427530077,
+          "FN_w": 9305.528139127084,
+          "n_truth": 12511,
+          "n_emitted": 10404,
+          "dti": 0.25877204959620076,
+          "coverage": 0.256212282061619
+        },
+        {
+          "fold": "SW",
+          "TP_w": 2233.531716098927,
+          "FP_w": 9337.134842816355,
+          "FN_w": 18300.46828390107,
+          "n_truth": 20534,
+          "n_emitted": 10410,
+          "dti": 0.11917677781669582,
+          "coverage": 0.10877236369430832
+        },
+        {
+          "fold": "SE",
+          "TP_w": 3151.662347916822,
+          "FP_w": 7091.031625893505,
+          "FN_w": 14626.337652083177,
+          "n_truth": 17778,
+          "n_emitted": 8426,
+          "dti": 0.19369886320954227,
+          "coverage": 0.17727879108543268
+        }
+      ],
+      "protocol": {
+        "aggregation": "pooled TPw/FPw/FNw, not mean fold DTI",
+        "buffer_m": 1500,
+        "whole_components_hidden_everywhere": true,
+        "visible_fault_mask": "pixel-exact, applied before credit and FP calculation",
+        "catalogue_features": "must be constructed from fold.visible only",
+        "alpha": 0.2,
+        "beta": 0.8,
+        "triangular_kernel_radius_m": 300
+      }
+    },
+    "EXP-2": {
+      "label": "HOLDOUT-DTI",
+      "evaluator_version": "gems-segment-pooled-v1",
+      "TP_w": 11546.271157865485,
+      "FP_w": 32057.58070494514,
+      "FN_w": 49441.72884213451,
+      "n_truth": 60988.0,
+      "n_emitted": 37654.0,
+      "dti": 0.2007657135656901,
+      "n_withheld_positive_pixels": 60988,
+      "n_unique_withheld_components": 3199,
+      "ci95": {
+        "level": 0.95,
+        "interval": [
+          0.18648773519590356,
+          0.21533340056778932
+        ],
+        "method": "percentile spatial-block bootstrap of pooled TPw/FPw/FNw",
+        "block_pixels": 100,
+        "block_size_m": 10000,
+        "n_blocks": 583,
+        "resamples": 1999,
+        "seed": 20261025,
+        "limitation": "Internal-validation uncertainty; geologic structures may cross blocks. Not a hidden-score interval."
+      },
+      "folds": [
+        {
+          "fold": "NW",
+          "TP_w": 2129.34498990483,
+          "FP_w": 7303.8443060311565,
+          "FN_w": 8035.65501009517,
+          "n_truth": 10165,
+          "n_emitted": 8414,
+          "dti": 0.21253837296164407,
+          "coverage": 0.20947811017263454
+        },
+        {
+          "fold": "NE_LidarGapHeavy",
+          "TP_w": 3312.13581907954,
+          "FP_w": 8627.368185243717,
+          "FN_w": 9198.86418092046,
+          "n_truth": 12511,
+          "n_emitted": 10404,
+          "dti": 0.26717881412623956,
+          "coverage": 0.2647378961777268
+        },
+        {
+          "fold": "SW",
+          "TP_w": 2583.1634660802474,
+          "FP_w": 9254.018684060382,
+          "FN_w": 17950.83653391975,
+          "n_truth": 20534,
+          "n_emitted": 10410,
+          "dti": 0.13744152357953526,
+          "coverage": 0.1257993311619873
+        },
+        {
+          "fold": "SE",
+          "TP_w": 3521.6268828008683,
+          "FP_w": 6872.349529609884,
+          "FN_w": 14256.373117199131,
+          "n_truth": 17778,
+          "n_emitted": 8426,
+          "dti": 0.21603488712043903,
+          "coverage": 0.1980890360445983
+        }
+      ],
+      "protocol": {
+        "aggregation": "pooled TPw/FPw/FNw, not mean fold DTI",
+        "buffer_m": 1500,
+        "whole_components_hidden_everywhere": true,
+        "visible_fault_mask": "pixel-exact, applied before credit and FP calculation",
+        "catalogue_features": "must be constructed from fold.visible only",
+        "alpha": 0.2,
+        "beta": 0.8,
+        "triangular_kernel_radius_m": 300
+      }
+    },
+    "EXP-3": {
+      "label": "HOLDOUT-DTI",
+      "evaluator_version": "gems-segment-pooled-v1",
+      "TP_w": 11536.285051716028,
+      "FP_w": 32065.623604986038,
+      "FN_w": 49451.714948283974,
+      "n_truth": 60988.0,
+      "n_emitted": 37654.0,
+      "dti": 0.20059343142973285,
+      "n_withheld_positive_pixels": 60988,
+      "n_unique_withheld_components": 3199,
+      "ci95": {
+        "level": 0.95,
+        "interval": [
+          0.18603809149462877,
+          0.21516637736026567
+        ],
+        "method": "percentile spatial-block bootstrap of pooled TPw/FPw/FNw",
+        "block_pixels": 100,
+        "block_size_m": 10000,
+        "n_blocks": 583,
+        "resamples": 1999,
+        "seed": 20261025,
+        "limitation": "Internal-validation uncertainty; geologic structures may cross blocks. Not a hidden-score interval."
+      },
+      "folds": [
+        {
+          "fold": "NW",
+          "TP_w": 2110.985779797087,
+          "FP_w": 7308.828144979992,
+          "FN_w": 8054.014220202913,
+          "n_truth": 10165,
+          "n_emitted": 8414,
+          "dti": 0.2107621429012136,
+          "coverage": 0.2076719901423598
+        },
+        {
+          "fold": "NE_LidarGapHeavy",
+          "TP_w": 3306.19707787365,
+          "FP_w": 8657.368181844298,
+          "FN_w": 9204.80292212635,
+          "n_truth": 12511,
+          "n_emitted": 10404,
+          "dti": 0.2665962664393468,
+          "coverage": 0.2642632146010431
+        },
+        {
+          "fold": "SW",
+          "TP_w": 2578.8800263603416,
+          "FP_w": 9258.315907339223,
+          "FN_w": 17955.11997363966,
+          "n_truth": 20534,
+          "n_emitted": 10410,
+          "dti": 0.13721359589419968,
+          "coverage": 0.12559072885752126
+        },
+        {
+          "fold": "SE",
+          "TP_w": 3540.2221676849485,
+          "FP_w": 6841.111370822525,
+          "FN_w": 14237.777832315052,
+          "n_truth": 17778,
+          "n_emitted": 8426,
+          "dti": 0.21720931111441102,
+          "coverage": 0.19913500774468154
+        }
+      ],
+      "protocol": {
+        "aggregation": "pooled TPw/FPw/FNw, not mean fold DTI",
+        "buffer_m": 1500,
+        "whole_components_hidden_everywhere": true,
+        "visible_fault_mask": "pixel-exact, applied before credit and FP calculation",
+        "catalogue_features": "must be constructed from fold.visible only",
+        "alpha": 0.2,
+        "beta": 0.8,
+        "triangular_kernel_radius_m": 300
+      }
+    }
+  },
+  "paired": {
+    "EXP-1_vs_B0": {
+      "evaluator_version": "gems-segment-pooled-v1",
+      "candidate_dti": 0.18476927799093776,
+      "baseline_dti": 0.13275953015149403,
+      "paired_delta_dti": 0.05200974783944373,
+      "paired_delta_ci95": [
+        0.04137054200522438,
+        0.06270813168894236
+      ],
+      "ci95_strictly_positive": true,
+      "fold_wins": 4,
+      "n_folds": 4,
+      "min_fold_delta": 0.033105168541491384,
+      "folds": [
+        {
+          "fold": "NW",
+          "candidate_dti": 0.20147946147432347,
+          "baseline_dti": 0.14176382799052045,
+          "delta_dti": 0.059715633483803016,
+          "candidate_wins": true
+        },
+        {
+          "fold": "NE_LidarGapHeavy",
+          "candidate_dti": 0.25877204959620076,
+          "baseline_dti": 0.1701352468531627,
+          "delta_dti": 0.08863680274303806,
+          "candidate_wins": true
+        },
+        {
+          "fold": "SW",
+          "candidate_dti": 0.11917677781669582,
+          "baseline_dti": 0.08607160927520444,
+          "delta_dti": 0.033105168541491384,
+          "candidate_wins": true
+        },
+        {
+          "fold": "SE",
+          "candidate_dti": 0.19369886320954227,
+          "baseline_dti": 0.1526408633185958,
+          "delta_dti": 0.04105799989094647,
+          "candidate_wins": true
+        }
+      ]
+    },
+    "EXP-2_vs_B0": {
+      "evaluator_version": "gems-segment-pooled-v1",
+      "candidate_dti": 0.2007657135656901,
+      "baseline_dti": 0.13275953015149403,
+      "paired_delta_dti": 0.06800618341419606,
+      "paired_delta_ci95": [
+        0.056407003035775075,
+        0.07977988771906258
+      ],
+      "ci95_strictly_positive": true,
+      "fold_wins": 4,
+      "n_folds": 4,
+      "min_fold_delta": 0.05136991430433083,
+      "folds": [
+        {
+          "fold": "NW",
+          "candidate_dti": 0.21253837296164407,
+          "baseline_dti": 0.14176382799052045,
+          "delta_dti": 0.07077454497112362,
+          "candidate_wins": true
+        },
+        {
+          "fold": "NE_LidarGapHeavy",
+          "candidate_dti": 0.26717881412623956,
+          "baseline_dti": 0.1701352468531627,
+          "delta_dti": 0.09704356727307686,
+          "candidate_wins": true
+        },
+        {
+          "fold": "SW",
+          "candidate_dti": 0.13744152357953526,
+          "baseline_dti": 0.08607160927520444,
+          "delta_dti": 0.05136991430433083,
+          "candidate_wins": true
+        },
+        {
+          "fold": "SE",
+          "candidate_dti": 0.21603488712043903,
+          "baseline_dti": 0.1526408633185958,
+          "delta_dti": 0.06339402380184322,
+          "candidate_wins": true
+        }
+      ]
+    },
+    "EXP-3_vs_B0": {
+      "evaluator_version": "gems-segment-pooled-v1",
+      "candidate_dti": 0.20059343142973285,
+      "baseline_dti": 0.13275953015149403,
+      "paired_delta_dti": 0.06783390127823882,
+      "paired_delta_ci95": [
+        0.056016414770307846,
+        0.07940133375666165
+      ],
+      "ci95_strictly_positive": true,
+      "fold_wins": 4,
+      "n_folds": 4,
+      "min_fold_delta": 0.051141986618995244,
+      "folds": [
+        {
+          "fold": "NW",
+          "candidate_dti": 0.2107621429012136,
+          "baseline_dti": 0.14176382799052045,
+          "delta_dti": 0.06899831491069314,
+          "candidate_wins": true
+        },
+        {
+          "fold": "NE_LidarGapHeavy",
+          "candidate_dti": 0.2665962664393468,
+          "baseline_dti": 0.1701352468531627,
+          "delta_dti": 0.09646101958618411,
+          "candidate_wins": true
+        },
+        {
+          "fold": "SW",
+          "candidate_dti": 0.13721359589419968,
+          "baseline_dti": 0.08607160927520444,
+          "delta_dti": 0.051141986618995244,
+          "candidate_wins": true
+        },
+        {
+          "fold": "SE",
+          "candidate_dti": 0.21720931111441102,
+          "baseline_dti": 0.1526408633185958,
+          "delta_dti": 0.06456844779581522,
+          "candidate_wins": true
+        }
+      ]
+    },
+    "C-KPL_vs_B0": {
+      "evaluator_version": "gems-segment-pooled-v1",
+      "candidate_dti": 0.1698915244829432,
+      "baseline_dti": 0.13275953015149403,
+      "paired_delta_dti": 0.037131994331449175,
+      "paired_delta_ci95": [
+        0.0272174276369179,
+        0.04693767945560606
+      ],
+      "ci95_strictly_positive": true,
+      "fold_wins": 4,
+      "n_folds": 4,
+      "min_fold_delta": 0.0231074125836562,
+      "folds": [
+        {
+          "fold": "NW",
+          "candidate_dti": 0.19033468182409902,
+          "baseline_dti": 0.14176382799052045,
+          "delta_dti": 0.048570853833578564,
+          "candidate_wins": true
+        },
+        {
+          "fold": "NE_LidarGapHeavy",
+          "candidate_dti": 0.2361559262710302,
+          "baseline_dti": 0.1701352468531627,
+          "delta_dti": 0.06602067941786749,
+          "candidate_wins": true
+        },
+        {
+          "fold": "SW",
+          "candidate_dti": 0.11012104489919733,
+          "baseline_dti": 0.08607160927520444,
+          "delta_dti": 0.024049435623992893,
+          "candidate_wins": true
+        },
+        {
+          "fold": "SE",
+          "candidate_dti": 0.175748275902252,
+          "baseline_dti": 0.1526408633185958,
+          "delta_dti": 0.0231074125836562,
+          "candidate_wins": true
+        }
+      ]
+    },
+    "EXP-1_vs_C-KPL": {
+      "evaluator_version": "gems-segment-pooled-v1",
+      "candidate_dti": 0.18476927799093776,
+      "baseline_dti": 0.1698915244829432,
+      "paired_delta_dti": 0.014877753507994557,
+      "paired_delta_ci95": [
+        0.01082535349927544,
+        0.01885172361231581
+      ],
+      "ci95_strictly_positive": true,
+      "fold_wins": 4,
+      "n_folds": 4,
+      "min_fold_delta": 0.00905573291749849,
+      "folds": [
+        {
+          "fold": "NW",
+          "candidate_dti": 0.20147946147432347,
+          "baseline_dti": 0.19033468182409902,
+          "delta_dti": 0.011144779650224451,
+          "candidate_wins": true
+        },
+        {
+          "fold": "NE_LidarGapHeavy",
+          "candidate_dti": 0.25877204959620076,
+          "baseline_dti": 0.2361559262710302,
+          "delta_dti": 0.022616123325170573,
+          "candidate_wins": true
+        },
+        {
+          "fold": "SW",
+          "candidate_dti": 0.11917677781669582,
+          "baseline_dti": 0.11012104489919733,
+          "delta_dti": 0.00905573291749849,
+          "candidate_wins": true
+        },
+        {
+          "fold": "SE",
+          "candidate_dti": 0.19369886320954227,
+          "baseline_dti": 0.175748275902252,
+          "delta_dti": 0.017950587307290267,
+          "candidate_wins": true
+        }
+      ]
+    },
+    "EXP-2_vs_C-KPL": {
+      "evaluator_version": "gems-segment-pooled-v1",
+      "candidate_dti": 0.2007657135656901,
+      "baseline_dti": 0.1698915244829432,
+      "paired_delta_dti": 0.03087418908274689,
+      "paired_delta_ci95": [
+        0.023106142242747145,
+        0.038712942251888614
+      ],
+      "ci95_strictly_positive": true,
+      "fold_wins": 4,
+      "n_folds": 4,
+      "min_fold_delta": 0.022203691137545056,
+      "folds": [
+        {
+          "fold": "NW",
+          "candidate_dti": 0.21253837296164407,
+          "baseline_dti": 0.19033468182409902,
+          "delta_dti": 0.022203691137545056,
+          "candidate_wins": true
+        },
+        {
+          "fold": "NE_LidarGapHeavy",
+          "candidate_dti": 0.26717881412623956,
+          "baseline_dti": 0.2361559262710302,
+          "delta_dti": 0.031022887855209375,
+          "candidate_wins": true
+        },
+        {
+          "fold": "SW",
+          "candidate_dti": 0.13744152357953526,
+          "baseline_dti": 0.11012104489919733,
+          "delta_dti": 0.027320478680337934,
+          "candidate_wins": true
+        },
+        {
+          "fold": "SE",
+          "candidate_dti": 0.21603488712043903,
+          "baseline_dti": 0.175748275902252,
+          "delta_dti": 0.040286611218187024,
+          "candidate_wins": true
+        }
+      ]
+    },
+    "EXP-3_vs_C-KPL": {
+      "evaluator_version": "gems-segment-pooled-v1",
+      "candidate_dti": 0.20059343142973285,
+      "baseline_dti": 0.1698915244829432,
+      "paired_delta_dti": 0.030701906946789648,
+      "paired_delta_ci95": [
+        0.022734445725872847,
+        0.038875837939922914
+      ],
+      "ci95_strictly_positive": true,
+      "fold_wins": 4,
+      "n_folds": 4,
+      "min_fold_delta": 0.020427461077114573,
+      "folds": [
+        {
+          "fold": "NW",
+          "candidate_dti": 0.2107621429012136,
+          "baseline_dti": 0.19033468182409902,
+          "delta_dti": 0.020427461077114573,
+          "candidate_wins": true
+        },
+        {
+          "fold": "NE_LidarGapHeavy",
+          "candidate_dti": 0.2665962664393468,
+          "baseline_dti": 0.2361559262710302,
+          "delta_dti": 0.03044034016831662,
+          "candidate_wins": true
+        },
+        {
+          "fold": "SW",
+          "candidate_dti": 0.13721359589419968,
+          "baseline_dti": 0.11012104489919733,
+          "delta_dti": 0.02709255099500235,
+          "candidate_wins": true
+        },
+        {
+          "fold": "SE",
+          "candidate_dti": 0.21720931111441102,
+          "baseline_dti": 0.175748275902252,
+          "delta_dti": 0.04146103521215902,
+          "candidate_wins": true
+        }
+      ]
+    },
+    "EXP-2_vs_EXP-1": {
+      "evaluator_version": "gems-segment-pooled-v1",
+      "candidate_dti": 0.2007657135656901,
+      "baseline_dti": 0.18476927799093776,
+      "paired_delta_dti": 0.015996435574752332,
+      "paired_delta_ci95": [
+        0.009605301734021096,
+        0.022669331857559715
+      ],
+      "ci95_strictly_positive": true,
+      "fold_wins": 4,
+      "n_folds": 4,
+      "min_fold_delta": 0.008406764530038802,
+      "folds": [
+        {
+          "fold": "NW",
+          "candidate_dti": 0.21253837296164407,
+          "baseline_dti": 0.20147946147432347,
+          "delta_dti": 0.011058911487320605,
+          "candidate_wins": true
+        },
+        {
+          "fold": "NE_LidarGapHeavy",
+          "candidate_dti": 0.26717881412623956,
+          "baseline_dti": 0.25877204959620076,
+          "delta_dti": 0.008406764530038802,
+          "candidate_wins": true
+        },
+        {
+          "fold": "SW",
+          "candidate_dti": 0.13744152357953526,
+          "baseline_dti": 0.11917677781669582,
+          "delta_dti": 0.018264745762839443,
+          "candidate_wins": true
+        },
+        {
+          "fold": "SE",
+          "candidate_dti": 0.21603488712043903,
+          "baseline_dti": 0.19369886320954227,
+          "delta_dti": 0.022336023910896757,
+          "candidate_wins": true
+        }
+      ]
+    },
+    "EXP-3_vs_EXP-2": {
+      "evaluator_version": "gems-segment-pooled-v1",
+      "candidate_dti": 0.20059343142973285,
+      "baseline_dti": 0.2007657135656901,
+      "paired_delta_dti": -0.0001722821359572413,
+      "paired_delta_ci95": [
+        -0.002216756849958748,
+        0.001800994130253193
+      ],
+      "ci95_strictly_positive": false,
+      "fold_wins": 1,
+      "n_folds": 4,
+      "min_fold_delta": -0.0017762300604304837,
+      "folds": [
+        {
+          "fold": "NW",
+          "candidate_dti": 0.2107621429012136,
+          "baseline_dti": 0.21253837296164407,
+          "delta_dti": -0.0017762300604304837,
+          "candidate_wins": false
+        },
+        {
+          "fold": "NE_LidarGapHeavy",
+          "candidate_dti": 0.2665962664393468,
+          "baseline_dti": 0.26717881412623956,
+          "delta_dti": -0.0005825476868927537,
+          "candidate_wins": false
+        },
+        {
+          "fold": "SW",
+          "candidate_dti": 0.13721359589419968,
+          "baseline_dti": 0.13744152357953526,
+          "delta_dti": -0.00022792768533558272,
+          "candidate_wins": false
+        },
+        {
+          "fold": "SE",
+          "candidate_dti": 0.21720931111441102,
+          "baseline_dti": 0.21603488712043903,
+          "delta_dti": 0.0011744239939719958,
+          "candidate_wins": true
+        }
+      ]
+    }
+  },
+  "folds": [
+    {
+      "fold": "NW",
+      "budget": 8414,
+      "B0": {
+        "n_pos_train": 49737,
+        "n_neg_train": 300000,
+        "n_dots": 8414,
+        "fold_dti": 0.141764
+      },
+      "C-KPL": {
+        "full": {
+          "n_pos_pool": 49737,
+          "n_neg_pool": 3601889,
+          "n_pos_train": 49737,
+          "n_neg_train": 320000,
+          "pi_pos": 1.0,
+          "pi_neg": 0.088842,
+          "bayes_odds_ratio_r": 11.2559
+        },
+        "blind": {
+          "n_pos_pool": 49737,
+          "n_neg_pool": 3601889,
+          "n_pos_train": 49737,
+          "n_neg_train": 320000,
+          "pi_pos": 1.0,
+          "pi_neg": 0.088842,
+          "bayes_odds_ratio_r": 11.2559
+        },
+        "n_dots": 8414,
+        "obj": 3025.55,
+        "fold_dti": 0.190335
+      },
+      "EXP-1": {
+        "full": {
+          "n_pos_pool": 49737,
+          "n_neg_pool": 3601889,
+          "n_pos_train": 49737,
+          "n_neg_train": 320000,
+          "pi_pos": 1.0,
+          "pi_neg": 0.088842,
+          "bayes_odds_ratio_r": 11.2559
+        },
+        "blind": {
+          "n_pos_pool": 49737,
+          "n_neg_pool": 3601889,
+          "n_pos_train": 49737,
+          "n_neg_train": 320000,
+          "pi_pos": 1.0,
+          "pi_neg": 0.088842,
+          "bayes_odds_ratio_r": 11.2559
+        },
+        "n_dots": 8414,
+        "obj": 3194.94,
+        "fold_dti": 0.201479
+      },
+      "EXP-2": {
+        "stage2_cols": 42,
+        "n_pos_train": 49737,
+        "n_neg_train": 320000,
+        "blend_weights": [
+          0.28,
+          0.72
+        ],
+        "halo_gamma": 0.15,
+        "n_dots": 8414,
+        "obj": 4208.04,
+        "fold_dti": 0.212538
+      },
+      "EXP-3": {
+        "stage2_cols": 46,
+        "n_pos_train": 49737,
+        "n_neg_train": 320000,
+        "blend_weights": [
+          0.28,
+          0.72
+        ],
+        "halo_gamma": 0.15,
+        "dual_aux": {
+          "n_pos_quat": 49737,
+          "n_pos_bedrock_offcat": 53348,
+          "w_bed": 0.25
+        },
+        "n_dots": 8414,
+        "obj": 4093.31,
+        "fold_dti": 0.210762
+      },
+      "seconds": 352.7
+    },
+    {
+      "fold": "NE_LidarGapHeavy",
+      "budget": 10404,
+      "B0": {
+        "n_pos_train": 48181,
+        "n_neg_train": 300000,
+        "n_dots": 10404,
+        "fold_dti": 0.170135
+      },
+      "C-KPL": {
+        "full": {
+          "n_pos_pool": 48181,
+          "n_neg_pool": 3373167,
+          "n_pos_train": 48181,
+          "n_neg_train": 320000,
+          "pi_pos": 1.0,
+          "pi_neg": 0.094866,
+          "bayes_odds_ratio_r": 10.5411
+        },
+        "blind": {
+          "n_pos_pool": 48181,
+          "n_neg_pool": 3373167,
+          "n_pos_train": 48181,
+          "n_neg_train": 320000,
+          "pi_pos": 1.0,
+          "pi_neg": 0.094866,
+          "bayes_odds_ratio_r": 10.5411
+        },
+        "n_dots": 10404,
+        "obj": 2116.72,
+        "fold_dti": 0.236156
+      },
+      "EXP-1": {
+        "full": {
+          "n_pos_pool": 48181,
+          "n_neg_pool": 3373167,
+          "n_pos_train": 48181,
+          "n_neg_train": 320000,
+          "pi_pos": 1.0,
+          "pi_neg": 0.094866,
+          "bayes_odds_ratio_r": 10.5411
+        },
+        "blind": {
+          "n_pos_pool": 48181,
+          "n_neg_pool": 3373167,
+          "n_pos_train": 48181,
+          "n_neg_train": 320000,
+          "pi_pos": 1.0,
+          "pi_neg": 0.094866,
+          "bayes_odds_ratio_r": 10.5411
+        },
+        "n_dots": 10404,
+        "obj": 2713.85,
+        "fold_dti": 0.258772
+      },
+      "EXP-2": {
+        "stage2_cols": 42,
+        "n_pos_train": 48181,
+        "n_neg_train": 320000,
+        "blend_weights": [
+          0.28,
+          0.72
+        ],
+        "halo_gamma": 0.15,
+        "n_dots": 10404,
+        "obj": 4042.27,
+        "fold_dti": 0.267179
+      },
+      "EXP-3": {
+        "stage2_cols": 46,
+        "n_pos_train": 48181,
+        "n_neg_train": 320000,
+        "blend_weights": [
+          0.28,
+          0.72
+        ],
+        "halo_gamma": 0.15,
+        "dual_aux": {
+          "n_pos_quat": 48181,
+          "n_pos_bedrock_offcat": 37269,
+          "w_bed": 0.25
+        },
+        "n_dots": 10404,
+        "obj": 4151.37,
+        "fold_dti": 0.266596
+      },
+      "seconds": 1649.5
+    },
+    {
+      "fold": "SW",
+      "budget": 10410,
+      "B0": {
+        "n_pos_train": 38495,
+        "n_neg_train": 300000,
+        "n_dots": 10410,
+        "fold_dti": 0.086072
+      },
+      "C-KPL": {
+        "full": {
+          "n_pos_pool": 38495,
+          "n_neg_pool": 3378328,
+          "n_pos_train": 38495,
+          "n_neg_train": 320000,
+          "pi_pos": 1.0,
+          "pi_neg": 0.094721,
+          "bayes_odds_ratio_r": 10.5573
+        },
+        "blind": {
+          "n_pos_pool": 38495,
+          "n_neg_pool": 3378328,
+          "n_pos_train": 38495,
+          "n_neg_train": 320000,
+          "pi_pos": 1.0,
+          "pi_neg": 0.094721,
+          "bayes_odds_ratio_r": 10.5573
+        },
+        "n_dots": 10410,
+        "obj": 2959.01,
+        "fold_dti": 0.110121
+      },
+      "EXP-1": {
+        "full": {
+          "n_pos_pool": 38495,
+          "n_neg_pool": 3378328,
+          "n_pos_train": 38495,
+          "n_neg_train": 320000,
+          "pi_pos": 1.0,
+          "pi_neg": 0.094721,
+          "bayes_odds_ratio_r": 10.5573
+        },
+        "blind": {
+          "n_pos_pool": 38495,
+          "n_neg_pool": 3378328,
+          "n_pos_train": 38495,
+          "n_neg_train": 320000,
+          "pi_pos": 1.0,
+          "pi_neg": 0.094721,
+          "bayes_odds_ratio_r": 10.5573
+        },
+        "n_dots": 10410,
+        "obj": 3024.46,
+        "fold_dti": 0.119177
+      },
+      "EXP-2": {
+        "stage2_cols": 42,
+        "n_pos_train": 38495,
+        "n_neg_train": 320000,
+        "blend_weights": [
+          0.28,
+          0.72
+        ],
+        "halo_gamma": 0.15,
+        "n_dots": 10410,
+        "obj": 3527.26,
+        "fold_dti": 0.137442
+      },
+      "EXP-3": {
+        "stage2_cols": 46,
+        "n_pos_train": 38495,
+        "n_neg_train": 320000,
+        "blend_weights": [
+          0.28,
+          0.72
+        ],
+        "halo_gamma": 0.15,
+        "dual_aux": {
+          "n_pos_quat": 38495,
+          "n_pos_bedrock_offcat": 51587,
+          "w_bed": 0.25
+        },
+        "n_dots": 10410,
+        "obj": 3563.38,
+        "fold_dti": 0.137214
+      },
+      "seconds": 1571.3
+    },
+    {
+      "fold": "SE",
+      "budget": 8426,
+      "B0": {
+        "n_pos_train": 42225,
+        "n_neg_train": 300000,
+        "n_dots": 8426,
+        "fold_dti": 0.152641
+      },
+      "C-KPL": {
+        "full": {
+          "n_pos_pool": 42225,
+          "n_neg_pool": 3647713,
+          "n_pos_train": 42225,
+          "n_neg_train": 320000,
+          "pi_pos": 1.0,
+          "pi_neg": 0.087726,
+          "bayes_odds_ratio_r": 11.3991
+        },
+        "blind": {
+          "n_pos_pool": 42225,
+          "n_neg_pool": 3647713,
+          "n_pos_train": 42225,
+          "n_neg_train": 320000,
+          "pi_pos": 1.0,
+          "pi_neg": 0.087726,
+          "bayes_odds_ratio_r": 11.3991
+        },
+        "n_dots": 8426,
+        "obj": 2151.77,
+        "fold_dti": 0.175748
+      },
+      "EXP-1": {
+        "full": {
+          "n_pos_pool": 42225,
+          "n_neg_pool": 3647713,
+          "n_pos_train": 42225,
+          "n_neg_train": 320000,
+          "pi_pos": 1.0,
+          "pi_neg": 0.087726,
+          "bayes_odds_ratio_r": 11.3991
+        },
+        "blind": {
+          "n_pos_pool": 42225,
+          "n_neg_pool": 3647713,
+          "n_pos_train": 42225,
+          "n_neg_train": 320000,
+          "pi_pos": 1.0,
+          "pi_neg": 0.087726,
+          "bayes_odds_ratio_r": 11.3991
+        },
+        "n_dots": 8426,
+        "obj": 2345.06,
+        "fold_dti": 0.193699
+      },
+      "EXP-2": {
+        "stage2_cols": 42,
+        "n_pos_train": 42225,
+        "n_neg_train": 320000,
+        "blend_weights": [
+          0.28,
+          0.72
+        ],
+        "halo_gamma": 0.15,
+        "n_dots": 8426,
+        "obj": 3260.78,
+        "fold_dti": 0.216035
+      },
+      "EXP-3": {
+        "stage2_cols": 46,
+        "n_pos_train": 42225,
+        "n_neg_train": 320000,
+        "blend_weights": [
+          0.28,
+          0.72
+        ],
+        "halo_gamma": 0.15,
+        "dual_aux": {
+          "n_pos_quat": 42225,
+          "n_pos_bedrock_offcat": 45537,
+          "w_bed": 0.25
+        },
+        "n_dots": 8426,
+        "obj": 3174.26,
+        "fold_dti": 0.217209
+      },
+      "seconds": 1458.2
+    }
+  ],
+  "elapsed_seconds": 162.7
+}
