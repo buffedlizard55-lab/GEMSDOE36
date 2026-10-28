@@ -112,8 +112,8 @@ def render_page(table_html: str, card: dict, s2d: dict, *, title: str) -> str:
 <main id="main" class="wrap">
 <!-- LITERAL_REVIEW:START -->
 <section class="verdict verdict-bad" aria-labelledby="decision-title"><span class="eyebrow">Current decision · 28 October 2026</span>
-<h1 id="decision-title">DO NOT SUBMIT — literal uniqueness gate failed</h1>
-<p class="verdict-sub"><strong>No new candidate TIFF, submission name, note, or approved slot.</strong> The designated method paragraph is missing and existing candidates fail the literal all-registry rule. The current run is <strong>negative</strong>; a future selector is separate from validation.</p>
+<h1 id="decision-title">DO NOT SUBMIT — no candidate is authorized</h1>
+<p class="verdict-sub"><strong>No new candidate TIFF, submission name, note, or approved slot.</strong> The designated method paragraph is missing. The literal 70% check is degenerate against reg-052's near-regular 5-pixel lattice; it blocks candidates at the historical density but does not prove an untested candidate is a duplicate. The current run is <strong>negative</strong>; a future selector is separate from validation.</p>
 <div class="hero-actions"><a class="button warning" href="downloads/session-review-20261028-audit-run-card.json">Current negative JSON run card →</a><a class="button secondary" href="research/review-20261028.md">Audit, hypotheses &amp; sources →</a><a class="button secondary" href="#focus9-decision">Nine-site table ↓</a></div>
 <p class="small">Historical KPL: <strong>0.1647 USER-REPORTED</strong>, without a receipt; 99.17% of its dots overlap reg-052 within 3 px. See the <a href="downloads/literal-release-review.json">literal-release review</a>.</p>
 </section><!-- LITERAL_REVIEW:END -->
@@ -125,8 +125,8 @@ def render_page(table_html: str, card: dict, s2d: dict, *, title: str) -> str:
 <p>GEMSDOE32 B2 is the 44,090-dot D2.8 raster with 6,436 catalogue-near dots removed and no dots added. This lineage was reproduced from pinned comparison files; the reported <strong>0.2778 OWNER-REPORTED</strong> has no organizer receipt. Pruning changes spatial coverage and may reduce unsupported positives, but hidden labels and scorer details are not available to attribute the result. It may be beatable, but neither the method nor a score above it is established.</p>
 <p>The official 300 m triangular-distance Tversky metric weights false positives at 0.2 and false negatives at 0.8; it does not establish the previously claimed organizer masking mechanism. <a href="https://www.drivendata.org/competitions/306/competition-doe-gems/page/967/">Official problem and metric</a>.</p>
 </section>
-<section class="section" id="novelty"><span class="eyebrow">Why the gate is binding</span><h2>Independently reproduced geometric stop</h2>
-<p>The reg-052 comparison lattice covers {b['covered_pixels_within_3px']:,} of {b['footprint_pixels']:,} footprint cells within 3 pixels. Any set of {b['candidate_distinct_dots']:,} distinct dots must overlap at least {b['minimum_overlapping_dots']:,} of them: <strong>{b['minimum_overlap_fraction'] * 100:.2f}%</strong>, exceeding the literal 70% ceiling. At or above this count the proof forces a stop: {b['first_dot_count_forced_over_70_percent']:,} dots. Hash-pinned owner mirrors are not organizer-authenticated.</p>
+<section class="section" id="novelty"><span class="eyebrow">Literal registry protocol · fail closed</span><h2>The overlap check is degenerate against reg-052</h2>
+<p>The SHA-pinned reg-052 comparison is a regular 5-pixel lattice covering 99.8713% of footprint cells within 3 pixels ({b['covered_pixels_within_3px']:,} of {b['footprint_pixels']:,}). It forces at least {b['minimum_overlapping_dots']:,}/{b['candidate_distinct_dots']:,} candidate dots ({b['minimum_overlap_fraction'] * 100:.2f}%) within 3 px, above the literal 70% limit; the forced-stop count is {b['first_dot_count_forced_over_70_percent']:,} dots. Because it tiles almost the whole footprint, this criterion cannot distinguish a duplicate from a different in-footprint detector. It is a gate-design defect, <strong>not proof of candidate duplication</strong>. Under the current protocol no candidate is authorized until this issue is resolved without unilateral threshold changes. The other 11 rasters in the local registry coverage audit cover 6–28% within 3 px. Hash-pinned owner mirrors are not organizer-authenticated. <a href="downloads/registry-coverage-audit-20261028.json">Download coverage audit</a>.</p>
 <p>The shared novelty comparison also accepts a same-shaped raster with wrong CRS/transform; <a href="https://github.com/buffedlizard55-lab/GEMSDOE24/issues/77">reported upstream</a>. The shared template has not been privately patched; do not treat its output as promotion proof until fixed.</p>
 </section>
 <section class="section" id="how-to-submit"><span class="eyebrow">Future only · no slot selected</span><h2>Conditional submission guide</h2>
@@ -159,8 +159,18 @@ def publish(root: Path = ROOT) -> None:
         raise ValueError("The current review must be negative with no candidate or selected slot")
     literal = load(evidence / "literal_release_review_20261027.json")
     bound_doc = load(evidence / "literal_bound_20261027.json")
+    coverage = load(evidence / "registry_coverage_audit_20261028.json")
     bound = bound_doc["bound"]
     proof = card["registry"]["reproduced_literal_preflight"]
+    reg052 = next((row for row in coverage["rasters"]
+                   if row["file"] == Path(bound_doc["reference_registry_path"]).name), None)
+    if (coverage.get("schema_version") != "gemsdoe36.registry-coverage-audit.v1"
+            or coverage.get("threshold") != 0.70 or coverage.get("radius_px") != 3
+            or coverage.get("template_sha256") != bound_doc["template_sha256"]
+            or reg052 is None or reg052.get("sha256") != bound_doc["reference_sha256"]
+            or reg052.get("gate_degenerate") is not True
+            or reg052.get("coverage_share", 0) < 0.99):
+        raise ValueError("Registry coverage audit does not substantiate the current gate caveat")
     fields = {
         "candidate_distinct_dots": "candidate_distinct_dots",
         "footprint_pixels": "footprint_pixels",
@@ -237,6 +247,8 @@ def publish(root: Path = ROOT) -> None:
         (evidence / "mto36_ninesite_forensics.json", docs / "downloads/focus9-source-integrity.json"),
         (evidence / "s2d36_run_card_20261027.json", docs / "downloads/s2d36-run-card.json"),
         (evidence / "tcd36_run_card_20261027.json", docs / "downloads/tcd36-run-card.json"),
+        (evidence / "registry_coverage_audit_20261028.json",
+         docs / "downloads/registry-coverage-audit-20261028.json"),
     ):
         copyfile(source, target)
     for name, title in (("index.html", "Decision and evidence"), ("executive-summary.html", "Executive guide")):

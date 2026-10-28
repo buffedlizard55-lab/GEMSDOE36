@@ -40,6 +40,7 @@ def test_public_pages_show_superseding_stop():
     for name in ('index.html', 'executive-summary.html'):
         text = (ROOT / 'docs' / name).read_text()
         assert text.count('<!-- LITERAL_REVIEW:START -->') == 1
-        assert 'DO NOT SUBMIT — literal uniqueness gate failed' in text
+        assert 'DO NOT SUBMIT — no candidate is authorized' in text
+        assert 'not proof of candidate duplication' in text
         assert '0.1647 USER-REPORTED' in text
         assert 'downloads/literal-release-review.json' in text

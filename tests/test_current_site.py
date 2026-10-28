@@ -37,7 +37,8 @@ def _copy_publish_inputs(tmp_path):
 
 def _published_digests(root):
     names = ("docs/index.html", "docs/executive-summary.html", "docs/current-run.json",
-             "docs/downloads/submissions_manifest.json")
+             "docs/downloads/submissions_manifest.json",
+             "docs/downloads/registry-coverage-audit-20261028.json")
     return [hashlib.sha256((root / name).read_bytes()).hexdigest() for name in names]
 
 
@@ -60,6 +61,9 @@ def test_current_publisher_is_idempotent_and_preserves_archived_lanes(tmp_path):
         assert "NaN-outside files are what triggered" not in text
         assert "OK TO SUBMIT" not in text
         assert "the cause is unknown" in text
+        assert "gate-design defect" in text
+        assert "not proof of candidate duplication" in text
+        assert "registry-coverage-audit-20261028.json" in text
 
 
 def test_publisher_rejects_promoted_run_card_before_modifying_pages(tmp_path):
@@ -82,6 +86,19 @@ def test_publisher_rejects_forged_geometric_bound(tmp_path):
     card["registry"]["reproduced_literal_preflight"]["minimum_overlapping_dots"] = 1
     path.write_text(json.dumps(card))
     with pytest.raises(ValueError, match="registry evidence"):
+        publisher.publish(tmp_path)
+    assert _published_digests(tmp_path) == before
+
+
+def test_publisher_rejects_forged_registry_coverage_audit(tmp_path):
+    _copy_publish_inputs(tmp_path)
+    publisher.publish(tmp_path)
+    before = _published_digests(tmp_path)
+    path = tmp_path / "evidence/registry_coverage_audit_20261028.json"
+    audit = json.loads(path.read_text())
+    audit["rasters"][0]["coverage_share"] = 0.2
+    path.write_text(json.dumps(audit))
+    with pytest.raises(ValueError, match="coverage audit"):
         publisher.publish(tmp_path)
     assert _published_digests(tmp_path) == before
 

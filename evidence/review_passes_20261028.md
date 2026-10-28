@@ -25,8 +25,8 @@
 
 - Restored 30 files listed in `registry/data_manifest.json` from pinned GitHub owner mirrors (591,020,452 bytes total), verified hashes, and reran preparation. These data remain owner mirrors, not organizer-authenticated source files.
 - Downloaded the ten hash-pinned focus comparison rasters to the ignored cache, then reran `audit_focus_sources.py` (9 sites plus all 8 inherited family checks) and `audit_focus_uniqueness.py` (72 directed pairs; no site unique vs all eight). The first audit attempt before caching those rasters failed closed on a missing file; the cache step resolved that input omission.
-- Re-ran `registry_feasibility.py`; expected exit 2 and the bound was reproduced: at 37,654 dots minimum overlap is 31,005 / 37,654 = 82.341849%; forced failure begins at 22,164 dots. No candidate raster was created.
-- Final checkout verification: `pytest -q` reported **191 passed, 1 skipped** (optional Torch missing); Ruff and `scripts/check_site.py` passed. No model experiment or submission slot was used. The missing lane assignment still blocks holdout experiments; data restoration does not relax the strict registry gate.
+- Re-ran `registry_feasibility.py`; expected exit 2 and the bound was reproduced: at 37,654 dots minimum overlap is 31,005 / 37,654 = 82.341849%; the literal gate forces a stop from 22,164 dots. Concurrent `registry_coverage_audit_20261028.json` shows reg-052 is a regular 5-pixel lattice covering 99.8713% of the footprint, so this comparison is degenerate and is not proof of actual candidate duplication. The protocol still blocks a candidate; changing the threshold or omitting the raster would require explicit owner approval. No candidate raster was created.
+- Final checkout verification after the publisher/test update: `pytest -q` reported **195 passed, 1 skipped** (optional Torch missing); Ruff and `scripts/check_site.py` passed. No model experiment or submission slot was used. The missing lane assignment still blocks holdout experiments; data restoration does not relax the strict registry gate.
 
 ## Open limitations
 
