@@ -1,0 +1,153 @@
+{
+  "schema": "gemsdoe36.run-card.v2",
+  "session": "2026-10-28 owner-brief session B (branch arena/9c1525b7-gemsdoe36)",
+  "verdict": "negative",
+  "verdict_reason": "No candidate was generated. The parallel protocol lane paragraph is absent from the brief, and the literal 70% within-3px registry gate is mathematically guaranteed to fail for any candidate above 22,163 distinct dots against reg-052.",
+  "hypothesis": null,
+  "hypothesis_status": "No lane assigned. Three ranked proposals are in docs/research/review-20261028.md; none implemented or tested.",
+  "mechanism": null,
+  "named_non_fault_mimic": null,
+  "experiments_run": 0,
+  "experiment_budget": 3,
+  "holdout": {
+    "holdout_dti": null,
+    "ci95": null,
+    "evaluator_version": null,
+    "withheld_positives": null,
+    "note": "Not run. No holdout number is reported for any new candidate in this session."
+  },
+  "leakage_canary": {
+    "status": "not_run",
+    "note": "No feature was tested alone; no candidate feature exists."
+  },
+  "registry_overlap_checks": {
+    "reference": "reg-052 (13GEMSDOE/docs/downloads/13gems_20261001_r13-lattice-s5_v2_nan-outside.tif)",
+    "reference_sha256": "b4570b406efec198eb2f4d142ad8d0d6184b14b66f2f52b5c4d697f0647dc9b2",
+    "reference_dots": 206895,
+    "footprint_pixels": 5167373,
+    "covered_within_3px": 5160724,
+    "uncovered_pixels": 6649,
+    "forced_minimum_overlap_at_37654_dots": 31005,
+    "forced_minimum_overlap_fraction_at_37654_dots": 0.8234184947150369,
+    "first_dot_count_forced_over_70pct": 22164,
+    "gate": "FAIL (guaranteed for any candidate >= 22,164 dots)",
+    "source": "python scripts/registry_feasibility.py (re-run 2026-10-28; output matches evidence/literal_bound_20261027.json)"
+  },
+  "nine_site_pairwise": {
+    "directed_pairs": 72,
+    "pairs_over_70pct_overlap": 72,
+    "min_overlap_pair": "GEMSDOE27 -> GEMSDOE32 (86.72%)",
+    "max_overlap_pair": "GEMSDOE32 -> GEMSDOE36 (100.00%)",
+    "pairs_over_abs_spearman_0p90": 22,
+    "all_nine_unique": false,
+    "source": "evidence/focus_sites_pairwise_uniqueness_20261026.json (regenerated 2026-10-28; byte-identical to committed file)"
+  },
+  "nine_site_content_duplicates": {
+    "result": "8 distinct contents among 9 pinned files",
+    "identical_group": [
+      "GEMSDOE25 (sha256 91eae1ca42ec…, NaN outside)",
+      "GEMSDOE30 (sha256 8cf893ead566…, zeros outside)"
+    ],
+    "evidence": "same 44,090 positive pixels; in-footprint values identical (max |diff| = 0.0); bytes differ only in outside-footprint encoding. Both reported at 0.2600 (OWNER-REPORTED).",
+    "note": "GEMSDOE30's filename tag '91eae1ca' equals GEMSDOE25's hash prefix, not GEMSDOE30's own."
+  },
+  "b2_lineage_verified_this_session": {
+    "result": "GEMSDOE32 B2 is a strict subset of the GEMSDOE25 44,090-dot raster: 44,090 - 6,436 = 37,654; 0 dots added; all 6,436 removed dots lie 1-2 px from the labels.tif catalogue; 0 kept B2 dots lie within 2 px of the catalogue.",
+    "script": "scripts/verify_focus_content_20261028.py",
+    "evidence": "evidence/focus9_content_checks_20261028.json"
+  },
+  "raster_sha256": null,
+  "validator_output": {
+    "sample_template": {
+      "file": "data/raw/sample_submission.tif (organizer sample, SHA-pinned mirror)",
+      "sha256": "2176d08e485aa2cd2860ce8df539db4faf4d76163b38a4dd8c30a40454d35cbc",
+      "passed": true,
+      "finite_in_bounds": 5167373,
+      "finite_outside_bounds": 0,
+      "min": 0.0,
+      "max": 1.0,
+      "crs": "EPSG:32611",
+      "shape": [
+        3730,
+        3292
+      ],
+      "resolution_m": [
+        100.0,
+        100.0
+      ]
+    },
+    "historical_nan_twin_gemsdoe36_anderson": {
+      "file": "docs/downloads/gemsdoe36-anderson-geothermal-pinn-38854-20261004T230000Z-9b9ea4e6-nan.tif",
+      "sha256": "e15891020b9c57056ac7fa874a5e506fbd6ed9314a4ea8e73af0753887a3708a",
+      "strict_default": "PASS",
+      "finite_outside_bounds": 0
+    },
+    "historical_zeros_outside_same_file": {
+      "file": "docs/downloads/gemsdoe36-anderson-geothermal-pinn-38854-20261004T230000Z-9b9ea4e6-zeros.tif",
+      "strict_default_before_fix": "PASS (filename-based relaxation: '-zeros.tif')",
+      "strict_default_after_fix": "FAIL unless --zeros-mode is given (7,111,787 finite values outside footprint)"
+    },
+    "name_bypass_test": "Same bytes written under -nan.tif and -zeros.tif: identical SHA-256; before fix verdicts differed (FAIL vs PASS); after fix both FAIL in default mode. Regression test: tests/test_validate_submission_cli.py",
+    "nan_check_inside_footprint": "0 non-finite values inside the footprint in the sample and NaN twin",
+    "sha256_full_for_candidate": null
+  },
+  "submission_name": null,
+  "submission_note": null,
+  "submission_note_chars": null,
+  "slot_used": false,
+  "slot_approved": false,
+  "organizer_receipt": null,
+  "leaderboard_observations": {
+    "public_top_score": 0.4544,
+    "public_top_user": "xiaofanhu",
+    "public_second_score": 0.3916,
+    "label": "PUBLIC LEADERBOARD OBSERVED 2026-10-28 (not an organizer receipt for any file)",
+    "source": "https://www.drivendata.org/competitions/306/competition-doe-gems/leaderboard/"
+  },
+  "owner_reported_scores_checked": {
+    "GEMSDOE32_B2": {
+      "reported": 0.2778,
+      "label": "OWNER-REPORTED",
+      "owner_page_status": "owner page says 'already submitted - do not resubmit'; no receipt linking hash to score",
+      "source": "https://buffedlizard55-lab.github.io/GEMSDOE32/docs/index.html",
+      "sha256": "c55bafc470054e8271dcb89347a17e07fefe50de6af6e6ba6c4b169ef7ab6fa9"
+    }
+  },
+  "official_metric_check": {
+    "source": "https://www.drivendata.org/competitions/306/competition-doe-gems/page/967/",
+    "formula": "DTI = TP_w / (TP_w + 0.2 FP_w + 0.8 FN_w)",
+    "worked_example_in_official_text": {
+      "TP_w": 3.0,
+      "FP_w": 1.89,
+      "FN_w": 2.0,
+      "published_DTI": 0.6,
+      "recomputed_DTI": 0.6027
+    },
+    "code_under_review": "src/gems/metric.py dti_components_exact (kernel k(d)=max(1-d/3,0); TP per truth pixel = max p*k; FP = sum p*(1-k_to_truth))",
+    "result": "formula arithmetic matches the official worked example; code matches the official definitions by line reading; no independent numerical check against an organizer scorer exists"
+  },
+  "tests": {
+    "pytest": "193 passed, 1 skipped (PyTorch not installed); includes tests/test_validate_submission_cli.py (2)",
+    "ruff": "passed",
+    "site_check": "passed"
+  },
+  "irregularities_flagged": [
+    "Parallel-protocol lane paragraph ('the single method paragraph below') is absent from the brief.",
+    "Literal 70%/3-px gate is guaranteed to fail above 22,163 dots because reg-052 covers 99.87% of the footprint; the gate cannot be satisfied by a non-trivial dot candidate.",
+    "Validator filename bypass (-zeros.tif relaxed the official outside-bounds rule) - FIXED in scripts/validate_submission.py with a regression test.",
+    "scripts/audit_release.py still uses the same filename rule for archived format audits - NOT changed (it writes archived audit evidence); flagged for review.",
+    "Official text says data outside the bounds is null or NaN; the organizer sample uses NaN. Historical zeros-outside files (including the owner-reported GEMSDOE32 B2) do not match the official text; portal acceptance of zeros-outside is unverified.",
+    "The reported portal error 'Predicted values must be in range [0, 1]' has no verified cause; no rejected file or portal trace is available.",
+    "Prompt leaderboard figures (0.3195, 0.4413) conflict with the live public leaderboard top (0.4544) observed on 2026-10-28.",
+    "Owner GEMSDOE32 page says B2 is already submitted; the prompt treats it as a candidate to beat. Not reconciled.",
+    "GEMSDOE30 pinned raster is content-identical to GEMSDOE25 (same 44,090 positive pixels, identical in-footprint values; only the outside encoding differs). Both were reported at 0.2600. Submitting both would be a duplicate.",
+    "HOLDOUT-DTI values are not comparable across repositories: GEMSDOE32 owner page uses 'GEMSDOE32-HIDE-RECOVER-v3.0' with a Champion of 0.099202, while this repo's S2D-36 uses gems-segment-pooled-v1 at 0.200766.",
+    "Owner GEMSDOE32 page claims H51-1-EWSP beats the Champion on its holdout and passes 610 detector rasters; those claims are not reproduced here and the owner marks the file DO NOT SUBMIT.",
+    "Registry 'local' paths point to data/registry/scored/ while restore_data.py writes data/raw/scored/; audit_focus_sources.py also needs unrestored solo files (not re-run this session).",
+    "Groundwater-head and Landsat hypotheses are not implemented; GVSC-36 uses a DEM-derived hydraulic-head proxy, not observed well data."
+  ],
+  "next_actions_blocked_on_user": [
+    "Supply the lane method paragraph (or choose one of the ranked leads).",
+    "Decide whether the literal 70%/3-px gate stays, or is replaced by a passable, pre-declared gate (for example a 1-px tolerance) before any experiment."
+  ]
+}

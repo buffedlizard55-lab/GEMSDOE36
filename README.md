@@ -1,5 +1,9 @@
 # GEMSDOE36 — current decision & reproducible research
 
+> **Start here (every session):** read the [28 October owner brief](knowledge/owner_brief_20261028.md) and the [session-B review](docs/research/review-20261028-session-b.md). The full standing brief is preserved below.
+>
+> **Status, 28 Oct 2026 (session B): NO SUBMISSION TIFF — verdict negative.** Two blockers need your decision: (1) the parallel-protocol "single method paragraph" is absent from the brief; (2) the literal 70%-within-3-px registry gate is guaranteed to fail for any candidate above 22,163 dots (reg-052 covers 99.87% of the footprint). Verified today: the 0.2778 GEMSDOE32 B2 file is a strict subset of the 44,090-dot D2.8 raster with 6,436 catalogue-adjacent dots removed; GEMSDOE30 is content-identical to GEMSDOE25. The validator's filename bypass is fixed. Run card: [`evidence/session_review_20261028b_run_card.json`](evidence/session_review_20261028b_run_card.json).
+
 <!-- LITERAL_REVIEW:START -->
 > **28 October 2026 — DO NOT SUBMIT.** No new candidate TIFF, submission name, note or competition slot was selected. The required single-method lane paragraph was not identifiable, and the literal all-registry novelty rule blocks the historical dot budget. Every available TIFF is **research only**. See the [decision and download page](docs/index.html), [nine-site executive guide](docs/executive-summary.html), [current run card](evidence/session_review_20261028_audit_run_card.json), and [full review, hypotheses and sources](docs/research/review-20261028.md).
 <!-- LITERAL_REVIEW:END -->
@@ -26,6 +30,10 @@ python -m venv .venv
 .venv/bin/python scripts/cache_focus9_audit.py             # ignored comparison-only TIFFs
 .venv/bin/python scripts/audit_focus_sources.py
 .venv/bin/python scripts/audit_focus_uniqueness.py
+.venv/bin/python scripts/fetch_pinned_focus_rasters.py     # pinned GitHub-commit bytes -> .cache/focus_registry
+cp -n .cache/focus_registry/*.tif data/registry/scored/    # registry 'local' paths expect this folder
+.venv/bin/python scripts/verify_focus_content_20261028.py  # B2 lineage + content duplicates (28 Oct)
+.venv/bin/python scripts/validate_submission.py FILE.tif   # strict: outside footprint must be NaN; --zeros-mode to permit zeros
 .venv/bin/python scripts/build_site.py
 .venv/bin/python scripts/check_site.py
 .venv/bin/python -m pytest -q

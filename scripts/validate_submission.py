@@ -29,13 +29,16 @@ def main() -> int:
     parser.add_argument(
         "--zeros-mode",
         action="store_true",
-        help="permit 0.0 outside bounds (portal-safe mode)",
+        help=(
+            "explicitly permit finite values outside the template footprint (historical "
+            "zeros-outside files). Off by default: the official format says data outside "
+            "the bounds is null or NaN, as in the organizer sample. Never inferred from the "
+            "filename, so identical bytes always receive the identical verdict."
+        ),
     )
     args = parser.parse_args()
 
-    # Automatically enable zeros mode if the filename ends with -zeros.tif
-    zeros_mode = args.zeros_mode or args.submission.name.endswith("-zeros.tif")
-    require_nonfinite = not zeros_mode
+    require_nonfinite = not args.zeros_mode
 
     report = validate_submission(
         args.submission,
