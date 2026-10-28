@@ -5,6 +5,7 @@ from __future__ import annotations
 
 import json
 import sys
+from datetime import datetime, timezone
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -55,11 +56,13 @@ def main() -> int:
 
     output = {
         "template_sha256": entry["sha256"],
-        "audited_utc": "2026-10-26",
+        "audited_utc": datetime.now(timezone.utc).isoformat(timespec="seconds"),
+        "scope": "Historical format audit only; no literal registry or selector authorization",
         "artifacts": rows,
         "promoted_count": sum(1 for r in rows if r["submit_ready"]),
     }
-    dest = ROOT / "evidence" / "downloads_validation_20261026.json"
+    # Do not overwrite the dated historical audit with new results.
+    dest = ROOT / "evidence" / "downloads_validation_latest.json"
     dest.write_text(json.dumps(output, indent=2, allow_nan=False) + "\n", encoding="utf-8")
     print(
         f"Audited {len(rows)} files ({output['promoted_count']} promoted). "

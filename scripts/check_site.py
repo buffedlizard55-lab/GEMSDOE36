@@ -110,10 +110,20 @@ def validate_current(current: dict, stop: dict, stop_sha: str) -> list[str]:
                 or current.get("run_card_sha256") != sha(card_path)
                 or current.get("review_date_utc") != card.get("review_date_utc")):
             errors.append("v6 current manifest must describe the hash-bound negative no-candidate review")
+        card_nulls = ("raster_sha256", "submission_name", "submission_note")
+        h = card.get("holdout") or {}
+        v = card.get("validator_output") or {}
+        r = card.get("registry") or {}
         if (card.get("verdict") != "negative" or card.get("slot_approved") is not False
-                or card.get("slot_selected") is not False or card.get("raster_sha256") is not None
-                or card.get("submission_name") is not None or card.get("submission_note") is not None
-                or card.get("validator_output", {}).get("new_raster_generated") is not False):
+                or card.get("slot_selected") is not False
+                or any(k not in card or card[k] is not None for k in card_nulls)
+                or any(k not in h or h[k] is not None for k in
+                       ("evaluator_version", "withheld_positive_pixels", "dti", "ci95"))
+                or any(k not in v or v[k] is not None for k in
+                       ("no_nan_inside_footprint", "values_in_0_1", "crs_shape_transform_match"))
+                or any(k not in r or r[k] is not None for k in
+                       ("new_surface_rank_correlation", "new_candidate_final_dot_overlap"))
+                or v.get("new_raster_generated") is not False):
             errors.append("Current run card must remain negative with no new raster or slot")
         previous_path = ROOT / "evidence/previous_current_run_bdc36_20261026.json"
         try:

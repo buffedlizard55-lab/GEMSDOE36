@@ -142,6 +142,9 @@ def test_current_manifest_binds_negative_card_and_rejects_positive_mutations():
     fake = deepcopy(current)
     fake["previous_current_run_v4_BDC36"]["slot_approved"] = True
     assert validate_current(fake, stop, sha(stop_path))
+    fake = deepcopy(current)
+    del fake["tif_path"]  # explicit null, not an absent/ambiguous field
+    assert validate_current(fake, stop, sha(stop_path))
 
 
 def test_lane36_self_promotion_cannot_bypass_expanded_registry():

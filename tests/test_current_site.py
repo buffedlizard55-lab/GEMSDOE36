@@ -74,6 +74,28 @@ def test_publisher_rejects_promoted_run_card_before_modifying_pages(tmp_path):
     assert _published_digests(tmp_path) == before
 
 
+def test_publisher_rejects_forged_geometric_bound(tmp_path):
+    _copy_publish_inputs(tmp_path)
+    before = _published_digests(tmp_path)
+    path = tmp_path / "evidence/session_review_20261028_audit_run_card.json"
+    card = json.loads(path.read_text())
+    card["registry"]["reproduced_literal_preflight"]["minimum_overlapping_dots"] = 1
+    path.write_text(json.dumps(card))
+    with pytest.raises(ValueError, match="registry evidence"):
+        publisher.publish(tmp_path)
+    assert _published_digests(tmp_path) == before
+
+
+def test_publisher_rejects_fabricated_holdout(tmp_path):
+    _copy_publish_inputs(tmp_path)
+    path = tmp_path / "evidence/session_review_20261028_audit_run_card.json"
+    card = json.loads(path.read_text())
+    card["holdout"]["dti"] = 0.9
+    path.write_text(json.dumps(card))
+    with pytest.raises(ValueError, match="no candidate"):
+        publisher.publish(tmp_path)
+
+
 def test_publisher_rejects_altered_research_tiff_before_modifying_pages(tmp_path):
     _copy_publish_inputs(tmp_path)
     before = _published_digests(tmp_path)

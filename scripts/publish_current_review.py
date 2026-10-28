@@ -51,10 +51,11 @@ def build_focus_table(table: dict, historical: dict, pairs: dict) -> str:
                 or pair["unique_under_parallel_protocol_vs_all_eight"] is not False
                 or best["file"] != source["name"] or best["url"] != source["pinned_raster_source_url"]
                 or best["sha256"] != source["sha256_full"] or best["reported_score"] != source["score"]
-                or best["max_overlap_3px_vs_other_eight"] != pair["max_overlap_vs_other_eight"]):
+                or best["max_overlap_3px_vs_other_eight"] != pair["max_overlap_vs_other_eight"]
+                or best["max_abs_spearman_vs_other_eight"] != pair["max_abs_binary_surface_spearman"]):
             raise ValueError(f"Focus-9 source or uniqueness mismatch for {site}")
         label = best["score_label"].split(",", 1)[0]
-        if label not in {"OWNER-REPORTED", "USER-REPORTED"}:
+        if label not in {"OWNER-REPORTED", "USER-REPORTED"} or not source["score_label"].startswith(label):
             raise ValueError(f"Unsupported score provenance for {site}: {label}")
         rows.append(
             f'<tr><th scope="row">{esc(site)}</th>'
@@ -75,9 +76,12 @@ def build_focus_table(table: dict, historical: dict, pairs: dict) -> str:
 
 
 def historical_lane(card: dict, card_filename: str, root: Path) -> dict:
-    if card["verdict"] != "negative":
-        raise ValueError(f"Archived {card['lane_id']} is not explicitly negative")
     sub, h, best = card["submission"], card["holdout"], card["best_arm"]
+    if (card["verdict"] != "negative" or card.get("slot_approved", False) is not False
+            or card.get("ok_to_download_and_submit", False) is not False
+            or sub.get("slot_approved", False) is not False
+            or sub.get("ok_to_download_and_submit", False) is not False):
+        raise ValueError(f"Archived {card['lane_id']} is not explicitly negative")
     for key, digest in (("file", "sha256"), ("zip", "zip_sha256")):
         if sha(root / sub[key]) != sub[digest]:
             raise ValueError(f"Historical artifact hash mismatch: {sub[key]}")
@@ -140,17 +144,37 @@ def publish(root: Path = ROOT) -> None:
     docs, evidence = root / "docs", root / "evidence"
     card_path = evidence / "session_review_20261028_audit_run_card.json"
     card = load(card_path)
+    nulls = ("raster_sha256", "submission_name", "submission_note")
+    holdout_nulls = ("evaluator_version", "withheld_positive_pixels", "dti", "ci95")
+    validator_nulls = ("no_nan_inside_footprint", "values_in_0_1", "crs_shape_transform_match")
     if (card.get("verdict") != "negative" or card.get("slot_approved") is not False
-            or card.get("slot_selected") is not False or card.get("raster_sha256") is not None
-            or card.get("submission_name") is not None or card.get("submission_note") is not None
+            or card.get("slot_selected") is not False
+            or any(k not in card or card[k] is not None for k in nulls)
+            or any(k not in card["holdout"] or card["holdout"][k] is not None for k in holdout_nulls)
+            or any(k not in card["validator_output"] or card["validator_output"][k] is not None
+                   for k in validator_nulls)
+            or card["registry"]["new_surface_rank_correlation"] is not None
+            or card["registry"]["new_candidate_final_dot_overlap"] is not None
             or card["validator_output"]["new_raster_generated"] is not False):
         raise ValueError("The current review must be negative with no candidate or selected slot")
     literal = load(evidence / "literal_release_review_20261027.json")
-    bound = load(evidence / "literal_bound_20261027.json")["bound"]
+    bound_doc = load(evidence / "literal_bound_20261027.json")
+    bound = bound_doc["bound"]
     proof = card["registry"]["reproduced_literal_preflight"]
+    fields = {
+        "candidate_distinct_dots": "candidate_distinct_dots",
+        "footprint_pixels": "footprint_pixels",
+        "covered_pixels_within_3px": "covered_pixels",
+        "uncovered_pixels": "uncovered_pixels",
+        "minimum_overlapping_dots": "minimum_overlapping_dots",
+        "minimum_overlap_fraction": "minimum_overlap_fraction",
+        "first_dot_count_forced_over_70_percent": "first_dot_count_forced_over_threshold",
+    }
     if (literal["verdict"] != "negative" or literal["registry"]["dot_overlap_3px"] <= 0.70
-            or proof["minimum_overlap_fraction"] != bound["minimum_overlap_fraction"]
-            or proof["first_dot_count_forced_over_70_percent"] != bound["first_dot_count_forced_over_threshold"]):
+            or card["registry"]["historical_kpl_rechecked_dot_overlap"] != literal["registry"]["dot_overlap_3px"]
+            or proof["reference_id"] != bound_doc["reference_id"]
+            or proof["reference_sha256"] != bound_doc["reference_sha256"]
+            or any(proof[ours] != bound[ref] for ours, ref in fields.items())):
         raise ValueError("Negative literal registry evidence does not match the run card")
     table = load(evidence / "focus9_decision_table_20261027.json")
     historical = load(evidence / "focus_sites_9repo_summary_20261026.json")
@@ -162,7 +186,8 @@ def publish(root: Path = ROOT) -> None:
     tcd = historical_lane(tcd_card, "tcd36-run-card.json", root)
     h = card["holdout"]["historical_reference_not_rerun"]
     if (s2d["holdout_dti"] != h["dti"] or s2d["ci95"] != h["ci95"]
-            or s2d["evaluator_version"] != h["evaluator_version"]):
+            or s2d["evaluator_version"] != h["evaluator_version"]
+            or s2d["withheld_positives"] != h["withheld_positive_pixels"]):
         raise ValueError("Historical holdout mismatch")
 
     # Retain historical data, but make every top-level field describe this review.

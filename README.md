@@ -4,6 +4,8 @@
 > **28 October 2026 — DO NOT SUBMIT.** No new candidate TIFF, submission name, note or competition slot was selected. The required single-method lane paragraph was not identifiable, and the literal all-registry novelty rule blocks the historical dot budget. Every available TIFF is **research only**. See the [decision and download page](docs/index.html), [nine-site executive guide](docs/executive-summary.html), [current run card](evidence/session_review_20261028_audit_run_card.json), and [full review, hypotheses and sources](docs/research/review-20261028.md).
 <!-- LITERAL_REVIEW:END -->
 
+An [earlier parallel review](docs/research/session-review-20261028.md) separately hardened the historical release gate; its missing-input observations describe that earlier checkout, before this session restored the data.
+
 ## Findings
 
 - The historical owner-mirror `reg-052` covers 5,160,724 of 5,167,373 footprint cells within 3 pixels. Any 37,654-dot candidate must overlap at least 31,005 dots (**82.34%**), over the literal 70% limit. Failure is forced from **22,164** dots upward. A bound is not a general impossibility proof for smaller candidates. Owner-mirror hashes do not authenticate organizer data.

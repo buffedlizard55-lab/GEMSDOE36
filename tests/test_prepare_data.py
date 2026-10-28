@@ -118,6 +118,26 @@ def test_incomplete_cache_build_preserves_previous_cache(inputs, tmp_path, monke
     assert not (tmp_path / "data/prepared_manifest.json").exists()
 
 
+def test_feature_dataset_mask_is_sanitized_inside_footprint(inputs, tmp_path, monkeypatch):
+    mask = np.full((4, 4), 255, dtype="uint8")
+    mask[2, 2] = 0
+    with rasterio.open(inputs[2], "r+") as dataset:
+        dataset.write_mask(mask)
+    monkeypatch.setattr(prep, "data_dir", lambda: tmp_path)
+    monkeypatch.setattr(prep, "work_dir", lambda: tmp_path / "work")
+    monkeypatch.setattr(prep, "ROOT", tmp_path)
+    monkeypatch.setattr(prep, "BASE_NAMES", NAMES)
+    original = prep.inspect_core_inputs
+    monkeypatch.setattr(prep, "inspect_core_inputs", lambda *paths: original(
+        *paths, expected_shape=(4, 4), expected_transform=tuple(TRANSFORM)[:6],
+        expected_footprint_pixels=15, expected_names=NAMES,
+    ))
+    manifest = prep.prepare()
+    cached = np.load(tmp_path / "work/bands/01_feature_a.npy")
+    assert np.isnan(cached[2, 2])
+    assert manifest["bands"][0]["sentinel_in_footprint"] == 1
+
+
 def test_successful_cache_replaces_previous_and_writes_manifest(inputs, tmp_path, monkeypatch):
     cache = tmp_path / "work" / "bands"
     cache.mkdir(parents=True)

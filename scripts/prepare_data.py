@@ -138,7 +138,7 @@ def prepare() -> dict:
             nd = feat_src.nodata
             for idx, bname in enumerate(BASE_NAMES, 1):
                 arr = feat_src.read(idx).astype(np.float32)
-                is_sentinel = (~np.isfinite(arr)) | (arr < -1e38)
+                is_sentinel = (~np.isfinite(arr)) | (arr < -1e38) | (feat_src.read_masks(idx) == 0)
                 if nd is not None and not np.isnan(nd):
                     is_sentinel |= arr == nd
                 sentinel_in_foot = int(np.sum(is_sentinel & foot))
