@@ -1,0 +1,33 @@
+{
+  "schema": "gemsdoe36.session-review.v1",
+  "date_utc": "2026-10-28",
+  "hypothesis": null,
+  "mechanism": null,
+  "named_non_fault_mimic": null,
+  "holdout": null,
+  "registry_comparison": null,
+  "raster_sha256": null,
+  "validator_output": {
+    "fresh_raster_validation_performed": false,
+    "no_nan_inside_footprint": null,
+    "values_in_0_1": null,
+    "crs_shape_transform_match": null,
+    "reason": "No new raster was generated; pinned template and labels are missing."
+  },
+  "submission_name": null,
+  "note": "No candidate: lane missing, raw data unavailable, registry stop remains in force.",
+  "verdict": "negative",
+  "experiments_run": 0,
+  "slot_selected": false,
+  "historical_comparator": {
+    "name": "S2D-36 EXP-2",
+    "evidence": "evidence/s2d36_run_card_20261027.json",
+    "holdout_label": "HOLDOUT-DTI (historical, not rerun)",
+    "evaluator_version": "gems-segment-pooled-v1",
+    "withheld_positives": 60988,
+    "dti": 0.2007657135656901,
+    "ci95": [0.18648773519590356, 0.21533340056778932],
+    "literal_final_dot_overlap_vs_reg_052": 0.9948,
+    "note": "Historical rounded registry overlap; not a new registry audit or an organizer score."
+  }
+}
