@@ -1,5 +1,7 @@
 # GEMSDOE36 — current decision & reproducible research
 
+> **28 October 2026 review: DO NOT SUBMIT.** No new lane was assigned or TIFF generated. A historical release check now fails closed if its pinned raster inputs are absent; current Pages no longer present withdrawn forecasts or selector overrides. See the [review](docs/research/session-review-20261028.md) and [negative run card](evidence/session_review_20261028_run_card.json).
+
 <!-- LITERAL_REVIEW:START -->
 > **27 October 2026 superseding decision: DO NOT SUBMIT.** KPL is a literal-protocol duplicate: 99.17% 3-px overlap with reg-052. The owner reports KPL **0.1647 USER-REPORTED**, not organizer-confirmed. The prior forecast is uncalibrated and withdrawn. No new TIFF, training experiment or submission slot was authorized. See the [nine-site executive decision table](docs/research/focus9-executive-summary-20261027.md), [executive review](docs/research/review-20261027.md), and the [27 Oct repository audit](docs/research/repo-review-20261027-session.md) ([session run card](evidence/repo_review_run_card_20261027.json)). The method paragraph assigning this session's lane is absent. Current data/raw is absent in this checkout. Historical cards and reported scores are preserved, not promoted.
 <!-- LITERAL_REVIEW:END -->

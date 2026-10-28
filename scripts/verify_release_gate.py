@@ -1,5 +1,9 @@
 #!/usr/bin/env python3
-"""Automated zero-human release, uniqueness, canary, and HTML link gate for GEMSDOE36."""
+"""Historical H36 evidence audit; not an authorization to upload a submission.
+
+Fails if the pinned raster inputs needed for fresh validation are unavailable.
+A selector and current full-registry audit are separate prerequisites.
+"""
 
 from __future__ import annotations
 
@@ -91,7 +95,19 @@ def verify_all(root: Path = ROOT) -> dict[str, Any]:
 
     tmpl_p = root / "data" / "raw" / "sample_submission.tif"
     lbl_p = root / "data" / "raw" / "labels.tif"
-    if tmpl_p.is_file() and lbl_p.is_file():
+    raster_validation_performed = False
+    if not tmpl_p.is_file() or not lbl_p.is_file():
+        errors.append("Fresh raster validation unavailable: missing sample_submission.tif or labels.tif")
+    else:
+        manifest = json.loads((root / "registry" / "data_manifest.json").read_text())
+        pins = {item["id"]: item["sha256"] for item in manifest["files"]}
+        mismatched = [name for name, path in (("sample_submission", tmpl_p), ("labels", lbl_p))
+                      if pins.get(name) != sha256_file(path)]
+        if mismatched:
+            errors.append("Raster input hash mismatch: " + ", ".join(mismatched))
+        else:
+            raster_validation_performed = True
+    if raster_validation_performed:
         rep_z = validate_submission(zeros_p, tmpl_p, require_nonfinite_outside=False)
         rep_n = validate_submission(nan_p, tmpl_p, require_nonfinite_outside=True)
         chk_z = gems_check_variants(zeros_p, tmpl_p)
@@ -147,7 +163,9 @@ def verify_all(root: Path = ROOT) -> dict[str, Any]:
         "passed": len(errors) == 0,
         "verdict": rc["verdict"],
         "ok_to_download_research_tif": rc["validator_output"]["ok_to_download_research_tif"],
-        "safe_to_download_and_submit": rc["validator_output"]["safe_to_download_and_submit"],
+        "safe_to_download_and_submit": False,
+        "raster_validation_performed": raster_validation_performed,
+        "scope": "Historical H36 audit only; never a selector or current registry authorization",
         "submission_name": rc["submission"]["submission_name"],
         "zeros_filename": zeros_fname,
         "raster_sha256": rc["submission"]["raster_sha256"],

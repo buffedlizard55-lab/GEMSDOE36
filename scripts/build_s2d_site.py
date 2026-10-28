@@ -51,15 +51,14 @@ def build_s2d_section(card: dict, cross: dict, peers: dict) -> str:
     promote = verdict == "promote" and all(gates.values())
     if verdict == "promote" and not all(gates.values()):
         raise RuntimeError("FAIL-CLOSED: verdict=promote with failing gates")
+    if promote:
+        raise RuntimeError("Separate selector authorization required; this historical publisher cannot promote")
 
     sub = card["submission"]
     tif_rel = sub["file"].removeprefix("docs/")
     zip_rel = sub["zip"].removeprefix("docs/")
     h = card["holdout"]
     best = card["best_arm"]
-    scen = card["scenario_projection_not_a_score"]
-    scen_lo, scen_hi = scen["peer_mechanism_matched_scenario_range"]
-    scen_floor = scen["conservative_kpl_ratio_projection"]
 
     arms_rows = "".join(
         f"<tr><td><code>{a}</code></td>"
@@ -75,12 +74,12 @@ def build_s2d_section(card: dict, cross: dict, peers: dict) -> str:
             f'<br><small>SHA-256 <code>{sub["sha256"][:16]}…</code> · {sub["dots"]:,} dots · [0,1] zeros-outside</small>',
             f"<strong>HOLDOUT-DTI {h['arms'][best]['dti']:.6f}</strong> [{h['arms'][best]['ci95'][0]:.4f}, {h['arms'][best]['ci95'][1]:.4f}]<br>"
             f"<small>{h['evaluator_version']} · {h['n_withheld_positive_pixels']:,} withheld positives</small>",
-            f"{scen_lo:.3f}–{scen_hi:.3f} peer-matched scenario (floor {scen_floor:.3f}; NOT A SCORE, no receipt)",
+            "Not defensibly estimable; prior scenario withdrawn",
             f"<strong>PASS modern ≤45k external peers</strong> (max {peers['max_oct25_27_peer_3px_overlap']*100:.2f}%; "
             f"vs B2 {cross['final_dots']['overlap_vs_GEMSDOE32_B2_3px']*100:.2f}%; vs SFD-36 57.53%) · "
             f"<strong>FAIL literal</strong> ({cross['final_dots']['max_overlap_literal_all_198']*100:.2f}% reg-052; "
             f"70.93% vs parallel TCD-36)",
-            "<strong>DO NOT SUBMIT</strong> (fail-closed; human selector required)",
+            "<strong>DO NOT SUBMIT</strong> (literal uniqueness failure; no override)",
         ),
         (
             "GEMSDOE36 · TCD-36 EXP-2 (parallel Oct 27)",
@@ -166,7 +165,7 @@ def build_s2d_section(card: dict, cross: dict, peers: dict) -> str:
 <a class="button secondary" href="research/s2d36-20261027.md">S2D-36 PhD monograph &amp; full audit →</a>
 </div>
 <p><strong>Unique submission name:</strong> <code>{html.escape(sub['name'])}</code><br>
-<strong>Copy-paste Note</strong> ({sub['note_characters']}/140 chars, if selector overrides): <code>{html.escape(sub['note'])}</code></p>
+<strong>Copy-paste Note</strong> ({sub['note_characters']}/140 chars, research only; not for upload): <code>{html.escape(sub['note'])}</code></p>
 </div>
 <aside class="status-card" aria-label="S2D-36 gate summary"><span class="eyebrow">Automated 6-gate verdict: {verdict.upper()}</span>
 <p style="font-size:.93rem"><strong>G1 Canary PASS:</strong> max single-feature symmetric AUC = {card['leakage_canary']['max_symmetric_auc']:.4f} (&le;0.90).<br>
@@ -175,12 +174,12 @@ def build_s2d_section(card: dict, cross: dict, peers: dict) -> str:
 <strong>G3b/G3c Overlap STOP:</strong> passes 13/13 Oct 25–27 external peers (&le;68.49%) and 7/9 Focus-9 champions (vs GEMSDOE32 B2 = <strong>65.49%</strong>; vs SFD-36 = 57.53%; vs KPL-36 = 65.18%), while parallel TCD-36 (70.93%), wide &ge;60k blankets (GEMSDOE27 d1.5 = 70.96%, reg-062 = 96.23%), and the 5&times;5 calibration lattice reg-052 (99.48%) exceed 70%.<br>
 <strong>G4 Format PASS:</strong> single-band float32, [0, 1] whole-grid finite, d_cat &gt; 2 px (min 2.236 px).</p>
 </aside>
-<div class="table-wrap"><table><caption>Executive summary ledger — downloadable files, measured provenance, scenario range (not a score), and uniqueness</caption>
-<thead><tr><th>Site / Lane</th><th>File to download &amp; SHA-256</th><th>Measured metric &amp; provenance</th><th>Scenario range (not a score)</th><th>Uniqueness audit (3-px dot overlap)</th><th>Automated decision</th></tr></thead>
+<div class="table-wrap"><table><caption>Executive summary ledger — downloadable files, measured provenance, score provenance and uniqueness</caption>
+<thead><tr><th>Site / Lane</th><th>File to download &amp; SHA-256</th><th>Measured metric &amp; provenance</th><th>Leaderboard estimate / context</th><th>Uniqueness audit (3-px dot overlap)</th><th>Automated decision</th></tr></thead>
 <tbody>{exec_html}</tbody></table></div>
 <div class="table-wrap"><table><caption>S2D-36 4-quadrant buffered segment holdout — HOLDOUT-DTI ({h['evaluator_version']}, {h['n_withheld_positive_pixels']:,} withheld positives)</caption>
 <thead><tr><th>Arm</th><th>Pooled Metric</th><th>95% Segment-Bootstrap CI</th></tr></thead><tbody>{arms_rows}</tbody></table></div>
-<p style="font-size:.92rem"><strong>Why GEMSDOE32 B2 achieved 0.2778 OWNER-REPORTED &amp; how to score higher:</strong> B2 (37,654 dots) is the exact set difference <code>D2.8 \\ {{d_cat &le; 2 px}}</code> (removing 6,436 near-catalogue collar dots where organizer pixel-exact masking zeros out known-fault recall while leaving adjacent background pixels as 4&times;-weighted precision penalties under &alpha;=0.2, &beta;=0.8) on top of 19GEMSDOE H19-5's four-layer skeleton (L1 fault-tip Coulomb lobes + L2 GDR thermal/sinter + L3 3DEP scarps + L4 GeoDAWN worms). KPL-36 (0.1647 USER-REPORTED) trailed due to the 24.63% 1 m LiDAR gap, highway/survey-seam false positives (SW 90.6% FP), and 1-stage piedmont halo bleed. S2D-36 EXP-2 resolves those three physics/inference gaps (+0.0309 HOLDOUT-DTI to 0.200766; scenario range {scen_lo:.3f}–{scen_hi:.3f}, NOT A SCORE). Surpassing 0.2778 toward the 0.4413 / 0.4437 public leaderboard top requires adding Leave-Segment-Out explicit fault-tip &amp; relay-ramp continuation (L1) plus Sentinel-1 InSAR / raw 1-D flight-line wavelets (H-S2D-4); see the <a href="research/s2d36-20261027.md">S2D-36 monograph</a>.</p>
+<p style="font-size:.92rem"><strong>GEMSDOE32 B2 (0.2778 USER-REPORTED):</strong> Prior pinned forensics describe a catalogue-near-pruned D2.8-family subset. Pruning may reduce uncredited predictions, but hidden truth and an organizer receipt are unavailable. This is a hypothesis, not a proven causal explanation or leaderboard forecast.</p>
 </section>
 <!-- S2D36:END -->"""
 

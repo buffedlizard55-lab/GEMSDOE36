@@ -74,7 +74,6 @@ def main() -> int:
         f"{scen['novel_credit_0.03']['estimated_DTI_if_credit_assumptions_hold']:.3f}–"
         f"{scen['novel_credit_0.13']['estimated_DTI_if_credit_assumptions_hold']:.3f}"
     )
-    est_mid = scen["novel_credit_0.07"]["estimated_DTI_if_credit_assumptions_hold"]
     arms_rows = "".join(
         f"<tr><td><code>{a}</code></td><td>{v['dti']:.6f}</td><td>[{v['ci95'][0]:.4f}, {v['ci95'][1]:.4f}]</td></tr>"
         for a, v in h["arms"].items()
@@ -103,11 +102,11 @@ def main() -> int:
 <a class="button secondary" href="research/kpl36-20261026.md">KPL-36 monograph &amp; 9-site audit →</a>
 </div>
 <p><strong>Unique name:</strong> <code>{html.escape(sub['name'])}</code><br>
-<strong>Copy-paste submission Note</strong> ({sub['note_characters']}/140 chars): <code>{html.escape(sub['note'])}</code></p>
+<strong>Historical note (not for upload)</strong> ({sub['note_characters']}/140 chars): <code>{html.escape(sub['note'])}</code></p>
 </div>
 <aside class="status-card" aria-label="KPL-36 evidence summary"><span class="eyebrow">Why this file — measured evidence</span>
 <p style="font-size:.93rem"><strong>HOLDOUT-DTI {h['arms'][best]['dti']:.6f}</strong> [{h['arms'][best]['ci95'][0]:.4f}, {h['arms'][best]['ci95'][1]:.4f}] (gems-segment-pooled-v1, {h['n_withheld_positive_pixels']:,} withheld positives) vs B0 {h['arms']['B0']['dti']:.6f} and GVSC replication {h['arms']['C-GVSC']['dti']:.6f}; leakage canary ≤0.6344. Internal hide-and-recover figure, not a leaderboard score.<br>
-<strong>Scenario estimate {est_range}</strong> (mid {est_mid:.3f}; assumptions in the monograph; novel-dot credit ≥{est['novel_credit_needed_to_match_0.2778']:.3f} would be needed to match the historical champion score discussed below — no organizer receipt exists yet for KPL-36).<br>
+<strong>Leaderboard estimate: not defensibly estimable.</strong> The historical scenario was withdrawn; no organizer receipt exists for KPL-36.<br>
 <strong>Uniqueness:</strong> max 3-px dot overlap vs the nine focus-site champions = {cross['final_dots']['max_champion_3px_overlap']:.3f} (vs GEMSDOE32-B2 = {cross['final_dots']['overlap_vs_GEMSDOE32_B2_3px']:.3f}); surface max |Spearman| = {cross['surface_before_placement']['max_abs_rank_correlation']:.3f} vs {cross['focus9_entries_checked']} focus-9 rasters; vs post-merge local candidates ≤0.058. The 505-dot lattice-avoiding research candidate and every archived lane remain <strong>DO NOT SUBMIT</strong>.</p>
 </aside>
 <table><caption>KPL-36 holdout arms — HOLDOUT-DTI</caption><thead><tr><th>Arm</th><th>HOLDOUT-DTI</th><th>95% CI</th></tr></thead><tbody>{arms_rows}</tbody></table>
@@ -184,7 +183,7 @@ def main() -> int:
         "note": sub["note"],
         "submission_name": sub["name"],
         "gates": gates,
-        "score_estimate_scenario_range": est_range,
+        "score_estimate_scenario_range": None,
         "parallel_experiments": [parallel_dw_projection(dw)],
         "previous_current_run_v4_BDC36": prev_bdc,
         "kpl36_run_card": card,
