@@ -65,12 +65,27 @@ def build_focus_table(table: dict, historical: dict, pairs: dict) -> str:
             f'<td><strong>NO</strong> · max {best["max_overlap_3px_vs_other_eight"] * 100:.2f}% '
             f'within 3 px</td><td><strong>DO NOT SUBMIT</strong></td></tr>'
         )
+    # Data-derived "at a glance" callout: the highest REPORTED score among the nine pinned
+    # rows. It states the negative verdict only; it does not authorise upload or estimate.
+    top_entry = max(entries, key=lambda x: x["historical_best"]["reported_score"])
+    top = top_entry["historical_best"]
+    top_label = top["score_label"].split(",", 1)[0]
+    glance = (
+        '<div class="callout warning" id="best-reported"><strong>Highest reported file (at a glance): '
+        f'{esc(top_entry["site"])}</strong> · <code>{esc(top["file"])}</code> · '
+        f'{top["reported_score"]:.4f} {esc(top_label)} · estimate: not estimable · '
+        f'unique vs the other eight: <strong>NO</strong> (max {top["max_overlap_3px_vs_other_eight"] * 100:.2f}% '
+        "of dots within 3 px) · <mark>DO NOT SUBMIT</mark>. The owner page reports this file as already "
+        "submitted; no organizer receipt is archived here.</div>"
+    )
     return '''<!-- FOCUS9_DECISION:START -->
 <section class="section" id="focus9-decision" aria-labelledby="focus-title">
+''' + glance + '''
 <div class="section-head"><div><span class="eyebrow">Pinned snapshot · nine sites</span><h2 id="focus-title">Historical files, not submission choices</h2></div></div>
 <p>These are the highest reported files in the pinned historical snapshot, not a live ranking. Each fails uniqueness against at least one of the other eight. A nine-site check alone cannot establish global registry uniqueness. Scores are owner/user-reported; no submission-page receipt is archived. Additional results transcribed from the owner-supplied prompt are in the evidence, not authenticated receipts.</p>
 <div class="table-wrap"><table><caption class="small">Research and provenance links only; no new leaderboard estimate is defensible</caption>
 <thead><tr><th>Site</th><th>Historical file &amp; SHA-256 prefix</th><th>Reported score / estimate</th><th>Unique vs 8?</th><th>Action</th></tr></thead><tbody>''' + "".join(rows) + '''</tbody></table></div>
+<p class="small">Content check (28 Oct 2026, pinned bytes): GEMSDOE30's raster has the same 44,090 positive pixels and in-footprint values as GEMSDOE25 (only the outside encoding differs), so the two are duplicates for submission purposes. GEMSDOE32 B2 is a strict subset of the 44,090-dot D2.8 raster with 6,436 catalogue-adjacent dots removed. Evidence: <a href="downloads/focus9_content_checks_20261028.json">focus9_content_checks_20261028.json</a>.</p>
 <p class="small"><a href="downloads/focus9-decision-table-20261027.json">Full decision data</a> · <a href="downloads/focus-sites-pairwise-uniqueness.json">72 directed pairwise checks</a> · <a href="research/focus9-executive-summary-20261027.md">Historical audit and later updates</a></p>
 </section><!-- FOCUS9_DECISION:END -->'''
 

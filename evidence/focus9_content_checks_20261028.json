@@ -1,0 +1,39 @@
+{
+  "schema": "gemsdoe36.focus9-content-checks.v1",
+  "checked_utc": "2026-10-28T16:39:04+00:00",
+  "inputs_note": "Hash-pinned owner-mirror or GitHub-commit bytes; not organizer-authenticated.",
+  "b2_lineage": {
+    "d28_dots": 44090,
+    "b2_dots": 37654,
+    "removed_from_d28": 6436,
+    "added_to_d28": 0,
+    "removed_distance_to_catalogue_px_min": 1.0,
+    "removed_distance_to_catalogue_px_max": 2.0,
+    "kept_b2_dots_within_2px_of_catalogue": 0,
+    "verdict": true
+  },
+  "nine_site_distinct_contents": 8,
+  "nine_site_content_duplicate_groups": [
+    [
+      {
+        "file": "GEMSDOE25",
+        "sha256_12": "91eae1ca42ec",
+        "outside_encoding": "nan",
+        "dots": 44090
+      },
+      {
+        "file": "GEMSDOE30",
+        "sha256_12": "8cf893ead566",
+        "outside_encoding": "zeros",
+        "dots": 44090
+      }
+    ]
+  ],
+  "gemsdoe25_vs_gemsdoe30": {
+    "gemsdoe25_sha256": "91eae1ca42ec845eaa8c2ba32da49806e24751743459b8a10017c479bbe639b8",
+    "gemsdoe30_sha256": "8cf893ead5667df21d3288a9968c35fd5385c425b029d82ee71d311715b129fd",
+    "bytes_identical": false,
+    "positive_pixel_sets_identical": true,
+    "inside_footprint_values_identical": true
+  }
+}
