@@ -206,7 +206,9 @@ def test_parallel_dw_remains_negative_and_separate_from_preflight():
         ensure_parallel_dw(fake)
 
 
-def test_published_threshold_copy_includes_the_boundary():
+def test_published_threshold_copy_explains_degenerate_lattice_gate():
     landing = (ROOT / "docs/index.html").read_text()
-    assert "At or above this count the proof forces a stop" in landing
-    assert "Above this count the proof forces a stop" not in landing
+    assert "the forced-stop count is 22,164 dots" in landing
+    assert "gate-design defect" in landing
+    assert "not proof of candidate duplication" in landing
+    assert "registry-coverage-audit-20261028.json" in landing
