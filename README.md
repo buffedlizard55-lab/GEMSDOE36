@@ -32,7 +32,7 @@ python -m venv .venv
 .venv/bin/ruff check src scripts tests
 ```
 
-No candidate is approved by any of these commands. When a method is assigned and the shared issue fixed, follow the canary, buffered whole-segment holdout, literal surface-and-dot novelty gates and **separate selector** protocol in the preserved brief below. See [three review passes and limitations](evidence/review_passes_20261028.md).
+No candidate is approved by any of these commands. When a method is assigned and the shared issue fixed, follow the canary, buffered whole-segment holdout, literal surface-and-dot novelty gates and **separate selector** protocol in the preserved brief below. See [three review passes and limitations](evidence/review_passes_20261028.md) and the [fresh-checkout verification note](evidence/session_review_20261028_environment.md). The fresh checkout used for this review did not contain `data/raw` or the original template rasters; its applicable tests were skipped rather than inferred from earlier restored-data runs.
 
 Core Values: **Maximize P(Win)** and **Own the Outcome**.
 
