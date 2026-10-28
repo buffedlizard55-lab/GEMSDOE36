@@ -4,7 +4,9 @@
 > **28 October 2026 — DO NOT SUBMIT.** No new candidate TIFF, submission name, note or competition slot was selected. The required single-method lane paragraph was not identifiable, and the literal all-registry novelty rule blocks the historical dot budget. Every available TIFF is **research only**. See the [decision and download page](docs/index.html), [nine-site executive guide](docs/executive-summary.html), [current run card](evidence/session_review_20261028_audit_run_card.json), and [full review, hypotheses and sources](docs/research/review-20261028.md).
 <!-- LITERAL_REVIEW:END -->
 
-An [earlier parallel review](docs/research/session-review-20261028.md) separately hardened the historical release gate; its missing-input observations describe that earlier checkout, before this session restored the data.
+**Session-start rule:** Read this complete README (including the preserved owner brief and latest continuation below), the current [review](docs/research/review-20261028.md), and the linked current run card before editing or running experiments. Treat archived scores as unverified unless explicitly marked ORGANIZER-CONFIRMED with a submission-page receipt.
+
+An [earlier parallel review](docs/research/session-review-20261028.md) separately hardened the historical release gate. This current checkout has since restored the 30 SHA-pinned owner-mirror objects (591,020,452 bytes) and rerun preparation; hashes establish mirror integrity only, **not organizer authentication**.
 
 ## Findings
 
@@ -914,7 +916,7 @@ Rule: only run a candidate after the session's method paragraph assigns its lane
 - evidence/n2_holdout_run_card.json — N2 negative holdout result (this session).
 - evidence/kpl36_literal_recheck_20261027.json, evidence/literal_release_review_20261027.json, evidence/literal_bound_20261027.json — literal registry revocation evidence.
 - Local format validation of KPL-36 TIF vs data/raw/sample_submission.tif: PASS ([0,1], zeros outside, grid/CRS match); portal acceptance not verified.
-- Data placement remains a limitation in this checkout: `data/raw/` is absent (only manifests/receipts and small prepared metadata are tracked), so data-dependent tests skip. Any earlier restoration record is historical and does not mean the authenticated organizer training package is currently available here.
+- Data placement was restored in the 28 October follow-up from 30 SHA-pinned GitHub owner mirrors (591,020,452 bytes) and re-prepared locally; `data/raw/` is ignored and is not committed. The feature/template/label hashes and grid checks pass, but these mirrors are not organizer-authenticated. `data/prepared_manifest.json` records the latest preparation. Data-dependent tests now run in this checkout; only optional Torch orientation coverage is skipped.
 
 ## Site
 GitHub Pages from /docs: clean UI, download buttons at the top of both pages, executive-summary subpage with the how-to-submit guide, official links (DrivenData competition 306 pages 967/968/leaderboard, rules PDF docs.nlr.gov/docs/fy26osti/96647.pdf, USGS GeoDAWN, DOE GDR 1391, EPSG:32611, Tversky index).
@@ -945,3 +947,10 @@ unilaterally, and `TCD-36` (`HOLDOUT-DTI = 0.194164`, `+0.0158` over `SFD-36`,
 `+0.0241` over `KPL-36`, `4.54%` 300 m crowding vs `42.57%`) fails closed on
 automatic slot spend solely due to `reg-052`'s 5-px calibration lattice while
 publishing the validated `[0, 1]` research GeoTIFF (`DOWNLOAD: YES · DO NOT SUBMIT automatically`).
+
+### Continuation brief — 28 October 2026
+At the start of each session, review the full standing owner brief above and the latest negative decision before taking action. The current request reiterates the nine-site comparison (GEMSDOE24/25/27/28/30/31/32/33/36), asks for a high-scoring **unique** GeoTIFF and an obvious download/submission status, requests 3–5 previously untried scientific hypotheses before implementation, and requires official-source links, a three-pass review, and transparent limitations. Keep Arena Core Values — **Maximize P(Win)** and **Own the Outcome** — central to decisions.
+
+The parallel-run constraints remain controlling: use only the assigned single-method lane; stop if surface rank-correlation exceeds 0.90 or final-dot overlap exceeds 70% against any registry raster; use the shared cached stack/evaluator/writer and buffered whole-segment holdout with feature-alone leakage canaries; label numbers as HOLDOUT-DTI with evaluator, withheld positives and 95% CI, or ORGANIZER-CONFIRMED with a receipt; record one JSON run card; stop after three experiments or two hours; and keep weekly-slot selection separate. Never describe an estimate as a score.
+
+Current decision: **no submission is authorized**. The prompt does not identify the required lane paragraph. A reproduced owner-mirror lattice bound forces >70% overlap for any candidate of 22,164 or more dots; at 37,654 dots the minimum is 82.34%. The current research review ranks three external-data hypotheses (persistent groundwater-head barriers, seasonal Landsat thermal persistence, and multi-contact displacement consensus), but they are proposals, not validated/approved methods. Current data inputs are now locally restored and prepared, but are SHA-pinned owner mirrors, not organizer-authenticated. Do not evade the novelty bound by arbitrarily thinning/relabeling an old raster. No slot was selected and no new TIFF or score estimate was produced. See [`docs/research/review-20261028.md`](docs/research/review-20261028.md), [`evidence/session_review_20261028_audit_run_card.json`](evidence/session_review_20261028_audit_run_card.json), and [`evidence/review_passes_20261028.md`](evidence/review_passes_20261028.md) for the auditable decision.
