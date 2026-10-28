@@ -14,6 +14,21 @@ from gemsdoe36.paths import data_dir
 from gemsdoe36.submission import sha256_file, validate_submission
 
 
+def archive_review_row(path: Path, digest: str, report: dict, atvr_card: dict) -> dict:
+    """A historical format audit never grants a slot, even for a forged card."""
+    is_atvr36 = path.name == "gemsdoe36-atvr36-20261026.tif"
+    return {
+        "sha256": digest,
+        "validator": report,
+        "submit_ready": False,
+        "historical_card_verdict": atvr_card.get("verdict") if is_atvr36 else None,
+        "reason": (
+            "Historical research artifact only: format checks do not establish literal "
+            "registry uniqueness or a separate slot-selection decision; DO NOT SUBMIT."
+        ),
+    }
+
+
 def main() -> int:
     template = data_dir() / "sample_submission.tif"
     if not template.exists():
@@ -28,7 +43,6 @@ def main() -> int:
     atvr_card = json.loads(
         (ROOT / "evidence/atvr36_run_card_20261026.json").read_text(encoding="utf-8")
     )
-    atvr_promoted = bool(atvr_card.get("verdict") == "promote")
 
     rows = []
     for path in sorted((ROOT / "docs/downloads").glob("*.tif")):
@@ -37,24 +51,7 @@ def main() -> int:
             path, template, require_nonfinite_outside=not zeros_mode
         ).to_dict()
         report["path"] = str(path.relative_to(ROOT))
-        is_atvr36 = path.name == "gemsdoe36-atvr36-20261026.tif"
-        rows.append(
-            {
-                "sha256": sha256_file(path),
-                "validator": report,
-                "submit_ready": bool(is_atvr36 and report["passed"] and atvr_promoted),
-                "reason": (
-                    "Promoted ATVR-36 EXP-2 cross-fitted submission"
-                    if (is_atvr36 and atvr_promoted)
-                    else (
-                        "ATVR-36 EXP-2 cross-fitted research raster: format-valid [0, 1] "
-                        "(DOWNLOAD: YES; DO NOT SUBMIT standalone — verdict=negative)"
-                        if is_atvr36
-                        else "Research / legacy artifact: verdict=negative or retired — do not submit"
-                    )
-                ),
-            }
-        )
+        rows.append(archive_review_row(path, sha256_file(path), report, atvr_card))
 
     output = {
         "template_sha256": entry["sha256"],

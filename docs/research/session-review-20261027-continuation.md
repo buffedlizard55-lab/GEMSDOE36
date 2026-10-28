@@ -1,5 +1,7 @@
 # Continuation review — 27 October 2026
 
+> Historical session record. On 28 October the inputs and dependencies were restored and further audits were run. See the [current review](review-20261028.md); old availability and leaderboard statements below are not current.
+
 ## Decision
 
 **NEGATIVE — no new TIFF, model run, weekly slot, or score estimate was authorized.** This is a repo audit and candidate-screening pass, not a submission run. The user-supplied parallel-run instruction refers to a single method paragraph, but no such paragraph is present in the request. The branch has no authority to infer a lane. The existing S2D-36 GeoTIFF remains a research artifact only: its local format check passed historically, but its literal all-registry 3-pixel overlap is 99.48% against `reg-052`, above the stated 70% stop threshold. The fixed 37,654-dot budget also has a registry-derived lower bound of 82.34%. These are registry-overlap diagnostics, not scores.
@@ -10,7 +12,7 @@ The standing protocol requires a stop if a registry raster exceeds either the co
 
 The executive guide already has the nine requested site rows and artifact names. The supplied site results are reports, not organizer receipts. Its current record identifies these highest user-supplied historical values: GEMSDOE24 0.2477; GEMSDOE25 0.2600; GEMSDOE27 0.2449 (with later H31 reported at 0.2250); GEMSDOE28 0.2710; GEMSDOE30 0.2600; GEMSDOE31 0.2708; GEMSDOE32 0.2778; GEMSDOE33 0.2632; GEMSDOE36 0.2750 (with later KPL-36 reported at 0.1647). All are **USER-REPORTED** unless a dated organizer receipt is archived; none in this record is upgraded to **ORGANIZER-CONFIRMED**.
 
-The existing file audits indicate that the strongest reported files in the older H19-5 / D2.8 family are closely related or strict subsets. In particular, GEMSDOE32 B2 is a catalogue-near-pruned subset of D2.8, not evidence that a new independent geological signal caused the score increase. Pruning can improve a precision-sensitive metric by removing predictions with no known-fault recall credit, but this is a mechanism hypothesis, not a demonstrated explanation of the hidden-label result. There is no calibrated leaderboard score forecast for a new method. The historical 0.2778 result cannot be used as a forecast, and the conflicting 0.3195 / 0.4413 leaderboard figures cannot be resolved from this checkout.
+The existing file audits indicate that the strongest reported files in the older H19-5 / D2.8 family are closely related or strict subsets. In particular, GEMSDOE32 B2 is a catalogue-near-pruned subset of D2.8, not evidence that a new independent geological signal caused the score increase. Pruning alters the spatial false-positive/false-negative tradeoff, but any benefit depends on unavailable hidden truth; the public problem page does not establish the previously claimed organizer mask. There is no calibrated leaderboard score forecast for a new method. The historical 0.2778 result cannot be used as a forecast, and the conflicting 0.3195 / 0.4413 leaderboard figures cannot be resolved from this checkout.
 
 ## Repository review: novelty claims that must not be repeated
 

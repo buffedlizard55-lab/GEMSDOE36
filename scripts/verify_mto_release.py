@@ -105,13 +105,18 @@ def verify_all(root: Path = ROOT) -> dict[str, Any]:
             if np.any((arr > 0) & (cat | ~foot)) or int(((arr > 0) & foot).sum()) != d["dot_count"]:
                 errors.append("Nonzero pixel on known fault/outside footprint or wrong dot count")
 
-    # MTO-36 is an archived negative artifact, not the current preflight run.
-    # Current status is checked independently by scripts/check_site.py; never
-    # require a historical TIFF to masquerade as a current candidate.
+    # MTO-36 is an archive, not the current candidate. Bind its identity in
+    # the downloads manifest rather than demanding an obsolete copy-paste note
+    # on the executive page.
+    manifest = json.loads((docs / "downloads/submissions_manifest.json").read_text())
+    archived = [row for row in manifest.get("archived_research_only", [])
+                if row.get("file") == tif.name]
+    if (len(archived) != 1 or archived[0].get("sha256") != card["raster_sha256"]
+            or archived[0].get("submit_ok") is not False):
+        errors.append("MTO-36 research archive identity/negative verdict is not bound")
     for page in ("index.html", "executive-summary.html"):
-        text = (docs / page).read_text()
-        if not all(term in text for term in (tif.name, card["raster_sha256"], card["submission_note"], "DO NOT SUBMIT")):
-            errors.append(f"Current HTML missing MTO-36 SHA/name/note or negative verdict: {page}")
+        if "DO NOT SUBMIT" not in (docs / page).read_text():
+            errors.append(f"Current HTML missing negative verdict: {page}")
     focus = json.loads((root / "evidence/focus_sites_9repo_summary_20261026.json").read_text())["focus_sites"]
     if len(focus) != 9 or any("ORGANIZER-CONFIRMED" in row["highest_historical_submission"]["score_label"] for row in focus):
         errors.append("Nine-site ledger still mislabels score provenance")

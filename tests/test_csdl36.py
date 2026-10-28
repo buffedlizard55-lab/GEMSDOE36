@@ -46,18 +46,26 @@ def test_csdl36_feature_list_invariants_ir04() -> None:
     assert set(EXP3_BLIND_FEATURES) | set(LIDAR_FEATURE_SET) == set(EXP2_FEATURES)
 
 
-@pytest.mark.skipif(
-    not (ROOT / "data/raw/sample_submission.tif").is_file(),
-    reason="data/raw not restored",
-)
-def test_csdl36_mineralogical_deconfounding_no_det_elev_ir02() -> None:
-    if not (ROOT / "data/raw/sample_submission.tif").is_file():
-        pytest.skip("requires restored data/raw (run scripts/restore_data.py)")
+def test_csdl36_source_excludes_det_elev() -> None:
+    # Always check the source, including during a partial data restore.
     src_lines = [
         line for line in inspect.getsource(rasterize_deconfounded_geothermal_layers).splitlines()
         if not line.strip().startswith(("#", '"""'))
     ]
     assert "det_elev" not in "\n".join(src_lines)
+
+
+@pytest.mark.skipif(
+    not all((ROOT / path).is_file() for path in (
+        "data/raw/sample_submission.tif",
+        "data/raw/external/paleo_geothermal_regional.zip",
+        "data/raw/external/2m_temperature_probe_INGENIOUS_regional_data.zip",
+        "data/raw/external/gdr_volcanic_vents_in_footprint.csv",
+        "data/raw/external/gdr_wellspring_in_footprint.csv",
+    )),
+    reason="CSDL integration inputs are incomplete",
+)
+def test_csdl36_mineralogical_deconfounding_no_det_elev_ir02() -> None:
     grid = load_footprint_grid(ROOT / "data/raw")
     _, inv = rasterize_deconfounded_geothermal_layers(ROOT / "data/raw", grid)
     assert inv.paleo_throat_in_footprint == 82
