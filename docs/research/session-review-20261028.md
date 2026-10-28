@@ -1,5 +1,7 @@
 # Repository review — 28 October 2026
 
+> Earlier parallel-session snapshot: its missing-data and inaccessible-source observations describe that checkout at the time. The later [current review](review-20261028.md) restored pinned owner mirrors, inspected official pages and retained this historical release-gate fix.
+
 ## Decision: DO NOT SUBMIT
 
 No new submission TIFF was generated and no weekly slot was used. The request refers to a single lane-defining method paragraph, but none is identifiable. Selecting a method would risk colliding with the other concurrent sessions. The raw template, labels, feature stack and full registry raster cache are absent here; historical restore receipts do not prove present availability. This checkout's previous literal registry test also found a blocker: the prior S2D candidate had approximately 99.48% of its dots within three pixels of `reg-052`, exceeding the requested 70% limit. Do not let a selector or a format check override a failed uniqueness gate. The prior analysis of the 5×5 lattice shows that at 37,654 distinct dots the literal threshold is mathematically impossible to pass on that footprint. That is a bound for this budget and reference, not proof that all possible lower-budget methods fail. See [the detailed evidence](../../evidence/registry_preflight_run_card_20261026.json).

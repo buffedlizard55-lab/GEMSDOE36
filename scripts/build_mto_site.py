@@ -12,7 +12,6 @@ import json
 import subprocess
 from fractions import Fraction
 from pathlib import Path
-from shutil import copyfile
 
 ROOT = Path(__file__).resolve().parents[1]
 DOCS = ROOT / "docs"
@@ -439,73 +438,10 @@ For the pinned nine-site forensic rerun, run `python scripts/cache_focus9_audit.
 
 
 def main() -> int:
-    mto, hvg, gvsc, csdl, stop, ledger, dw = (
-        json.loads(p.read_text(encoding="utf-8"))
-        for p in (CARD, HVG_CARD, GVSC_CARD, CSDL_CARD, STOP_CARD, LEDGER, DW_CARD)
-    )
-    ensure_status(mto, ledger, hvg)
-    ensure_stop_card(stop, gvsc)
-    ensure_csdl_card(csdl)
-    ensure_parallel_dw(dw)
-    for source, target in (
-        (STOP_CARD, DOCS / "downloads/registry-preflight-run-card.json"),
-        (DW_CARD, DOCS / "downloads/dw36-run-card.json"),
-        (CARD, DOCS / "downloads/mto36-run-card.json"),
-        (HVG_CARD, DOCS / "downloads/hvg36-run-card.json"),
-        (GVSC_CARD, DOCS / "downloads/gvsc36-run-card.json"),
-        (CSDL_CARD, DOCS / "downloads/csdl36-run-card.json"),
-        (BDC_CARD, DOCS / "downloads/bdc36-run-card.json"),
-        (LEDGER, DOCS / "downloads/focus9-verified-source-ledger.json"),
-        (UNIQUENESS, DOCS / "downloads/focus-sites-pairwise-uniqueness.json"),
-        (ROOT / "evidence/mto36_ninesite_forensics.json", DOCS / "downloads/focus9-source-integrity.json"),
-        (ROOT / "evidence/lane36_crosscheck.json", DOCS / "downloads/lane36-crosscheck.json"),
-        (ROOT / "evidence/moe36_run_card_20261026.json", DOCS / "downloads/moe36-run-card.json"),
-        (ROOT / "evidence/atvr36_run_card_20261026.json", DOCS / "downloads/atvr36-run-card.json"),
-    ):
-        copyfile(source, target)
-    snapshot = json.loads((ROOT / "registry/priority_source_snapshot.json").read_text())
-    refs = {x["repo"].split("/")[-1]: x["ref"] for x in snapshot["sources"]}
-    (DOCS / "data").mkdir(exist_ok=True)
-    (DOCS / "data/focus-refs.json").write_text(json.dumps(refs, indent=2) + "\n")
-    current = {
-        "schema": "gemsdoe36.current-run.v3", "lane_id": stop["lane_id"], "verdict": "negative",
-        "slot_approved": False, "ok_to_download_and_submit": False, "research_downloads_only": True,
-        "tif_path": None, "tif_sha256": None, "holdout_dti": None,
-        "run_card": "downloads/registry-preflight-run-card.json", "run_card_sha256": _digest(STOP_CARD),
-        "registry_preflight": stop["registry"]["literal_preflight"]["bound"],
-        "parallel_experiments": [parallel_dw_projection(dw)],
-        "csdl36_experiment": {
-            "lane_id": csdl["lane_id"],
-            "best_arm": csdl["best_arm"],
-            "verdict": csdl["verdict"],
-            "slot_approved": False,
-            "holdout_label": "HOLDOUT-DTI",
-            "holdout_dti": csdl["holdout"][csdl["best_arm"]]["dti"],
-            "ci95": csdl["holdout"][csdl["best_arm"]]["ci95"],
-            "evaluator_version": csdl["holdout"]["evaluator_version"],
-            "withheld_positives": csdl["holdout"]["withheld_positives"],
-            "focus9_max_overlap_3px": csdl["registry_uniqueness"]["focus_9_sites_max_overlap_3px"],
-            "focus9_passed": csdl["registry_uniqueness"]["focus_9_sites_passed"],
-            "literal_all_entry_max_overlap_3px": csdl["registry_uniqueness"]["literal_all_entry_max_overlap_3px"],
-            "tif": f"downloads/{csdl['submission']['zeros_filename']}",
-            "raster_sha256": csdl["submission"]["raster_sha256"],
-            "run_card": "downloads/csdl36-run-card.json",
-        },
-    }
-    (DOCS / "current-run.json").write_text(json.dumps(current, indent=2) + "\n")
-    manifest = {"schema": "gemsdoe36.research-downloads.v3", "slot_approved": False,
-                "current_candidate": None, "run_card": "registry-preflight-run-card.json",
-                "archived_research_only": [
-                    {"file": gvsc["submission"]["zeros_filename"], "sha256": gvsc["submission"]["raster_sha256"], "submit_ok": False},
-                    {"file": Path(hvg["artifact"]["tif_path"]).name, "sha256": hvg["artifact"]["tif_sha256"], "submit_ok": False},
-                    {"file": Path(mto["download"]["tif"]).name, "sha256": mto["raster_sha256"], "submit_ok": False},
-                ] + additional_archives()}
-    (DOCS / "downloads/submissions_manifest.json").write_text(json.dumps(manifest, indent=2) + "\n")
-    (DOCS / "index.html").write_text(index_page(stop, mto, hvg, gvsc, ledger, dw, csdl), encoding="utf-8")
-    (DOCS / "executive-summary.html").write_text(executive_page(stop, mto, hvg, gvsc, ledger, dw, csdl), encoding="utf-8")
-    update_readme(stop, ledger, dw, csdl)
-    print("Built Pages and README: literal-registry preflight NEGATIVE; no candidate or slot")
-    return 0
+    """Legacy entrypoint delegates to the current no-candidate review."""
+    from publish_current_review import main as publish_current
+
+    return publish_current()
 
 
 if __name__ == "__main__":

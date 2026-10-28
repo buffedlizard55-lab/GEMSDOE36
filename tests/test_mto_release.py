@@ -94,10 +94,17 @@ def test_table_does_not_call_estimates_holdouts_or_nine_sites_unique() -> None:
     assert "Estimated Score" not in table
     for item in ledger["focus_sites"]:
         assert item["highest_historical_submission"]["name"] in table
+    # The current executive table is the source-checked, more concise successor.
+    from publish_current_review import build_focus_table
+
     summary = (ROOT / "docs/executive-summary.html").read_text()
-    assert summary.count("<!-- FOCUS9_EXEC:START -->") == 1
-    assert summary.count("<!-- FOCUS9_EXEC:END -->") == 1
-    assert table in summary
+    current_table = build_focus_table(
+        load("evidence/focus9_decision_table_20261027.json"), ledger,
+        load("evidence/focus_sites_pairwise_uniqueness_20261026.json"),
+    )
+    assert summary.count("<!-- FOCUS9_DECISION:START -->") == 1
+    assert summary.count("<!-- FOCUS9_DECISION:END -->") == 1
+    assert current_table in summary
 
 
 def test_negative_preflight_cannot_be_forged_to_promote():
@@ -119,13 +126,11 @@ def test_negative_preflight_cannot_be_forged_to_promote():
 
 
 def test_current_manifest_binds_negative_card_and_rejects_positive_mutations():
-    """Successor (KPL-36 v5): current manifest is hash-bound to the KPL-36 run
-    card; the superseded negative BDC-36 v4 manifest must survive nested, and
-    mutations that break either binding are rejected."""
+    """Current v6 binds the negative no-candidate review and preserves BDC-36."""
     stop_path = ROOT / "evidence/registry_preflight_run_card_20261026.json"
     stop = json.loads(stop_path.read_text())
     current = load("docs/current-run.json")
-    assert current["schema"] == "gemsdoe36.current-run.v5"
+    assert current["schema"] == "gemsdoe36.current-run.v6"
     assert validate_current(current, stop, sha(stop_path)) == []
     prev = current["previous_current_run_v4_BDC36"]
     assert prev["lane_id"] == "BDC-36" and prev["verdict"] == "negative"
@@ -136,6 +141,9 @@ def test_current_manifest_binds_negative_card_and_rejects_positive_mutations():
         assert validate_current(fake, stop, sha(stop_path))
     fake = deepcopy(current)
     fake["previous_current_run_v4_BDC36"]["slot_approved"] = True
+    assert validate_current(fake, stop, sha(stop_path))
+    fake = deepcopy(current)
+    del fake["tif_path"]  # explicit null, not an absent/ambiguous field
     assert validate_current(fake, stop, sha(stop_path))
 
 
@@ -182,9 +190,9 @@ def test_parallel_dw_remains_negative_and_separate_from_preflight():
     ensure_parallel_dw(dw)
     current = load("docs/current-run.json")
     assert current["parallel_experiments"] == [parallel_dw_projection(dw)]
-    # v5 top-level stays bound to KPL-36 while nesting TCD-36 & S2D-36; DW36 stays a separate parallel entry.
+    # Current run has no candidate; historical lanes remain separately labeled.
     assert current["previous_current_run_v4_BDC36"]["lane_id"] == "BDC-36"
-    assert current["holdout_dti"] == pytest.approx(0.17010000946379217)
+    assert current["holdout_dti"] is None
     assert current["latest_research_lane_tcd36"]["holdout_dti"] == pytest.approx(0.19416399564770398)
     assert current["latest_research_lane_s2d36"]["holdout_dti"] == pytest.approx(0.2007657135656901)
     assert dw["holdout_dti"]["pooled_candidate"] == pytest.approx(0.06605205634872657)

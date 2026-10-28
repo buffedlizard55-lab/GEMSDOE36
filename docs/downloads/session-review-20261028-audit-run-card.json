@@ -1,0 +1,67 @@
+{
+  "schema": "gemsdoe36.parallel_run_card.v1",
+  "review_date_utc": "2026-10-28",
+  "hypothesis": "No experiment selected: the required single-method lane paragraph was not identified; ranked leads remain unvalidated research proposals.",
+  "mechanism": "No new mechanism was implemented. The leading proposed research question is whether persistent groundwater-head discontinuities reveal hydraulic compartment boundaries near unmapped faults.",
+  "named_non_fault_mimic": "Pumping cones, well-screen differences and recharge or lithologic boundaries can mimic a groundwater-head discontinuity.",
+  "experiments_run_this_session": 0,
+  "holdout": {
+    "label": "HOLDOUT-DTI",
+    "status": "Not run for a new candidate in this session",
+    "evaluator_version": null,
+    "withheld_positive_pixels": null,
+    "dti": null,
+    "ci95": null,
+    "historical_reference_not_rerun": {
+      "arm": "S2D-36 EXP-2",
+      "label": "HOLDOUT-DTI",
+      "evaluator_version": "gems-segment-pooled-v1",
+      "withheld_positive_pixels": 60988,
+      "dti": 0.2007657135656901,
+      "ci95": [0.18648773519590356, 0.21533340056778932],
+      "evidence": "evidence/s2d36_run_card_20261027.json"
+    }
+  },
+  "registry": {
+    "new_surface_rank_correlation": null,
+    "new_candidate_final_dot_overlap": null,
+    "status": "No new surface or dots exist. Full all-registry comparison has not been rerun for a new candidate.",
+    "reproduced_literal_preflight": {
+      "reference_id": "reg-052",
+      "reference_sha256": "b4570b406efec198eb2f4d142ad8d0d6184b14b66f2f52b5c4d697f0647dc9b2",
+      "candidate_distinct_dots": 37654,
+      "footprint_pixels": 5167373,
+      "covered_pixels_within_3px": 5160724,
+      "uncovered_pixels": 6649,
+      "minimum_overlapping_dots": 31005,
+      "minimum_overlap_fraction": 0.8234184947150369,
+      "first_dot_count_forced_over_70_percent": 22164,
+      "provenance": "SHA-pinned owner mirrors; not organizer-authenticated"
+    },
+    "historical_kpl_rechecked_dot_overlap": 0.9916874701226961,
+    "shared_tool_issue": "https://github.com/buffedlizard55-lab/GEMSDOE24/issues/77"
+  },
+  "raster_sha256": null,
+  "validator_output": {
+    "new_raster_generated": false,
+    "no_nan_inside_footprint": null,
+    "values_in_0_1": null,
+    "crs_shape_transform_match": null,
+    "status": "Not applicable: no new raster. Validation of a research artifact is not submission authorization.",
+    "historical_kpl_rechecked": {
+      "raster_sha256": "86fc8243ad573bcdbfac8b432daf0ec5b6800b991b2c3278706358be7eb9922d",
+      "single_band": true,
+      "no_nan_inside": true,
+      "whole_grid_finite": true,
+      "range_0_1": true,
+      "crs_shape_transform_match": true,
+      "organizer_portal_acceptance": "unknown"
+    }
+  },
+  "submission_name": null,
+  "submission_note": null,
+  "verdict": "negative",
+  "slot_approved": false,
+  "slot_selected": false,
+  "reason": "No assigned method paragraph or tested unique candidate; literal all-registry threshold remains binding and the shared novelty-tool georeferencing issue is unresolved. No competition slot spent."
+}

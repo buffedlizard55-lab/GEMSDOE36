@@ -87,12 +87,53 @@ def kpl_promote() -> tuple[bool, dict]:
 def validate_current(current: dict, stop: dict, stop_sha: str) -> list[str]:
     """A missing or fabricated candidate cannot be made submit-ready by Pages.
 
-    Schema v3 = the negative registry-preflight manifest. Schema v5 (KPL-36
-    successor; BDC-36 already used the v4 tag on main) must be hash-bound to
-    the KPL-36 evidence run card, may approve a slot only when that card's
-    preregistered gates all pass, and must preserve the superseded BDC-36
-    manifest verbatim under ``previous_current_run_v4_BDC36`` (itself negative).
+    Schema v6 represents the current negative review and binds its run card;
+    every candidate field must be explicitly null. Legacy v3/v5 validation is
+    retained for archived manifests, but cannot grant a current v6 slot.
     """
+    if current.get("schema") == "gemsdoe36.current-run.v6":
+        card_path = ROOT / "evidence/session_review_20261028_audit_run_card.json"
+        try:
+            card = json.loads(card_path.read_text())
+        except (OSError, ValueError):
+            return ["Missing or invalid current negative run card"]
+        null_fields = ("lane_id", "tif_path", "tif_sha256", "zip_path", "zip_sha256",
+                       "holdout_dti", "ci95", "evaluator_version", "withheld_positives",
+                       "submission_name", "note", "score_estimate_scenario_range")
+        errors = []
+        if (current.get("verdict") != "negative" or current.get("slot_approved") is not False
+                or current.get("slot_selected") is not False
+                or current.get("ok_to_download_and_submit") is not False
+                or current.get("research_downloads_only") is not True
+                or any(k not in current or current[k] is not None for k in null_fields)
+                or current.get("run_card") != "downloads/session-review-20261028-audit-run-card.json"
+                or current.get("run_card_sha256") != sha(card_path)
+                or current.get("review_date_utc") != card.get("review_date_utc")):
+            errors.append("v6 current manifest must describe the hash-bound negative no-candidate review")
+        card_nulls = ("raster_sha256", "submission_name", "submission_note")
+        h = card.get("holdout") or {}
+        v = card.get("validator_output") or {}
+        r = card.get("registry") or {}
+        if (card.get("verdict") != "negative" or card.get("slot_approved") is not False
+                or card.get("slot_selected") is not False
+                or any(k not in card or card[k] is not None for k in card_nulls)
+                or any(k not in h or h[k] is not None for k in
+                       ("evaluator_version", "withheld_positive_pixels", "dti", "ci95"))
+                or any(k not in v or v[k] is not None for k in
+                       ("no_nan_inside_footprint", "values_in_0_1", "crs_shape_transform_match"))
+                or any(k not in r or r[k] is not None for k in
+                       ("new_surface_rank_correlation", "new_candidate_final_dot_overlap"))
+                or v.get("new_raster_generated") is not False):
+            errors.append("Current run card must remain negative with no new raster or slot")
+        previous_path = ROOT / "evidence/previous_current_run_bdc36_20261026.json"
+        try:
+            previous = json.loads(previous_path.read_text())
+        except (OSError, ValueError):
+            errors.append("Missing archived BDC-36 manifest")
+        else:
+            if current.get("previous_current_run_v4_BDC36") != previous:
+                errors.append("Archived BDC-36 manifest was modified or lost")
+        return errors
     if current.get("schema") != "gemsdoe36.current-run.v5":
         return _validate_current_v3(current, stop, stop_sha)
     errors = []
@@ -127,8 +168,8 @@ def main() -> int:
         ensure_status,
         ensure_stop_card,
         parallel_dw_projection,
-        site_table,
     )
+    from publish_current_review import build_focus_table, historical_lane
 
     errors: list[str] = []
     mto = json.loads((ROOT / "evidence/mto36_run_card_20261026.json").read_text())
@@ -145,6 +186,16 @@ def main() -> int:
         ensure_parallel_dw(dw)
     except (RuntimeError, OSError, KeyError, StopIteration, ValueError) as exc:
         errors.append(f"Release evidence invalid: {exc}")
+
+    try:
+        focus_table = build_focus_table(
+            json.loads((ROOT / "evidence/focus9_decision_table_20261027.json").read_text()),
+            ledger,
+            json.loads((ROOT / "evidence/focus_sites_pairwise_uniqueness_20261026.json").read_text()),
+        )
+    except (OSError, ValueError, KeyError) as exc:
+        errors.append(f"Focus-9 evidence invalid: {exc}")
+        focus_table = None
 
     root_page = parse(ROOT / "index.html")
     if root_page.refresh_target not in {"docs/", "docs/index.html"}:
@@ -170,40 +221,27 @@ def main() -> int:
             if "noopener" not in rel.split():
                 errors.append(f"docs/{page}: target=_blank without rel=noopener: {href}")
         for phrase in ("DO NOT SUBMIT", "DOWNLOAD: YES", "Research downloads only", "HOLDOUT-DTI",
-                       "ORGANIZER-CONFIRMED", "0.155970", "0.158855", "0.135759", "0.1637924", "0.2778", "DW36", "0.066052"):
+                       "ORGANIZER-CONFIRMED", "0.2778", "0.1647 USER-REPORTED", "82.34%"):
             if phrase not in text:
                 errors.append(f"docs/{page}: missing {phrase}")
         first_screen = text[: max(1, len(text) // 4)]
         if "DO NOT SUBMIT" not in first_screen:
             errors.append(f"docs/{page}: negative verdict must lead the page")
-        if site_table(ledger) not in path.read_text():
-            errors.append(f"docs/{page}: pinned nine-site table differs from source")
-        _kpl_ok, _kpl_card = kpl_promote()
-        forbidden_phrases = ("New GEMSDOE36 Holdout Record", "Highest Recorded Holdout across 9 repos",
-                             "Estimated Score: HOLDOUT-DTI", "Projected live score")
-        if not _kpl_ok:
-            forbidden_phrases += ("OK TO SUBMIT",)
+        if focus_table is None or focus_table not in path.read_text():
+            errors.append(f"docs/{page}: pinned nine-site decision table differs from source")
+        forbidden_phrases = (
+            "OK TO SUBMIT", "Projected live score", "0.205–0.238",
+            "NaN-outside files are what triggered", "fixes prior portal error",
+            "recommended spend of one slot", "4× precision penalty", "portal-safe",
+        )
         for forbidden in forbidden_phrases:
             if forbidden.lower() in text.lower():
                 errors.append(f"docs/{page}: stale or unsafe claim: {forbidden}")
-        if _kpl_ok:
-            for phrase in ("OK TO SUBMIT", _kpl_card["submission"]["sha256"],
-                           Path(_kpl_card["submission"]["file"]).name, _kpl_card["submission"]["note"]):
-                if phrase not in text:
-                    errors.append(f"docs/{page}: missing KPL-36 current candidate identity: {phrase[:60]}")
         if re.search(r"(?:0\.\d{3,4}).{0,25}ORGANIZER-CONFIRMED", text, re.I):
             errors.append(f"docs/{page}: numeric score incorrectly called organizer-confirmed")
-        for fname, checksum in (
-            (csdl["submission"]["zeros_filename"], csdl["submission"]["raster_sha256"]),
-            (gvsc["submission"]["zeros_filename"], gvsc["submission"]["raster_sha256"]),
-            (Path(hvg["artifact"]["tif_path"]).name, hvg["artifact"]["tif_sha256"]),
-            (Path(mto["download"]["tif"]).name, mto["raster_sha256"]),
-        ):
-            if fname not in text or checksum not in text:
-                errors.append(f"docs/{page}: missing archived artifact identity {fname}")
 
     exec_text = " ".join(parse(DOCS / "executive-summary.html").text).lower()
-    for term in ("single-band geotiff (.tif)", ".zip file containing a single geotiff",
+    for term in ("single-band float32 geotiff (.tif)", ".zip file containing a single geotiff",
                  "crs, shape, and geotransform", "predicted values must be in range [0, 1]",
                  "three weekly slots", "one submission for both prize rounds", "nan"):
         if term not in exec_text:
@@ -212,12 +250,26 @@ def main() -> int:
     current_path = DOCS / "current-run.json"
     if current_path.is_file():
         current = json.loads(current_path.read_text())
+        if current.get("schema") != "gemsdoe36.current-run.v6":
+            errors.append("Active Pages must use the current negative v6 manifest")
         errors.extend(validate_current(current, stop, sha(STOP)))
         if current.get("parallel_experiments") != [parallel_dw_projection(dw)]:
             errors.append("Current manifest must preserve the separately run negative DW36 experiment")
+        for lane, evidence_path, public_name in (
+            ("latest_research_lane_s2d36", "evidence/s2d36_run_card_20261027.json", "s2d36-run-card.json"),
+            ("latest_research_lane_tcd36", "evidence/tcd36_run_card_20261027.json", "tcd36-run-card.json"),
+        ):
+            try:
+                expected = historical_lane(json.loads((ROOT / evidence_path).read_text()), public_name, ROOT)
+                if current.get(lane) != expected:
+                    errors.append(f"Historical research summary does not match its card: {lane}")
+            except (OSError, ValueError, KeyError) as exc:
+                errors.append(f"Historical research summary invalid: {lane}: {exc}")
     else:
         errors.append("Missing docs/current-run.json")
     for original, copy in (
+        (ROOT / "evidence/session_review_20261028_audit_run_card.json", DOCS / "downloads/session-review-20261028-audit-run-card.json"),
+        (ROOT / "evidence/focus9_decision_table_20261027.json", DOCS / "downloads/focus9-decision-table-20261027.json"),
         (STOP, DOCS / "downloads/registry-preflight-run-card.json"),
         (ROOT / "evidence/dw36_run_card_20261026.json", DOCS / "downloads/dw36-run-card.json"),
         (ROOT / "evidence/mto36_run_card_20261026.json", DOCS / "downloads/mto36-run-card.json"),
@@ -238,21 +290,11 @@ def main() -> int:
             errors.append(f"Pages JSON mirror differs from evidence: {copy}")
 
     manifest = json.loads((DOCS / "downloads/submissions_manifest.json").read_text())
-    _kpl_ok, _kpl_card = kpl_promote()
-    cand = manifest.get("current_candidate")
-    if _kpl_ok:
-        cand_ok = bool(
-            isinstance(cand, dict)
-            and cand.get("sha256") == _kpl_card["submission"]["sha256"]
-            and cand.get("submit_ok") is True
-            and manifest.get("slot_approved") is True
-        )
-    else:
-        cand_ok = cand is None and manifest.get("slot_approved") is False
-    if (not cand_ok
+    if (manifest.get("current_candidate") is not None or manifest.get("slot_approved") is not False
+            or manifest.get("research_candidate", {}).get("submit_ok") is not False
             or len(manifest.get("archived_research_only", [])) != 9
             or any(x.get("submit_ok") is not False for x in manifest["archived_research_only"])):
-        errors.append("Downloads manifest current/archive split inconsistent with KPL-36 gates")
+        errors.append("Downloads manifest must be negative with no current candidate")
 
     try:
         older = additional_archives()  # verifies all legacy TIFF/ZIP/NaN hashes and Lane36 conflict
@@ -311,7 +353,7 @@ def main() -> int:
     if errors:
         print("Site check FAILED:\n- " + "\n- ".join(errors))
         return 1
-    print("Site check passed: KPL-36 current manifest bound to its run card; preflight/archives preserved; pinned links and bundle integrity")
+    print("Site check passed: negative no-candidate run card, nine-site evidence, local links and research bundles verified")
     return 0
 
 

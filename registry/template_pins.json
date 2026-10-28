@@ -5,7 +5,8 @@
  "competing_template_irregularity": "GEMSDOE31 registry/shared_template.json pins a different template (57GEMSDOE@822a0ce5). Logged as IR-36-17.",
  "known_template_issues_reported_not_forked": [
   "gems.submission.make_note enforces a 200-character limit; the owner protocol requires <= 140. GEMSDOE36 does not call make_note and enforces <= 140 in scripts/build_h36_submission.py.",
-  "gems.submission.write_submission(outside='zero') writes nodata=None (intended: strict [0,1] whole-array variant)."
+  "gems.submission.write_submission(outside='zero') writes nodata=None (intended: strict [0,1] whole-array variant).",
+  "gems.novelty.compare_registry checks array shape but not reference CRS or geotransform; reported upstream https://github.com/buffedlizard55-lab/GEMSDOE24/issues/77. Shared fix and re-pin are outstanding."
  ],
  "files": [
   {

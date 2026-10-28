@@ -1,5 +1,7 @@
 # Focus-9 executive decision table — 27 October 2026
 
+> **28 October update:** This remains a historical snapshot, not a live ranking. The current [executive guide](../executive-summary.html) and [review](review-20261028.md) supersede its old data-availability and leaderboard notes. The lineage and nine-site comparisons have been reproduced from pinned owner mirrors; no organizer receipt was obtained.
+
 ## Decision at a glance: no file is cleared to submit
 
 **Do not submit any of the nine historical rasters or the current GEMSDOE36 research TIFFs.** The best reported historical result in this set is GEMSDOE32 B2 at **0.2778 OWNER-REPORTED** (no organizer receipt archived). Its raster is not unique under the protocol's own pairwise test, and no candidate has a defensible leaderboard-score estimate. The table distinguishes reported scores from estimates; **“not estimable” is not zero**.
@@ -22,7 +24,7 @@ The table below lists the highest historical file in the pinned Focus-9 audit fo
 
 ## Why GEMSDOE32's 0.2778 is plausible—and what it does not prove
 
-The pinned raster for GEMSDOE32 B2 is identified by the prior forensic analysis as a member of the same D2.8 dotted-ridge family, with 6,436 near-catalogue dots removed. If the competition scorer masks known catalogue faults pixel-exactly, predictions on those known faults earn no true-positive credit and consume a finite prediction budget. Pruning those predictions can therefore improve the precision-sensitive Tversky score without discovering any additional faults. The family score/count relationship and raster lineage are consistent with this explanation.
+The pinned raster for GEMSDOE32 B2 is exactly the D2.8 dotted-ridge family raster with 6,436 near-catalogue dots removed and none added; the 28 October audit reproduced this relationship. Pruning can change false-positive and false-negative tradeoffs by altering where prediction mass is allocated, but the hidden truth is unavailable. The public problem description does not establish the previously claimed exact organizer masking mechanism. Its distance-weighted Tversky metric weights false positives 0.2 and false negatives 0.8, so no specific improvement can be inferred from pruning alone.
 
 This is a **mechanistic interpretation**, not proof of what hidden labels caused the reported 0.2778: hidden truth and an organizer receipt are unavailable here. It also does not support a numerical forecast above 0.2778. Internal HOLDOUT-DTI values are a different measurement and are not interchangeable with the leaderboard score.
 

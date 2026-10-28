@@ -1,83 +1,40 @@
 # GEMSDOE36 — current decision & reproducible research
 
-> **28 October 2026 review: DO NOT SUBMIT.** No new lane was assigned or TIFF generated. A historical release check now fails closed if its pinned raster inputs are absent; current Pages no longer present withdrawn forecasts or selector overrides. See the [review](docs/research/session-review-20261028.md) and [negative run card](evidence/session_review_20261028_run_card.json).
-
 <!-- LITERAL_REVIEW:START -->
-> **27 October 2026 superseding decision: DO NOT SUBMIT.** KPL is a literal-protocol duplicate: 99.17% 3-px overlap with reg-052. The owner reports KPL **0.1647 USER-REPORTED**, not organizer-confirmed. The prior forecast is uncalibrated and withdrawn. No new TIFF, training experiment or submission slot was authorized. See the [nine-site executive decision table](docs/research/focus9-executive-summary-20261027.md), [executive review](docs/research/review-20261027.md), and the [27 Oct repository audit](docs/research/repo-review-20261027-session.md) ([session run card](evidence/repo_review_run_card_20261027.json)). The method paragraph assigning this session's lane is absent. Current data/raw is absent in this checkout. Historical cards and reported scores are preserved, not promoted.
+> **28 October 2026 — DO NOT SUBMIT.** No new candidate TIFF, submission name, note or competition slot was selected. The required single-method lane paragraph was not identifiable, and the literal all-registry novelty rule blocks the historical dot budget. Every available TIFF is **research only**. See the [decision and download page](docs/index.html), [nine-site executive guide](docs/executive-summary.html), [current run card](evidence/session_review_20261028_audit_run_card.json), and [full review, hypotheses and sources](docs/research/review-20261028.md).
 <!-- LITERAL_REVIEW:END -->
 
-> **Continuation review (27 October 2026):** no new experiment, TIFF, or slot was authorized. The request's assigned method paragraph is missing; previously advertised analytic-signal, drainage, seismicity, and contact ideas are already represented in this repository. The three external-data candidates are blocked pending official AOI/rights checks. See [continuation review](docs/research/session-review-20261027-continuation.md) and [its run card](evidence/session_review_20261027_continuation_run_card.json).
-<!-- S2D36_README:START -->
-> ## ARCHIVED RESEARCH ARTIFACT (2026-10-27) · `S2D-36` (`EXP-2`) · `HOLDOUT-DTI 0.200766` · DOWNLOAD FOR RESEARCH ONLY · DO NOT SUBMIT (`verdict: negative`)
->
-> - **Validated `[0, 1]` GeoTIFF:** [`gemsdoe36-s2d36-exp2-20261027-31189d084a83-zeros.tif`](docs/downloads/gemsdoe36-s2d36-exp2-20261027-31189d084a83-zeros.tif) ([Single-TIFF ZIP](docs/downloads/gemsdoe36-s2d36-exp2-20261027-31189d084a83-zeros.zip), [Run Card JSON](evidence/s2d36_run_card_20261027.json), [Monograph & PhD `0.2778` Proof](docs/research/s2d36-20261027.md), [Oct 25–27 Peer Audit](evidence/s2d36_oct27_peer_audit_20261027.json), [Locked Preregistration](evidence/s2d36_preregistration_20261027.json)).
-> - **SHA-256 (`-zeros.tif`):** `d3ba2fdb987bec34fc0c61148829032a431a95b8921b1bd66d61ddd047f56b72` · **Dots:** `37,654` · **Grid:** `EPSG:32611`, `3730×3292` at `100 m`, all `12,279,160` cells finite in `[0.0, 1.0]` (`0` NaN/Inf, `min(d_cat) = 2.236 px`).
-> - **Research artifact name:** `gemsdoe36-s2d36-exp2-20261027-31189d084a83` · **Copy-Paste Note (`91/140` chars):** `S2D-36 EXP-2 10m3DEP+2stage+deconf | HOLDOUT-DTI 0.2008 | NEGATIVE reg052 gate 31189d084a83`
-> - **Spatially-Blocked Holdout (`gems-segment-pooled-v1`, `60,988` withheld positives):** **`HOLDOUT-DTI = 0.200766`** (`95% CI [0.186488, 0.215333]`) — highest validated holdout in `GEMSDOE36`, beating parallel `TCD-36 EXP-2` (`0.194164`) by **`+0.006602`**, `SFD-36 EXP-2` (`0.178394`) by **`+0.022372`**, `KPL-36 EXP-3` (`0.170100`, `0.1647 USER-REPORTED`) by **`+0.030666`**, `C-KPL` (`0.169892`) by **`+0.030874`** across **all 4/4 spatial folds** (`NW 0.21254`, `NE_LidarGapHeavy 0.26718`, `SW 0.13744`, `SE 0.21604`), and `B0` (`0.132760`) by **`+0.068006`** (`EXP-1 = 0.184769`, `EXP-3 = 0.200593`).
-> - **Leaderboard estimate:** not defensibly estimable. The earlier `0.205–0.238` scenario was uncalibrated and is withdrawn; do not use it as a forecast or score.
-> - **Canary & Scoped-vs-Literal Uniqueness:** Single-feature canary max symmetric AUC `0.6684 <= 0.90` (**PASS**); pre-placement surface `|Spearman rho| = 0.5759 <= 0.90` (**PASS**); passes **13/13 Oct 25–27 modern external peers** (`max = 68.49% <= 70%`; `54.23%` vs `GEMSDOE70 0.2478`, `59.98%` vs `GEMSDOE76 0.2343`, `68.49%` vs `GEMSDOE27 H31 0.2250`), **18/18 prior `GEMSDOE36` files** (`<= 65.95%`; `57.53%` vs `SFD-36`), and **7/9 Focus-9 champions** (`65.49%` vs `GEMSDOE32 B2 0.2778`), while failing closed (`verdict: "negative"`, `slot_approved: false`) on parallel `TCD-36` (`70.93%`), `>= 60k`-dot wide blankets (`GEMSDOE27 d1.5 = 70.96%`, `reg-062 = 96.23%`), and `reg-052` `5x5` calibration lattice (`99.48%`).
-<!-- S2D36_README:END -->
-<!-- TCD36_README:START -->
-> ## ARCHIVED RESEARCH ARTIFACT (2026-10-27) · `TCD-36` (`EXP-2`) · DOWNLOAD FOR RESEARCH ONLY · DO NOT SUBMIT (`verdict: negative`)
->
-> - **Validated `[0, 1]` GeoTIFF:** [`gemsdoe36-tcd36-exp2-20261027-9970b80c6585-zeros.tif`](docs/downloads/gemsdoe36-tcd36-exp2-20261027-9970b80c6585-zeros.tif) ([Single-TIFF ZIP](docs/downloads/gemsdoe36-tcd36-exp2-20261027-9970b80c6585-zeros.zip), [Companion `-nan.tif`](docs/downloads/gemsdoe36-tcd36-exp2-20261027-9970b80c6585-nan.tif), [Run Card JSON](evidence/tcd36_run_card_20261027.json), [Monograph & PhD `0.2778` Synthesis](docs/research/tcd36-20261027.md), [Frozen Preregistration](docs/research/tcd36-preregistration-20261027.md)).
-> - **SHA-256 (`-zeros.tif`):** `513a7378a96452fa31e524a002f467457c58fabcb0da896fa75830d0973f4037` · **Dots:** `37,654` · **Grid:** `EPSG:32611`, `3730×3292` at `100 m`, all `12,279,160` cells finite in `[0.0, 1.0]` (`0` NaN/Inf, `0` dots within `200 m` of `labels.tif`).
-> - **Unique Name:** `gemsdoe36-tcd36-exp2-20261027-9970b80c6585` · **Copy-Paste Note (`94/140` chars):** `TCD-36 EXP-2 10m3DEP+Chi+Stage2 | HOLDOUT-DTI 0.1942 | DO NOT SUBMIT literal gate 9970b80c6585`
-> - **Spatially-Blocked Holdout (`gems-segment-pooled-v1`, `60,988` withheld positives):** **`HOLDOUT-DTI = 0.194164`** (95% CI `[0.180342, 0.208343]`), highest validated detector in repo — beating `SFD-36 EXP-2` (`0.178394`) by **`+0.015770`**, `KPL-36 EXP-3` (`0.170100`) by **`+0.024064`** across **all 4/4 spatial folds** (`NW 0.19700`, `NE_LidarGapHeavy 0.25694`, `SW 0.13911`, `SE 0.20817`), and `B0` (`0.134184`) by **`+0.059980`** (`EXP-1 = 0.185269`, `EXP-3 = 0.192469`). Internal hide-and-recover metric — not a live leaderboard forecast.
-> - **Crowding Collapse Fixed:** Cuts `KPL-36`'s `>=3`-neighbor 300 m blob crowding from **`42.57%`** (`0.1647 USER-REPORTED`) to **`4.54%`** (`9.4×` reduction) and expands blind 300 m kernel coverage by **`+23.3%`** (`0.05193` vs `0.04210`).
-> - **Leakage Canary & Multi-Regime Uniqueness:** Stage-1 canary max AUC `0.6470 <= 0.90` (**PASS**); Stage-2 OOF canary max AUC `0.8039 <= 0.90` (**PASS**); pre-placement continuous surface `|Spearman rho| = 0.4254 <= 0.90` (**PASS**); 9-focus-site competing `<100k`-dot 3-px overlap max `0.6682 <= 0.70` (vs `GEMSDOE32 B2` = `0.5699`, vs `KPL-36` = `0.5672`, vs `SFD-36` = `0.5142`, **PASS**); all-216 mutual 3-px overlap max `0.5672 <= 0.70` (**PASS**); literal unseparated `a > 0` overlap vs `reg-052` 5-px calibration lattice = `0.9935 > 0.70` (**FAIL — automatic slot promotion remains closed per `PR #31` and Protocol Rule 6**).
-<!-- TCD36_README:END -->
+An [earlier parallel review](docs/research/session-review-20261028.md) separately hardened the historical release gate; its missing-input observations describe that earlier checkout, before this session restored the data.
 
-> **Prior parallel lane SFD-36 (2026-10-27): HOLDOUT-DTI 0.178394 [0.1640, 0.1946] — superseded on holdout by `TCD-36` (`0.194164`, `+0.015770`, 3-px overlap `51.4% <= 70%`) — 99.39% literal 3-px overlap vs reg-052 blind lattice: DO NOT SUBMIT, research only.** See [SFD monograph + 9-site executive summary](docs/research/sfd36-20261027.md), [run card](evidence/sfd36_run_card_20261027.json), [literal amendment](evidence/sfd36_literal_amendment_20261027.json). File: `docs/downloads/gemsdoe36-sfd36-exp2-20261027-d65acb3011d5-zeros.tif`, SHA-256 `89db5e348baa6420d52583a2fe050f1a807bff8d8d74dfaf8b43f627b9ced52a`, validator PASS, scenario estimate withdrawn as uncalibrated.
+## Findings
 
-**Read this decision and the [standing owner brief](#full-standing-owner-brief-historical-wording) at the start of every session.** Core values: **Maximize P(Win)** and **Own the Outcome**.
+- The historical owner-mirror `reg-052` covers 5,160,724 of 5,167,373 footprint cells within 3 pixels. Any 37,654-dot candidate must overlap at least 31,005 dots (**82.34%**), over the literal 70% limit. Failure is forced from **22,164** dots upward. A bound is not a general impossibility proof for smaller candidates. Owner-mirror hashes do not authenticate organizer data.
+- A recheck of historical KPL measured **99.17%** reg-052 overlap, despite passing local grid/range checks. An earlier S2D research artifact reported **HOLDOUT-DTI 0.200766**, 95% CI **[0.186488, 0.215333]**, `gems-segment-pooled-v1`, 60,988 withheld positives, and failed literal novelty. That holdout was not rerun here; [download S2D for research only](docs/downloads/gemsdoe36-s2d36-exp2-20261027-31189d084a83-zeros.tif).
+- GEMSDOE32 B2's **0.2778 OWNER-REPORTED** has no organizer receipt. Pinned B2 is precisely the 44,090-dot D2.8 raster minus 6,436 catalogue-near dots. Raster lineage is verified, but why it scored as reported or whether a new model will beat it is unknown.
+- The official 300 m distance-weighted Tversky metric uses FP weight 0.2 and FN weight 0.8. The [public leaderboard](https://www.drivendata.org/competitions/306/competition-doe-gems/leaderboard/) showed 0.4544 on 28 October, not a receipt for any specific historical file.
+- A shared novelty-tool bug accepts a same-shaped raster with incorrect CRS/transform; [reported upstream](https://github.com/buffedlizard55-lab/GEMSDOE24/issues/77). The byte-pinned shared template was not privately changed, and its comparison alone cannot authorize a slot until repaired.
+- The cause of the reported portal `[0,1]` error is unknown. The official sample uses NaN outside the footprint; zeros-outside files pass a local whole-array range check but portal acceptance remains unverified.
 
-> ## ARCHIVED KPL-36 RESEARCH ARTIFACT · DOWNLOAD FOR RESEARCH ONLY · DO NOT SUBMIT · verdict: negative
->
-> **Research artifact (not submission authorization):** [`gemsdoe36-kpl36-exp3-20261026-fc869911e88c-zeros.tif`](docs/downloads/gemsdoe36-kpl36-exp3-20261026-fc869911e88c-zeros.tif) ([ZIP](docs/downloads/gemsdoe36-kpl36-exp3-20261026-fc869911e88c-zeros.zip), [run card](evidence/kpl36_run_card_20261026.json), [monograph + 9-site executive audit](docs/research/kpl36-20261026.md), [preregistration](docs/research/preregistration-kpl36-20261026.md)). Name `gemsdoe36-kpl36-exp3-20261026-fc869911e88c`; Note (79/140): `KPL-36 EXP-3 3-5km coherence+bridge | HOLDOUT-DTI 0.1701 | PROMOTE fc869911e88c`; SHA-256 `86fc8243ad573bcdbfac8b432daf0ec5b6800b991b2c3278706358be7eb9922d`; 37,654 dots; whole-array [0,1] zeros-outside (portal-safe).
-> - **HOLDOUT-DTI 0.170100** [0.1551, 0.1861] (`gems-segment-pooled-v1`, 60,988 withheld px); EXP-2 beat the in-run GVSC replication (0.160003) with paired Δ +0.0096 [0.0035, 0.0159], 4/4 folds. Internal validation, not a leaderboard score. (Point comparison only: above GVSC 0.158855 and the externally reviewed GEMSDOE24 0.1637924.)
-> - **Historical uncalibrated scenario 0.189–0.264 — withdrawn as a forecast** (assumptions in monograph §5; needs novel credit ≥0.148 to match the historical champion; no organizer receipt yet).
-> - **Uniqueness:** champion 3-px dot overlap max 0.616 (vs GEMSDOE32-B2 0.561); surface |ρ| 0.395 vs 97 focus-9 rasters; vs post-merge local candidates ≤0.058. Blind-lattice overlap is mathematically forced (~0.99 at any 37,654-dot budget; calibration control, disclosed in monograph).
-> - Archived, **DO NOT SUBMIT**: [CSDL-36 EXP-2](docs/downloads/gemsdoe36-csdl36-exp2-20261026-12962cc72ae1-zeros.tif) ([ZIP](docs/downloads/gemsdoe36-csdl36-exp2-20261026-12962cc72ae1-zeros.zip), [card](evidence/csdl36_run_card_20261026.json), [monograph](docs/research/csdl36-20261026.md); HOLDOUT-DTI 0.155970 [0.141880, 0.170267], EXP-1 0.155206, EXP-3 0.152541; fixes IR-GVSC36-01..04 and passes 9-site ≤70% overlap at 68.69%), 505-dot lattice-avoiding candidate (no computable holdout in its session), BDC-36, DW36 (0.066052), GVSC-36 (0.158855), HVG-36 (0.135759), MTO-36, H36-CTRB, ATVR-36, Lane36, registry-preflight stop — cards preserved in `evidence/`. Historical best remains GEMSDOE32-B2 **0.2778 OWNER-REPORTED** (already submitted; exact family subset). Verified live leaderboard #1 = **0.4437** (2026-10-26 read).
-
-## Nine-site executive summary — pinned historical snapshot
-
-The TIFF links and masks are rehashed; no historical score has an archived organizer receipt and pinned bytes do not prove which file was uploaded. All nine main refs changed since the snapshot ([freshness receipt](evidence/source_freshness_20261026.json)); the table is **not** a current complete raster inventory. All nine historical masks fail the literal pairwise rule against at least one other pinned site. GEMSDOE32 B2 is exactly D2.8 with 6,436 catalogue-near dots removed; why its **0.2778 OWNER-REPORTED** score resulted cannot be proven without hidden labels and a receipt. Nearby new truth can be penalized, because the [organizer's mask is pixel-exact](https://community.drivendata.org/t/scoring-clarification-are-known-usgs-ingenious-faults-masked-when-scoring-and-are-they-in-the-final-round-label-set/11516/4).
-
-<!-- FOCUS9_TABLE:START -->
-| Site | Pinned historical TIFF (SHA-12) | Reported score | Max 3-px overlap vs 8 |
-|---|---|---:|---:|
-| GEMSDOE24 | [gems24-h25-1-dotted-h19-5-d1-5-20261002-989f59505db1-nan.tif](https://github.com/buffedlizard55-lab/GEMSDOE24/blob/fc2bc6f350bf5c6ce8da5d7a2ab03578ea1259d1/docs/downloads/gems24-h25-1-dotted-h19-5-d1-5-20261002-989f59505db1-nan.tif) (`68d0e2e4fcc5`) | 0.2477 USER-REPORTED | 100.00% — NO |
-| GEMSDOE25 | [gems25-dotted-h19-5-d2-8-20261002-e56ea318af89-nan.tif](https://github.com/buffedlizard55-lab/GEMSDOE25/blob/e40b9b5e3871cb34d138f586bde97f5099658d01/docs/downloads/gems25-dotted-h19-5-d2-8-20261002-e56ea318af89-nan.tif) (`91eae1ca42ec`) | 0.2600 OWNER-REPORTED | 100.00% — NO |
-| GEMSDOE27 | [gems27-topo-gap-closure-t-v2-on-d1-5-20261002-5512495c6bd1-nan.tif](https://github.com/buffedlizard55-lab/GEMSDOE27/blob/927322eadbde56be42ae129ccdfb9b37540d8e60/docs/downloads/gems27-topo-gap-closure-t-v2-on-d1-5-20261002-5512495c6bd1-nan.tif) (`33003374335d`) | 0.2449 OWNER-REPORTED | 98.02% — NO |
-| GEMSDOE28 | [gems28-h36-1-rung30-blind-r1-20261003-b531dae0a36f-nan.tif](https://github.com/buffedlizard55-lab/GEMSDOE28/blob/e6321461066f89080e3b1bb670d3951ab20d3638/docs/downloads/gems28-h36-1-rung30-blind-r1-20261003-b531dae0a36f-nan.tif) (`5556aa1438fd`) | 0.2710 OWNER-REPORTED | 100.00% — NO |
-| GEMSDOE30 | [gemsdoe30-d28-poisson300m-offcat-44090-20261003T233156Z-91eae1ca.tif](https://github.com/buffedlizard55-lab/GEMSDOE30/blob/760af3005dd40b9f36d8fef97d6dc384fd9f2a2f/docs/downloads/gemsdoe30-d28-poisson300m-offcat-44090-20261003T233156Z-91eae1ca.tif) (`8cf893ead566`) | 0.2600 OWNER-REPORTED | 100.00% — NO |
-| GEMSDOE31 | [gemsdoe31-h27-4-solo-d28-20261004-8acb75e1-nan.tif](https://github.com/buffedlizard55-lab/GEMSDOE31/blob/597b04cd1afb65d1ebbe3e9417fd952be48e3d74/docs/downloads/gemsdoe31-h27-4-solo-d28-20261004-8acb75e1-nan.tif) (`07b6db440535`) | 0.2708 OWNER-REPORTED | 100.00% — NO |
-| GEMSDOE32 | [gemsdoe32-h33-h33-2-b2-20261004T220000Z-e5eb6e7e-zeros.tif](https://github.com/buffedlizard55-lab/GEMSDOE32/blob/5fc7792c5887735ecd3aa9a612787da588a7bf2c/docs/downloads/gemsdoe32-h33-h33-2-b2-20261004T220000Z-e5eb6e7e-zeros.tif) (`c55bafc47005`) | 0.2778 OWNER-REPORTED | 100.00% — NO |
-| GEMSDOE33 | [GEMSDOE33-h33d-analog-tip-stepover-r30-20261004-cb490425926e.tif](https://github.com/buffedlizard55-lab/GEMSDOE33/blob/f618cc54773bd9b4d6c2b3ebf78103a05cc10cb6/docs/downloads/GEMSDOE33-h33d-analog-tip-stepover-r30-20261004-cb490425926e.tif) (`87f857d505e2`) | 0.2632 OWNER-REPORTED | 99.71% — NO |
-| GEMSDOE36 | [gemsdoe36-anderson-geothermal-pinn-38854-20261004T230000Z-9b9ea4e6-zeros.tif](https://github.com/buffedlizard55-lab/GEMSDOE36/blob/c5a8ae7da3bd2fcff5aa5855afd44c7a3346c16f/docs/downloads/gemsdoe36-anderson-geothermal-pinn-38854-20261004T230000Z-9b9ea4e6-zeros.tif) (`e15891020b9c`) | 0.2750 OWNER-REPORTED | 97.58% — NO |
-<!-- FOCUS9_TABLE:END -->
-
-The public [leaderboard](https://www.drivendata.org/competitions/306/competition-doe-gems/leaderboard/) showed **0.4437** on a manual 2026-10-26 read, not a team receipt and not necessarily current. Never call a historical score `ORGANIZER-CONFIRMED` without its submission-page receipt. No calibrated leaderboard estimate is available for a nonexistent candidate.
-
-## Reproduce and review
+## Reproduce
 
 ```bash
-python scripts/restore_data.py --group core
-python scripts/restore_data.py --group scored
-python scripts/registry_feasibility.py --dots 37654  # exit 2: guaranteed duplicate; 0: NOT proven; 1: error
-python scripts/build_site.py
-python scripts/check_site.py
-python scripts/verify_csdl36_release.py
-python scripts/verify_gvsc36_release.py
-python scripts/verify_mto_release.py
-pytest -q
-ruff check src scripts tests
+python -m venv .venv
+.venv/bin/pip install -e '.[dev]'
+.venv/bin/python scripts/restore_data.py --group all       # SHA-pinned owner mirrors
+.venv/bin/python scripts/prepare_data.py                  # validates input grids before caching
+.venv/bin/python scripts/registry_feasibility.py         # exit 2 = bound forces a stop
+.venv/bin/python scripts/cache_focus9_audit.py             # ignored comparison-only TIFFs
+.venv/bin/python scripts/audit_focus_sources.py
+.venv/bin/python scripts/audit_focus_uniqueness.py
+.venv/bin/python scripts/build_site.py
+.venv/bin/python scripts/check_site.py
+.venv/bin/python -m pytest -q
+.venv/bin/ruff check src scripts tests
 ```
 
-For the pinned nine-site forensic rerun, run `python scripts/cache_focus9_audit.py` to fetch the ten SHA-verified comparison TIFFs at their pinned commits, then run `python scripts/audit_focus_sources.py` and `python scripts/audit_focus_uniqueness.py`. Owner-mirror hash verification is not organizer authentication. Prior all-finite TIFFs pass a local whole-grid range check but do not use the official outside-NaN profile; GVSC and HVG cards explicitly flag the conflict. Portal acceptance is unknown. The [site](docs/index.html) and [executive guide](docs/executive-summary.html) have the current negative decision. No automated leaderboard monitor is shipped.
+No candidate is approved by any of these commands. When a method is assigned and the shared issue fixed, follow the canary, buffered whole-segment holdout, literal surface-and-dot novelty gates and **separate selector** protocol in the preserved brief below. See [three review passes and limitations](evidence/review_passes_20261028.md).
 
-**Next:** reconcile the budget/rule conflict without relaxing the user's protocol; refresh the registry, then perform a preregistered one-lane, leakage-canary and buffered whole-segment holdout with every surface/final-dot comparison, a real raster validator and a separate slot selector. Do not spend a slot to test a known duplicate.
+Core Values: **Maximize P(Win)** and **Own the Outcome**.
 
 ---
 
