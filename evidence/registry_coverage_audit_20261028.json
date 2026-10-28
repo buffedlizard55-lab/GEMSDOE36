@@ -1,0 +1,128 @@
+{
+  "schema_version": "gemsdoe36.registry-coverage-audit.v1",
+  "template": "data/raw/sample_submission.tif",
+  "template_sha256": "2176d08e485aa2cd2860ce8df539db4faf4d76163b38a4dd8c30a40454d35cbc",
+  "crs": "EPSG:32611",
+  "shape": [
+    3730,
+    3292
+  ],
+  "footprint_cells": 5167373,
+  "radius_px": 3,
+  "threshold": 0.7,
+  "provenance": "SHA-pinned owner mirrors via scripts/restore_data.py; not organizer-authenticated",
+  "rasters": [
+    {
+      "file": "13gems_20261001_r13-lattice-s5_v2_nan-outside.tif",
+      "sha256": "b4570b406efec198eb2f4d142ad8d0d6184b14b66f2f52b5c4d697f0647dc9b2",
+      "dot_pixels": 206895,
+      "footprint_cells_within_3px": 5160724,
+      "coverage_share": 0.998713,
+      "first_dot_count_forced_over_70pct": 22164,
+      "gate_degenerate": true
+    },
+    {
+      "file": "8GEMSDOE_Hedge-v2_submission.tif",
+      "sha256": "052688eafbc7a55d90caab72252a50304fe5caa8ecf973f8e791b4ae910f0792",
+      "dot_pixels": 227507,
+      "footprint_cells_within_3px": 1465283,
+      "coverage_share": 0.283564,
+      "first_dot_count_forced_over_70pct": 12340300,
+      "gate_degenerate": false
+    },
+    {
+      "file": "gems10-h25-ctx-ridge-20260927T232947704150Z-6452ae1d00.tif",
+      "sha256": "1381e784fb8b8340beffd0e735ac9eea89ad35d1a807f8a9bab5506e3fc8275e",
+      "dot_pixels": 174232,
+      "footprint_cells_within_3px": 1359590,
+      "coverage_share": 0.26311,
+      "first_dot_count_forced_over_70pct": 12692610,
+      "gate_degenerate": false
+    },
+    {
+      "file": "gems10-h28-dotted-ridge-20260928T020256236880Z-6452ae1d00.tif",
+      "sha256": "7637b72d4c6c3e10226bf46bd72a20272d62ccbe29743062632d10b158b49c58",
+      "dot_pixels": 69281,
+      "footprint_cells_within_3px": 1405708,
+      "coverage_share": 0.272035,
+      "first_dot_count_forced_over_70pct": 12538884,
+      "gate_degenerate": false
+    },
+    {
+      "file": "gems16-h16-1-topo-geophys-baseline-ridges-20260930-df20f65e-nan.tif",
+      "sha256": "055309694ed499ca3d87e76b3f5e81c292aef6e39c418d33ff5a817aa1309bea",
+      "dot_pixels": 123939,
+      "footprint_cells_within_3px": 1078154,
+      "coverage_share": 0.208646,
+      "first_dot_count_forced_over_70pct": 13630730,
+      "gate_degenerate": false
+    },
+    {
+      "file": "gems19-h19-4-multiline-corroborated-openness-thermal-pop-20260930-691e4dfa-nan.tif",
+      "sha256": "89109a3bd2cd3b12e7a0f388113c519843acfc9c4f46825affefc3e63dd99b22",
+      "dot_pixels": 123779,
+      "footprint_cells_within_3px": 1052028,
+      "coverage_share": 0.20359,
+      "first_dot_count_forced_over_70pct": 13717817,
+      "gate_degenerate": false
+    },
+    {
+      "file": "gems19-h19-5-powerlaw-budget-multiline-corroborated-20260930-e27054cf-nan.tif",
+      "sha256": "ec1f9b56b83ce33cad781ceb9f104b18fb4f2ff785263a4e89616af4aabdee8d",
+      "dot_pixels": 121131,
+      "footprint_cells_within_3px": 1013295,
+      "coverage_share": 0.196095,
+      "first_dot_count_forced_over_70pct": 13846927,
+      "gate_degenerate": false
+    },
+    {
+      "file": "gems24-h25-1-dotted-h19-5-d1-5-20261002-989f59505db1-nan.tif",
+      "sha256": "68d0e2e4fcc594f9a23f56c44b885fee733d026d39be55e18ad2a07289525310",
+      "dot_pixels": 60069,
+      "footprint_cells_within_3px": 934224,
+      "coverage_share": 0.180793,
+      "first_dot_count_forced_over_70pct": 14110497,
+      "gate_degenerate": false
+    },
+    {
+      "file": "gems24-h25-1-dotted-h19-5-d2-8-20261002-e56ea318af89-nan.tif",
+      "sha256": "91eae1ca42ec845eaa8c2ba32da49806e24751743459b8a10017c479bbe639b8",
+      "dot_pixels": 44090,
+      "footprint_cells_within_3px": 888328,
+      "coverage_share": 0.171911,
+      "first_dot_count_forced_over_70pct": 14263484,
+      "gate_degenerate": false
+    },
+    {
+      "file": "gems27-topo-gap-closure-t-v2-on-d1-5-20261002-5512495c6bd1-nan.tif",
+      "sha256": "33003374335d84bf885f2d8f5e9dd4c57044c8ec58fa6a0d7fa581e8bc41c11d",
+      "dot_pixels": 61328,
+      "footprint_cells_within_3px": 957077,
+      "coverage_share": 0.185215,
+      "first_dot_count_forced_over_70pct": 14034320,
+      "gate_degenerate": false
+    },
+    {
+      "file": "gemsdoe-ens12-adopted-7f00890a.tif",
+      "sha256": "7f00890a62878d612fb5eef67a9a364a2df819433dde74b6762ce4fc0fc4fe15",
+      "dot_pixels": 172974,
+      "footprint_cells_within_3px": 1255264,
+      "coverage_share": 0.242921,
+      "first_dot_count_forced_over_70pct": 13040364,
+      "gate_degenerate": false
+    },
+    {
+      "file": "gemsdoe9-PLACEHOLDER-2314b599.tif",
+      "sha256": "2314b59920bfeeaf6a592d4868b25eca62212825620f9945723c2f6d0a2e5b22",
+      "dot_pixels": 343816,
+      "footprint_cells_within_3px": 324976,
+      "coverage_share": 0.06289,
+      "first_dot_count_forced_over_70pct": 16141324,
+      "gate_degenerate": false
+    }
+  ],
+  "degenerate_references": [
+    "13gems_20261001_r13-lattice-s5_v2_nan-outside.tif"
+  ],
+  "interpretation": "A reference whose 3-px coverage is near 1.0 makes the literal 70% gate fail for almost any candidate placed inside the footprint, so the gate cannot tell a duplicate from a non-duplicate against that reference. This is a finding for owner review, not a verdict on any candidate."
+}

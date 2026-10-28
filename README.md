@@ -4,6 +4,12 @@
 > **28 October 2026 — DO NOT SUBMIT.** No new candidate TIFF, submission name, note or competition slot was selected. The required single-method lane paragraph was not identifiable, and the literal all-registry novelty rule blocks the historical dot budget. Every available TIFF is **research only**. See the [decision and download page](docs/index.html), [nine-site executive guide](docs/executive-summary.html), [current run card](evidence/session_review_20261028_audit_run_card.json), and [full review, hypotheses and sources](docs/research/review-20261028.md).
 <!-- LITERAL_REVIEW:END -->
 
+### Session 2026-10-28 verification (gate audit)
+- Restored all 30 SHA-pinned files (`scripts/restore_data.py --group all`); `pytest` 191 passed / 1 skipped (torch absent); `ruff` and `check_site.py` pass.
+- **Finding:** `13gems_20261001_r13-lattice-s5_v2_nan-outside.tif` (`reg-052`) is a regular 5-px lattice with 206,895 dots (exactly footprint ÷ 25). **99.87%** of footprint cells lie within 3 px of it, so the literal "more than 70% within 3 px" test fails for almost any candidate placed in the footprint. Every other registry raster covers 6–28% and the gate is meaningful for them. Reproduce: `scripts/audit_registry_coverage.py` → `evidence/registry_coverage_audit_20261028.json`.
+- **Consequence:** no candidate can clear the literal gate against this one lattice. This is a gate-design defect, not evidence that any candidate is a duplicate. **No candidate is authorized for submission.** Changing the gate needs owner approval (see the open decision in the latest session report).
+- Leaderboard reads (0.4413, 0.4437, 0.4544, 0.3195) remain unreconciled: `drivendata.org` and `*.github.io` are unreachable from this sandbox.
+
 An [earlier parallel review](docs/research/session-review-20261028.md) separately hardened the historical release gate; its missing-input observations describe that earlier checkout, before this session restored the data.
 
 ## Findings
