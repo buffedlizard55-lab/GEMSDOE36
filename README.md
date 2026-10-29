@@ -1,5 +1,7 @@
 # GEMSDOE36 — current decision & reproducible research
 
+> **Fresh checkout audit · 29 Oct 2026:** `data/raw/` is absent in this checkout; the manifests/restore receipt do not substitute for the competition template and labels. Local verification: 190 passed, 8 skipped (missing raw/integration inputs and optional Torch), Ruff passed, and the site consistency check passed. No experiment or new candidate TIFF was produced. See [today's repo review](evidence/repo_review_20261029.md).
+>
 > **Start here (every session):** read the [28 October owner brief](knowledge/owner_brief_20261028.md) and the [session-B review](docs/research/review-20261028-session-b.md). The full standing brief is preserved below.
 >
 > **Status, 28 Oct 2026 (session B): NO SUBMISSION TIFF — verdict negative.** Two blockers need your decision: (1) the parallel-protocol "single method paragraph" is absent from the brief; (2) the literal 70%-within-3-px registry gate is guaranteed to fail for any candidate above 22,163 dots (reg-052 covers 99.87% of the footprint). Verified today: the 0.2778 GEMSDOE32 B2 file is a strict subset of the 44,090-dot D2.8 raster with 6,436 catalogue-adjacent dots removed; GEMSDOE30 is content-identical to GEMSDOE25. The validator's filename bypass is fixed. Run card: [`evidence/session_review_20261028b_run_card.json`](evidence/session_review_20261028b_run_card.json).
