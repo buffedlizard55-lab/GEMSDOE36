@@ -12,7 +12,7 @@ This is the operative summary of the owner's 28 October prompt. Key rules are qu
 1. Read this file and the latest review: [`docs/research/review-20261028-session-b.md`](../docs/research/review-20261028-session-b.md).
 2. Check the blockers in §Status before any experiment.
 3. Restore data by SHA-pinned mirror and check pins: `scripts/restore_data.py --group core|scored|external`, then `scripts/prepare_data.py`.
-4. Work on `arena/9c1525b7-gemsdoe36` only.
+4. Work only on the active Arena session branch; for this checkout it is `arena/7be5e97f-gemsdoe36`. Do not switch branches.
 5. Label every number as **HOLDOUT-DTI** (evaluator version, withheld positives, 95% CI), **ORGANIZER-CONFIRMED** (from a submission-page receipt), or **OWNER/USER-REPORTED**. A projection is never written as a score.
 
 ## Operative requirements and current status

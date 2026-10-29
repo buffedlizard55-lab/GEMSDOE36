@@ -15,6 +15,11 @@ from gemsdoe36.paths import data_dir
 from gemsdoe36.submission import sha256_file, validate_submission
 
 
+def validate_archive_raster(path: Path, template: Path) -> dict:
+    """Use strict outside-footprint handling regardless of historical filename."""
+    return validate_submission(path, template, require_nonfinite_outside=True).to_dict()
+
+
 def archive_review_row(path: Path, digest: str, report: dict, atvr_card: dict) -> dict:
     """A historical format audit never grants a slot, even for a forged card."""
     is_atvr36 = path.name == "gemsdoe36-atvr36-20261026.tif"
@@ -47,10 +52,8 @@ def main() -> int:
 
     rows = []
     for path in sorted((ROOT / "docs/downloads").glob("*.tif")):
-        zeros_mode = path.name.endswith("-zeros.tif") or ("atvr36" in path.name)
-        report = validate_submission(
-            path, template, require_nonfinite_outside=not zeros_mode
-        ).to_dict()
+        # Historical suffixes are metadata, not format authorization.
+        report = validate_archive_raster(path, template)
         report["path"] = str(path.relative_to(ROOT))
         rows.append(archive_review_row(path, sha256_file(path), report, atvr_card))
 
