@@ -1,4 +1,6 @@
-# Owner brief — 28 October 2026 (read at the start of every session)
+# Owner brief — 28 October 2026 (historical; superseded for current status)
+
+> Use [`owner_brief_20261029.md`](owner_brief_20261029.md) and [`review-20261029.md`](../docs/research/review-20261029.md) for current status. The original user protocol and constraints remain preserved in this historical record and in the README.
 
 This is the operative summary of the owner's 28 October prompt. Key rules are quoted **verbatim**. The full 25 October wording stays byte-preserved in the [README](../README.md) under "Full standing owner brief". Where the two differ, this file governs. Historical scores in the brief are **owner- or user-reported** unless marked otherwise.
 
@@ -12,7 +14,7 @@ This is the operative summary of the owner's 28 October prompt. Key rules are qu
 1. Read this file and the latest review: [`docs/research/review-20261028-session-b.md`](../docs/research/review-20261028-session-b.md).
 2. Check the blockers in §Status before any experiment.
 3. Restore data by SHA-pinned mirror and check pins: `scripts/restore_data.py --group core|scored|external`, then `scripts/prepare_data.py`.
-4. Work on `arena/9c1525b7-gemsdoe36` only.
+4. Work only on the active Arena-session branch. The branch name recorded in this dated brief is historical, not authoritative.
 5. Label every number as **HOLDOUT-DTI** (evaluator version, withheld positives, 95% CI), **ORGANIZER-CONFIRMED** (from a submission-page receipt), or **OWNER/USER-REPORTED**. A projection is never written as a score.
 
 ## Operative requirements and current status

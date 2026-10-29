@@ -92,7 +92,7 @@ def validate_current(current: dict, stop: dict, stop_sha: str) -> list[str]:
     retained for archived manifests, but cannot grant a current v6 slot.
     """
     if current.get("schema") == "gemsdoe36.current-run.v6":
-        card_path = ROOT / "evidence/session_review_20261028_audit_run_card.json"
+        card_path = ROOT / "evidence/session_review_20261029_run_card.json"
         try:
             card = json.loads(card_path.read_text())
         except (OSError, ValueError):
@@ -106,7 +106,7 @@ def validate_current(current: dict, stop: dict, stop_sha: str) -> list[str]:
                 or current.get("ok_to_download_and_submit") is not False
                 or current.get("research_downloads_only") is not True
                 or any(k not in current or current[k] is not None for k in null_fields)
-                or current.get("run_card") != "downloads/session-review-20261028-audit-run-card.json"
+                or current.get("run_card") != "downloads/session-review-20261029-run-card.json"
                 or current.get("run_card_sha256") != sha(card_path)
                 or current.get("review_date_utc") != card.get("review_date_utc")):
             errors.append("v6 current manifest must describe the hash-bound negative no-candidate review")
@@ -268,7 +268,9 @@ def main() -> int:
     else:
         errors.append("Missing docs/current-run.json")
     for original, copy in (
-        (ROOT / "evidence/session_review_20261028_audit_run_card.json", DOCS / "downloads/session-review-20261028-audit-run-card.json"),
+        (ROOT / "evidence/session_review_20261029_run_card.json", DOCS / "downloads/session-review-20261029-run-card.json"),
+        (ROOT / "evidence/focus9_content_checks_20261028.json", DOCS / "downloads/focus9_content_checks_20261028.json"),
+        (ROOT / "evidence/downloads_validation_latest.json", DOCS / "downloads/strict-download-validation-20261029.json"),
         (ROOT / "evidence/focus9_decision_table_20261027.json", DOCS / "downloads/focus9-decision-table-20261027.json"),
         (STOP, DOCS / "downloads/registry-preflight-run-card.json"),
         (ROOT / "evidence/dw36_run_card_20261026.json", DOCS / "downloads/dw36-run-card.json"),

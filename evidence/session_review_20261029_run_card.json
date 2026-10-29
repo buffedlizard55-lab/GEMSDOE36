@@ -1,0 +1,239 @@
+{
+  "schema": "gemsdoe36.parallel_run_card.v2",
+  "review_date_utc": "2026-10-29",
+  "lane_id": null,
+  "hypothesis": "No hypothesis was tested: the required single-method lane paragraph is not specified in the supplied prompt. The highest-priority untested research lead is a persistent groundwater-head barrier, conditional on adequate independent well time-series coverage.",
+  "mechanism": "No new mechanism was implemented or measured. For the historical GEMSDOE32 B2 raster, pinned-byte analysis verifies that 6,436 dots near the known-fault catalogue were removed from a 44,090-dot D2.8 family raster and no dots were added. Pruning could reduce false-positive mass, but hidden truth and a submission receipt are unavailable, so this is not a causal explanation of the reported score.",
+  "named_non_fault_mimic": "For the leading proposed groundwater-head hypothesis: pumping cones, well-screen depth differences, recharge boundaries, lithologic boundaries, and temporally unbalanced measurements can mimic a fault-related hydraulic-head break.",
+  "experiments_run_this_session": 0,
+  "experiment_budget": {
+    "maximum_experiments": 3,
+    "maximum_wall_seconds": 7200,
+    "experiments_used": 0,
+    "elapsed_wall_seconds": null,
+    "elapsed_time_note": "No experiment was run; session wall-clock accounting was not captured precisely."
+  },
+  "candidate_hypotheses": [
+    {
+      "rank": 1,
+      "name": "Persistent observed groundwater-head barrier",
+      "layers_or_inputs": [
+        "USGS Water Data groundwater-level observations, timestamps, well coordinates, and screen metadata",
+        "cached 12_det_elev DEM and selected geophysical context for terrain and basin controls"
+      ],
+      "physical_signature": "A cross-strike hydraulic-head gradient break that persists across seasons and is supported by multiple independent wells, rather than a one-date anomaly.",
+      "off_catalogue_rationale": "A concealed fault core can compartmentalize groundwater without producing a mapped surface scarp; independent hydraulic measurements could reveal that barrier away from catalogue traces.",
+      "difference_from_repository": "GVSC-36 contains a DEM-derived hydraulic-head proxy, not an observed multi-well, multi-date groundwater-head surface. This proposal requires measured well time series and is not an implementation of that proxy.",
+      "named_mimics": [
+        "pumping cones",
+        "well-screen differences",
+        "recharge boundaries",
+        "lithologic boundaries",
+        "measurement-date bias"
+      ],
+      "official_source": "https://api.waterdata.usgs.gov/",
+      "availability_check": "NOT VERIFIED IN THIS SESSION: USGS hosts are outside the sandbox outbound allowlist. A prior repository review records one exploratory well location and no time-series metadata for that well; that does not establish usable footprint coverage.",
+      "qualitative_expected_holdout_increment": "Highest of this screen only if repeated, independent well coverage exists; otherwise likely negligible. No numeric DTI projection is defensible.",
+      "implementation_cost": "High",
+      "status": "BLOCKED; not viable until source coverage, time-series density, datum, screen depth, and sharing terms are checked."
+    },
+    {
+      "rank": 2,
+      "name": "Seasonal Landsat thermal phase and persistence",
+      "layers_or_inputs": [
+        "USGS Landsat Collection 2 Level-2 surface temperature (ST_B10) and reflectance bands across repeated seasons",
+        "cached 10 m-derived DEM terrain controls and surface reflectance/land-cover covariates"
+      ],
+      "physical_signature": "A narrow thermal anomaly with repeatable seasonal persistence or phase behavior after cloud, terrain, albedo, vegetation, and soil-moisture controls.",
+      "off_catalogue_rationale": "Persistent shallow upflow can alter surface thermal behavior along a concealed permeable structure that is absent from a fault-line catalogue.",
+      "difference_from_repository": "Existing geothermal information is largely point-probe/geothermometer data; no audited multi-date satellite thermal phase-lag surface is implemented in the repository.",
+      "named_mimics": [
+        "albedo",
+        "vegetation",
+        "soil moisture",
+        "irrigation",
+        "topographic illumination",
+        "cloud or atmospheric artifacts",
+        "lithology"
+      ],
+      "official_source": "https://www.usgs.gov/landsat-missions/landsat-collection-2-level-2-science-products",
+      "availability_check": "NOT VERIFIED IN THIS SESSION: USGS hosts are outside the sandbox outbound allowlist. Suitable scene dates, cloud-free footprint coverage, processing terms, and 100 m signal-to-noise have not been checked.",
+      "qualitative_expected_holdout_increment": "Potentially useful for geothermal upflow but lower confidence than rank 1 until scene coverage and confounders are quantified. No numeric DTI projection is defensible.",
+      "implementation_cost": "High",
+      "status": "BLOCKED; source access and scene-level availability not established."
+    },
+    {
+      "rank": 3,
+      "name": "Multi-contact displacement consensus",
+      "layers_or_inputs": [
+        "Independent USGS National Geologic Map Database or Nevada Bureau of Mines and Geology contact/unit geometry at suitable map scale",
+        "cached 12_det_elev, 02_rtp, and gravity-gradient context for registration and corroboration"
+      ],
+      "physical_signature": "Two or more independent mapped unit contacts show a consistent, geometrically coherent offset or truncation across the same narrow corridor.",
+      "off_catalogue_rationale": "Consistent displacement of independent contacts may reveal a concealed fault where no catalogue trace is mapped, unlike a simple contact-strength detector.",
+      "difference_from_repository": "MTO explored contact orientation/crosscut concepts; this proposed statistic requires matched displacement geometry across multiple independent contacts, not merely contact alignment or lineament intersection.",
+      "named_mimics": [
+        "depositional pinch-outs",
+        "erosional unconformities",
+        "map generalization",
+        "geologic-unit boundaries unrelated to faulting",
+        "registration error"
+      ],
+      "official_source": "https://ngmdb.usgs.gov/ngmdb/ngmdb_home.html",
+      "availability_check": "NOT VERIFIED IN THIS SESSION: USGS hosts are outside the sandbox outbound allowlist. No appropriately scaled, footprint-covering, shareable map has been confirmed, and any map encoding the withheld fault catalogue would be a leakage risk.",
+      "qualitative_expected_holdout_increment": "Lower prior than ranks 1-2 because map scale and catalog leakage are serious constraints; no numeric DTI projection is defensible.",
+      "implementation_cost": "Medium-high",
+      "status": "BLOCKED; map coverage, rights, registration accuracy, and catalogue independence are unverified."
+    }
+  ],
+  "data_readiness": {
+    "owner_mirror_files_sha256_verified": 30,
+    "owner_mirror_bytes_verified": 591020452,
+    "prepared_feature_bands": 19,
+    "prepared_footprint_pixels": 5167373,
+    "prepared_catalogue_positive_pixels": 60988,
+    "training_features_sha256": "4371c82e3b8339b807bdffcf4ef59a225520fe2988d521be208ae33743123bc5",
+    "labels_sha256": "7ba308ccdc4418b31a178f4f1ef21aaa6e152e4028f2f6f64b01f7eb25ae4093",
+    "sample_submission_sha256": "2176d08e485aa2cd2860ce8df539db4faf4d76163b38a4dd8c30a40454d35cbc",
+    "prepared_manifest": "data/prepared_manifest.json",
+    "restore_receipt": "data/restore_receipt.json",
+    "preparation_command": ".venv/bin/python scripts/prepare_data.py",
+    "owner_mirror_note": "All inputs were restored from SHA-pinned GitHub owner mirrors. Hash/grid validation establishes mirror integrity, not organizer authentication. No DrivenData login or organizer receipt is available."
+  },
+  "holdout": {
+    "label": "HOLDOUT-DTI",
+    "status": "NOT RUN for a new candidate",
+    "evaluator_version": null,
+    "withheld_positive_pixels": null,
+    "dti": null,
+    "ci95": null,
+    "reason": "No assigned single-method lane; the proposed top hypothesis also requires observed groundwater data that were not obtainable from this sandbox.",
+    "historical_reference_not_rerun": {
+      "arm": "S2D-36 EXP-2",
+      "label": "HOLDOUT-DTI",
+      "evaluator_version": "gems-segment-pooled-v1",
+      "withheld_positive_pixels": 60988,
+      "dti": 0.2007657135656901,
+      "ci95": [
+        0.18648773519590356,
+        0.21533340056778932
+      ],
+      "evidence": "evidence/s2d36_run_card_20261027.json",
+      "note": "Historical internal result; not a leaderboard estimate and not rerun in this session."
+    }
+  },
+  "leakage_canary": {
+    "status": "NOT RUN",
+    "feature_auc": null,
+    "reason": "No candidate feature was built or tested. AUC >0.90 remains the protocol leakage stop."
+  },
+  "registry": {
+    "new_surface_rank_correlation": null,
+    "new_candidate_final_dot_overlap": null,
+    "new_candidate_status": "No new surface or dot set exists; surface and final-dot gates were not run.",
+    "focus9_pinned_snapshot": {
+      "pinned_sites": 9,
+      "directed_pairwise_comparisons": 72,
+      "sites_unique_vs_all_other_eight": 0,
+      "source": "evidence/focus_sites_pairwise_uniqueness_20261026.json; pinned raster bytes fetched and hash-prefix checked on 2026-10-29",
+      "scope_note": "Historical pinned snapshot only; not a live refresh of each repository or the full 198-entry registry."
+    },
+    "content_duplicates": [
+      {
+        "site_a": "GEMSDOE25",
+        "file_a": "gems25-dotted-h19-5-d2-8-20261002-e56ea318af89-nan.tif",
+        "site_b": "GEMSDOE30",
+        "file_b": "gemsdoe30-d28-poisson300m-offcat-44090-20261003T233156Z-91eae1ca.tif",
+        "comparison": "Identical positive-pixel sets and identical in-footprint values; different outside-footprint encoding."
+      },
+      {
+        "site_a": "GEMSDOE28",
+        "file_a": "gems28-h27-4-r1-solo-d2-8-20261003-8acb75e1f2cc-nan.tif",
+        "site_b": "GEMSDOE31",
+        "file_b": "gemsdoe31-h27-4-solo-d28-20261004-8acb75e1-nan.tif",
+        "comparison": "Identical positive-pixel sets and identical in-footprint values. This is a GEMSDOE28 alternate, not the site's 0.2710 historical-best h36-1 file."
+      }
+    ],
+    "gemsdoe32_b2_lineage": {
+      "source_file": "gemsdoe32-h33-h33-2-b2-20261004T220000Z-e5eb6e7e-zeros.tif",
+      "family_reference": "GEMSDOE25 44,090-dot D2.8",
+      "b2_dots": 37654,
+      "removed_near_catalogue_dots": 6436,
+      "added_dots": 0,
+      "verified_with_hash_pinned_bytes": true,
+      "score_provenance": "0.2778 OWNER-REPORTED; no organizer submission-page receipt archived",
+      "causal_interpretation": "Removing catalogue-adjacent, potentially poorly credited predictions may reduce false-positive mass; hidden truth and submission evidence are unavailable, so the mechanism is plausible but unproven."
+    },
+    "provenance": "SHA-pinned owner-mirror and GitHub-commit rasters; not organizer-authenticated.",
+    "reproduced_literal_preflight": {
+      "reference_id": "reg-052",
+      "reference_sha256": "b4570b406efec198eb2f4d142ad8d0d6184b14b66f2f52b5c4d697f0647dc9b2",
+      "candidate_distinct_dots": 37654,
+      "footprint_pixels": 5167373,
+      "covered_pixels_within_3px": 5160724,
+      "uncovered_pixels": 6649,
+      "minimum_overlapping_dots": 31005,
+      "minimum_overlap_fraction": 0.8234184947150369,
+      "first_dot_count_forced_over_70_percent": 22164,
+      "provenance": "SHA-pinned owner mirrors; not organizer-authenticated"
+    },
+    "historical_kpl_rechecked_dot_overlap": 0.9916874701226961
+  },
+  "historical_leaderboard_reports_not_verified_this_session": [
+    {
+      "reported_score": 0.3195,
+      "provenance": "USER-REPORTED in this prompt; not fetched from DrivenData this session."
+    },
+    {
+      "reported_score": 0.4544,
+      "provenance": "OWNER-REPORTED prior public-page observation recorded in the repository on 2026-10-28; not freshly fetched and not a submission-page receipt for any listed file."
+    }
+  ],
+  "score_estimate": {
+    "value": null,
+    "label": "Not estimable",
+    "reason": "No candidate has a comparable, preregistered holdout improvement and no holdout-to-leaderboard calibration is available."
+  },
+  "raster_sha256": null,
+  "validator_output": {
+    "new_raster_generated": false,
+    "no_nan_inside_footprint": null,
+    "values_in_0_1": null,
+    "crs_shape_transform_match": null,
+    "status": "NOT RUN for a new candidate; no candidate raster exists. Historical files are research-only and cannot substitute for candidate validation."
+  },
+  "submission_name": null,
+  "submission_note": null,
+  "submission_note_char_count": null,
+  "slot_approved": false,
+  "slot_selected": false,
+  "organizer_submission_receipt": null,
+  "external_source_access_limit": "Only GitHub, GitHub API/codeload, npm registry, PyPI, and Python package-file hosts are available outbound. DrivenData, USGS, NLR, Landsat data services, USGS Water Data API, NGMDB, and GitHub Pages domains were not accessible in this turn.",
+  "irregularities": [
+    "The single-method lane paragraph referenced by the parallel-run protocol is absent; no lane was inferred.",
+    "The literal 70% within-3-px test is mathematically forced over threshold at the historical dot budget by a nearly footprint-filling regular lattice. This is a degenerate gate, not proof of actual duplicate geology; it was not bypassed.",
+    "GEMSDOE25 and GEMSDOE30 have identical in-footprint predictions under different outside encodings.",
+    "The GEMSDOE28 alternate h27-4 file is content-identical to GEMSDOE31's historical-best h27-4 file; GEMSDOE28's selected h36-1 historical-best is not the member of this duplicate pair.",
+    "The current prompt reports a 0.3195 leaderboard high, while the prior repository snapshot records a public leaderboard observation of 0.4544 on 2026-10-28. The discrepancy is not resolved because the competition page was not accessible this session.",
+    "The official cause of the user's [0,1] portal error is unknown; no rejected TIFF or portal validation trace is available.",
+    "All nine pinned historical champions fail pairwise uniqueness against at least one of the other eight; the current, full registry has not been refreshed."
+  ],
+  "verdict": "negative",
+  "reason": "No method lane was assigned and the literal registry gate remains non-passable at the historical budget. Although the core owner-mirror data are now restored and prepared, there is no candidate to evaluate; no external-data lead is viable until its official source coverage is checked. No TIFF was generated, no score estimate was made, and no weekly slot was selected.",
+  "historical_archive_audit": {
+    "evidence": "evidence/downloads_validation_latest.json",
+    "strict_outside_footprint_required": true,
+    "audited_historical_tiffs": 23,
+    "strict_format_passes": 5,
+    "strict_format_failures": 18,
+    "promoted": 0,
+    "s2d36_exp2_path": "docs/downloads/gemsdoe36-s2d36-exp2-20261027-31189d084a83-zeros.tif",
+    "s2d36_exp2_strict_format_passed": false,
+    "s2d36_exp2_finite_outside_footprint": 7111787,
+    "s2d36_exp2_reason": [
+      "7111787 finite values outside the template bounds"
+    ],
+    "audited_utc": "2026-10-29T18:09:27+00:00",
+    "template_sha256": "2176d08e485aa2cd2860ce8df539db4faf4d76163b38a4dd8c30a40454d35cbc"
+  }
+}

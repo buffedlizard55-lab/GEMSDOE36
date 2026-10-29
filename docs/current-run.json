@@ -14,8 +14,8 @@
   "ci95": null,
   "evaluator_version": null,
   "withheld_positives": null,
-  "run_card": "downloads/session-review-20261028-audit-run-card.json",
-  "run_card_sha256": "b449f5695a8b522e5cc76854094cc676626895ec26ec9c186eb1bb0daf71c740",
+  "run_card": "downloads/session-review-20261029-run-card.json",
+  "run_card_sha256": "dc2917dffc8ffbef498ce72db8c454b70e041ffec10e5ee6e5372a4d7cc5e174",
   "note": null,
   "submission_name": null,
   "gates": null,
@@ -123,5 +123,5 @@
     "run_card": "downloads/s2d36-run-card.json"
   },
   "slot_selected": false,
-  "review_date_utc": "2026-10-28"
+  "review_date_utc": "2026-10-29"
 }
