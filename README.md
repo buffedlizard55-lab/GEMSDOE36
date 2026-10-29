@@ -1,5 +1,7 @@
 # GEMSDOE36 — current decision & reproducible research
 
+> **Fresh checkout audit · 29 Oct 2026:** `data/raw/` is absent; manifests and restore receipts do not substitute for competition template/labels. Current local verification: 191 passed, 8 skipped (missing raw/integration inputs and optional Torch), Ruff passed, and site consistency passed. No experiment or new candidate TIFF was produced. See [today’s review](evidence/session_review_20261029.md) and [fresh-checkout audit](evidence/repo_review_20261029.md).
+>
 > **Start here (every session):** read this full README, the [owner brief](knowledge/owner_brief_20261028.md), the latest [29 October review](evidence/session_review_20261029.md), and the [28 October session-B research review](docs/research/review-20261028-session-b.md). The full standing brief is preserved below.
 >
 > **Status, 29 Oct 2026: NO SUBMISSION TIFF — verdict negative.** The protocol's lane paragraph is absent and the literal 70%-within-3-px gate remains infeasible for realistic candidate dot counts. No candidate, holdout score, or slot authorization was produced. Review: [`evidence/session_review_20261029.md`](evidence/session_review_20261029.md). GEMSDOE32 B2's 0.2778 remains OWNER-REPORTED; its subset lineage is documented, not treated as proof of an achievable score. GEMSDOE30 is content-identical to GEMSDOE25 in-footprint. The submission and archive validators do not permit filename-based exceptions.
