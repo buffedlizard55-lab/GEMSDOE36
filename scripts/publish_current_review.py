@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """Publish the current negative review. Never authorize a submission slot.
 
-Historical TIFFs and evidence remain available, but the only current run is the
-no-candidate 28 October review. All site entrypoints delegate here so rebuilding
+Historical TIFFs and evidence remain available, but the current run is the
+no-candidate 29 October review. All site entrypoints delegate here so rebuilding
 cannot resurrect an obsolete upload instruction or overwrite a later lane.
 """
 from __future__ import annotations
@@ -85,7 +85,7 @@ def build_focus_table(table: dict, historical: dict, pairs: dict) -> str:
 <p>These are the highest reported files in the pinned historical snapshot, not a live ranking. Each fails uniqueness against at least one of the other eight. A nine-site check alone cannot establish global registry uniqueness. Scores are owner/user-reported; no submission-page receipt is archived. Additional results transcribed from the owner-supplied prompt are in the evidence, not authenticated receipts.</p>
 <div class="table-wrap"><table><caption class="small">Research and provenance links only; no new leaderboard estimate is defensible</caption>
 <thead><tr><th>Site</th><th>Historical file &amp; SHA-256 prefix</th><th>Reported score / estimate</th><th>Unique vs 8?</th><th>Action</th></tr></thead><tbody>''' + "".join(rows) + '''</tbody></table></div>
-<p class="small">Content check (28 Oct 2026, pinned bytes): GEMSDOE30's raster has the same 44,090 positive pixels and in-footprint values as GEMSDOE25 (only the outside encoding differs), so the two are duplicates for submission purposes. GEMSDOE32 B2 is a strict subset of the 44,090-dot D2.8 raster with 6,436 catalogue-adjacent dots removed. Evidence: <a href="downloads/focus9_content_checks_20261028.json">focus9_content_checks_20261028.json</a>.</p>
+<p class="small">Pinned-content audit (29 Oct 2026): 10 comparison rasters from nine sites contain eight distinct in-footprint prediction contents. GEMSDOE25 and GEMSDOE30 are identical in-footprint (44,090 dots; only outside encoding differs). A separate GEMSDOE28 alternate, <code>gems28-h27-4-r1-solo-d2-8-20261003-8acb75e1f2cc-nan.tif</code> (40,199 dots), is identical to GEMSDOE31's h27-4 file; it is <strong>not</strong> GEMSDOE28's h36-1 historical-best (37,660 dots). GEMSDOE32 B2 is a strict subset of the 44,090-dot D2.8 raster with 6,436 catalogue-near dots removed. Evidence: <a href="downloads/focus9_content_checks_20261028.json">pinned content-check JSON</a>.</p>
 <p class="small"><a href="downloads/focus9-decision-table-20261027.json">Full decision data</a> · <a href="downloads/focus-sites-pairwise-uniqueness.json">72 directed pairwise checks</a> · <a href="research/focus9-executive-summary-20261027.md">Historical audit and later updates</a></p>
 </section><!-- FOCUS9_DECISION:END -->'''
 
@@ -113,9 +113,13 @@ def historical_lane(card: dict, card_filename: str, root: Path) -> dict:
     }
 
 
-def render_page(table_html: str, card: dict, s2d: dict, *, title: str) -> str:
+def render_page(table_html: str, card: dict, s2d: dict, archive_audit: dict, *, title: str) -> str:
     h = card["holdout"]["historical_reference_not_rerun"]
     b = card["registry"]["reproduced_literal_preflight"]
+    s2d_format = next(
+        row["validator"] for row in archive_audit["artifacts"]
+        if row["validator"]["path"] == card["historical_archive_audit"]["s2d36_exp2_path"]
+    )
     tif = s2d["tif_path"]
     return f'''<!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
@@ -123,17 +127,18 @@ def render_page(table_html: str, card: dict, s2d: dict, *, title: str) -> str:
 <title>{esc(title)} · GEMS DOE 36</title><link rel="stylesheet" href="assets/site.css"></head>
 <body><a class="skip-link" href="#main">Skip to main content</a>
 <header class="site-header"><a class="brand" href="index.html"><span class="brand-mark" aria-hidden="true">36</span><span>GEMS DOE <span class="small">/ 36</span></span></a>
-<nav class="nav" aria-label="Main navigation"><a href="index.html">Decision</a><a href="executive-summary.html">Executive guide</a><a href="research/review-20261028.md">Research &amp; sources</a><a href="https://www.drivendata.org/competitions/306/competition-doe-gems/leaderboard/" target="_blank" rel="noopener">Official leaderboard ↗</a></nav></header>
+<nav class="nav" aria-label="Main navigation"><a href="index.html">Decision</a><a href="executive-summary.html">Executive guide</a><a href="research/review-20261029.md">Research &amp; sources</a><a href="https://www.drivendata.org/competitions/306/competition-doe-gems/leaderboard/" target="_blank" rel="noopener">Official leaderboard ↗</a></nav></header>
 <main id="main" class="wrap">
 <!-- LITERAL_REVIEW:START -->
-<section class="verdict verdict-bad" aria-labelledby="decision-title"><span class="eyebrow">Current decision · 28 October 2026</span>
+<section class="verdict verdict-bad" aria-labelledby="decision-title"><span class="eyebrow">Current decision · 29 October 2026</span>
 <h1 id="decision-title">DO NOT SUBMIT — no candidate is authorized</h1>
 <p class="verdict-sub"><strong>No new candidate TIFF, submission name, note, or approved slot.</strong> The designated method paragraph is missing. The literal 70% check is degenerate against reg-052's near-regular 5-pixel lattice; it blocks candidates at the historical density but does not prove an untested candidate is a duplicate. The current run is <strong>negative</strong>; a future selector is separate from validation.</p>
-<div class="hero-actions"><a class="button warning" href="downloads/session-review-20261028-audit-run-card.json">Current negative JSON run card →</a><a class="button secondary" href="research/review-20261028.md">Audit, hypotheses &amp; sources →</a><a class="button secondary" href="#focus9-decision">Nine-site table ↓</a></div>
+<div class="hero-actions"><a class="button warning" href="downloads/session-review-20261029-run-card.json">Current negative JSON run card →</a><a class="button secondary" href="research/review-20261029.md">Audit, hypotheses &amp; sources →</a><a class="button secondary" href="#focus9-decision">Nine-site table ↓</a></div>
 <p class="small">Historical KPL: <strong>0.1647 USER-REPORTED</strong>, without a receipt; 99.17% of its dots overlap reg-052 within 3 px. See the <a href="downloads/literal-release-review.json">literal-release review</a>.</p>
 </section><!-- LITERAL_REVIEW:END -->
 <section class="download-strip" aria-label="Research download, not submission"><div><strong>DOWNLOAD: YES · Research downloads only · SUBMIT: NO</strong>
-<p>Historical S2D-36 EXP-2: <strong>HOLDOUT-DTI {h['dti']:.6f}</strong>, 95% CI [{h['ci95'][0]:.4f}, {h['ci95'][1]:.4f}], {esc(h['evaluator_version'])}, {h['withheld_positive_pixels']:,} withheld positives. This is prior internal validation, not rerun here or an organizer score. Its reg-052 overlap was 99.48%. SHA-256 <code>{esc(s2d['tif_sha256'])}</code>.</p></div>
+<p>Historical S2D-36 EXP-2: <strong>HOLDOUT-DTI {h['dti']:.6f}</strong>, 95% CI [{h['ci95'][0]:.4f}, {h['ci95'][1]:.4f}], {esc(h['evaluator_version'])}, {h['withheld_positive_pixels']:,} withheld positives. This is prior internal validation, not rerun here or an organizer score. Its reg-052 overlap was 99.48%. SHA-256 <code>{esc(s2d['tif_sha256'])}</code>.</p>
+<p><strong>Strict archive-format audit:</strong> this historical zeros-outside TIFF has {s2d_format['finite_outside_bounds']:,} finite values outside the template footprint and fails the strict outside-footprint check. The audit found {sum(bool(row['validator']['passed']) for row in archive_audit['artifacts'])} format-passing and {sum(not bool(row['validator']['passed']) for row in archive_audit['artifacts'])} format-failing historical TIFFs; <strong>0 are promoted</strong>. All remain research-only. <a href="downloads/strict-download-validation-20261029.json">Audit JSON</a>.</p></div>
 <a class="button secondary" href="{esc(tif)}" download>Download historical research TIFF</a></section>
 {table_html}
 <section class="section" id="why-b2"><span class="eyebrow">The reported 0.2778</span><h2>What the raster can—and cannot—tell us</h2>
@@ -157,7 +162,7 @@ def render_page(table_html: str, card: dict, s2d: dict, *, title: str) -> str:
 def publish(root: Path = ROOT) -> None:
     root = Path(root)
     docs, evidence = root / "docs", root / "evidence"
-    card_path = evidence / "session_review_20261028_audit_run_card.json"
+    card_path = evidence / "session_review_20261029_run_card.json"
     card = load(card_path)
     nulls = ("raster_sha256", "submission_name", "submission_note")
     holdout_nulls = ("evaluator_version", "withheld_positive_pixels", "dti", "ci95")
@@ -172,6 +177,26 @@ def publish(root: Path = ROOT) -> None:
             or card["registry"]["new_candidate_final_dot_overlap"] is not None
             or card["validator_output"]["new_raster_generated"] is not False):
         raise ValueError("The current review must be negative with no candidate or selected slot")
+    archive_audit = load(evidence / "downloads_validation_latest.json")
+    archive_status = card.get("historical_archive_audit", {})
+    s2d_audit = next((row for row in archive_audit.get("artifacts", [])
+                      if row.get("validator", {}).get("path") == archive_status.get("s2d36_exp2_path")), None)
+    passes = sum(bool(row.get("validator", {}).get("passed")) for row in archive_audit.get("artifacts", []))
+    failures = len(archive_audit.get("artifacts", [])) - passes
+    if (s2d_audit is None or archive_status.get("strict_outside_footprint_required") is not True
+            or archive_status.get("audited_utc") != archive_audit.get("audited_utc")
+            or archive_status.get("template_sha256") != archive_audit.get("template_sha256")
+            or archive_status.get("audited_historical_tiffs") != len(archive_audit["artifacts"])
+            or archive_status.get("strict_format_passes") != passes
+            or archive_status.get("strict_format_failures") != failures
+            or archive_status.get("promoted") != 0 or archive_audit.get("promoted_count") != 0
+            or any(row.get("submit_ready") is not False for row in archive_audit["artifacts"])
+            or s2d_audit["validator"].get("passed") is not False
+            or archive_status.get("s2d36_exp2_strict_format_passed") is not False
+            or archive_status.get("s2d36_exp2_finite_outside_footprint")
+                != s2d_audit["validator"].get("finite_outside_bounds")
+            or archive_status.get("s2d36_exp2_reason") != s2d_audit["validator"].get("errors")):
+        raise ValueError("Strict historical archive-format audit does not match the current run card")
     literal = load(evidence / "literal_release_review_20261027.json")
     bound_doc = load(evidence / "literal_bound_20261027.json")
     coverage = load(evidence / "registry_coverage_audit_20261028.json")
@@ -226,7 +251,7 @@ def publish(root: Path = ROOT) -> None:
         "tif_path": None, "tif_sha256": None, "zip_path": None, "zip_sha256": None,
         "holdout_dti": None, "ci95": None, "evaluator_version": None, "withheld_positives": None,
         "submission_name": None, "note": None, "gates": None,
-        "score_estimate_scenario_range": None, "run_card": "downloads/session-review-20261028-audit-run-card.json",
+        "score_estimate_scenario_range": None, "run_card": "downloads/session-review-20261029-run-card.json",
         "run_card_sha256": sha(card_path), "superseding_review": "downloads/literal-release-review.json",
         "latest_research_lane_s2d36": s2d, "latest_research_lane_tcd36": tcd,
     })
@@ -237,7 +262,7 @@ def publish(root: Path = ROOT) -> None:
     manifest_path = docs / "downloads/submissions_manifest.json"
     manifest = load(manifest_path)
     manifest.update({"slot_approved": False, "current_candidate": None,
-                     "run_card": "session-review-20261028-audit-run-card.json"})
+                     "run_card": "session-review-20261029-run-card.json"})
     old_kpl = manifest.get("superseded_kpl36_research_candidate")
     if old_kpl is not None:
         old_kpl["submit_ok"] = False
@@ -254,7 +279,11 @@ def publish(root: Path = ROOT) -> None:
     manifest_path.write_text(json.dumps(manifest, indent=2, allow_nan=False) + "\n", encoding="utf-8")
 
     for source, target in (
-        (card_path, docs / "downloads/session-review-20261028-audit-run-card.json"),
+        (card_path, docs / "downloads/session-review-20261029-run-card.json"),
+        (evidence / "focus9_content_checks_20261028.json",
+         docs / "downloads/focus9_content_checks_20261028.json"),
+        (evidence / "downloads_validation_latest.json",
+         docs / "downloads/strict-download-validation-20261029.json"),
         (evidence / "literal_release_review_20261027.json", docs / "downloads/literal-release-review.json"),
         (evidence / "focus9_decision_table_20261027.json", docs / "downloads/focus9-decision-table-20261027.json"),
         (evidence / "focus_sites_9repo_summary_20261026.json", docs / "downloads/focus9-historical-summary-20261026.json"),
@@ -267,7 +296,7 @@ def publish(root: Path = ROOT) -> None:
     ):
         copyfile(source, target)
     for name, title in (("index.html", "Decision and evidence"), ("executive-summary.html", "Executive guide")):
-        (docs / name).write_text(render_page(table_html, card, s2d, title=title), encoding="utf-8")
+        (docs / name).write_text(render_page(table_html, card, s2d, archive_audit, title=title), encoding="utf-8")
     print("Built current Pages: NEGATIVE; no candidate TIFF, submission name, or slot")
 
 

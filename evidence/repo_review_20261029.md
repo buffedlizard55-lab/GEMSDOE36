@@ -1,4 +1,6 @@
-# Repository review — 2026-10-29
+# Repository review — 2026-10-29 (earlier checkout snapshot)
+
+> **Superseded as current status by [`docs/research/review-20261029.md`](../docs/research/review-20261029.md).** This checkout review preceded restoration of `data/raw/`; its missing-input statements are historical. The later review restored and grid-checked inputs, populated `.cache/gems_work/bands`, and reran the relevant tests.
 
 ## Scope and decision
 

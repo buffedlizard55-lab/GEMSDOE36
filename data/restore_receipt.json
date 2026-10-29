@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "requested_group": "scored",
+  "requested_group": "all",
   "verified_files_count": 30,
   "storage_root": "/home/user/GEMSDOE36/data/raw",
   "files": [
@@ -8,7 +8,7 @@
       "id": "training_features",
       "dest": "training_features.tif",
       "group": "core",
-      "status": "present",
+      "status": "restored",
       "bytes": 418912844,
       "sha256": "4371c82e3b8339b807bdffcf4ef59a225520fe2988d521be208ae33743123bc5"
     },
@@ -16,7 +16,7 @@
       "id": "labels",
       "dest": "labels.tif",
       "group": "core",
-      "status": "present",
+      "status": "restored",
       "bytes": 425830,
       "sha256": "7ba308ccdc4418b31a178f4f1ef21aaa6e152e4028f2f6f64b01f7eb25ae4093"
     },
@@ -24,7 +24,7 @@
       "id": "existing_faults",
       "dest": "existing_faults.tif",
       "group": "core",
-      "status": "present",
+      "status": "restored",
       "bytes": 425830,
       "sha256": "7ba308ccdc4418b31a178f4f1ef21aaa6e152e4028f2f6f64b01f7eb25ae4093"
     },
@@ -32,7 +32,7 @@
       "id": "sample_submission",
       "dest": "sample_submission.tif",
       "group": "core",
-      "status": "present",
+      "status": "restored",
       "bytes": 1599597,
       "sha256": "2176d08e485aa2cd2860ce8df539db4faf4d76163b38a4dd8c30a40454d35cbc"
     },
@@ -40,7 +40,7 @@
       "id": "ext_lidar_scarp_features_u8",
       "dest": "external/lidar_scarp_features_u8.tif",
       "group": "external",
-      "status": "present",
+      "status": "restored",
       "bytes": 36943606,
       "sha256": "d580bb8bdcdb941e32fefb8b38044bc5bf04e199bf2e83498c3576e6fc465568"
     },
@@ -48,7 +48,7 @@
       "id": "ext_geodawn_rad_u8",
       "dest": "external/geodawn_rad_u8.tif",
       "group": "external",
-      "status": "present",
+      "status": "restored",
       "bytes": 26612970,
       "sha256": "c22420f75999030d7cc65c9e31e50d232ea6158423bca051613a18a8b20ba682"
     },
@@ -56,7 +56,7 @@
       "id": "ext_geodawn_extensions_u8",
       "dest": "external/geodawn_extensions_u8.tif",
       "group": "external",
-      "status": "present",
+      "status": "restored",
       "bytes": 27132925,
       "sha256": "a35a9c6d2a14786f4dab85481ee59769213072f5dab5b2535ea82ae4d9bb7d9b"
     },
@@ -64,7 +64,7 @@
       "id": "ext_derived_sgmc_faults_100m_u8",
       "dest": "external/derived_sgmc_faults_100m_u8.tif",
       "group": "external",
-      "status": "present",
+      "status": "restored",
       "bytes": 198602,
       "sha256": "643cbe992ef4ba37588fb469163ed8291e3ceb23d6c1f78a3cfaa462430c2da0"
     },
@@ -72,7 +72,7 @@
       "id": "ext_gdr_wellspring_in_footprint",
       "dest": "external/gdr_wellspring_in_footprint.csv",
       "group": "external",
-      "status": "present",
+      "status": "restored",
       "bytes": 2146771,
       "sha256": "122718e65bdf55aab0ee12ad20d80062f0deb1de957225a61ad880dd5dc196ea"
     },
@@ -80,7 +80,7 @@
       "id": "ext_gdr_qfaults_traces",
       "dest": "external/gdr_qfaults_traces.csv",
       "group": "external",
-      "status": "present",
+      "status": "restored",
       "bytes": 126177,
       "sha256": "9702f2e5c382a4f472ae834d22b94990983b059677a37adfafd51c50f75e643c"
     },
@@ -88,7 +88,7 @@
       "id": "ext_gdr_volcanic_vents_in_footprint",
       "dest": "external/gdr_volcanic_vents_in_footprint.csv",
       "group": "external",
-      "status": "present",
+      "status": "restored",
       "bytes": 672,
       "sha256": "f91bafbaccaaf2754e71d60434fc0f9eb2c7b880c6e714883f4974542ff6a0bf"
     },
@@ -96,7 +96,7 @@
       "id": "ext_gdr_paleo_geothermal_regional_zip",
       "dest": "external/paleo_geothermal_regional.zip",
       "group": "external",
-      "status": "present",
+      "status": "restored",
       "bytes": 84008,
       "sha256": "faffcf697f32dbbf6cbb317cd1effb3e305538ce38eb239d72d0c6fa071e91ca"
     },
@@ -104,7 +104,7 @@
       "id": "ext_gdr_2m_temperature_probe_regional_zip",
       "dest": "external/2m_temperature_probe_INGENIOUS_regional_data.zip",
       "group": "external",
-      "status": "present",
+      "status": "restored",
       "bytes": 1080530,
       "sha256": "1301f70d230058e616ea5d34d1c7a32fabf7d49198172f376c59c89bd652eca3"
     },
@@ -112,7 +112,7 @@
       "id": "ext_topo_10m_derived_100m_u8",
       "dest": "external/topo_10m_derived_100m_u8.tif",
       "group": "external",
-      "status": "present",
+      "status": "restored",
       "bytes": 32523329,
       "sha256": "a6398d9950965dec6aae6ccecdaa6ced48645d133eab222cbdd11def9bdabfa4"
     },
@@ -120,7 +120,7 @@
       "id": "ext_dem10_chi_100m_i16",
       "dest": "external/dem10_chi_100m_i16.tif",
       "group": "external",
-      "status": "present",
+      "status": "restored",
       "bytes": 12777098,
       "sha256": "8897ba9c30ef1cd7ad5f23c16c6dfd7bb070e7e757f36fd9486eb45edfd973a5"
     },
@@ -128,7 +128,7 @@
       "id": "ext_dem10_chi_100m_u8",
       "dest": "external/dem10_chi_100m_u8.tif",
       "group": "external",
-      "status": "present",
+      "status": "restored",
       "bytes": 2061484,
       "sha256": "e8830ba6f0bb99f525266b1b3a483b0722d25cd4758c2bbccc6e7f54eb6b1b6a"
     },
@@ -136,7 +136,7 @@
       "id": "ext_tiger_road_distance_m",
       "dest": "external/tiger_road_distance_m.tif",
       "group": "external",
-      "status": "present",
+      "status": "restored",
       "bytes": 10492276,
       "sha256": "e5350423508968fa2d32b0a6ae0d3fb4ae3ea645e3b8736f0c8e7ad9ff2f2988"
     },
@@ -144,7 +144,7 @@
       "id": "ext_dem1m_high_prior_openness_lrm",
       "dest": "external/dem1m_high_prior_openness_lrm.npz",
       "group": "external",
-      "status": "present",
+      "status": "restored",
       "bytes": 610575,
       "sha256": "62f27929747ad3c35be4dd3e0257b0bde7d7bea8566474956e1711269ad451fe"
     },

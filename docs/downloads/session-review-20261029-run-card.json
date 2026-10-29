@@ -1,83 +1,276 @@
 {
-  "schema": "gemsdoe36.run-card.v2",
-  "session_date_utc": "2026-10-29",
+  "schema": "gemsdoe36.parallel_run_card.v2",
+  "review_date_utc": "2026-10-29",
   "lane_id": null,
-  "hypothesis": "No experiment selected. Ranked proposals are documented in docs/research/review-20261029-hypothesis-screen.md; rank 1 is a multianalyte hydrochemical mixing-front feature from DOE GDR 1391, conditional on a data audit and lane authorization.",
-  "mechanism": "Not tested. Candidate mechanism: faults may provide permeable conduits for deep fluids, yielding spatially coherent water-rock interaction chemistry beyond mapped faults.",
-  "named_non_fault_process_that_could_mimic_it": "Evaporative concentration, lithologic weathering, irrigation return flow, sample contamination, and differing aquifer depths.",
+  "hypothesis": "No hypothesis was tested: the required single-method lane paragraph is not specified. The leading previously unimplemented research lead is a hydrochemical mixing-front feature from DOE GDR 1391, conditional on retrieving and auditing independent multi-analyte samples; the restored working CSV has no chemistry analytes.",
+  "mechanism": "No new mechanism was implemented or measured. A concealed fault can conduct deep fluid and create a localized water-rock interaction signature; an independently replicated cross-strike chemistry transition could reveal an off-catalogue conduit. The restored GDR working CSV only contains temperature/geothermometry fields, and the source chemistry tables were not fetched. For the historical GEMSDOE32 B2 raster, pinned-byte analysis verifies 6,436 dots were removed from a 44,090-dot D2.8 family raster and none were added; this is not a causal score explanation.",
+  "named_non_fault_mimic": "For hydrochemical mixing: evaporative concentration, lithologic weathering, irrigation return flow, sample contamination, and differing aquifer depths.",
+  "experiments_run_this_session": 0,
+  "experiment_budget": {
+    "maximum_experiments": 3,
+    "maximum_wall_seconds": 7200,
+    "experiments_used": 0,
+    "elapsed_wall_seconds": null,
+    "elapsed_time_note": "No experiment was run; session wall-clock accounting was not captured precisely."
+  },
+  "candidate_hypotheses": [
+    {
+      "rank": 1,
+      "name": "Hydrochemical mixing-front / deep-fluid fingerprint",
+      "layers_or_inputs": [
+        "DOE GDR 1391 independent spring/well chemistry tables, if analyte columns are available",
+        "Cached location/elevation and selected geophysical context; exclude all catalogue-distance-derived columns"
+      ],
+      "physical_signature": "A spatially coherent cross-strike transition in normalized major-ion/trace-element relationships, replicated across independent samples.",
+      "off_catalogue_rationale": "A fault can conduct deep fluids and create a localized water-rock interaction signature beyond mapped catalogue traces.",
+      "difference_from_repository": "csdl_features.py and ctrb.py use temperatures, geothermometry, vents, and shallow probes; no validated multi-analyte compositional mixing field was found.",
+      "named_mimics": [
+        "evaporative concentration",
+        "lithologic weathering",
+        "irrigation return flow",
+        "sample contamination",
+        "aquifer-depth differences"
+      ],
+      "official_source": "https://gdr.openei.org/submissions/1391",
+      "availability_check": "The restored 27,092-row working CSV has location, temperature, and geothermometry columns but no major-ion or trace-element assays. dist_known_fault_px is label-derived and prohibited. The original source chemistry tables were not fetched or audited in this turn.",
+      "qualitative_expected_holdout_increment": "Highest conditional scientific upside in this screen, but expected DTI is unknown and depends on sufficient independent, quality-controlled chemistry samples. No numeric projection.",
+      "implementation_cost": "Medium-high",
+      "status": "BLOCKED; not eligible until official chemistry tables, hashes, missingness, sample density, coordinates, and terms are audited; lane assignment is also absent."
+    },
+    {
+      "rank": 2,
+      "name": "Seasonal vegetation / soil-moisture persistence",
+      "layers_or_inputs": [
+        "Multi-date Landsat Collection 2 Level-2 surface-reflectance NIR/SWIR indices",
+        "Cached terrain and land-cover covariates for controls"
+      ],
+      "physical_signature": "Seasonal amplitude and robustly recurring moisture/vegetation anomaly, not a one-date greenness signal.",
+      "off_catalogue_rationale": "Sustained shallow moisture or vegetation anomalies may reveal diffuse geothermal discharge or a fault-controlled groundwater pathway without a mapped scarp.",
+      "difference_from_repository": "No multi-date vegetation/moisture persistence feature was found; this is distinct from the previously discussed thermal-infrared phase-lag proposal.",
+      "named_mimics": [
+        "irrigation",
+        "vegetation communities",
+        "recent precipitation",
+        "elevation/aspect",
+        "grazing",
+        "soil and land-cover change"
+      ],
+      "official_source": "https://www.usgs.gov/centers/eros/science/usgs-eros-archive-landsat-archives-landsat-8-9-olitirs-collection-2-level-2",
+      "availability_check": "The official product/access route is documented in the prior hypothesis-screen review; this turn did not query AOI scene inventory, cloud-free seasonal coverage, or source services.",
+      "qualitative_expected_holdout_increment": "Moderate conditional potential; expected DTI unknown. Scene density, resolution, and confounders determine value.",
+      "implementation_cost": "High",
+      "status": "BLOCKED; no scene inventory, cloud-screened seasonal sample, 100 m utility, or lane assignment."
+    },
+    {
+      "rank": 3,
+      "name": "Paired lateral channel deflection / reach offset",
+      "layers_or_inputs": [
+        "Finest suitable bare-earth USGS 3DEP DEM",
+        "Derived channel centerlines and cached geophysical context for corridor controls"
+      ],
+      "physical_signature": "Repeated paired channel deflection or reach offset across multiple nearby drainages at one corridor.",
+      "off_catalogue_rationale": "Consistent planform displacement can record fault kinematics independently of one elevation edge or longitudinal knickpoint.",
+      "difference_from_repository": "TCD includes slope, curvature, chi/steepness, knickpoint, and ridge-worm measures; no paired cross-corridor lateral channel-offset statistic was found.",
+      "named_mimics": [
+        "alluvial-fan distributaries",
+        "lithologic boundaries",
+        "landslides",
+        "roads or ditches",
+        "channel-extraction artifacts"
+      ],
+      "official_source": "https://www.usgs.gov/tools/download-data-maps-national-map",
+      "availability_check": "The repository has a 100 m derivative but not the raw channel geometry needed here. No raw DEM tile inventory, resolution continuity, or source/licensing record was verified in this turn.",
+      "qualitative_expected_holdout_increment": "Lower-to-moderate conditional potential; expected DTI unknown.",
+      "implementation_cost": "High",
+      "status": "BLOCKED; raw DEM availability and lane assignment are unverified."
+    }
+  ],
+  "data_readiness": {
+    "owner_mirror_files_sha256_verified": 30,
+    "owner_mirror_bytes_verified": 591020452,
+    "prepared_feature_bands": 19,
+    "prepared_footprint_pixels": 5167373,
+    "prepared_catalogue_positive_pixels": 60988,
+    "training_features_sha256": "4371c82e3b8339b807bdffcf4ef59a225520fe2988d521be208ae33743123bc5",
+    "labels_sha256": "7ba308ccdc4418b31a178f4f1ef21aaa6e152e4028f2f6f64b01f7eb25ae4093",
+    "sample_submission_sha256": "2176d08e485aa2cd2860ce8df539db4faf4d76163b38a4dd8c30a40454d35cbc",
+    "prepared_manifest": "data/prepared_manifest.json",
+    "restore_receipt": "data/restore_receipt.json",
+    "preparation_command": ".venv/bin/python scripts/prepare_data.py",
+    "owner_mirror_note": "All inputs were restored from SHA-pinned GitHub owner mirrors. Hash/grid validation establishes mirror integrity, not organizer authentication. No DrivenData login or organizer receipt is available.",
+    "numeric_feature_cache": {
+      "directory": ".cache/gems_work/bands",
+      "array_files": 21,
+      "feature_band_arrays": 19,
+      "support_arrays": [
+        "footprint",
+        "labels"
+      ],
+      "bytes": 957781264,
+      "status": "PRESENT locally and ignored by Git; data/prepared/ contains manifest and small summary, not the numeric arrays."
+    },
+    "gdr_working_csv": {
+      "path": "data/raw/external/gdr_wellspring_in_footprint.csv",
+      "data_rows": 27092,
+      "fields": [
+        "layer",
+        "name",
+        "thermalclass",
+        "row",
+        "col",
+        "utm_x",
+        "utm_y",
+        "dist_known_fault_px",
+        "temp_c",
+        "geothermquartz_c",
+        "geothermchalc_c",
+        "geothermcat_c"
+      ],
+      "major_ion_or_trace_element_assays_present": false,
+      "prohibited_label_derived_column": "dist_known_fault_px",
+      "source_archive_audited_this_turn": false
+    }
+  },
   "holdout": {
     "label": "HOLDOUT-DTI",
+    "status": "NOT RUN for a new candidate",
     "evaluator_version": null,
     "withheld_positive_pixels": null,
     "dti": null,
     "ci95": null,
-    "status": "NOT RUN: lane is unassigned and the required full numeric feature stack is absent; the restored GDR working CSV lacks elemental assay columns."
+    "reason": "No assigned single-method lane; the leading GDR hydrochemical proposal is blocked because the restored working CSV has no assay columns and the original chemistry tables were not fetched. The shared evaluator was therefore not run on a new candidate.",
+    "historical_reference_not_rerun": {
+      "arm": "S2D-36 EXP-2",
+      "label": "HOLDOUT-DTI",
+      "evaluator_version": "gems-segment-pooled-v1",
+      "withheld_positive_pixels": 60988,
+      "dti": 0.2007657135656901,
+      "ci95": [
+        0.18648773519590356,
+        0.21533340056778932
+      ],
+      "evidence": "evidence/s2d36_run_card_20261027.json",
+      "note": "Historical internal result; not a leaderboard estimate and not rerun in this session."
+    }
   },
   "leakage_canary": {
     "status": "NOT RUN",
-    "per_feature_auc": null
+    "feature_auc": null,
+    "reason": "No candidate feature was built or tested. AUC >0.90 remains the protocol leakage stop."
   },
-  "registry_comparison": {
+  "registry": {
     "new_surface_rank_correlation": null,
     "new_candidate_final_dot_overlap": null,
-    "status": "NOT RUN: no candidate surface or dot raster generated. Prior reg-052 bound is historical evidence only."
+    "new_candidate_status": "No new surface or dot set exists; surface and final-dot gates were not run.",
+    "focus9_pinned_snapshot": {
+      "pinned_sites": 9,
+      "directed_pairwise_comparisons": 72,
+      "sites_unique_vs_all_other_eight": 0,
+      "source": "evidence/focus_sites_pairwise_uniqueness_20261026.json; pinned raster bytes fetched and hash-prefix checked on 2026-10-29",
+      "scope_note": "Historical pinned snapshot only; not a live refresh of each repository or the full 198-entry registry."
+    },
+    "content_duplicates": [
+      {
+        "site_a": "GEMSDOE25",
+        "file_a": "gems25-dotted-h19-5-d2-8-20261002-e56ea318af89-nan.tif",
+        "site_b": "GEMSDOE30",
+        "file_b": "gemsdoe30-d28-poisson300m-offcat-44090-20261003T233156Z-91eae1ca.tif",
+        "comparison": "Identical positive-pixel sets and identical in-footprint values; different outside-footprint encoding."
+      },
+      {
+        "site_a": "GEMSDOE28",
+        "file_a": "gems28-h27-4-r1-solo-d2-8-20261003-8acb75e1f2cc-nan.tif",
+        "site_b": "GEMSDOE31",
+        "file_b": "gemsdoe31-h27-4-solo-d28-20261004-8acb75e1-nan.tif",
+        "comparison": "Identical positive-pixel sets and identical in-footprint values. This is a GEMSDOE28 alternate, not the site's 0.2710 historical-best h36-1 file."
+      }
+    ],
+    "gemsdoe32_b2_lineage": {
+      "source_file": "gemsdoe32-h33-h33-2-b2-20261004T220000Z-e5eb6e7e-zeros.tif",
+      "family_reference": "GEMSDOE25 44,090-dot D2.8",
+      "b2_dots": 37654,
+      "removed_near_catalogue_dots": 6436,
+      "added_dots": 0,
+      "verified_with_hash_pinned_bytes": true,
+      "score_provenance": "0.2778 OWNER-REPORTED; no organizer submission-page receipt archived",
+      "causal_interpretation": "Removing catalogue-adjacent, potentially poorly credited predictions may reduce false-positive mass; hidden truth and submission evidence are unavailable, so the mechanism is plausible but unproven."
+    },
+    "provenance": "SHA-pinned owner-mirror and GitHub-commit rasters; not organizer-authenticated.",
+    "reproduced_literal_preflight": {
+      "reference_id": "reg-052",
+      "reference_sha256": "b4570b406efec198eb2f4d142ad8d0d6184b14b66f2f52b5c4d697f0647dc9b2",
+      "candidate_distinct_dots": 37654,
+      "footprint_pixels": 5167373,
+      "covered_pixels_within_3px": 5160724,
+      "uncovered_pixels": 6649,
+      "minimum_overlapping_dots": 31005,
+      "minimum_overlap_fraction": 0.8234184947150369,
+      "first_dot_count_forced_over_70_percent": 22164,
+      "provenance": "SHA-pinned owner mirrors; not organizer-authenticated"
+    },
+    "historical_kpl_rechecked_dot_overlap": 0.9916874701226961
+  },
+  "historical_leaderboard_reports_not_verified_this_session": [
+    {
+      "reported_score": 0.3195,
+      "provenance": "USER-REPORTED in this prompt; not fetched from DrivenData this session."
+    },
+    {
+      "reported_score": 0.4544,
+      "provenance": "OWNER-REPORTED prior public-page observation recorded in the repository on 2026-10-28; not freshly fetched and not a submission-page receipt for any listed file."
+    }
+  ],
+  "score_estimate": {
+    "value": null,
+    "label": "Not estimable",
+    "reason": "No candidate has a comparable, preregistered holdout improvement and no holdout-to-leaderboard calibration is available."
   },
   "raster_sha256": null,
   "validator_output": {
+    "new_raster_generated": false,
     "no_nan_inside_footprint": null,
     "values_in_0_1": null,
     "crs_shape_transform_match": null,
-    "status": "NOT RUN: no TIFF generated."
+    "status": "NOT RUN for a new candidate; no candidate raster exists. Historical files are research-only and cannot substitute for candidate validation."
   },
   "submission_name": null,
-  "submission_note": "No candidate TIFF generated; no weekly slot selected.",
-  "verdict": "negative",
-  "experiments_run": 0,
+  "submission_note": null,
+  "submission_note_char_count": null,
+  "slot_approved": false,
   "slot_selected": false,
-  "ok_to_download_and_submit": false,
-  "ok_to_download_for_research": false,
-  "reason": "The method-lane assignment is not unambiguous in the preserved brief. Core and external owner-mirror rasters were restored and prepared, but there is no full numeric cached feature stack; the restored GDR working CSV lacks elemental chemistry analytes. The literal registry gate also forces a stop at historical candidate densities against reg-052; no threshold or registry control was changed.",
-  "verification": {
-    "restored_groups": "core, external, scored comparison-only",
-    "verified_file_count": 30,
-    "restore_manifest_hashes_passed": true,
-    "organizer_authentication": false,
-    "prepare_data": "PASS: 19 bands; EPSG:32611; shape 3730x3292; 5,167,373 footprint cells; 60,988 catalogue positives; 58,171 sentinel band-pixels.",
-    "gdr_working_csv": {
-      "rows": 27092,
-      "fields": ["layer", "name", "thermalclass", "row", "col", "utm_x", "utm_y", "dist_known_fault_px", "temp_c", "geothermquartz_c", "geothermchalc_c", "geothermcat_c"],
-      "elemental_assay_fields_present": false,
-      "banned_label_derived_column": "dist_known_fault_px"
-    },
-    "run_checks": "198 passed, 1 skipped; Ruff and Pages site check passed after merging latest main and restoring all groups. The only skip is optional Torch orientation coverage."
-  },
-  "historical_comparator": {
-    "name": "GEMSDOE32 B2, as listed by the user",
-    "score": 0.2778,
-    "label": "OWNER-REPORTED; no submission-page receipt archived",
-    "candidate_score_estimate": null,
-    "note": "Historical number is not a projected score and does not establish why the submission performed as reported."
+  "organizer_submission_receipt": null,
+  "external_source_access_limit": "Only GitHub, GitHub API/codeload, npm registry, PyPI, and Python package-file hosts are available outbound. DrivenData, USGS, NLR, Landsat data services, USGS Water Data API, NGMDB, and GitHub Pages domains were not accessible in this turn.",
+  "irregularities": [
+    "The single-method lane paragraph referenced by the parallel-run protocol is absent; no lane was inferred.",
+    "The literal 70% within-3-px test is mathematically forced over threshold at the historical dot budget by a nearly footprint-filling regular lattice. This is a degenerate gate, not proof of actual duplicate geology; it was not bypassed.",
+    "GEMSDOE25 and GEMSDOE30 have identical in-footprint predictions under different outside encodings.",
+    "The GEMSDOE28 alternate h27-4 file is content-identical to GEMSDOE31's historical-best h27-4 file; GEMSDOE28's selected h36-1 historical-best is not the member of this duplicate pair.",
+    "The current prompt reports a 0.3195 leaderboard high, while the prior repository snapshot records a public leaderboard observation of 0.4544 on 2026-10-28. The discrepancy is not resolved because the competition page was not accessible this session.",
+    "The official cause of the user's [0,1] portal error is unknown; no rejected TIFF or portal validation trace is available.",
+    "All nine pinned historical champions fail pairwise uniqueness against at least one of the other eight; the current, full registry has not been refreshed.",
+    "The restored GDR working CSV has no major-ion or trace-element assay columns; its dist_known_fault_px field is label-derived and prohibited as a predictor. The full cached 19-band numeric stack is present locally; this supersedes earlier 29 October checkout notes that only a manifest/summary were available."
+  ],
+  "verdict": "negative",
+  "reason": "No method lane was assigned and the literal registry gate remains non-discriminating at historical candidate densities. Core/external owner-mirror inputs and the 19-band numeric cache are present, but the leading hydrochemical lead lacks assay columns in the restored working CSV and external coverage remains unverified. No candidate was eligible for holdout; no TIFF, score estimate, or weekly-slot selection was made.",
+  "historical_archive_audit": {
+    "evidence": "evidence/downloads_validation_latest.json",
+    "strict_outside_footprint_required": true,
+    "audited_historical_tiffs": 23,
+    "strict_format_passes": 5,
+    "strict_format_failures": 18,
+    "promoted": 0,
+    "s2d36_exp2_path": "docs/downloads/gemsdoe36-s2d36-exp2-20261027-31189d084a83-zeros.tif",
+    "s2d36_exp2_strict_format_passed": false,
+    "s2d36_exp2_finite_outside_footprint": 7111787,
+    "s2d36_exp2_reason": [
+      "7111787 finite values outside the template bounds"
+    ],
+    "audited_utc": "2026-10-29T18:09:27+00:00",
+    "template_sha256": "2176d08e485aa2cd2860ce8df539db4faf4d76163b38a4dd8c30a40454d35cbc"
   },
   "source_audit": {
-    "gdr_1391_public_listing": "Official GDR page lists aqueous chemistry and publicly accessible CC terms. Restored the SHA-pinned owner-mirror core, external, and scored comparison groups (30 files total) and checked their manifest hashes. The local derived GDR CSV has 27,092 rows and only location, temperature, and geothermometry fields (plus a banned label-derived fault-distance column); the source-page chemistry archive itself was not fetched. No major-ion/trace-element assay coverage is verified.",
-    "core_external_restore": "PASS: core and external groups restored from pinned owner mirrors; all manifest hashes matched and preparation grid check passed. Owner-mirror hashes are not organizer authentication.",
-    "scored_comparison_mirrors": "PASS: scored group restored to complete the local comparison registry; these are comparison-only historical rasters, not proposal features or submission choices.",
-    "literal_registry_preflight": {
-      "reference": "reg-052",
-      "reference_sha256": "b4570b406efec198eb2f4d142ad8d0d6184b14b66f2f52b5c4d697f0647dc9b2",
-      "candidate_distinct_dots": 37654,
-      "covered_footprint_cells_within_3px": 5160724,
-      "uncovered_footprint_cells": 6649,
-      "minimum_overlap_dots": 31005,
-      "minimum_overlap_fraction": 0.8234184947150369,
-      "literal_threshold": 0.7,
-      "first_budget_forced_over_threshold": 22164,
-      "command_exit_code": 2,
-      "interpretation": "STOP under literal protocol; lattice coverage makes this overlap test degenerate, not proof of candidate duplication."
-    },
-    "prepared_grid": "EPSG:32611, 3730 x 3292, 5,167,373 footprint cells; 19 bands; 60,988 catalogue-positive pixels; 58,171 sentinel band-pixels sanitized by prepare_data.py.",
-    "feature_cache": "No full numeric cached stack in data/prepared/; only manifest and small summary JSON.",
-    "landsat_collection2_access": "Official USGS pages confirm products and no-cost open-data policy; AOI scene coverage not verified.",
-    "3dep_access": "Official USGS pages confirm program/access routes; AOI coverage and product resolution not verified."
+    "gdr_1391_working_csv": "Inspected the restored 27,092-row working CSV schema. It has location, temperature, geothermometry, and label-derived dist_known_fault_px fields; no elemental assay columns. The official source-page chemistry archive was not fetched or audited in this turn.",
+    "feature_cache": "Present locally at .cache/gems_work/bands: 19 numeric feature arrays plus footprint/labels (21 arrays, 957,781,264 bytes). Ignored by Git.",
+    "landsat_and_3dep": "Prior hypothesis-screen review links official USGS product/access pages. No AOI scene/tile coverage query or new official-source fetch occurred in this turn."
   }
 }

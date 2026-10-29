@@ -20,9 +20,14 @@ def test_archive_raster_always_uses_strict_outside_footprint_rule(monkeypatch):
         audit_release, "validate_submission",
         lambda path, template, **kwargs: (calls.append(kwargs), Report())[1],
     )
-    for name in ("candidate-zeros.tif", "gemsdoe36-atvr36-20261026.tif"):
+    for name in (
+        "candidate-nan.tif",
+        "candidate-zeros.tif",
+        "gemsdoe36-atvr36-20261026.tif",
+    ):
         validate_archive_raster(Path(name), Path("sample.tif"))
     assert calls == [
+        {"require_nonfinite_outside": True},
         {"require_nonfinite_outside": True},
         {"require_nonfinite_outside": True},
     ]

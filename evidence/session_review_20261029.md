@@ -1,4 +1,6 @@
-# Repository review — 29 October 2026
+# Repository review — 29 October 2026 (earlier checkout snapshot)
+
+> **Superseded as current status by [`docs/research/review-20261029.md`](../docs/research/review-20261029.md).** This earlier snapshot predates restoration/preparation in the current checkout. Later review restored the owner mirrors, prepared the 19-band numeric cache, re-audited 10 focus rasters, and ran the strict archive audit. Its score provenance and no-candidate conclusions remain applicable; its data-availability snapshot is historical.
 
 ## Verdict
 

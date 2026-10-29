@@ -1,4 +1,6 @@
-# GEMSDOE36 research review — 29 October 2026
+# GEMSDOE36 research review — 29 October 2026 (earlier hypothesis-screen snapshot)
+
+> **Superseded as the current release/status report by [`review-20261029.md`](review-20261029.md).** This earlier review accurately records its own checkout at that time, when the numeric cache was absent. A later prepare pass populated `.cache/gems_work/bands` with 19 feature arrays plus footprint/labels. The GDR working CSV still lacks assay columns, the lane remains unassigned, and no hypothesis was tested. The current report also includes the 10-raster/eight-content duplicate audit and strict archive-format results.
 
 ## Executive decision
 

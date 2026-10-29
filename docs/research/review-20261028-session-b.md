@@ -1,5 +1,7 @@
 # Review — 28 October 2026, session B (owner brief re-supplied)
 
+> **Historical snapshot; superseded as current status by the [29 October review](review-20261029.md).** The 29 October pinned-byte re-audit found a second duplicate group: GEMSDOE28's 40,199-dot h27-4 alternate is identical to GEMSDOE31's h27-4 file. This is not GEMSDOE28's 37,660-dot h36-1 historical-best. The later review card and machine-readable content audit are authoritative for current status and duplicate scope.
+
 **Decision: NO SUBMISSION TIFF. Verdict negative.** No candidate was generated, no experiment was run (0 of 3 budgeted), and no weekly slot was used. The run card is [`evidence/session_review_20261028b_run_card.json`](../../evidence/session_review_20261028b_run_card.json).
 
 Core values applied: **Maximize P(Win)** — the blocked path is named, not forced. **Own the Outcome** — every blocker is listed with the decision that unblocks it.

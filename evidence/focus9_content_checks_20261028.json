@@ -1,6 +1,6 @@
 {
   "schema": "gemsdoe36.focus9-content-checks.v1",
-  "checked_utc": "2026-10-28T16:39:04+00:00",
+  "checked_utc": "2026-10-29T18:07:05+00:00",
   "inputs_note": "Hash-pinned owner-mirror or GitHub-commit bytes; not organizer-authenticated.",
   "b2_lineage": {
     "d28_dots": 44090,
@@ -12,22 +12,47 @@
     "kept_b2_dots_within_2px_of_catalogue": 0,
     "verdict": true
   },
-  "nine_site_distinct_contents": 8,
-  "nine_site_content_duplicate_groups": [
-    [
-      {
-        "file": "GEMSDOE25",
-        "sha256_12": "91eae1ca42ec",
-        "outside_encoding": "nan",
-        "dots": 44090
-      },
-      {
-        "file": "GEMSDOE30",
-        "sha256_12": "8cf893ead566",
-        "outside_encoding": "zeros",
-        "dots": 44090
-      }
-    ]
+  "audited_reference_raster_count": 10,
+  "distinct_in_footprint_contents": 8,
+  "content_duplicate_groups": [
+    {
+      "comparison": "identical positive-pixel mask and identical in-footprint values",
+      "artifacts": [
+        {
+          "site": "GEMSDOE25",
+          "filename": "gems25-dotted-h19-5-d2-8-20261002-e56ea318af89-nan.tif",
+          "sha256": "91eae1ca42ec845eaa8c2ba32da49806e24751743459b8a10017c479bbe639b8",
+          "outside_encoding": "nan",
+          "dots": 44090
+        },
+        {
+          "site": "GEMSDOE30",
+          "filename": "gemsdoe30-d28-poisson300m-offcat-44090-20261003T233156Z-91eae1ca.tif",
+          "sha256": "8cf893ead5667df21d3288a9968c35fd5385c425b029d82ee71d311715b129fd",
+          "outside_encoding": "zeros",
+          "dots": 44090
+        }
+      ]
+    },
+    {
+      "comparison": "identical positive-pixel mask and identical in-footprint values",
+      "artifacts": [
+        {
+          "site": "GEMSDOE28",
+          "filename": "gems28-h27-4-r1-solo-d2-8-20261003-8acb75e1f2cc-nan.tif",
+          "sha256": "ab02300152248fdda04e988e2cd2a0c13f35eec42fcf670a15e8b76b19e24a73",
+          "outside_encoding": "nan",
+          "dots": 40199
+        },
+        {
+          "site": "GEMSDOE31",
+          "filename": "gemsdoe31-h27-4-solo-d28-20261004-8acb75e1-nan.tif",
+          "sha256": "07b6db440535404bb41ec8ddc797713e200d308e3da35937393efde5eb84bc40",
+          "outside_encoding": "nan",
+          "dots": 40199
+        }
+      ]
+    }
   ],
   "gemsdoe25_vs_gemsdoe30": {
     "gemsdoe25_sha256": "91eae1ca42ec845eaa8c2ba32da49806e24751743459b8a10017c479bbe639b8",

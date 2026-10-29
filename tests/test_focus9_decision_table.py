@@ -70,3 +70,33 @@ def test_public_machine_readable_mirrors_match_repo_evidence():
         ("evidence/focus_sites_9repo_summary_20261026.json", "docs/downloads/focus9-historical-summary-20261026.json"),
     ):
         assert load(source) == load(public_copy)
+
+
+def test_content_audit_identifies_ten_artifacts_and_the_gemsdoe28_alternate():
+    audit = load("evidence/focus9_content_checks_20261028.json")
+    public = load("docs/downloads/focus9_content_checks_20261028.json")
+    historical = load("evidence/focus_sites_9repo_summary_20261026.json")
+    assert audit == public
+    assert audit["audited_reference_raster_count"] == 10
+    assert audit["distinct_in_footprint_contents"] == 8
+
+    pairs = audit["content_duplicate_groups"]
+    assert len(pairs) == 2
+    by_sites = {frozenset(x["site"] for x in group["artifacts"]): group for group in pairs}
+    assert set(by_sites) == {
+        frozenset({"GEMSDOE25", "GEMSDOE30"}),
+        frozenset({"GEMSDOE28", "GEMSDOE31"}),
+    }
+    group = by_sites[frozenset({"GEMSDOE28", "GEMSDOE31"})]
+    artifacts = {x["site"]: x for x in group["artifacts"]}
+    assert artifacts["GEMSDOE28"]["filename"] == (
+        "gems28-h27-4-r1-solo-d2-8-20261003-8acb75e1f2cc-nan.tif"
+    )
+    assert artifacts["GEMSDOE31"]["filename"] == (
+        "gemsdoe31-h27-4-solo-d28-20261004-8acb75e1-nan.tif"
+    )
+    best = next(x["highest_historical_submission"] for x in historical["focus_sites"]
+                if x["site"] == "GEMSDOE28")
+    assert best["name"].startswith("gems28-h36-1-")
+    assert best["dots"] == 37660
+    assert best["name"] != artifacts["GEMSDOE28"]["filename"]

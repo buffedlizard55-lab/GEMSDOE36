@@ -1,16 +1,16 @@
 #!/usr/bin/env python3
-"""Read-only content checks on the pinned nine-site rasters (28 Oct 2026 session).
+"""Read-only content checks on the pinned Focus-9 rasters and one family comparator.
 
-Verifies three claims from the owner/executive pages against the pinned bytes:
+Verifies three claims against SHA-pinned bytes:
   1. GEMSDOE32 B2 is a strict subset of the 44,090-dot GEMSDOE25 raster, with exactly
      6,436 dots removed, none added, and every removed dot 1-2 px from the catalogue.
-  2. Which of the nine pinned rasters have identical content (in-footprint values and
-     positive pixels), ignoring the outside-footprint encoding.
+  2. Exact in-footprint duplicates among the nine pinned historical-best rasters plus
+     the GEMSDOE28 h27-4 family comparator, ignoring outside-footprint encoding.
   3. Whether GEMSDOE25 and GEMSDOE30 differ only in outside-footprint encoding.
 
 Requires restored inputs: data/raw/sample_submission.tif, data/raw/labels.tif and the
 focus rasters in data/registry/scored/ (copied from .cache/focus_registry by
-scripts/fetch_pinned_focus_rasters.py). Writes evidence/focus9_content_checks_20261028.json.
+scripts/fetch_pinned_focus_rasters.py). Writes a dated-snapshot evidence JSON.
 """
 
 from __future__ import annotations
@@ -102,7 +102,9 @@ def main() -> int:
             encoding = "zeros"
         else:
             encoding = "other"
-        records.append({"name": path.name, "sha256": sha256(path), "inside": inside, "pos": pos,
+        site, filename = path.name.split("__", 1)
+        records.append({"site": site, "filename": filename, "name": path.name,
+                        "sha256": sha256(path), "inside": inside, "pos": pos,
                         "encoding": encoding, "dots": int(pos.sum())})
 
     groups: list[list[int]] = []
@@ -119,8 +121,19 @@ def main() -> int:
                 assigned.add(j)
         groups.append(group)
     duplicates = [
-        [{"file": records[k]["name"].split("__", 1)[0], "sha256_12": records[k]["sha256"][:12],
-          "outside_encoding": records[k]["encoding"], "dots": records[k]["dots"]} for k in g]
+        {
+            "comparison": "identical positive-pixel mask and identical in-footprint values",
+            "artifacts": [
+                {
+                    "site": records[k]["site"],
+                    "filename": records[k]["filename"],
+                    "sha256": records[k]["sha256"],
+                    "outside_encoding": records[k]["encoding"],
+                    "dots": records[k]["dots"],
+                }
+                for k in g
+            ],
+        }
         for g in groups if len(g) > 1
     ]
 
@@ -142,8 +155,9 @@ def main() -> int:
         "checked_utc": datetime.now(timezone.utc).isoformat(timespec="seconds"),
         "inputs_note": "Hash-pinned owner-mirror or GitHub-commit bytes; not organizer-authenticated.",
         "b2_lineage": lineage,
-        "nine_site_distinct_contents": len(groups),
-        "nine_site_content_duplicate_groups": duplicates,
+        "audited_reference_raster_count": len(records),
+        "distinct_in_footprint_contents": len(groups),
+        "content_duplicate_groups": duplicates,
         "gemsdoe25_vs_gemsdoe30": pair,
     }
     OUT.write_text(json.dumps(result, indent=2, allow_nan=False) + "\n", encoding="utf-8")
