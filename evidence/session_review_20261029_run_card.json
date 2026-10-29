@@ -1,0 +1,83 @@
+{
+  "schema": "gemsdoe36.run-card.v2",
+  "session_date_utc": "2026-10-29",
+  "lane_id": null,
+  "hypothesis": "No experiment selected. Ranked proposals are documented in docs/research/review-20261029-hypothesis-screen.md; rank 1 is a multianalyte hydrochemical mixing-front feature from DOE GDR 1391, conditional on a data audit and lane authorization.",
+  "mechanism": "Not tested. Candidate mechanism: faults may provide permeable conduits for deep fluids, yielding spatially coherent water-rock interaction chemistry beyond mapped faults.",
+  "named_non_fault_process_that_could_mimic_it": "Evaporative concentration, lithologic weathering, irrigation return flow, sample contamination, and differing aquifer depths.",
+  "holdout": {
+    "label": "HOLDOUT-DTI",
+    "evaluator_version": null,
+    "withheld_positive_pixels": null,
+    "dti": null,
+    "ci95": null,
+    "status": "NOT RUN: lane is unassigned and the required full numeric feature stack is absent; the restored GDR working CSV lacks elemental assay columns."
+  },
+  "leakage_canary": {
+    "status": "NOT RUN",
+    "per_feature_auc": null
+  },
+  "registry_comparison": {
+    "new_surface_rank_correlation": null,
+    "new_candidate_final_dot_overlap": null,
+    "status": "NOT RUN: no candidate surface or dot raster generated. Prior reg-052 bound is historical evidence only."
+  },
+  "raster_sha256": null,
+  "validator_output": {
+    "no_nan_inside_footprint": null,
+    "values_in_0_1": null,
+    "crs_shape_transform_match": null,
+    "status": "NOT RUN: no TIFF generated."
+  },
+  "submission_name": null,
+  "submission_note": "No candidate TIFF generated; no weekly slot selected.",
+  "verdict": "negative",
+  "experiments_run": 0,
+  "slot_selected": false,
+  "ok_to_download_and_submit": false,
+  "ok_to_download_for_research": false,
+  "reason": "The method-lane assignment is not unambiguous in the preserved brief. Core and external owner-mirror rasters were restored and prepared, but there is no full numeric cached feature stack; the restored GDR working CSV lacks elemental chemistry analytes. The literal registry gate also forces a stop at historical candidate densities against reg-052; no threshold or registry control was changed.",
+  "verification": {
+    "restored_groups": "core, external, scored comparison-only",
+    "verified_file_count": 30,
+    "restore_manifest_hashes_passed": true,
+    "organizer_authentication": false,
+    "prepare_data": "PASS: 19 bands; EPSG:32611; shape 3730x3292; 5,167,373 footprint cells; 60,988 catalogue positives; 58,171 sentinel band-pixels.",
+    "gdr_working_csv": {
+      "rows": 27092,
+      "fields": ["layer", "name", "thermalclass", "row", "col", "utm_x", "utm_y", "dist_known_fault_px", "temp_c", "geothermquartz_c", "geothermchalc_c", "geothermcat_c"],
+      "elemental_assay_fields_present": false,
+      "banned_label_derived_column": "dist_known_fault_px"
+    },
+    "run_checks": "198 passed, 1 skipped; Ruff and Pages site check passed after merging latest main and restoring all groups. The only skip is optional Torch orientation coverage."
+  },
+  "historical_comparator": {
+    "name": "GEMSDOE32 B2, as listed by the user",
+    "score": 0.2778,
+    "label": "OWNER-REPORTED; no submission-page receipt archived",
+    "candidate_score_estimate": null,
+    "note": "Historical number is not a projected score and does not establish why the submission performed as reported."
+  },
+  "source_audit": {
+    "gdr_1391_public_listing": "Official GDR page lists aqueous chemistry and publicly accessible CC terms. Restored the SHA-pinned owner-mirror core, external, and scored comparison groups (30 files total) and checked their manifest hashes. The local derived GDR CSV has 27,092 rows and only location, temperature, and geothermometry fields (plus a banned label-derived fault-distance column); the source-page chemistry archive itself was not fetched. No major-ion/trace-element assay coverage is verified.",
+    "core_external_restore": "PASS: core and external groups restored from pinned owner mirrors; all manifest hashes matched and preparation grid check passed. Owner-mirror hashes are not organizer authentication.",
+    "scored_comparison_mirrors": "PASS: scored group restored to complete the local comparison registry; these are comparison-only historical rasters, not proposal features or submission choices.",
+    "literal_registry_preflight": {
+      "reference": "reg-052",
+      "reference_sha256": "b4570b406efec198eb2f4d142ad8d0d6184b14b66f2f52b5c4d697f0647dc9b2",
+      "candidate_distinct_dots": 37654,
+      "covered_footprint_cells_within_3px": 5160724,
+      "uncovered_footprint_cells": 6649,
+      "minimum_overlap_dots": 31005,
+      "minimum_overlap_fraction": 0.8234184947150369,
+      "literal_threshold": 0.7,
+      "first_budget_forced_over_threshold": 22164,
+      "command_exit_code": 2,
+      "interpretation": "STOP under literal protocol; lattice coverage makes this overlap test degenerate, not proof of candidate duplication."
+    },
+    "prepared_grid": "EPSG:32611, 3730 x 3292, 5,167,373 footprint cells; 19 bands; 60,988 catalogue-positive pixels; 58,171 sentinel band-pixels sanitized by prepare_data.py.",
+    "feature_cache": "No full numeric cached stack in data/prepared/; only manifest and small summary JSON.",
+    "landsat_collection2_access": "Official USGS pages confirm products and no-cost open-data policy; AOI scene coverage not verified.",
+    "3dep_access": "Official USGS pages confirm program/access routes; AOI coverage and product resolution not verified."
+  }
+}
