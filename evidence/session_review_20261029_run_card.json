@@ -2,9 +2,9 @@
   "schema": "gemsdoe36.parallel_run_card.v2",
   "review_date_utc": "2026-10-29",
   "lane_id": null,
-  "hypothesis": "No hypothesis was tested: the required single-method lane paragraph is not specified in the supplied prompt. The highest-priority untested research lead is a persistent groundwater-head barrier, conditional on adequate independent well time-series coverage.",
-  "mechanism": "No new mechanism was implemented or measured. For the historical GEMSDOE32 B2 raster, pinned-byte analysis verifies that 6,436 dots near the known-fault catalogue were removed from a 44,090-dot D2.8 family raster and no dots were added. Pruning could reduce false-positive mass, but hidden truth and a submission receipt are unavailable, so this is not a causal explanation of the reported score.",
-  "named_non_fault_mimic": "For the leading proposed groundwater-head hypothesis: pumping cones, well-screen depth differences, recharge boundaries, lithologic boundaries, and temporally unbalanced measurements can mimic a fault-related hydraulic-head break.",
+  "hypothesis": "No hypothesis was tested: the required single-method lane paragraph is not specified. The leading previously unimplemented research lead is a hydrochemical mixing-front feature from DOE GDR 1391, conditional on retrieving and auditing independent multi-analyte samples; the restored working CSV has no chemistry analytes.",
+  "mechanism": "No new mechanism was implemented or measured. A concealed fault can conduct deep fluid and create a localized water-rock interaction signature; an independently replicated cross-strike chemistry transition could reveal an off-catalogue conduit. The restored GDR working CSV only contains temperature/geothermometry fields, and the source chemistry tables were not fetched. For the historical GEMSDOE32 B2 raster, pinned-byte analysis verifies 6,436 dots were removed from a 44,090-dot D2.8 family raster and none were added; this is not a causal score explanation.",
+  "named_non_fault_mimic": "For hydrochemical mixing: evaporative concentration, lithologic weathering, irrigation return flow, sample contamination, and differing aquifer depths.",
   "experiments_run_this_session": 0,
   "experiment_budget": {
     "maximum_experiments": 3,
@@ -16,74 +16,73 @@
   "candidate_hypotheses": [
     {
       "rank": 1,
-      "name": "Persistent observed groundwater-head barrier",
+      "name": "Hydrochemical mixing-front / deep-fluid fingerprint",
       "layers_or_inputs": [
-        "USGS Water Data groundwater-level observations, timestamps, well coordinates, and screen metadata",
-        "cached 12_det_elev DEM and selected geophysical context for terrain and basin controls"
+        "DOE GDR 1391 independent spring/well chemistry tables, if analyte columns are available",
+        "Cached location/elevation and selected geophysical context; exclude all catalogue-distance-derived columns"
       ],
-      "physical_signature": "A cross-strike hydraulic-head gradient break that persists across seasons and is supported by multiple independent wells, rather than a one-date anomaly.",
-      "off_catalogue_rationale": "A concealed fault core can compartmentalize groundwater without producing a mapped surface scarp; independent hydraulic measurements could reveal that barrier away from catalogue traces.",
-      "difference_from_repository": "GVSC-36 contains a DEM-derived hydraulic-head proxy, not an observed multi-well, multi-date groundwater-head surface. This proposal requires measured well time series and is not an implementation of that proxy.",
+      "physical_signature": "A spatially coherent cross-strike transition in normalized major-ion/trace-element relationships, replicated across independent samples.",
+      "off_catalogue_rationale": "A fault can conduct deep fluids and create a localized water-rock interaction signature beyond mapped catalogue traces.",
+      "difference_from_repository": "csdl_features.py and ctrb.py use temperatures, geothermometry, vents, and shallow probes; no validated multi-analyte compositional mixing field was found.",
       "named_mimics": [
-        "pumping cones",
-        "well-screen differences",
-        "recharge boundaries",
-        "lithologic boundaries",
-        "measurement-date bias"
+        "evaporative concentration",
+        "lithologic weathering",
+        "irrigation return flow",
+        "sample contamination",
+        "aquifer-depth differences"
       ],
-      "official_source": "https://api.waterdata.usgs.gov/",
-      "availability_check": "NOT VERIFIED IN THIS SESSION: USGS hosts are outside the sandbox outbound allowlist. A prior repository review records one exploratory well location and no time-series metadata for that well; that does not establish usable footprint coverage.",
-      "qualitative_expected_holdout_increment": "Highest of this screen only if repeated, independent well coverage exists; otherwise likely negligible. No numeric DTI projection is defensible.",
-      "implementation_cost": "High",
-      "status": "BLOCKED; not viable until source coverage, time-series density, datum, screen depth, and sharing terms are checked."
+      "official_source": "https://gdr.openei.org/submissions/1391",
+      "availability_check": "The restored 27,092-row working CSV has location, temperature, and geothermometry columns but no major-ion or trace-element assays. dist_known_fault_px is label-derived and prohibited. The original source chemistry tables were not fetched or audited in this turn.",
+      "qualitative_expected_holdout_increment": "Highest conditional scientific upside in this screen, but expected DTI is unknown and depends on sufficient independent, quality-controlled chemistry samples. No numeric projection.",
+      "implementation_cost": "Medium-high",
+      "status": "BLOCKED; not eligible until official chemistry tables, hashes, missingness, sample density, coordinates, and terms are audited; lane assignment is also absent."
     },
     {
       "rank": 2,
-      "name": "Seasonal Landsat thermal phase and persistence",
+      "name": "Seasonal vegetation / soil-moisture persistence",
       "layers_or_inputs": [
-        "USGS Landsat Collection 2 Level-2 surface temperature (ST_B10) and reflectance bands across repeated seasons",
-        "cached 10 m-derived DEM terrain controls and surface reflectance/land-cover covariates"
+        "Multi-date Landsat Collection 2 Level-2 surface-reflectance NIR/SWIR indices",
+        "Cached terrain and land-cover covariates for controls"
       ],
-      "physical_signature": "A narrow thermal anomaly with repeatable seasonal persistence or phase behavior after cloud, terrain, albedo, vegetation, and soil-moisture controls.",
-      "off_catalogue_rationale": "Persistent shallow upflow can alter surface thermal behavior along a concealed permeable structure that is absent from a fault-line catalogue.",
-      "difference_from_repository": "Existing geothermal information is largely point-probe/geothermometer data; no audited multi-date satellite thermal phase-lag surface is implemented in the repository.",
+      "physical_signature": "Seasonal amplitude and robustly recurring moisture/vegetation anomaly, not a one-date greenness signal.",
+      "off_catalogue_rationale": "Sustained shallow moisture or vegetation anomalies may reveal diffuse geothermal discharge or a fault-controlled groundwater pathway without a mapped scarp.",
+      "difference_from_repository": "No multi-date vegetation/moisture persistence feature was found; this is distinct from the previously discussed thermal-infrared phase-lag proposal.",
       "named_mimics": [
-        "albedo",
-        "vegetation",
-        "soil moisture",
         "irrigation",
-        "topographic illumination",
-        "cloud or atmospheric artifacts",
-        "lithology"
+        "vegetation communities",
+        "recent precipitation",
+        "elevation/aspect",
+        "grazing",
+        "soil and land-cover change"
       ],
-      "official_source": "https://www.usgs.gov/landsat-missions/landsat-collection-2-level-2-science-products",
-      "availability_check": "NOT VERIFIED IN THIS SESSION: USGS hosts are outside the sandbox outbound allowlist. Suitable scene dates, cloud-free footprint coverage, processing terms, and 100 m signal-to-noise have not been checked.",
-      "qualitative_expected_holdout_increment": "Potentially useful for geothermal upflow but lower confidence than rank 1 until scene coverage and confounders are quantified. No numeric DTI projection is defensible.",
+      "official_source": "https://www.usgs.gov/centers/eros/science/usgs-eros-archive-landsat-archives-landsat-8-9-olitirs-collection-2-level-2",
+      "availability_check": "The official product/access route is documented in the prior hypothesis-screen review; this turn did not query AOI scene inventory, cloud-free seasonal coverage, or source services.",
+      "qualitative_expected_holdout_increment": "Moderate conditional potential; expected DTI unknown. Scene density, resolution, and confounders determine value.",
       "implementation_cost": "High",
-      "status": "BLOCKED; source access and scene-level availability not established."
+      "status": "BLOCKED; no scene inventory, cloud-screened seasonal sample, 100 m utility, or lane assignment."
     },
     {
       "rank": 3,
-      "name": "Multi-contact displacement consensus",
+      "name": "Paired lateral channel deflection / reach offset",
       "layers_or_inputs": [
-        "Independent USGS National Geologic Map Database or Nevada Bureau of Mines and Geology contact/unit geometry at suitable map scale",
-        "cached 12_det_elev, 02_rtp, and gravity-gradient context for registration and corroboration"
+        "Finest suitable bare-earth USGS 3DEP DEM",
+        "Derived channel centerlines and cached geophysical context for corridor controls"
       ],
-      "physical_signature": "Two or more independent mapped unit contacts show a consistent, geometrically coherent offset or truncation across the same narrow corridor.",
-      "off_catalogue_rationale": "Consistent displacement of independent contacts may reveal a concealed fault where no catalogue trace is mapped, unlike a simple contact-strength detector.",
-      "difference_from_repository": "MTO explored contact orientation/crosscut concepts; this proposed statistic requires matched displacement geometry across multiple independent contacts, not merely contact alignment or lineament intersection.",
+      "physical_signature": "Repeated paired channel deflection or reach offset across multiple nearby drainages at one corridor.",
+      "off_catalogue_rationale": "Consistent planform displacement can record fault kinematics independently of one elevation edge or longitudinal knickpoint.",
+      "difference_from_repository": "TCD includes slope, curvature, chi/steepness, knickpoint, and ridge-worm measures; no paired cross-corridor lateral channel-offset statistic was found.",
       "named_mimics": [
-        "depositional pinch-outs",
-        "erosional unconformities",
-        "map generalization",
-        "geologic-unit boundaries unrelated to faulting",
-        "registration error"
+        "alluvial-fan distributaries",
+        "lithologic boundaries",
+        "landslides",
+        "roads or ditches",
+        "channel-extraction artifacts"
       ],
-      "official_source": "https://ngmdb.usgs.gov/ngmdb/ngmdb_home.html",
-      "availability_check": "NOT VERIFIED IN THIS SESSION: USGS hosts are outside the sandbox outbound allowlist. No appropriately scaled, footprint-covering, shareable map has been confirmed, and any map encoding the withheld fault catalogue would be a leakage risk.",
-      "qualitative_expected_holdout_increment": "Lower prior than ranks 1-2 because map scale and catalog leakage are serious constraints; no numeric DTI projection is defensible.",
-      "implementation_cost": "Medium-high",
-      "status": "BLOCKED; map coverage, rights, registration accuracy, and catalogue independence are unverified."
+      "official_source": "https://www.usgs.gov/tools/download-data-maps-national-map",
+      "availability_check": "The repository has a 100 m derivative but not the raw channel geometry needed here. No raw DEM tile inventory, resolution continuity, or source/licensing record was verified in this turn.",
+      "qualitative_expected_holdout_increment": "Lower-to-moderate conditional potential; expected DTI unknown.",
+      "implementation_cost": "High",
+      "status": "BLOCKED; raw DEM availability and lane assignment are unverified."
     }
   ],
   "data_readiness": {
@@ -98,7 +97,39 @@
     "prepared_manifest": "data/prepared_manifest.json",
     "restore_receipt": "data/restore_receipt.json",
     "preparation_command": ".venv/bin/python scripts/prepare_data.py",
-    "owner_mirror_note": "All inputs were restored from SHA-pinned GitHub owner mirrors. Hash/grid validation establishes mirror integrity, not organizer authentication. No DrivenData login or organizer receipt is available."
+    "owner_mirror_note": "All inputs were restored from SHA-pinned GitHub owner mirrors. Hash/grid validation establishes mirror integrity, not organizer authentication. No DrivenData login or organizer receipt is available.",
+    "numeric_feature_cache": {
+      "directory": ".cache/gems_work/bands",
+      "array_files": 21,
+      "feature_band_arrays": 19,
+      "support_arrays": [
+        "footprint",
+        "labels"
+      ],
+      "bytes": 957781264,
+      "status": "PRESENT locally and ignored by Git; data/prepared/ contains manifest and small summary, not the numeric arrays."
+    },
+    "gdr_working_csv": {
+      "path": "data/raw/external/gdr_wellspring_in_footprint.csv",
+      "data_rows": 27092,
+      "fields": [
+        "layer",
+        "name",
+        "thermalclass",
+        "row",
+        "col",
+        "utm_x",
+        "utm_y",
+        "dist_known_fault_px",
+        "temp_c",
+        "geothermquartz_c",
+        "geothermchalc_c",
+        "geothermcat_c"
+      ],
+      "major_ion_or_trace_element_assays_present": false,
+      "prohibited_label_derived_column": "dist_known_fault_px",
+      "source_archive_audited_this_turn": false
+    }
   },
   "holdout": {
     "label": "HOLDOUT-DTI",
@@ -107,7 +138,7 @@
     "withheld_positive_pixels": null,
     "dti": null,
     "ci95": null,
-    "reason": "No assigned single-method lane; the proposed top hypothesis also requires observed groundwater data that were not obtainable from this sandbox.",
+    "reason": "No assigned single-method lane; the leading GDR hydrochemical proposal is blocked because the restored working CSV has no assay columns and the original chemistry tables were not fetched. The shared evaluator was therefore not run on a new candidate.",
     "historical_reference_not_rerun": {
       "arm": "S2D-36 EXP-2",
       "label": "HOLDOUT-DTI",
@@ -216,10 +247,11 @@
     "The GEMSDOE28 alternate h27-4 file is content-identical to GEMSDOE31's historical-best h27-4 file; GEMSDOE28's selected h36-1 historical-best is not the member of this duplicate pair.",
     "The current prompt reports a 0.3195 leaderboard high, while the prior repository snapshot records a public leaderboard observation of 0.4544 on 2026-10-28. The discrepancy is not resolved because the competition page was not accessible this session.",
     "The official cause of the user's [0,1] portal error is unknown; no rejected TIFF or portal validation trace is available.",
-    "All nine pinned historical champions fail pairwise uniqueness against at least one of the other eight; the current, full registry has not been refreshed."
+    "All nine pinned historical champions fail pairwise uniqueness against at least one of the other eight; the current, full registry has not been refreshed.",
+    "The restored GDR working CSV has no major-ion or trace-element assay columns; its dist_known_fault_px field is label-derived and prohibited as a predictor. The full cached 19-band numeric stack is present locally; this supersedes earlier 29 October checkout notes that only a manifest/summary were available."
   ],
   "verdict": "negative",
-  "reason": "No method lane was assigned and the literal registry gate remains non-passable at the historical budget. Although the core owner-mirror data are now restored and prepared, there is no candidate to evaluate; no external-data lead is viable until its official source coverage is checked. No TIFF was generated, no score estimate was made, and no weekly slot was selected.",
+  "reason": "No method lane was assigned and the literal registry gate remains non-discriminating at historical candidate densities. Core/external owner-mirror inputs and the 19-band numeric cache are present, but the leading hydrochemical lead lacks assay columns in the restored working CSV and external coverage remains unverified. No candidate was eligible for holdout; no TIFF, score estimate, or weekly-slot selection was made.",
   "historical_archive_audit": {
     "evidence": "evidence/downloads_validation_latest.json",
     "strict_outside_footprint_required": true,
@@ -235,5 +267,10 @@
     ],
     "audited_utc": "2026-10-29T18:09:27+00:00",
     "template_sha256": "2176d08e485aa2cd2860ce8df539db4faf4d76163b38a4dd8c30a40454d35cbc"
+  },
+  "source_audit": {
+    "gdr_1391_working_csv": "Inspected the restored 27,092-row working CSV schema. It has location, temperature, geothermometry, and label-derived dist_known_fault_px fields; no elemental assay columns. The official source-page chemistry archive was not fetched or audited in this turn.",
+    "feature_cache": "Present locally at .cache/gems_work/bands: 19 numeric feature arrays plus footprint/labels (21 arrays, 957,781,264 bytes). Ignored by Git.",
+    "landsat_and_3dep": "Prior hypothesis-screen review links official USGS product/access pages. No AOI scene/tile coverage query or new official-source fetch occurred in this turn."
   }
 }

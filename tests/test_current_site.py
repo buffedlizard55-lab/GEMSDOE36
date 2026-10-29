@@ -59,6 +59,13 @@ def test_current_publisher_is_idempotent_and_preserves_archived_lanes(tmp_path):
     assert current["latest_research_lane_s2d36"]["verdict"] == "negative"
     assert current["latest_research_lane_tcd36"]["verdict"] == "negative"
     card = json.loads((tmp_path / "evidence/session_review_20261029_run_card.json").read_text())
+    cache = card["data_readiness"]["numeric_feature_cache"]
+    gdr = card["data_readiness"]["gdr_working_csv"]
+    assert cache["feature_band_arrays"] == 19 and cache["array_files"] == 21
+    assert cache["bytes"] == 957_781_264
+    assert gdr["data_rows"] == 27_092
+    assert gdr["major_ion_or_trace_element_assays_present"] is False
+    assert gdr["prohibited_label_derived_column"] == "dist_known_fault_px"
     strict_audit = json.loads((tmp_path / "evidence/downloads_validation_latest.json").read_text())
     s2d_row = next(row for row in strict_audit["artifacts"]
                    if row["validator"]["path"] == card["historical_archive_audit"]["s2d36_exp2_path"])
@@ -96,9 +103,11 @@ def test_20261029_research_review_covers_scope_and_blockers():
     assert "10 reference rasters across nine sites and eight distinct in-footprint contents" in report
     assert "The GEMSDOE28 member is the **h27-4 alternate**, not GEMSDOE28's **h36-1 historical-best**" in report
     assert "Leading eligible hypothesis:** none" in report
-    assert "no new HOLDOUT-DTI was manufactured" in report
+    assert "no new HOLDOUT-DTI was run" in report
     assert "0.3195 USER-REPORTED" in report
-    assert "USGS Water Data API" in report
+    assert "DOE GDR 1391" in report
+    assert "957,781,264 bytes" in report
+    assert "27,092 rows" in report
     assert "200 passed, 1 skipped" in report
     assert "No new candidate TIFF" in report
 

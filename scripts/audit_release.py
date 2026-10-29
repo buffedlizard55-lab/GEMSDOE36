@@ -15,13 +15,9 @@ from gemsdoe36.paths import data_dir
 from gemsdoe36.submission import sha256_file, validate_submission
 
 
-def validate_archived_raster(path: Path, template: Path):
-    """Apply the same strict official-format rule regardless of artifact filename.
-
-    Historical zeros-outside files are intentionally reported as format failures;
-    filenames and archived self-promotion cards never relax the null/NaN outside rule.
-    """
-    return validate_submission(path, template, require_nonfinite_outside=True)
+def validate_archive_raster(path: Path, template: Path) -> dict:
+    """Use strict outside-footprint handling regardless of historical filename."""
+    return validate_submission(path, template, require_nonfinite_outside=True).to_dict()
 
 
 def archive_review_row(path: Path, digest: str, report: dict, atvr_card: dict) -> dict:
@@ -56,7 +52,8 @@ def main() -> int:
 
     rows = []
     for path in sorted((ROOT / "docs/downloads").glob("*.tif")):
-        report = validate_archived_raster(path, template).to_dict()
+        # Historical suffixes are metadata, not format authorization.
+        report = validate_archive_raster(path, template)
         report["path"] = str(path.relative_to(ROOT))
         rows.append(archive_review_row(path, sha256_file(path), report, atvr_card))
 

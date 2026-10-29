@@ -4,8 +4,33 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "scripts"))
 
-import audit_release  # noqa: E402
-from audit_release import archive_review_row  # noqa: E402
+from audit_release import archive_review_row, validate_archive_raster  # noqa: E402
+
+
+def test_archive_raster_always_uses_strict_outside_footprint_rule(monkeypatch):
+    import audit_release
+
+    calls = []
+
+    class Report:
+        def to_dict(self):
+            return {"passed": False}
+
+    monkeypatch.setattr(
+        audit_release, "validate_submission",
+        lambda path, template, **kwargs: (calls.append(kwargs), Report())[1],
+    )
+    for name in (
+        "candidate-nan.tif",
+        "candidate-zeros.tif",
+        "gemsdoe36-atvr36-20261026.tif",
+    ):
+        validate_archive_raster(Path(name), Path("sample.tif"))
+    assert calls == [
+        {"require_nonfinite_outside": True},
+        {"require_nonfinite_outside": True},
+        {"require_nonfinite_outside": True},
+    ]
 
 
 def test_historical_format_and_claimed_promotion_cannot_authorize_slot():
@@ -13,25 +38,3 @@ def test_historical_format_and_claimed_promotion_cannot_authorize_slot():
         row = archive_review_row(Path(name), "abc", {"passed": True}, {"verdict": "promote"})
         assert row["submit_ready"] is False
         assert "DO NOT SUBMIT" in row["reason"]
-
-
-def test_archive_validation_is_strict_and_filename_invariant(monkeypatch):
-    calls = []
-
-    def fake_validate(path, template, *, require_nonfinite_outside):
-        calls.append((Path(path).name, Path(template).name, require_nonfinite_outside))
-        return object()
-
-    monkeypatch.setattr(audit_release, "validate_submission", fake_validate)
-    for name in (
-        "candidate-nan.tif",
-        "candidate-zeros.tif",
-        "gemsdoe36-atvr36-20261026.tif",
-    ):
-        audit_release.validate_archived_raster(Path(name), Path("sample_submission.tif"))
-
-    assert calls == [
-        ("candidate-nan.tif", "sample_submission.tif", True),
-        ("candidate-zeros.tif", "sample_submission.tif", True),
-        ("gemsdoe36-atvr36-20261026.tif", "sample_submission.tif", True),
-    ]

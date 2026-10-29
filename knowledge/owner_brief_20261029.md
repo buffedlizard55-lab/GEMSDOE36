@@ -17,10 +17,10 @@ No explicit lane was found. The literal `reg-052` lattice forces the >70%/3-px g
 
 ## Data and evidence
 
-- Restored and SHA-verified 30 owner-mirror files (591,020,452 bytes); prepared 19 bands; pinned-grid check passed (3,292 × 3,730, EPSG:32611). These owner mirrors are not organizer-authenticated.
+- Restored and SHA-verified 30 owner-mirror files (591,020,452 bytes); prepared 19 bands; the ignored numeric cache `.cache/gems_work/bands` contains 21 arrays (19 features plus footprint/labels; 957,781,264 bytes). The pinned-grid check passed (3,292 × 3,730, EPSG:32611). These owner mirrors are not organizer-authenticated.
 - Rechecked pinned rasters: 9 requested historical-best files plus one GEMSDOE28 family comparator = 10 rasters and 8 distinct in-footprint contents. Duplicate groups: GEMSDOE25/GEMSDOE30; GEMSDOE28 h27-4 alternate/GEMSDOE31 h27-4. **The GEMSDOE28 duplicate is not its h36-1 historical-best.**
 - No new holdout was run. The user-reported leaderboard 0.3195 is unverified; the old repository observation 0.4544 is not fresh and has no submission receipt.
-- Three external-data hypotheses and explicit access/data limits are in [`docs/research/review-20261029.md`](../docs/research/review-20261029.md). They are proposals only; no lane was inferred.
+- Three distinct untested proposals are ranked in [`docs/research/review-20261029.md`](../docs/research/review-20261029.md): hydrochemical mixing front, seasonal Landsat vegetation/moisture persistence, and paired lateral channel deflection. The leading GDR working CSV has no major-ion/trace-element columns; no lane was inferred and no holdout was run.
 
 ## Continuation artifacts
 
