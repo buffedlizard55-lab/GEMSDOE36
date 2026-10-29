@@ -1,8 +1,8 @@
-# GEMSDOE36 research review — 29 October 2026 (earlier hypothesis-screen snapshot)
+# GEMSDOE36 research review — 29 October 2026 (pre-GSEWC36 hypothesis-screen snapshot)
 
-> **Superseded as the current release/status report by [`review-20261029.md`](review-20261029.md).** This earlier review accurately records its own checkout at that time, when the numeric cache was absent. A later prepare pass populated `.cache/gems_work/bands` with 19 feature arrays plus footprint/labels. The GDR working CSV still lacks assay columns, the lane remains unassigned, and no hypothesis was tested. The current report also includes the 10-raster/eight-content duplicate audit and strict archive-format results.
+> **Historical pre-experiment screen; not the current result.** This snapshot accurately records its earlier checkpoint before GSEWC36-EXP1. The later current result is documented in [`hypothesis-screen-20261029.md`](hypothesis-screen-20261029.md) and [`evidence/gsewc36_run_card_20261029.json`](../../evidence/gsewc36_run_card_20261029.json). The pre-run release review is [`review-20261029.md`](review-20261029.md); its no-holdout wording is likewise limited to that checkpoint. The current release verdict remains negative, with no TIFF or slot.
 
-## Executive decision
+## Executive decision at this earlier checkpoint
 
 **DO NOT SUBMIT. No new TIFF was generated; no competition slot was selected.** During this review, the SHA-pinned owner mirrors for `core`, `external`, and scored comparison-only `scored` groups were restored (30 files total), and `prepare_data.py` was rerun. All manifest hashes/grid checks passed, but establish mirror integrity only—not organizer authentication. There is still no full numeric cached feature stack in `data/prepared/`; the directory has the prepared manifest and a small feature-summary JSON. The Python environment originally lacked NumPy, SciPy, Rasterio, scikit-learn, pytest, and Ruff; the declared project dependencies have now been installed into ignored `.venv/` for code-level checks.
 
@@ -10,7 +10,7 @@ The standing parallel-run protocol specifies one assigned method paragraph. No u
 
 The user-supplied `0.2778` for GEMSDOE32 B2 remains **OWNER-REPORTED**, not organizer-confirmed. The pinned forensic evidence in `evidence/focus9_content_checks_20261028.json` describes B2 as a strict subset of GEMSDOE25/30's D2.8-family mask after removing 6,436 catalogue-adjacent dots; that lineage alone cannot establish why the reported score occurred or predict a higher score. The existing nine-site table in `docs/executive-summary.html` is a historical snapshot and correctly reports no defensible score estimate for a new candidate.
 
-## Ranked hypothesis screen (ideas, not validated methods)
+## Ranked hypothesis screen at this earlier checkpoint (ideas, not validated methods)
 
 These are ranked by qualitative expected scientific upside, independent evidence, and feasibility—not by a numerical leaderboard-score estimate. **Expected DTI gain for every candidate is unknown.** The local code audit found no implementation of the exact feature recipe below, but that does not prove novelty across the nine other repositories. No hypothesis is promoted without the shared buffered whole-segment holdout, each feature's leakage canary, and both pre-placement surface and final-dot registry checks.
 

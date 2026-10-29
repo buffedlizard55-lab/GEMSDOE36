@@ -92,6 +92,16 @@ def validate_current(current: dict, stop: dict, stop_sha: str) -> list[str]:
     retained for archived manifests, but cannot grant a current v6 slot.
     """
     if current.get("schema") == "gemsdoe36.current-run.v6":
+        from publish_current_review import gsewc_public_projection, validate_gsewc36_evidence
+
+        try:
+            gsewc_card = validate_gsewc36_evidence(ROOT)
+            gsewc_path = ROOT / "evidence/gsewc36_run_card_20261029.json"
+            gsewc_expected = gsewc_public_projection(gsewc_card, gsewc_path)
+            if current.get("latest_unassigned_research_experiment") != gsewc_expected:
+                return ["Current manifest does not match the latest unassigned GSEWC36 research result"]
+        except (OSError, ValueError, KeyError, TypeError) as exc:
+            return [f"GSEWC36 research evidence invalid: {exc}"]
         card_path = ROOT / "evidence/session_review_20261029_run_card.json"
         try:
             card = json.loads(card_path.read_text())
@@ -169,7 +179,11 @@ def main() -> int:
         ensure_stop_card,
         parallel_dw_projection,
     )
-    from publish_current_review import build_focus_table, historical_lane
+    from publish_current_review import (
+        build_focus_table,
+        historical_lane,
+        validate_gsewc36_evidence,
+    )
 
     errors: list[str] = []
     mto = json.loads((ROOT / "evidence/mto36_run_card_20261026.json").read_text())
@@ -186,6 +200,11 @@ def main() -> int:
         ensure_parallel_dw(dw)
     except (RuntimeError, OSError, KeyError, StopIteration, ValueError) as exc:
         errors.append(f"Release evidence invalid: {exc}")
+
+    try:
+        validate_gsewc36_evidence(ROOT)
+    except (OSError, ValueError, KeyError, TypeError) as exc:
+        errors.append(f"GSEWC36 research evidence invalid: {exc}")
 
     try:
         focus_table = build_focus_table(
@@ -221,7 +240,9 @@ def main() -> int:
             if "noopener" not in rel.split():
                 errors.append(f"docs/{page}: target=_blank without rel=noopener: {href}")
         for phrase in ("DO NOT SUBMIT", "DOWNLOAD: YES", "Research downloads only", "HOLDOUT-DTI",
-                       "ORGANIZER-CONFIRMED", "0.2778", "0.1647 USER-REPORTED", "82.34%"):
+                       "ORGANIZER-CONFIRMED", "0.2778", "0.1647 USER-REPORTED", "82.34%",
+                       "GSEWC36-EXP1", "0.039712", "0.039523", "0.000189", "96.9645%",
+                       "GSEWC36 negative research run card"):
             if phrase not in text:
                 errors.append(f"docs/{page}: missing {phrase}")
         first_screen = text[: max(1, len(text) // 4)]
@@ -268,6 +289,15 @@ def main() -> int:
     else:
         errors.append("Missing docs/current-run.json")
     for original, copy in (
+        (ROOT / "evidence/gsewc36_run_card_20261029.json", DOCS / "downloads/gsewc36-run-card.json"),
+        (ROOT / "evidence/hypothesis_screen_20261029.json", DOCS / "downloads/hypothesis-screen-20261029.json"),
+        (ROOT / "evidence/gsewc36_prepared_manifest_at_run_20261029.json",
+         DOCS / "downloads/gsewc36-prepared-manifest-20261029.json"),
+        (ROOT / "evidence/gsewc36_restore_receipt_at_run_20261029.json",
+         DOCS / "downloads/gsewc36-restore-receipt-20261029.json"),
+        (ROOT / "evidence/gsewc36_current_restore_receipt_at_run_20261029.json",
+         DOCS / "downloads/gsewc36-current-restore-receipt-20261029.json"),
+        (ROOT / "evidence/session_review_20261028_audit_run_card.json", DOCS / "downloads/session-review-20261028-audit-run-card.json"),
         (ROOT / "evidence/session_review_20261029_run_card.json", DOCS / "downloads/session-review-20261029-run-card.json"),
         (ROOT / "evidence/focus9_content_checks_20261028.json", DOCS / "downloads/focus9_content_checks_20261028.json"),
         (ROOT / "evidence/downloads_validation_latest.json", DOCS / "downloads/strict-download-validation-20261029.json"),
@@ -355,7 +385,7 @@ def main() -> int:
     if errors:
         print("Site check FAILED:\n- " + "\n- ".join(errors))
         return 1
-    print("Site check passed: negative no-candidate run card, nine-site evidence, local links and research bundles verified")
+    print("Site check passed: negative release status, GSEWC36 result, nine-site evidence, links and research bundles verified")
     return 0
 
 

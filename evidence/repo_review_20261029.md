@@ -1,6 +1,6 @@
-# Repository review — 2026-10-29 (earlier checkout snapshot)
+# Repository review — 2026-10-29 (earlier pre-GSEWC36 checkout snapshot)
 
-> **Superseded as current status by [`docs/research/review-20261029.md`](../docs/research/review-20261029.md).** This checkout review preceded restoration of `data/raw/`; its missing-input statements are historical. The later review restored and grid-checked inputs, populated `.cache/gems_work/bands`, and reran the relevant tests.
+> **Historical pre-GSEWC36 checkout snapshot.** This review preceded restoration of `data/raw/` and the later candidate holdout. Its no-experiment and missing-input statements are historical only. Current result: [`docs/research/hypothesis-screen-20261029.md`](../docs/research/hypothesis-screen-20261029.md) and [`evidence/gsewc36_run_card_20261029.json`](gsewc36_run_card_20261029.json). No submission TIFF or slot is authorized.
 
 ## Scope and decision
 

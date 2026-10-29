@@ -1,10 +1,10 @@
-# Repository review — 29 October 2026 (earlier checkout snapshot)
+# Repository review — 29 October 2026 (earlier pre-GSEWC36 checkout snapshot)
 
-> **Superseded as current status by [`docs/research/review-20261029.md`](../docs/research/review-20261029.md).** This earlier snapshot predates restoration/preparation in the current checkout. Later review restored the owner mirrors, prepared the 19-band numeric cache, re-audited 10 focus rasters, and ran the strict archive audit. Its score provenance and no-candidate conclusions remain applicable; its data-availability snapshot is historical.
+> **Historical pre-GSEWC36 checkout snapshot.** This was written before the later candidate holdout. Its “no holdout” and missing-input statements describe that earlier checkout only. Current research outcome: [`docs/research/hypothesis-screen-20261029.md`](../docs/research/hypothesis-screen-20261029.md) and [`evidence/gsewc36_run_card_20261029.json`](gsewc36_run_card_20261029.json). No submission TIFF or slot is authorized.
 
 ## Verdict
 
-**Negative: no new TIFF is authorized or produced.** The current-run manifest remains `ok_to_download_and_submit: false`; no holdout result, candidate hash, or organizer receipt supports promotion. The supplied parallel-run rule requires stopping when either literal novelty condition fails. The 28 October review documents a missing method paragraph and a registry-coverage bound that forces >70% within-3-pixel overlap for candidates at or above 22,164 dots. The repository's own pairwise audit says all 72 directed pairs among the nine focus rasters exceed 70% overlap. Therefore changing a filename or thinning a previous raster would not meet the stated lane protocol and would not be a defensible submission.
+**Negative at that earlier checkpoint: no new TIFF was authorized or produced.** The release manifest remained `ok_to_download_and_submit: false`; no holdout result, candidate hash, or organizer receipt then supported promotion. The supplied parallel-run rule requires stopping when either literal novelty condition fails. The 28 October review documents a missing method paragraph and a registry-coverage bound that forces >70% within-3-pixel overlap for candidates at or above 22,164 dots. The repository's own pairwise audit says all 72 directed pairs among the nine focus rasters exceed 70% overlap. Therefore changing a filename or thinning a previous raster would not meet the stated lane protocol and would not be a defensible submission.
 
 ## Executive readout on requested focus sites
 

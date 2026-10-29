@@ -1,0 +1,159 @@
+{
+  "schema": "gemsdoe36.hypothesis-screen.v1",
+  "date_utc": "2026-10-29",
+  "status": "preregistered_before_implementation",
+  "scope": "Focus-9 review and at most one candidate holdout experiment; no submission slot selection.",
+  "historical_champion": {
+    "site": "GEMSDOE32",
+    "name": "h33-h33-2-b2-20261004T220000Z-e5eb6e7e-zeros",
+    "reported_score": 0.2778,
+    "score_label": "OWNER-REPORTED; no organizer receipt archived",
+    "verified_raster_lineage": "37,654-dot B2 is a strict subset of 44,090-dot GEMSDOE25 D2.8; 6,436 removed, 0 added; removed dots are within 1-2 pixels of the catalogue in the pinned local comparison.",
+    "causal_score_claim": "not established",
+    "source": "evidence/focus9_content_checks_20261028.json"
+  },
+  "candidates": [
+    {
+      "rank": 1,
+      "id": "GSEWC36",
+      "name": "Gaussian scale-space potential-field edge-width concordance",
+      "layers": [
+        "cached band 14: tmi",
+        "cached band 13: iso_grav_anom",
+        "cached band 15: depth_to_base_surf as a baseline covariate"
+      ],
+      "physical_signature": "Cross-sensor coincidence of scale-normalized edge response, peak scale/width, and axial gradient normal over Gaussian scales 1, 2, 4, 8 pixels.",
+      "off_catalogue_rationale": "A buried fault-related property boundary may be visible in both magnetic and gravity fields without a surface scarp or existing trace.",
+      "difference_from_repo": "No cross-sensor Gaussian scale-space peak-width concordance implementation was found in src/ or scripts/. Existing local gradients, Hessians, Euler sheet index, upward continuation, and cross-strike lags are related but not this statistic. A related width-change idea appeared in an older review but no run was found.",
+      "named_non_fault_mimic": "Intrusive/lithologic contacts, magnetization contrasts, and flight-line levelling seams.",
+      "new_external_data_required": false,
+      "relative_expected_improvement": "moderate research priority; unknown; no numeric DTI projection",
+      "implementation_cost": "low-to-medium",
+      "availability": "local cached bands; source bytes are SHA-pinned owner mirrors, not organizer-authenticated",
+      "selected_for_test": true
+    },
+    {
+      "rank": 2,
+      "id": "FGGC36",
+      "name": "Visible-fault graph gap closure with physical-edge support",
+      "layers": [
+        "visible-only labels.tif segments",
+        "cached potential-field edge stack"
+      ],
+      "physical_signature": "Short collinear, geophysically supported gaps between visible segment endpoints, scored with fold-safe endpoint orientation and graph connectivity.",
+      "off_catalogue_rationale": "An unrecorded strand or continuation may occupy a structural gap between independently mapped segments.",
+      "difference_from_repo": "No endpoint-graph centrality/gap-closure implementation was found. Related extension fields and line-placement methods are already implemented, increasing overlap risk.",
+      "named_non_fault_mimic": "Drainage channels, map-generalization gaps, and aligned lithologic contacts.",
+      "new_external_data_required": false,
+      "relative_expected_improvement": "low-to-moderate; unknown; no numeric DTI projection",
+      "implementation_cost": "medium-to-high",
+      "availability": "local labels/cache; fold-specific graph derivation required",
+      "selected_for_test": false
+    },
+    {
+      "rank": 3,
+      "id": "WSM36",
+      "name": "Regime-conditioned World Stress Map orientation prior",
+      "layers": [
+        "World Stress Map 2025 stress observations",
+        "cached geophysical edge orientations"
+      ],
+      "physical_signature": "Quality-weighted, regime-specific maximum horizontal stress orientation constraint; not a universal fault-trace azimuth.",
+      "off_catalogue_rationale": "Regional normal-faulting stress can help reject geophysical lineaments inconsistent with new fault orientations.",
+      "difference_from_repo": "No local WSM file or WSM-derived orientation likelihood found; existing strain features are not direct stress observations.",
+      "named_non_fault_mimic": "Poor-quality/mixed-regime stress records and lithologic contacts.",
+      "new_external_data_required": true,
+      "required_official_source": "GFZ Data Services, WSM Database Release 2025, DOI 10.5880/WSM.2025.001",
+      "obtainability_check": "Not obtainable in this sandbox session: GFZ/DOI hosts are outside the outbound allowlist and no source file is in the manifest. Blocked; not viable.",
+      "relative_expected_improvement": "unknown; no numeric DTI projection",
+      "implementation_cost": "high",
+      "selected_for_test": false
+    },
+    {
+      "rank": 4,
+      "id": "GDFL36",
+      "name": "GeoDAWN raw flight-line crossover and levelling residuals",
+      "layers": [
+        "raw GeoDAWN magnetic/radiometric profiles",
+        "line direction/crossover metadata",
+        "cached gridded bands"
+      ],
+      "physical_signature": "Retain anomalies repeated across crossing flight directions while downweighting line-aligned levelling artifacts.",
+      "off_catalogue_rationale": "Suppressing acquisition artifacts should reveal weaker geologic continuations in gridded fields.",
+      "difference_from_repo": "Current local methods use gridded bands and block/seam deconfounding; no raw-profile crossover adjustment found.",
+      "named_non_fault_mimic": "Acquisition striping, cultural infrastructure, and terrain-clearance effects.",
+      "new_external_data_required": true,
+      "required_official_source": "USGS GeoDAWN data release, DOI 10.5066/P93LGLVQ",
+      "obtainability_check": "Not obtainable in this sandbox session: the USGS/DOI hosts are outside the outbound allowlist; raw profile files are absent from the manifest. Blocked; not viable.",
+      "relative_expected_improvement": "unknown; no numeric DTI projection",
+      "implementation_cost": "high",
+      "selected_for_test": false
+    },
+    {
+      "rank": 5,
+      "id": "GWHB36",
+      "name": "Time-persistent groundwater-head barrier",
+      "layers": [
+        "observed USGS groundwater levels and station metadata",
+        "cached DEM/structure context"
+      ],
+      "physical_signature": "A repeatable head discontinuity across independent wells and seasons, rather than a single DEM-derived topographic gradient.",
+      "off_catalogue_rationale": "A buried low-permeability fault core may partition groundwater head where no surface trace is apparent.",
+      "difference_from_repo": "GVSC's hydraulic term is DEM-derived; no observed-well time-series barrier model is implemented.",
+      "named_non_fault_mimic": "Pumping cones, screen-depth differences, recharge, and lithology.",
+      "new_external_data_required": true,
+      "required_official_source": "USGS Water Data APIs, https://api.waterdata.usgs.gov/",
+      "obtainability_check": "Not obtainable in this sandbox session: the USGS API host is outside the outbound allowlist and no time-series data are local. AOI well density is unverified. Blocked; not viable.",
+      "relative_expected_improvement": "unknown; no numeric DTI projection",
+      "implementation_cost": "high",
+      "selected_for_test": false
+    }
+  ],
+  "experiment": {
+    "id": "GSEWC36-EXP1",
+    "max_model_experiments": 1,
+    "max_walltime_seconds": 7200,
+    "baseline": "B1 raw-19-band HistGradientBoosting with shared fold, sampled negatives, seeds, and emitter",
+    "candidate": "same baseline plus one pre-registered cross-sensor edge-width concordance feature",
+    "holdout": {
+      "function_source": "scripts/evaluate_holdout.py",
+      "evaluator_version": "gems36-segment-audit-v1",
+      "holdout": "whole 8-connected fault segments assigned whole to 4 spatial quadrants; 30-pixel/3 km training collar; pixel-exact exclusion of visible faults from scoring",
+      "metric": "pooled DTI; alpha=0.2; beta=0.8; 300 m triangular kernel",
+      "withheld_positive_count": 60988,
+      "bootstrap": "paired spatial-cell bootstrap; seed and replicate count recorded in run card"
+    },
+    "feature_canary": "each raw feature and new feature alone per fold; symmetric AUC > 0.90 triggers hard stop",
+    "dot_budget": 37654,
+    "promote_for_selector_only_if": "candidate improves on matched baseline with paired 95% CI strictly above zero and beats the best recorded result for the exact evaluator; all surface and final-dot registry checks pass",
+    "submission_slot_selected": false,
+    "submission_tif_written": false,
+    "candidate_feature_definition": {
+      "magnetic_band": "14_tmi",
+      "gravity_band": "13_iso_grav_anom",
+      "scales_sigma_px": [
+        1,
+        2,
+        4,
+        8
+      ],
+      "response": "sigma * hypot(d/dx G_sigma(field), d/dy G_sigma(field))",
+      "per_sensor_descriptor": "maximum scale-normalized response across scales, its argmax sigma, and its unit gradient normal",
+      "robust_normalization": "divide each sensor peak response by its own 99th percentile over that sensor valid four-sigma-eroded footprint support; clip to [0,1]; label-free and deterministic; the concordance is emitted only on joint support",
+      "concordance": "sqrt(magnetic_peak * gravity_peak) * exp(-abs(log(sigma_mag/sigma_grav))) * abs(dot(normal_mag, normal_grav))",
+      "missing_data_and_boundary_rule": "nearest-valid fill is for convolution only; exclude four-sigma halo from support; output zero outside joint support",
+      "units": "100 m grid; sigma in pixels"
+    }
+  },
+  "source_integrity": {
+    "competition_data_provenance": "SHA-pinned owner GitHub mirrors; hashes establish mirror consistency only, not organizer authentication",
+    "official_competition_pages_fetched_in_this_session": false,
+    "reason": "DrivenData, NLR, USGS, GFZ, and DOI hosts are outside the sandbox outbound allowlist; official links are provided for manual review, not represented as freshly fetched evidence."
+  },
+  "data_integrity": {
+    "labels_tif_sha256": "7ba308ccdc4418b31a178f4f1ef21aaa6e152e4028f2f6f64b01f7eb25ae4093",
+    "existing_faults_tif_sha256": "7ba308ccdc4418b31a178f4f1ef21aaa6e152e4028f2f6f64b01f7eb25ae4093",
+    "relationship": "Full SHA-256 equality and the pinned owner-mirror manifest both identify existing_faults.tif as byte-identical to labels.tif. This is a source-alias fact, not independent corroboration or organizer authentication.",
+    "source_ref": "registry/data_manifest.json; data/restore_receipt.json"
+  }
+}

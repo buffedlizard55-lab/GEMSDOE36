@@ -1,6 +1,6 @@
 # Owner brief — 28 October 2026 (historical; superseded for current status)
 
-> Use [`owner_brief_20261029.md`](owner_brief_20261029.md) and [`review-20261029.md`](../docs/research/review-20261029.md) for current status. The original user protocol and constraints remain preserved in this historical record and in the README.
+> **Historical 28 October brief.** For current release status use [`README.md`](../README.md), the [latest GSEWC36 screen/result](../docs/research/hypothesis-screen-20261029.md), and its [run card](../evidence/gsewc36_run_card_20261029.json). The 29 October review/continuation files linked elsewhere are pre-experiment snapshots; their no-holdout statements are historical. The original user protocol and constraints remain preserved in this historical record and the README.
 
 This is the operative summary of the owner's 28 October prompt. Key rules are quoted **verbatim**. The full 25 October wording stays byte-preserved in the [README](../README.md) under "Full standing owner brief". Where the two differ, this file governs. Historical scores in the brief are **owner- or user-reported** unless marked otherwise.
 
