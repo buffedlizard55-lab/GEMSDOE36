@@ -11,7 +11,7 @@
 ### 29 October verification
 - Restored all 30 SHA-pinned core/external/scored-comparison files using `scripts/restore_data.py` and reran `prepare_data.py`: 19 bands; EPSG:32611, 3730×3292; 5,167,373 footprint pixels; 60,988 catalogue-positive pixels; 58,171 sentinel band-pixels. Hash/grid checks passed; owner-mirror provenance is not organizer authentication.
 - Reran `registry_feasibility.py`: exit 2 as designed; reg-052 covers 5,160,724 footprint cells within 3 px and forces minimum overlap 31,005/37,654 (82.34%), exceeding the literal 70% gate. This is a degenerate lattice gate, not proof of actual duplication.
-- Post-restoration `PATH="$PWD/.venv/bin:$PATH" bash scripts/run_checks.sh`: **197 passed, 1 skipped**; Ruff and site checks passed. The only skip is optional Torch orientation coverage. The full numeric feature cache is still absent.
+- Post-restoration `PATH="$PWD/.venv/bin:$PATH" bash scripts/run_checks.sh`: **198 passed, 1 skipped**; Ruff and site checks passed. The only skip is optional Torch orientation coverage. The full numeric feature cache is still absent.
 - Created no TIFF and ran no model experiment. The three ranked research hypotheses are screening proposals only; no score estimate or uniqueness verdict for a new candidate is available. The restored GDR derived CSV has 27,092 rows but only location, temperature, and geothermometry fields; it does not contain analyte concentration columns for the proposed mixing-front method.
 - Original organizer files and a submission-page receipt are absent. SHA-pinned owner-mirror records are not organizer authentication.
 

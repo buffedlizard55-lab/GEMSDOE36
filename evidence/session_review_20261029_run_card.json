@@ -49,7 +49,7 @@
       "elemental_assay_fields_present": false,
       "banned_label_derived_column": "dist_known_fault_px"
     },
-    "run_checks": "197 passed, 1 skipped; Ruff and Pages site check passed after restoring all groups. The only skip is optional Torch orientation coverage."
+    "run_checks": "198 passed, 1 skipped; Ruff and Pages site check passed after merging latest main and restoring all groups. The only skip is optional Torch orientation coverage."
   },
   "historical_comparator": {
     "name": "GEMSDOE32 B2, as listed by the user",
