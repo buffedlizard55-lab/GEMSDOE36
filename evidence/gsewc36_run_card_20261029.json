@@ -1,0 +1,928 @@
+{
+  "schema": "gemsdoe36.experiment-run-card.v1",
+  "experiment_id": "GSEWC36-EXP1",
+  "date_utc": "2026-10-29",
+  "status": "stopped_registry_dot_overlap",
+  "verdict": "negative",
+  "scope": "one preregistered research experiment; no method-lane assignment and no slot selection",
+  "hypothesis": "Cross-sensor Gaussian scale-space edge-width concordance improves whole-segment hide-and-recover DTI over the matched raw-19-band HGB baseline.",
+  "mechanism": "A buried fault-related property boundary can create spatially coincident magnetic and gravity gradient edges with concordant apparent width and axial normal.",
+  "named_non_fault_mimic": "Intrusive/lithologic contacts, magnetization contrasts, and flight-line levelling seams.",
+  "inputs": {
+    "magnetic_band": "14_tmi",
+    "gravity_band": "13_iso_grav_anom",
+    "bands_dir": ".cache/gems_work/bands",
+    "feature_stack": "19 prepared bands; shared static cache for matched raw-19 baseline",
+    "feature_cache_not_saved_in_git": true,
+    "training_labels_sha256": "7ba308ccdc4418b31a178f4f1ef21aaa6e152e4028f2f6f64b01f7eb25ae4093",
+    "labels_existing_faults_relationship": "byte-identical owner-mirror files; source alias, not independent corroboration",
+    "prepared_manifest_sha256": "cd8ac1aad6279d54ff1d9ea88739a020ef6e110d202f27ed793b555e59e845b2",
+    "restore_receipt_sha256": "88455c5869706e8c96fe10c9bd37f90e959c24a16bb2fef5d35794983f3cea5c",
+    "provenance": "SHA-pinned owner GitHub mirrors; hashes prove mirror consistency only, not organizer authentication",
+    "restore_receipt_snapshot": "evidence/gsewc36_restore_receipt_at_run_20261029.json",
+    "restore_receipt_snapshot_sha256": "88455c5869706e8c96fe10c9bd37f90e959c24a16bb2fef5d35794983f3cea5c",
+    "current_restore_receipt_sha256": "56d50c031a891d77733ab4cc82c51fd1e9beaa52659fe9bb0fef63bd5fd824e4"
+  },
+  "preregistration": {
+    "path": "evidence/hypothesis_screen_20261029.json",
+    "sha256": "36dcd8732702585dea031fc7dc9bbe7e0f8f2b75e3a7a5f8a46af1fca68623a0",
+    "expected_sha256": "36dcd8732702585dea031fc7dc9bbe7e0f8f2b75e3a7a5f8a46af1fca68623a0",
+    "candidate_feature_source_sha256": "c296def6b79dfc3ccfb6510a6d10a8f2ddb3061c13785f496577ec62f9acf2e6",
+    "runner_sha256": "9a4a60155cbbd7c5f2a6e1617f5ce8008a7e3095222eb471ff39561e57eccfa4"
+  },
+  "evaluator": {
+    "label": "HOLDOUT-DTI",
+    "version": "gems36-segment-audit-v1",
+    "holdout": "whole 8-connected segments assigned to four spatial quadrants; 30 px / 3 km training collar",
+    "visible_fault_scoring_mask": "pixel-exact exclusion from scoring; no buffer in scoring mask",
+    "metric": "pooled distance-weighted Tversky; alpha=0.2, beta=0.8, 300 m triangular kernel",
+    "withheld_positive_expected": 60988,
+    "segment_count_expected": 3199,
+    "dot_budget": 37654,
+    "paired_uncertainty": "2000-replicate paired 16-cell spatial bootstrap; seed 36",
+    "feature_canary_gate": {
+      "n_features_tested": 20,
+      "max_two_polarity_auc_raw19": 0.602795,
+      "max_two_polarity_auc_candidate": 0.523514,
+      "all_passed": true
+    }
+  },
+  "feature_canary": {
+    "features": [
+      {
+        "feature": "01_mag_anom",
+        "max_two_polarity_auc": 0.537047,
+        "passed": true,
+        "folds": [
+          {
+            "fold": 0,
+            "auc": 0.497682,
+            "two_polarity_auc": 0.502318,
+            "passed": true
+          },
+          {
+            "fold": 1,
+            "auc": 0.502317,
+            "two_polarity_auc": 0.502317,
+            "passed": true
+          },
+          {
+            "fold": 2,
+            "auc": 0.462953,
+            "two_polarity_auc": 0.537047,
+            "passed": true
+          },
+          {
+            "fold": 3,
+            "auc": 0.505633,
+            "two_polarity_auc": 0.505633,
+            "passed": true
+          }
+        ]
+      },
+      {
+        "feature": "02_rtp",
+        "max_two_polarity_auc": 0.520667,
+        "passed": true,
+        "folds": [
+          {
+            "fold": 0,
+            "auc": 0.494491,
+            "two_polarity_auc": 0.505509,
+            "passed": true
+          },
+          {
+            "fold": 1,
+            "auc": 0.489705,
+            "two_polarity_auc": 0.510295,
+            "passed": true
+          },
+          {
+            "fold": 2,
+            "auc": 0.520667,
+            "two_polarity_auc": 0.520667,
+            "passed": true
+          },
+          {
+            "fold": 3,
+            "auc": 0.497547,
+            "two_polarity_auc": 0.502453,
+            "passed": true
+          }
+        ]
+      },
+      {
+        "feature": "03_tmi_hg",
+        "max_two_polarity_auc": 0.535961,
+        "passed": true,
+        "folds": [
+          {
+            "fold": 0,
+            "auc": 0.530518,
+            "two_polarity_auc": 0.530518,
+            "passed": true
+          },
+          {
+            "fold": 1,
+            "auc": 0.469597,
+            "two_polarity_auc": 0.530403,
+            "passed": true
+          },
+          {
+            "fold": 2,
+            "auc": 0.535961,
+            "two_polarity_auc": 0.535961,
+            "passed": true
+          },
+          {
+            "fold": 3,
+            "auc": 0.499742,
+            "two_polarity_auc": 0.500258,
+            "passed": true
+          }
+        ]
+      },
+      {
+        "feature": "04_geod_2ndinv",
+        "max_two_polarity_auc": 0.552803,
+        "passed": true,
+        "folds": [
+          {
+            "fold": 0,
+            "auc": 0.552803,
+            "two_polarity_auc": 0.552803,
+            "passed": true
+          },
+          {
+            "fold": 1,
+            "auc": 0.506239,
+            "two_polarity_auc": 0.506239,
+            "passed": true
+          },
+          {
+            "fold": 2,
+            "auc": 0.51902,
+            "two_polarity_auc": 0.51902,
+            "passed": true
+          },
+          {
+            "fold": 3,
+            "auc": 0.536919,
+            "two_polarity_auc": 0.536919,
+            "passed": true
+          }
+        ]
+      },
+      {
+        "feature": "05_iso_grav_anom_slope",
+        "max_two_polarity_auc": 0.58693,
+        "passed": true,
+        "folds": [
+          {
+            "fold": 0,
+            "auc": 0.522342,
+            "two_polarity_auc": 0.522342,
+            "passed": true
+          },
+          {
+            "fold": 1,
+            "auc": 0.58693,
+            "two_polarity_auc": 0.58693,
+            "passed": true
+          },
+          {
+            "fold": 2,
+            "auc": 0.490818,
+            "two_polarity_auc": 0.509182,
+            "passed": true
+          },
+          {
+            "fold": 3,
+            "auc": 0.554795,
+            "two_polarity_auc": 0.554795,
+            "passed": true
+          }
+        ]
+      },
+      {
+        "feature": "06_tc",
+        "max_two_polarity_auc": 0.599609,
+        "passed": true,
+        "folds": [
+          {
+            "fold": 0,
+            "auc": 0.455638,
+            "two_polarity_auc": 0.544362,
+            "passed": true
+          },
+          {
+            "fold": 1,
+            "auc": 0.419315,
+            "two_polarity_auc": 0.580685,
+            "passed": true
+          },
+          {
+            "fold": 2,
+            "auc": 0.456523,
+            "two_polarity_auc": 0.543477,
+            "passed": true
+          },
+          {
+            "fold": 3,
+            "auc": 0.400391,
+            "two_polarity_auc": 0.599609,
+            "passed": true
+          }
+        ]
+      },
+      {
+        "feature": "07_geod_shearrate",
+        "max_two_polarity_auc": 0.55893,
+        "passed": true,
+        "folds": [
+          {
+            "fold": 0,
+            "auc": 0.55893,
+            "two_polarity_auc": 0.55893,
+            "passed": true
+          },
+          {
+            "fold": 1,
+            "auc": 0.478464,
+            "two_polarity_auc": 0.521536,
+            "passed": true
+          },
+          {
+            "fold": 2,
+            "auc": 0.540236,
+            "two_polarity_auc": 0.540236,
+            "passed": true
+          },
+          {
+            "fold": 3,
+            "auc": 0.522887,
+            "two_polarity_auc": 0.522887,
+            "passed": true
+          }
+        ]
+      },
+      {
+        "feature": "08_geod_dilaterate",
+        "max_two_polarity_auc": 0.538791,
+        "passed": true,
+        "folds": [
+          {
+            "fold": 0,
+            "auc": 0.535169,
+            "two_polarity_auc": 0.535169,
+            "passed": true
+          },
+          {
+            "fold": 1,
+            "auc": 0.511151,
+            "two_polarity_auc": 0.511151,
+            "passed": true
+          },
+          {
+            "fold": 2,
+            "auc": 0.515859,
+            "two_polarity_auc": 0.515859,
+            "passed": true
+          },
+          {
+            "fold": 3,
+            "auc": 0.538791,
+            "two_polarity_auc": 0.538791,
+            "passed": true
+          }
+        ]
+      },
+      {
+        "feature": "09_tmi_vg",
+        "max_two_polarity_auc": 0.520431,
+        "passed": true,
+        "folds": [
+          {
+            "fold": 0,
+            "auc": 0.479569,
+            "two_polarity_auc": 0.520431,
+            "passed": true
+          },
+          {
+            "fold": 1,
+            "auc": 0.488015,
+            "two_polarity_auc": 0.511985,
+            "passed": true
+          },
+          {
+            "fold": 2,
+            "auc": 0.491861,
+            "two_polarity_auc": 0.508139,
+            "passed": true
+          },
+          {
+            "fold": 3,
+            "auc": 0.485005,
+            "two_polarity_auc": 0.514995,
+            "passed": true
+          }
+        ]
+      },
+      {
+        "feature": "10_deq_n100a15",
+        "max_two_polarity_auc": 0.53114,
+        "passed": true,
+        "folds": [
+          {
+            "fold": 0,
+            "auc": 0.525828,
+            "two_polarity_auc": 0.525828,
+            "passed": true
+          },
+          {
+            "fold": 1,
+            "auc": 0.528611,
+            "two_polarity_auc": 0.528611,
+            "passed": true
+          },
+          {
+            "fold": 2,
+            "auc": 0.500453,
+            "two_polarity_auc": 0.500453,
+            "passed": true
+          },
+          {
+            "fold": 3,
+            "auc": 0.46886,
+            "two_polarity_auc": 0.53114,
+            "passed": true
+          }
+        ]
+      },
+      {
+        "feature": "11_iso_grav_anom_vg",
+        "max_two_polarity_auc": 0.543564,
+        "passed": true,
+        "folds": [
+          {
+            "fold": 0,
+            "auc": 0.523129,
+            "two_polarity_auc": 0.523129,
+            "passed": true
+          },
+          {
+            "fold": 1,
+            "auc": 0.543564,
+            "two_polarity_auc": 0.543564,
+            "passed": true
+          },
+          {
+            "fold": 2,
+            "auc": 0.507657,
+            "two_polarity_auc": 0.507657,
+            "passed": true
+          },
+          {
+            "fold": 3,
+            "auc": 0.539089,
+            "two_polarity_auc": 0.539089,
+            "passed": true
+          }
+        ]
+      },
+      {
+        "feature": "12_det_elev",
+        "max_two_polarity_auc": 0.567826,
+        "passed": true,
+        "folds": [
+          {
+            "fold": 0,
+            "auc": 0.567826,
+            "two_polarity_auc": 0.567826,
+            "passed": true
+          },
+          {
+            "fold": 1,
+            "auc": 0.449076,
+            "two_polarity_auc": 0.550924,
+            "passed": true
+          },
+          {
+            "fold": 2,
+            "auc": 0.522311,
+            "two_polarity_auc": 0.522311,
+            "passed": true
+          },
+          {
+            "fold": 3,
+            "auc": 0.452189,
+            "two_polarity_auc": 0.547811,
+            "passed": true
+          }
+        ]
+      },
+      {
+        "feature": "13_iso_grav_anom",
+        "max_two_polarity_auc": 0.533123,
+        "passed": true,
+        "folds": [
+          {
+            "fold": 0,
+            "auc": 0.513523,
+            "two_polarity_auc": 0.513523,
+            "passed": true
+          },
+          {
+            "fold": 1,
+            "auc": 0.484567,
+            "two_polarity_auc": 0.515433,
+            "passed": true
+          },
+          {
+            "fold": 2,
+            "auc": 0.466877,
+            "two_polarity_auc": 0.533123,
+            "passed": true
+          },
+          {
+            "fold": 3,
+            "auc": 0.478339,
+            "two_polarity_auc": 0.521661,
+            "passed": true
+          }
+        ]
+      },
+      {
+        "feature": "14_tmi",
+        "max_two_polarity_auc": 0.523255,
+        "passed": true,
+        "folds": [
+          {
+            "fold": 0,
+            "auc": 0.494603,
+            "two_polarity_auc": 0.505397,
+            "passed": true
+          },
+          {
+            "fold": 1,
+            "auc": 0.494946,
+            "two_polarity_auc": 0.505054,
+            "passed": true
+          },
+          {
+            "fold": 2,
+            "auc": 0.476745,
+            "two_polarity_auc": 0.523255,
+            "passed": true
+          },
+          {
+            "fold": 3,
+            "auc": 0.491599,
+            "two_polarity_auc": 0.508401,
+            "passed": true
+          }
+        ]
+      },
+      {
+        "feature": "15_depth_to_base_surf",
+        "max_two_polarity_auc": 0.52572,
+        "passed": true,
+        "folds": [
+          {
+            "fold": 0,
+            "auc": 0.477504,
+            "two_polarity_auc": 0.522496,
+            "passed": true
+          },
+          {
+            "fold": 1,
+            "auc": 0.52572,
+            "two_polarity_auc": 0.52572,
+            "passed": true
+          },
+          {
+            "fold": 2,
+            "auc": 0.500575,
+            "two_polarity_auc": 0.500575,
+            "passed": true
+          },
+          {
+            "fold": 3,
+            "auc": 0.503604,
+            "two_polarity_auc": 0.503604,
+            "passed": true
+          }
+        ]
+      },
+      {
+        "feature": "16_ieq_n100a15",
+        "max_two_polarity_auc": 0.568766,
+        "passed": true,
+        "folds": [
+          {
+            "fold": 0,
+            "auc": 0.537746,
+            "two_polarity_auc": 0.537746,
+            "passed": true
+          },
+          {
+            "fold": 1,
+            "auc": 0.511109,
+            "two_polarity_auc": 0.511109,
+            "passed": true
+          },
+          {
+            "fold": 2,
+            "auc": 0.505932,
+            "two_polarity_auc": 0.505932,
+            "passed": true
+          },
+          {
+            "fold": 3,
+            "auc": 0.568766,
+            "two_polarity_auc": 0.568766,
+            "passed": true
+          }
+        ]
+      },
+      {
+        "feature": "17_cond_surf",
+        "max_two_polarity_auc": 0.536073,
+        "passed": true,
+        "folds": [
+          {
+            "fold": 0,
+            "auc": 0.536073,
+            "two_polarity_auc": 0.536073,
+            "passed": true
+          },
+          {
+            "fold": 1,
+            "auc": 0.475764,
+            "two_polarity_auc": 0.524236,
+            "passed": true
+          },
+          {
+            "fold": 2,
+            "auc": 0.491754,
+            "two_polarity_auc": 0.508246,
+            "passed": true
+          },
+          {
+            "fold": 3,
+            "auc": 0.469826,
+            "two_polarity_auc": 0.530174,
+            "passed": true
+          }
+        ]
+      },
+      {
+        "feature": "18_iso_grav_anom_hg",
+        "max_two_polarity_auc": 0.577389,
+        "passed": true,
+        "folds": [
+          {
+            "fold": 0,
+            "auc": 0.488196,
+            "two_polarity_auc": 0.511804,
+            "passed": true
+          },
+          {
+            "fold": 1,
+            "auc": 0.577389,
+            "two_polarity_auc": 0.577389,
+            "passed": true
+          },
+          {
+            "fold": 2,
+            "auc": 0.491148,
+            "two_polarity_auc": 0.508852,
+            "passed": true
+          },
+          {
+            "fold": 3,
+            "auc": 0.457637,
+            "two_polarity_auc": 0.542363,
+            "passed": true
+          }
+        ]
+      },
+      {
+        "feature": "19_det_elev_slope",
+        "max_two_polarity_auc": 0.602795,
+        "passed": true,
+        "folds": [
+          {
+            "fold": 0,
+            "auc": 0.602795,
+            "two_polarity_auc": 0.602795,
+            "passed": true
+          },
+          {
+            "fold": 1,
+            "auc": 0.547508,
+            "two_polarity_auc": 0.547508,
+            "passed": true
+          },
+          {
+            "fold": 2,
+            "auc": 0.53932,
+            "two_polarity_auc": 0.53932,
+            "passed": true
+          },
+          {
+            "fold": 3,
+            "auc": 0.559073,
+            "two_polarity_auc": 0.559073,
+            "passed": true
+          }
+        ]
+      },
+      {
+        "feature": "gsewc36_edge_width_concordance",
+        "max_two_polarity_auc": 0.523514,
+        "passed": true,
+        "folds": [
+          {
+            "fold": 0,
+            "auc": 0.521239,
+            "two_polarity_auc": 0.521239,
+            "passed": true
+          },
+          {
+            "fold": 1,
+            "auc": 0.523514,
+            "two_polarity_auc": 0.523514,
+            "passed": true
+          },
+          {
+            "fold": 2,
+            "auc": 0.500079,
+            "two_polarity_auc": 0.500079,
+            "passed": true
+          },
+          {
+            "fold": 3,
+            "auc": 0.507028,
+            "two_polarity_auc": 0.507028,
+            "passed": true
+          }
+        ]
+      }
+    ],
+    "threshold": "symmetric AUC > 0.90 is a hard stop",
+    "status": "passed_all_raw19_and_candidate"
+  },
+  "results": {
+    "baseline": {
+      "evaluator_version": "gems36-segment-audit-v1",
+      "label_tag": "HOLDOUT-DTI",
+      "withheld_positives_px": 60988,
+      "independent_cells": 15,
+      "total_dots_emitted": 37654,
+      "pooled_16block_dti": 0.039523,
+      "pooled_16block_ci95": [
+        0.027195,
+        0.054596
+      ],
+      "pooled_unsplit_dti": 0.040417,
+      "pooled_unsplit_tp_w": 2261.24,
+      "pooled_unsplit_fp_w": 33523.37,
+      "subdomains": {
+        "mountain": {
+          "dti": 0.04659,
+          "weighted_tp": 1574.09,
+          "positives": 35744.0,
+          "weighted_recall": 0.044,
+          "dots_emitted": 27412
+        },
+        "piedmont": {
+          "dti": 0.034851,
+          "weighted_tp": 296.3,
+          "positives": 9106.0,
+          "weighted_recall": 0.0325,
+          "dots_emitted": 6324
+        },
+        "basin": {
+          "dti": 0.01279,
+          "weighted_tp": 174.94,
+          "positives": 16138.0,
+          "weighted_recall": 0.0108,
+          "dots_emitted": 3918
+        },
+        "lidar_covered": {
+          "dti": 0.041924,
+          "weighted_tp": 1867.14,
+          "positives": 48465.0,
+          "weighted_recall": 0.0385,
+          "dots_emitted": 30437
+        },
+        "non_lidar_gap": {
+          "dti": 0.034466,
+          "weighted_tp": 393.32,
+          "positives": 12523.0,
+          "weighted_recall": 0.0314,
+          "dots_emitted": 7217
+        }
+      }
+    },
+    "candidate": {
+      "evaluator_version": "gems36-segment-audit-v1",
+      "label_tag": "HOLDOUT-DTI",
+      "withheld_positives_px": 60988,
+      "independent_cells": 15,
+      "total_dots_emitted": 37654,
+      "pooled_16block_dti": 0.039712,
+      "pooled_16block_ci95": [
+        0.026757,
+        0.05499
+      ],
+      "pooled_unsplit_dti": 0.041036,
+      "pooled_unsplit_tp_w": 2298.47,
+      "pooled_unsplit_fp_w": 33804.23,
+      "subdomains": {
+        "mountain": {
+          "dti": 0.047578,
+          "weighted_tp": 1613.67,
+          "positives": 35744.0,
+          "weighted_recall": 0.0451,
+          "dots_emitted": 27938
+        },
+        "piedmont": {
+          "dti": 0.020971,
+          "weighted_tp": 174.0,
+          "positives": 9106.0,
+          "weighted_recall": 0.0191,
+          "dots_emitted": 5152
+        },
+        "basin": {
+          "dti": 0.017592,
+          "weighted_tp": 242.73,
+          "positives": 16138.0,
+          "weighted_recall": 0.015,
+          "dots_emitted": 4564
+        },
+        "lidar_covered": {
+          "dti": 0.042696,
+          "weighted_tp": 1906.27,
+          "positives": 48465.0,
+          "weighted_recall": 0.0393,
+          "dots_emitted": 30725
+        },
+        "non_lidar_gap": {
+          "dti": 0.03431,
+          "weighted_tp": 389.89,
+          "positives": 12523.0,
+          "weighted_recall": 0.0311,
+          "dots_emitted": 6929
+        }
+      }
+    },
+    "paired_delta_vs_baseline": {
+      "delta_point": 0.000189,
+      "delta_ci95_lo": -0.004191,
+      "delta_ci95_hi": 0.004111,
+      "prob_cand_gt_base": 0.517
+    },
+    "same_evaluator_historical_best": {
+      "label": "HOLDOUT-DTI",
+      "evaluator_version": "gems36-segment-audit-v1",
+      "dti": 0.114542,
+      "ci95": [
+        0.078547,
+        0.151221
+      ],
+      "withheld_positives": 60988,
+      "source": "evidence/atvr36_run_card_20261026.json"
+    },
+    "projection_or_leaderboard_score": null,
+    "candidate_surface_sha256_f32_le": "1bf2e4ea130be05ae90f9047255446e3957bab2a36fc3c92c3611f56295d69f6",
+    "baseline_surface_sha256_f32_le": "b7d39cdfd189885d9ae13c83067a1a115275303f936de65496a689deb3c019d4",
+    "candidate_oof_dots_sha256_u8": "c837c7bf6a8ca301152f447a2123bba64d8b566168ef164eeca9f6752b1c0d73",
+    "baseline_oof_dots_sha256_u8": "0029b15b6ce8f0dd5734d756f4cdf5100dffc558aa6c348bd0e361252f632eec",
+    "candidate_vs_best_exact_evaluator": {
+      "best_prior_dti": 0.114542,
+      "candidate_minus_best": -0.07483,
+      "beats_best": false,
+      "candidate_dti": 0.039712,
+      "historical_best_minus_candidate": 0.07483
+    },
+    "scientific_holdout_gate_passed": false
+  },
+  "registry_gate": {
+    "status": "stopped_dot_overlap_gate",
+    "registry_raster": {
+      "id": "reg-052",
+      "path": "data/raw/scored/13gems_20261001_r13-lattice-s5_v2_nan-outside.tif",
+      "sha256": "b4570b406efec198eb2f4d142ad8d0d6184b14b66f2f52b5c4d697f0647dc9b2",
+      "label": "owner-mirror 5-pixel calibration lattice; comparison only",
+      "positive_pixels": 206895
+    },
+    "oof_dot_overlap_within_3px": {
+      "overlap_dots": 36511,
+      "candidate_oof_dots": 37654,
+      "fraction": 0.969645
+    },
+    "mathematical_lower_bound_overlap_at_37654_dots": 0.823418,
+    "literal_overlap_limit": 0.7,
+    "literal_abs_rank_correlation_limit": 0.9,
+    "note": "reg-052 is a 5-pixel calibration lattice, not an independent geological detector; it remains binding under the unrevised literal protocol.",
+    "candidate_oof_surface_abs_spearman_rho": 0.000325,
+    "surface_is_final_submission_surface": false,
+    "all_198_registry_rasters_checked": false,
+    "early_stop_policy": "Compare the OOF prediction surface before top-k placement; stop on first literal registry violation.",
+    "surface_gate_passed": true,
+    "dot_gate_passed_for_oof_diagnostic": false,
+    "candidate_oof_dot_surface_is_final_submission": false,
+    "final_submission_dots_generated": false,
+    "surface_rank_correlation_method": "Absolute Spearman rank correlation of the OOF model prediction surface over the footprint against the binary reg-052 raster; checked before top-k placement."
+  },
+  "submission": {
+    "submission_tif_written": false,
+    "submission_zip_written": false,
+    "writer_invoked": false,
+    "validator_output": null,
+    "name": null,
+    "note": null,
+    "raster_sha256": null,
+    "download_status": "NO; research-only; no candidate submission raster exists",
+    "weekly_slot_selected": false
+  },
+  "elapsed_seconds": 400.52,
+  "errors": [],
+  "holdout_plan": {
+    "n_segments": 3199,
+    "withheld_positive_pixels": 60988,
+    "n_folds": 4,
+    "buffer_px": 30,
+    "segment_split_count": 0,
+    "positive_count_matches_preregistration": true
+  },
+  "candidate_feature_diagnostics": {
+    "scales_px": [
+      1.0,
+      2.0,
+      4.0,
+      8.0
+    ],
+    "support_cells": 4572671,
+    "support_fraction_of_footprint": 0.8849121207236249,
+    "magnetic": {
+      "valid_cells": 5164313,
+      "support_cells": 4572671,
+      "support_fraction_of_footprint": 0.8849121207236249,
+      "peak_response_p99": 217.13113403320312
+    },
+    "gravity": {
+      "valid_cells": 5164313,
+      "support_cells": 4572671,
+      "support_fraction_of_footprint": 0.8849121207236249,
+      "peak_response_p99": 4.863613605499268
+    },
+    "feature_min": 0.0,
+    "feature_max": 0.884164571762085,
+    "feature_nonzero_cells": 4572671,
+    "candidate_feature_sha256_f32_le": "3bc95510fa0df8fb666a9065ace914c2c5eff7c3c5d89de05a38f205dcb76d7e",
+    "label_reads": 0,
+    "external_data_reads": 0,
+    "registry_or_submission_raster_reads": 0,
+    "scope_note": "The zero label/external/registry read statement describes the new scale-space feature builder only. Shared-cache and holdout construction read the pinned labels as required; the shared cache also builds unused static columns from restored external layers."
+  },
+  "verdict_reason": "Candidate OOF dots have 97.0% within-3px overlap with reg-052, exceeding the literal 70% gate. The geometric lower bound also rules out any 37,654-dot final map; no full-map model or submission TIFF was created.",
+  "holdout_dti_label": "HOLDOUT-DTI; never an organizer/leaderboard score",
+  "model_configuration": {
+    "baseline_features": "The 19 feature names in gemsdoe36.atvr_features.RAW19_NAMES.",
+    "candidate_features": "The same RAW19 columns plus one gsewc36 cross-sensor concordance column.",
+    "classifier": "sklearn.ensemble.HistGradientBoostingClassifier",
+    "parameters": {
+      "loss": "log_loss",
+      "learning_rate": 0.055,
+      "max_iter": 190,
+      "max_leaf_nodes": 63,
+      "min_samples_leaf": 90,
+      "l2_regularization": 2.5,
+      "max_bins": 255,
+      "early_stopping": false
+    },
+    "fold_seeds": [
+      3610,
+      3611,
+      3612,
+      3613
+    ],
+    "negative_sampling": {
+      "ratio": 5,
+      "minimum": 10000,
+      "sampling": "uniform without replacement from training negatives farther than 2 px from visible catalogue faults",
+      "sampling_seed": "same per fold for matched baseline and candidate",
+      "sample_weight": "Horvitz-Thompson expansion: population negative count / sampled negative count"
+    },
+    "same_baseline_candidate_folds_and_emitter": true
+  },
+  "experiment_budget": {
+    "allowed_experiments_max": 3,
+    "experiments_run": 1,
+    "walltime_cap_seconds": 7200,
+    "elapsed_seconds": 400.52
+  }
+}

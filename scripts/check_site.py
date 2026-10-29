@@ -268,6 +268,8 @@ def main() -> int:
     else:
         errors.append("Missing docs/current-run.json")
     for original, copy in (
+        (ROOT / "evidence/gsewc36_run_card_20261029.json", DOCS / "downloads/gsewc36-run-card.json"),
+        (ROOT / "evidence/hypothesis_screen_20261029.json", DOCS / "downloads/hypothesis-screen-20261029.json"),
         (ROOT / "evidence/session_review_20261028_audit_run_card.json", DOCS / "downloads/session-review-20261028-audit-run-card.json"),
         (ROOT / "evidence/focus9_decision_table_20261027.json", DOCS / "downloads/focus9-decision-table-20261027.json"),
         (STOP, DOCS / "downloads/registry-preflight-run-card.json"),
