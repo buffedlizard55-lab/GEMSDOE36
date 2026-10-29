@@ -1,6 +1,6 @@
 {
   "template_sha256": "2176d08e485aa2cd2860ce8df539db4faf4d76163b38a4dd8c30a40454d35cbc",
-  "audited_utc": "2026-10-28T11:47:41+00:00",
+  "audited_utc": "2026-10-29T18:09:27+00:00",
   "scope": "Historical format audit only; no literal registry or selector authorization",
   "artifacts": [
     {
@@ -111,8 +111,10 @@
         "maximum": 1.0,
         "nodata": null,
         "template_match": true,
-        "passed": true,
-        "errors": []
+        "passed": false,
+        "errors": [
+          "7111787 finite values outside the template bounds"
+        ]
       },
       "submit_ready": false,
       "historical_card_verdict": null,
@@ -139,8 +141,10 @@
         "maximum": 1.0,
         "nodata": null,
         "template_match": true,
-        "passed": true,
-        "errors": []
+        "passed": false,
+        "errors": [
+          "7111787 finite values outside the template bounds"
+        ]
       },
       "submit_ready": false,
       "historical_card_verdict": "negative",
@@ -167,8 +171,10 @@
         "maximum": 1.0,
         "nodata": null,
         "template_match": true,
-        "passed": true,
-        "errors": []
+        "passed": false,
+        "errors": [
+          "7111787 finite values outside the template bounds"
+        ]
       },
       "submit_ready": false,
       "historical_card_verdict": null,
@@ -195,8 +201,10 @@
         "maximum": 1.0,
         "nodata": null,
         "template_match": true,
-        "passed": true,
-        "errors": []
+        "passed": false,
+        "errors": [
+          "7111787 finite values outside the template bounds"
+        ]
       },
       "submit_ready": false,
       "historical_card_verdict": null,
@@ -223,8 +231,10 @@
         "maximum": 1.0,
         "nodata": null,
         "template_match": true,
-        "passed": true,
-        "errors": []
+        "passed": false,
+        "errors": [
+          "7111787 finite values outside the template bounds"
+        ]
       },
       "submit_ready": false,
       "historical_card_verdict": null,
@@ -279,8 +289,10 @@
         "maximum": 1.0,
         "nodata": null,
         "template_match": true,
-        "passed": true,
-        "errors": []
+        "passed": false,
+        "errors": [
+          "7111787 finite values outside the template bounds"
+        ]
       },
       "submit_ready": false,
       "historical_card_verdict": null,
@@ -335,8 +347,10 @@
         "maximum": 1.0,
         "nodata": null,
         "template_match": true,
-        "passed": true,
-        "errors": []
+        "passed": false,
+        "errors": [
+          "7111787 finite values outside the template bounds"
+        ]
       },
       "submit_ready": false,
       "historical_card_verdict": null,
@@ -363,8 +377,10 @@
         "maximum": 1.0,
         "nodata": null,
         "template_match": true,
-        "passed": true,
-        "errors": []
+        "passed": false,
+        "errors": [
+          "7111787 finite values outside the template bounds"
+        ]
       },
       "submit_ready": false,
       "historical_card_verdict": null,
@@ -391,8 +407,10 @@
         "maximum": 1.0,
         "nodata": null,
         "template_match": true,
-        "passed": true,
-        "errors": []
+        "passed": false,
+        "errors": [
+          "7111787 finite values outside the template bounds"
+        ]
       },
       "submit_ready": false,
       "historical_card_verdict": null,
@@ -419,8 +437,10 @@
         "maximum": 1.0,
         "nodata": null,
         "template_match": true,
-        "passed": true,
-        "errors": []
+        "passed": false,
+        "errors": [
+          "7111787 finite values outside the template bounds"
+        ]
       },
       "submit_ready": false,
       "historical_card_verdict": null,
@@ -447,8 +467,10 @@
         "maximum": 1.0,
         "nodata": null,
         "template_match": true,
-        "passed": true,
-        "errors": []
+        "passed": false,
+        "errors": [
+          "7111787 finite values outside the template bounds"
+        ]
       },
       "submit_ready": false,
       "historical_card_verdict": null,
@@ -475,8 +497,10 @@
         "maximum": 1.0,
         "nodata": null,
         "template_match": true,
-        "passed": true,
-        "errors": []
+        "passed": false,
+        "errors": [
+          "7111787 finite values outside the template bounds"
+        ]
       },
       "submit_ready": false,
       "historical_card_verdict": null,
@@ -503,8 +527,10 @@
         "maximum": 1.0,
         "nodata": null,
         "template_match": true,
-        "passed": true,
-        "errors": []
+        "passed": false,
+        "errors": [
+          "7111787 finite values outside the template bounds"
+        ]
       },
       "submit_ready": false,
       "historical_card_verdict": null,
@@ -531,8 +557,10 @@
         "maximum": 1.0,
         "nodata": null,
         "template_match": true,
-        "passed": true,
-        "errors": []
+        "passed": false,
+        "errors": [
+          "7111787 finite values outside the template bounds"
+        ]
       },
       "submit_ready": false,
       "historical_card_verdict": null,
@@ -559,8 +587,10 @@
         "maximum": 1.0,
         "nodata": null,
         "template_match": true,
-        "passed": true,
-        "errors": []
+        "passed": false,
+        "errors": [
+          "7111787 finite values outside the template bounds"
+        ]
       },
       "submit_ready": false,
       "historical_card_verdict": null,
@@ -615,8 +645,10 @@
         "maximum": 1.0,
         "nodata": null,
         "template_match": true,
-        "passed": true,
-        "errors": []
+        "passed": false,
+        "errors": [
+          "7111787 finite values outside the template bounds"
+        ]
       },
       "submit_ready": false,
       "historical_card_verdict": null,
@@ -643,8 +675,10 @@
         "maximum": 1.0,
         "nodata": null,
         "template_match": true,
-        "passed": true,
-        "errors": []
+        "passed": false,
+        "errors": [
+          "7111787 finite values outside the template bounds"
+        ]
       },
       "submit_ready": false,
       "historical_card_verdict": null,

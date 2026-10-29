@@ -21,7 +21,12 @@
     "provenance": "SHA-pinned owner GitHub mirrors; hashes prove mirror consistency only, not organizer authentication",
     "restore_receipt_snapshot": "evidence/gsewc36_restore_receipt_at_run_20261029.json",
     "restore_receipt_snapshot_sha256": "88455c5869706e8c96fe10c9bd37f90e959c24a16bb2fef5d35794983f3cea5c",
-    "current_restore_receipt_sha256": "56d50c031a891d77733ab4cc82c51fd1e9beaa52659fe9bb0fef63bd5fd824e4"
+    "current_restore_receipt_sha256": "56d50c031a891d77733ab4cc82c51fd1e9beaa52659fe9bb0fef63bd5fd824e4",
+    "prepared_manifest_snapshot": "evidence/gsewc36_prepared_manifest_at_run_20261029.json",
+    "prepared_manifest_snapshot_sha256": "cd8ac1aad6279d54ff1d9ea88739a020ef6e110d202f27ed793b555e59e845b2",
+    "prepared_manifest_snapshot_note": "Exact prepared_manifest.json bytes used at experiment time; the current data/prepared_manifest.json was refreshed later and has a different prepared_utc timestamp.",
+    "current_restore_receipt_snapshot": "evidence/gsewc36_current_restore_receipt_at_run_20261029.json",
+    "current_restore_receipt_snapshot_sha256": "56d50c031a891d77733ab4cc82c51fd1e9beaa52659fe9bb0fef63bd5fd824e4"
   },
   "preregistration": {
     "path": "evidence/hypothesis_screen_20261029.json",

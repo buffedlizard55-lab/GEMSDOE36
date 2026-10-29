@@ -14,8 +14,8 @@
   "ci95": null,
   "evaluator_version": null,
   "withheld_positives": null,
-  "run_card": "downloads/session-review-20261028-audit-run-card.json",
-  "run_card_sha256": "b449f5695a8b522e5cc76854094cc676626895ec26ec9c186eb1bb0daf71c740",
+  "run_card": "downloads/session-review-20261029-run-card.json",
+  "run_card_sha256": "4a770684c0444674e2cf345307e5ebe43aa894a0f21475812f9a89095f022450",
   "note": null,
   "submission_name": null,
   "gates": null,
@@ -123,5 +123,36 @@
     "run_card": "downloads/s2d36-run-card.json"
   },
   "slot_selected": false,
-  "review_date_utc": "2026-10-28"
+  "review_date_utc": "2026-10-29",
+  "latest_unassigned_research_experiment": {
+    "experiment_id": "GSEWC36-EXP1",
+    "lane_assignment": null,
+    "verdict": "negative",
+    "holdout_label": "HOLDOUT-DTI",
+    "evaluator_version": "gems36-segment-audit-v1",
+    "withheld_positives": 60988,
+    "baseline_dti": 0.039523,
+    "baseline_ci95": [
+      0.027195,
+      0.054596
+    ],
+    "candidate_dti": 0.039712,
+    "candidate_ci95": [
+      0.026757,
+      0.05499
+    ],
+    "paired_delta": 0.000189,
+    "paired_delta_ci95": [
+      -0.004191,
+      0.004111
+    ],
+    "registry_surface_abs_spearman": 0.000325,
+    "registry_oof_dot_overlap_fraction": 0.969645,
+    "literal_dot_overlap_limit": 0.7,
+    "oof_dot_gate_passed": false,
+    "submission_tif_written": false,
+    "slot_selected": false,
+    "run_card": "downloads/gsewc36-run-card.json",
+    "run_card_sha256": "9624b4e7e1e85079fe689e6e04ab45d93e79e3d23e64dce221d9db7192195794"
+  }
 }
